@@ -1,0 +1,344 @@
+﻿@page "/mobile-number"
+@inject NavigationManager Navigation
+@using Blazored.LocalStorage
+@using DayEaseServices.Services
+@using DayEaseServices.Services.IServices
+@using Domain.RequestModels
+@inject IRegistration RegistrationService
+@using System.Text.Json
+@inject IJSRuntime JS
+@inject ILocalStorageService LocalStorage
+
+<style>
+    .main-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        background: url('images/login-bg.png') no-repeat center center;
+        background-size: cover;
+        padding: 2rem;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .card {
+        background: rgba(0, 140, 255, 0.95);
+        color: white;
+        border-radius: 25px;
+        padding: 2.5rem 2rem;
+        width: 500px;
+        max-width: 90%;
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+        text-align: center;
+        transition: transform 0.3s ease;
+    }
+
+        .card:hover {
+            transform: scale(1.01);
+        }
+
+        .card .logo {
+            width: 150px;
+            margin: 0 auto 1.5rem auto;
+            display: block;
+        }
+
+    .inner-box {
+        background-color: transparent;
+        padding: 2rem 1rem 0;
+        text-align: left;
+    }
+
+        .inner-box h3 {
+            text-align: center;
+            color: #fff;
+            margin-bottom: 1.5rem;
+        }
+
+    .form-group {
+        margin-bottom: 1rem;
+    }
+
+        .form-group label {
+            font-weight: 600;
+            color: #f0f0f0;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+    .form-control {
+        width: 100%;
+        padding: 12px;
+        font-size: 1rem;
+        border-radius: 8px;
+        border: none;
+        outline: none;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+        .form-control.error {
+            border: 2px solid red;
+        }
+
+    .btn-primary {
+        width: 100%;
+        padding: 14px;
+        font-size: 1rem;
+        border: none;
+        border-radius: 8px;
+        background-color: #00c2ff;
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+        .btn-primary:hover {
+            background-color: #009edb;
+        }
+
+    .validation-error {
+        color: #ffcccc;
+        font-weight: 500;
+        font-size: 0.95rem;
+        margin-top: 0.5rem;
+    }
+
+    @@media (max-width: 768px) {
+        .card {
+            padding: 2rem 1.5rem;
+            width: 100%;
+        }
+
+        .inner-box {
+            padding: 1rem 0.5rem 0;
+        }
+
+        .form-control {
+            padding: 10px;
+            font-size: 0.95rem;
+        }
+
+        .btn-primary {
+            padding: 12px;
+            font-size: 0.95rem;
+        }
+
+        .inner-box h3 {
+            font-size: 1.25rem;
+        }
+    }
+
+    @@media (max-width: 480px) {
+        .card .logo {
+            width: 120px;
+        }
+
+        .inner-box h3 {
+            font-size: 1.1rem;
+        }
+
+        .form-group label {
+            font-size: 0.9rem;
+        }
+
+        .form-control, .btn-primary {
+            font-size: 0.9rem;
+        }
+    }
+
+    /* Modal Styles */
+    .modal-backdrop {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0,0,0,0.6);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+    }
+
+    .modal-box {
+        background: white;
+        color: black;
+        padding: 1.5rem 2rem;
+        border-radius: 10px;
+        width: 300px;
+        text-align: center;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    }
+
+        .modal-box p {
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+    .btn-primary-modal {
+        background-color: #00c2ff;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        margin-right: 10px;
+        border-radius: 6px;
+        cursor: pointer;
+    }
+
+        .btn-primary-modal:hover {
+            background-color: #009edb;
+        }
+
+    .btn-secondary-modal {
+        background-color: #ccc;
+        color: black;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 6px;
+        cursor: pointer;
+    }
+
+        .btn-secondary-modal:hover {
+            background-color: #aaa;
+        }
+</style>
+
+<div class="main-container">
+    <div class="card">
+        <img src="images/login-logo_v01.png" alt="Day Ease Logo" class="logo" />
+
+        <div class="inner-box">
+            <h3>Enter Mobile Number</h3>
+
+            <div class="form-group">
+                <label for="mobile">Mobile Number:</label>
+                <input id="mobile"
+                       class="form-control @(HasValidationError ? "error" : "")"
+                       @bind="PhoneNumber"
+                       @oninput="LimitToTenDigits"
+                       placeholder="Enter mobile number"
+                       maxlength="10"
+                       inputmode="numeric"
+                       pattern="\d*" />
+
+                @if (HasValidationError && !string.IsNullOrEmpty(errorMessage))
+                {
+                    <div class="validation-error">@errorMessage</div>
+                }
+            </div>
+
+            <button class="btn-primary" @onclick="RegisterUser">Send OTP</button>
+
+            <div class="text-center mt-3">
+                <a href="/login" class="text-decoration-none">Already have an account? Login</a>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@if (ShowUserExistsModal)
+{
+    <div class="modal-backdrop">
+        <div class="modal-box">
+            <p>User already exists. Please login or use a different number.</p>
+            <button class="btn-primary-modal" @onclick="NavigateToLogin">Login</button>
+            <button class="btn-secondary-modal" @onclick="CloseModal">Cancel</button>
+        </div>
+    </div>
+}
+
+@code {
+    private string PhoneNumber = "";
+    private string CountryCode = "+91";
+    private string errorMessage = "";
+    private bool HasValidationError = false;
+
+    private bool ShowUserExistsModal = false;
+
+    private async Task RegisterUser()
+    {
+        HasValidationError = false;
+        errorMessage = "";
+
+        if (PhoneNumber.Length != 10 || !PhoneNumber.All(char.IsDigit))
+        {
+            errorMessage = "Mobile number must be exactly 10 digits.";
+            HasValidationError = true;
+            return;
+        }
+
+        try
+        {
+            var request = new RegistrationRequest
+                {
+                    PhoneNumber = PhoneNumber,
+                    CountryCode = CountryCode
+                };
+
+            var response = await RegistrationService.PostAsync<RegistrationRequest, string>(request);
+
+            if (!string.IsNullOrEmpty(response))
+            {
+                string jsonString = response.Trim('\"').Replace("\\\"", "\"");
+
+                var registrationResponse = JsonSerializer.Deserialize<RegistrationResponse>(jsonString);
+
+                if (registrationResponse != null)
+                {
+                    if (registrationResponse.StatusCode == 200)
+                    {
+                        await LocalStorage.SetItemAsync("PhoneNumber", PhoneNumber);
+                        Navigation.NavigateTo("/otp-verification");
+                    }
+                    else if (registrationResponse.StatusCode == 409)
+                    {
+                        // Show modal popup instead of alert
+                        ShowUserExistsModal = true;
+                    }
+                    else
+                    {
+                        await JS.InvokeVoidAsync("alert", registrationResponse.Message ?? "Unexpected response.");
+                    }
+                }
+                else
+                {
+                    await JS.InvokeVoidAsync("alert", "Could not parse response.");
+                }
+            }
+            else
+            {
+                await JS.InvokeVoidAsync("alert", "Failed to send OTP.");
+            }
+        }
+        catch (Exception ex)
+        {
+            await JS.InvokeVoidAsync("alert", $"Error: {ex.Message}");
+        }
+    }
+
+    private void LimitToTenDigits(ChangeEventArgs e)
+    {
+        string input = e.Value?.ToString() ?? "";
+        PhoneNumber = new string(input.Where(char.IsDigit).Take(10).ToArray());
+    }
+
+    private void NavigateToLogin()
+    {
+        ShowUserExistsModal = false;
+        Navigation.NavigateTo("/login");
+    }
+
+    private void CloseModal()
+    {
+        ShowUserExistsModal = false;
+        // Stay on the same page
+    }
+
+    public class RegistrationResponse
+    {
+        public int StatusCode { get; set; }
+        public string Message { get; set; }
+    }
+}
