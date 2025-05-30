@@ -1,129 +1,141 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserApp\\DayEaseUserApp\\",
+  "WorkspaceRootPath": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserAppLatest\\dayeaseuser\\DayEaseUserApp\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{1D0DAB53-98BD-410F-B0CC-93603F493FD5}|DayEaseServices\\DayEaseServices.csproj|c:\\users\\bharath reddy\\onedrive\\desktop\\project\\dayeaseuserapp\\dayeaseuserapp\\dayeaseservices\\services\\registrationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1D0DAB53-98BD-410F-B0CC-93603F493FD5}|DayEaseServices\\DayEaseServices.csproj|solutionrelative:dayeaseservices\\services\\registrationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{1D0DAB53-98BD-410F-B0CC-93603F493FD5}|DayEaseServices\\DayEaseServices.csproj|c:\\users\\bharath reddy\\onedrive\\desktop\\project\\dayeaseuserapplatest\\dayeaseuser\\dayeaseuserapp\\dayeaseservices\\services\\userloginservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1D0DAB53-98BD-410F-B0CC-93603F493FD5}|DayEaseServices\\DayEaseServices.csproj|solutionrelative:dayeaseservices\\services\\userloginservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4336988E-970C-477C-9EBB-438167CB3BC8}|DayEaseUserApp\\DayEaseUserApp.csproj|c:\\users\\bharath reddy\\onedrive\\desktop\\project\\dayeaseuserapp\\dayeaseuserapp\\dayeaseuserapp\\pages\\userdetails.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{4336988E-970C-477C-9EBB-438167CB3BC8}|DayEaseUserApp\\DayEaseUserApp.csproj|solutionrelative:dayeaseuserapp\\pages\\userdetails.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{1D0DAB53-98BD-410F-B0CC-93603F493FD5}|DayEaseServices\\DayEaseServices.csproj|c:\\users\\bharath reddy\\onedrive\\desktop\\project\\dayeaseuserapplatest\\dayeaseuser\\dayeaseuserapp\\dayeaseservices\\services\\iservices\\iuserloginservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1D0DAB53-98BD-410F-B0CC-93603F493FD5}|DayEaseServices\\DayEaseServices.csproj|solutionrelative:dayeaseservices\\services\\iservices\\iuserloginservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4336988E-970C-477C-9EBB-438167CB3BC8}|DayEaseUserApp\\DayEaseUserApp.csproj|c:\\users\\bharath reddy\\onedrive\\desktop\\project\\dayeaseuserapp\\dayeaseuserapp\\dayeaseuserapp\\pages\\mobilenumber.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{4336988E-970C-477C-9EBB-438167CB3BC8}|DayEaseUserApp\\DayEaseUserApp.csproj|solutionrelative:dayeaseuserapp\\pages\\mobilenumber.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{4336988E-970C-477C-9EBB-438167CB3BC8}|DayEaseUserApp\\DayEaseUserApp.csproj|c:\\users\\bharath reddy\\onedrive\\desktop\\project\\dayeaseuserapp\\dayeaseuserapp\\dayeaseuserapp\\layout\\mainlayout.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{4336988E-970C-477C-9EBB-438167CB3BC8}|DayEaseUserApp\\DayEaseUserApp.csproj|solutionrelative:dayeaseuserapp\\layout\\mainlayout.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{4336988E-970C-477C-9EBB-438167CB3BC8}|DayEaseUserApp\\DayEaseUserApp.csproj|c:\\users\\bharath reddy\\onedrive\\desktop\\project\\dayeaseuserapp\\dayeaseuserapp\\dayeaseuserapp\\app.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{4336988E-970C-477C-9EBB-438167CB3BC8}|DayEaseUserApp\\DayEaseUserApp.csproj|solutionrelative:dayeaseuserapp\\app.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{4336988E-970C-477C-9EBB-438167CB3BC8}|DayEaseUserApp\\DayEaseUserApp.csproj|c:\\users\\bharath reddy\\onedrive\\desktop\\project\\dayeaseuserapp\\dayeaseuserapp\\dayeaseuserapp\\pages\\weather.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{4336988E-970C-477C-9EBB-438167CB3BC8}|DayEaseUserApp\\DayEaseUserApp.csproj|solutionrelative:dayeaseuserapp\\pages\\weather.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{4336988E-970C-477C-9EBB-438167CB3BC8}|DayEaseUserApp\\DayEaseUserApp.csproj|c:\\users\\bharath reddy\\onedrive\\desktop\\project\\dayeaseuserapp\\dayeaseuserapp\\dayeaseuserapp\\pages\\otpverification.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{4336988E-970C-477C-9EBB-438167CB3BC8}|DayEaseUserApp\\DayEaseUserApp.csproj|solutionrelative:dayeaseuserapp\\pages\\otpverification.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{4336988E-970C-477C-9EBB-438167CB3BC8}|DayEaseUserApp\\DayEaseUserApp.csproj|c:\\users\\bharath reddy\\onedrive\\desktop\\project\\dayeaseuserapp\\dayeaseuserapp\\dayeaseuserapp\\pages\\home.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{4336988E-970C-477C-9EBB-438167CB3BC8}|DayEaseUserApp\\DayEaseUserApp.csproj|solutionrelative:dayeaseuserapp\\pages\\home.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{4336988E-970C-477C-9EBB-438167CB3BC8}|DayEaseUserApp\\DayEaseUserApp.csproj|c:\\users\\bharath reddy\\onedrive\\desktop\\project\\dayeaseuserapp\\dayeaseuserapp\\dayeaseuserapp\\pages\\counter.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{4336988E-970C-477C-9EBB-438167CB3BC8}|DayEaseUserApp\\DayEaseUserApp.csproj|solutionrelative:dayeaseuserapp\\pages\\counter.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{4336988E-970C-477C-9EBB-438167CB3BC8}|DayEaseUserApp\\DayEaseUserApp.csproj|c:\\users\\bharath reddy\\onedrive\\desktop\\project\\dayeaseuserapp\\dayeaseuserapp\\dayeaseuserapp\\layout\\navmenu.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{4336988E-970C-477C-9EBB-438167CB3BC8}|DayEaseUserApp\\DayEaseUserApp.csproj|solutionrelative:dayeaseuserapp\\layout\\navmenu.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{4336988E-970C-477C-9EBB-438167CB3BC8}|DayEaseUserApp\\DayEaseUserApp.csproj|c:\\users\\bharath reddy\\onedrive\\desktop\\project\\dayeaseuserapp\\dayeaseuserapp\\dayeaseuserapp\\wwwroot\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{4336988E-970C-477C-9EBB-438167CB3BC8}|DayEaseUserApp\\DayEaseUserApp.csproj|solutionrelative:dayeaseuserapp\\wwwroot\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1D0DAB53-98BD-410F-B0CC-93603F493FD5}|DayEaseServices\\DayEaseServices.csproj|c:\\users\\bharath reddy\\onedrive\\desktop\\project\\dayeaseuserapp\\dayeaseuserapp\\dayeaseservices\\services\\iservices\\iregistration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1D0DAB53-98BD-410F-B0CC-93603F493FD5}|DayEaseServices\\DayEaseServices.csproj|solutionrelative:dayeaseservices\\services\\iservices\\iregistration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{81914702-48F3-46B9-AD4A-DDBCE3DBAD7A}|Domain\\Domain.csproj|c:\\users\\bharath reddy\\onedrive\\desktop\\project\\dayeaseuserapp\\dayeaseuserapp\\domain\\requestmodels\\mobilenumberrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{81914702-48F3-46B9-AD4A-DDBCE3DBAD7A}|Domain\\Domain.csproj|solutionrelative:domain\\requestmodels\\mobilenumberrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{81914702-48F3-46B9-AD4A-DDBCE3DBAD7A}|Domain\\Domain.csproj|c:\\users\\bharath reddy\\onedrive\\desktop\\project\\dayeaseuserapp\\dayeaseuserapp\\domain\\requestmodels\\registrationrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{81914702-48F3-46B9-AD4A-DDBCE3DBAD7A}|Domain\\Domain.csproj|solutionrelative:domain\\requestmodels\\registrationrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{81914702-48F3-46B9-AD4A-DDBCE3DBAD7A}|Domain\\Domain.csproj|c:\\users\\bharath reddy\\onedrive\\desktop\\project\\dayeaseuserapp\\dayeaseuserapp\\domain\\requestmodels\\statemodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{81914702-48F3-46B9-AD4A-DDBCE3DBAD7A}|Domain\\Domain.csproj|solutionrelative:domain\\requestmodels\\statemodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{81914702-48F3-46B9-AD4A-DDBCE3DBAD7A}|Domain\\Domain.csproj|c:\\users\\bharath reddy\\onedrive\\desktop\\project\\dayeaseuserapp\\dayeaseuserapp\\domain\\requestmodels\\otpverificationrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{81914702-48F3-46B9-AD4A-DDBCE3DBAD7A}|Domain\\Domain.csproj|solutionrelative:domain\\requestmodels\\otpverificationrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{81914702-48F3-46B9-AD4A-DDBCE3DBAD7A}|Domain\\Domain.csproj|c:\\users\\bharath reddy\\onedrive\\desktop\\project\\dayeaseuserapp\\dayeaseuserapp\\domain\\requestmodels\\usermodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{81914702-48F3-46B9-AD4A-DDBCE3DBAD7A}|Domain\\Domain.csproj|solutionrelative:domain\\requestmodels\\usermodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{81914702-48F3-46B9-AD4A-DDBCE3DBAD7A}|Domain\\Domain.csproj|c:\\users\\bharath reddy\\onedrive\\desktop\\project\\dayeaseuserapp\\dayeaseuserapp\\domain\\domainmodels\\apidetails.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{81914702-48F3-46B9-AD4A-DDBCE3DBAD7A}|Domain\\Domain.csproj|solutionrelative:domain\\domainmodels\\apidetails.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{4336988E-970C-477C-9EBB-438167CB3BC8}|DayEaseUserApp\\DayEaseUserApp.csproj|c:\\users\\bharath reddy\\onedrive\\desktop\\project\\dayeaseuserapp\\dayeaseuserapp\\dayeaseuserapp\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4336988E-970C-477C-9EBB-438167CB3BC8}|DayEaseUserApp\\DayEaseUserApp.csproj|solutionrelative:dayeaseuserapp\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{4336988E-970C-477C-9EBB-438167CB3BC8}|DayEaseUserApp\\DayEaseUserApp.csproj|c:\\users\\bharath reddy\\onedrive\\desktop\\project\\dayeaseuserapp\\dayeaseuserapp\\dayeaseuserapp\\pages\\register.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{4336988E-970C-477C-9EBB-438167CB3BC8}|DayEaseUserApp\\DayEaseUserApp.csproj|solutionrelative:dayeaseuserapp\\pages\\register.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{81914702-48F3-46B9-AD4A-DDBCE3DBAD7A}|Domain\\Domain.csproj|c:\\users\\bharath reddy\\onedrive\\desktop\\project\\dayeaseuserapp\\dayeaseuserapp\\domain\\utilities\\iutilities\\iapiservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{81914702-48F3-46B9-AD4A-DDBCE3DBAD7A}|Domain\\Domain.csproj|solutionrelative:domain\\utilities\\iutilities\\iapiservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{81914702-48F3-46B9-AD4A-DDBCE3DBAD7A}|Domain\\Domain.csproj|c:\\users\\bharath reddy\\onedrive\\desktop\\project\\dayeaseuserapp\\dayeaseuserapp\\domain\\requestmodels\\registrationstate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{81914702-48F3-46B9-AD4A-DDBCE3DBAD7A}|Domain\\Domain.csproj|solutionrelative:domain\\requestmodels\\registrationstate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{81914702-48F3-46B9-AD4A-DDBCE3DBAD7A}|Domain\\Domain.csproj|c:\\users\\bharath reddy\\onedrive\\desktop\\project\\dayeaseuserapp\\dayeaseuserapp\\domain\\requestmodels\\areamodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{81914702-48F3-46B9-AD4A-DDBCE3DBAD7A}|Domain\\Domain.csproj|solutionrelative:domain\\requestmodels\\areamodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{81914702-48F3-46B9-AD4A-DDBCE3DBAD7A}|Domain\\Domain.csproj|c:\\users\\bharath reddy\\onedrive\\desktop\\project\\dayeaseuserapp\\dayeaseuserapp\\domain\\requestmodels\\citymodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{81914702-48F3-46B9-AD4A-DDBCE3DBAD7A}|Domain\\Domain.csproj|solutionrelative:domain\\requestmodels\\citymodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{81914702-48F3-46B9-AD4A-DDBCE3DBAD7A}|Domain\\Domain.csproj|c:\\users\\bharath reddy\\onedrive\\desktop\\project\\dayeaseuserapp\\dayeaseuserapp\\domain\\utilities\\apiservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{81914702-48F3-46B9-AD4A-DDBCE3DBAD7A}|Domain\\Domain.csproj|c:\\users\\bharath reddy\\onedrive\\desktop\\project\\dayeaseuserapplatest\\dayeaseuser\\dayeaseuserapp\\domain\\utilities\\apiservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{81914702-48F3-46B9-AD4A-DDBCE3DBAD7A}|Domain\\Domain.csproj|solutionrelative:domain\\utilities\\apiservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{81914702-48F3-46B9-AD4A-DDBCE3DBAD7A}|Domain\\Domain.csproj|c:\\users\\bharath reddy\\onedrive\\desktop\\project\\dayeaseuserapp\\dayeaseuserapp\\domain\\requestmodels\\subareamodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{81914702-48F3-46B9-AD4A-DDBCE3DBAD7A}|Domain\\Domain.csproj|c:\\users\\bharath reddy\\onedrive\\desktop\\project\\dayeaseuserapplatest\\dayeaseuser\\dayeaseuserapp\\domain\\utilities\\iutilities\\iapiservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{81914702-48F3-46B9-AD4A-DDBCE3DBAD7A}|Domain\\Domain.csproj|solutionrelative:domain\\utilities\\iutilities\\iapiservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4336988E-970C-477C-9EBB-438167CB3BC8}|DayEaseUserApp\\DayEaseUserApp.csproj|c:\\users\\bharath reddy\\onedrive\\desktop\\project\\dayeaseuserapplatest\\dayeaseuser\\dayeaseuserapp\\dayeaseuserapp\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4336988E-970C-477C-9EBB-438167CB3BC8}|DayEaseUserApp\\DayEaseUserApp.csproj|solutionrelative:dayeaseuserapp\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4336988E-970C-477C-9EBB-438167CB3BC8}|DayEaseUserApp\\DayEaseUserApp.csproj|c:\\users\\bharath reddy\\onedrive\\desktop\\project\\dayeaseuserapplatest\\dayeaseuser\\dayeaseuserapp\\dayeaseuserapp\\pages\\login.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{4336988E-970C-477C-9EBB-438167CB3BC8}|DayEaseUserApp\\DayEaseUserApp.csproj|solutionrelative:dayeaseuserapp\\pages\\login.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4336988E-970C-477C-9EBB-438167CB3BC8}|DayEaseUserApp\\DayEaseUserApp.csproj|c:\\users\\bharath reddy\\onedrive\\desktop\\project\\dayeaseuserapplatest\\dayeaseuser\\dayeaseuserapp\\dayeaseuserapp\\pages\\mobilenumber.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{4336988E-970C-477C-9EBB-438167CB3BC8}|DayEaseUserApp\\DayEaseUserApp.csproj|solutionrelative:dayeaseuserapp\\pages\\mobilenumber.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1D0DAB53-98BD-410F-B0CC-93603F493FD5}|DayEaseServices\\DayEaseServices.csproj|c:\\users\\bharath reddy\\onedrive\\desktop\\project\\dayeaseuserapplatest\\dayeaseuser\\dayeaseuserapp\\dayeaseservices\\services\\registrationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1D0DAB53-98BD-410F-B0CC-93603F493FD5}|DayEaseServices\\DayEaseServices.csproj|solutionrelative:dayeaseservices\\services\\registrationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4336988E-970C-477C-9EBB-438167CB3BC8}|DayEaseUserApp\\DayEaseUserApp.csproj|c:\\users\\bharath reddy\\onedrive\\desktop\\project\\dayeaseuserapplatest\\dayeaseuser\\dayeaseuserapp\\dayeaseuserapp\\pages\\userdetails.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{4336988E-970C-477C-9EBB-438167CB3BC8}|DayEaseUserApp\\DayEaseUserApp.csproj|solutionrelative:dayeaseuserapp\\pages\\userdetails.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4336988E-970C-477C-9EBB-438167CB3BC8}|DayEaseUserApp\\DayEaseUserApp.csproj|c:\\users\\bharath reddy\\onedrive\\desktop\\project\\dayeaseuserapplatest\\dayeaseuser\\dayeaseuserapp\\dayeaseuserapp\\layout\\mainlayout.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{4336988E-970C-477C-9EBB-438167CB3BC8}|DayEaseUserApp\\DayEaseUserApp.csproj|solutionrelative:dayeaseuserapp\\layout\\mainlayout.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4336988E-970C-477C-9EBB-438167CB3BC8}|DayEaseUserApp\\DayEaseUserApp.csproj|c:\\users\\bharath reddy\\onedrive\\desktop\\project\\dayeaseuserapplatest\\dayeaseuser\\dayeaseuserapp\\dayeaseuserapp\\app.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{4336988E-970C-477C-9EBB-438167CB3BC8}|DayEaseUserApp\\DayEaseUserApp.csproj|solutionrelative:dayeaseuserapp\\app.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4336988E-970C-477C-9EBB-438167CB3BC8}|DayEaseUserApp\\DayEaseUserApp.csproj|c:\\users\\bharath reddy\\onedrive\\desktop\\project\\dayeaseuserapplatest\\dayeaseuser\\dayeaseuserapp\\dayeaseuserapp\\pages\\weather.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{4336988E-970C-477C-9EBB-438167CB3BC8}|DayEaseUserApp\\DayEaseUserApp.csproj|solutionrelative:dayeaseuserapp\\pages\\weather.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4336988E-970C-477C-9EBB-438167CB3BC8}|DayEaseUserApp\\DayEaseUserApp.csproj|c:\\users\\bharath reddy\\onedrive\\desktop\\project\\dayeaseuserapplatest\\dayeaseuser\\dayeaseuserapp\\dayeaseuserapp\\pages\\otpverification.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{4336988E-970C-477C-9EBB-438167CB3BC8}|DayEaseUserApp\\DayEaseUserApp.csproj|solutionrelative:dayeaseuserapp\\pages\\otpverification.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4336988E-970C-477C-9EBB-438167CB3BC8}|DayEaseUserApp\\DayEaseUserApp.csproj|c:\\users\\bharath reddy\\onedrive\\desktop\\project\\dayeaseuserapplatest\\dayeaseuser\\dayeaseuserapp\\dayeaseuserapp\\pages\\home.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{4336988E-970C-477C-9EBB-438167CB3BC8}|DayEaseUserApp\\DayEaseUserApp.csproj|solutionrelative:dayeaseuserapp\\pages\\home.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4336988E-970C-477C-9EBB-438167CB3BC8}|DayEaseUserApp\\DayEaseUserApp.csproj|c:\\users\\bharath reddy\\onedrive\\desktop\\project\\dayeaseuserapplatest\\dayeaseuser\\dayeaseuserapp\\dayeaseuserapp\\pages\\counter.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{4336988E-970C-477C-9EBB-438167CB3BC8}|DayEaseUserApp\\DayEaseUserApp.csproj|solutionrelative:dayeaseuserapp\\pages\\counter.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4336988E-970C-477C-9EBB-438167CB3BC8}|DayEaseUserApp\\DayEaseUserApp.csproj|c:\\users\\bharath reddy\\onedrive\\desktop\\project\\dayeaseuserapplatest\\dayeaseuser\\dayeaseuserapp\\dayeaseuserapp\\layout\\navmenu.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{4336988E-970C-477C-9EBB-438167CB3BC8}|DayEaseUserApp\\DayEaseUserApp.csproj|solutionrelative:dayeaseuserapp\\layout\\navmenu.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4336988E-970C-477C-9EBB-438167CB3BC8}|DayEaseUserApp\\DayEaseUserApp.csproj|c:\\users\\bharath reddy\\onedrive\\desktop\\project\\dayeaseuserapplatest\\dayeaseuser\\dayeaseuserapp\\dayeaseuserapp\\wwwroot\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{4336988E-970C-477C-9EBB-438167CB3BC8}|DayEaseUserApp\\DayEaseUserApp.csproj|solutionrelative:dayeaseuserapp\\wwwroot\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1D0DAB53-98BD-410F-B0CC-93603F493FD5}|DayEaseServices\\DayEaseServices.csproj|c:\\users\\bharath reddy\\onedrive\\desktop\\project\\dayeaseuserapplatest\\dayeaseuser\\dayeaseuserapp\\dayeaseservices\\services\\iservices\\iregistration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1D0DAB53-98BD-410F-B0CC-93603F493FD5}|DayEaseServices\\DayEaseServices.csproj|solutionrelative:dayeaseservices\\services\\iservices\\iregistration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{81914702-48F3-46B9-AD4A-DDBCE3DBAD7A}|Domain\\Domain.csproj|c:\\users\\bharath reddy\\onedrive\\desktop\\project\\dayeaseuserapplatest\\dayeaseuser\\dayeaseuserapp\\domain\\requestmodels\\mobilenumberrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{81914702-48F3-46B9-AD4A-DDBCE3DBAD7A}|Domain\\Domain.csproj|solutionrelative:domain\\requestmodels\\mobilenumberrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{81914702-48F3-46B9-AD4A-DDBCE3DBAD7A}|Domain\\Domain.csproj|c:\\users\\bharath reddy\\onedrive\\desktop\\project\\dayeaseuserapplatest\\dayeaseuser\\dayeaseuserapp\\domain\\requestmodels\\registrationrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{81914702-48F3-46B9-AD4A-DDBCE3DBAD7A}|Domain\\Domain.csproj|solutionrelative:domain\\requestmodels\\registrationrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{81914702-48F3-46B9-AD4A-DDBCE3DBAD7A}|Domain\\Domain.csproj|c:\\users\\bharath reddy\\onedrive\\desktop\\project\\dayeaseuserapplatest\\dayeaseuser\\dayeaseuserapp\\domain\\requestmodels\\statemodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{81914702-48F3-46B9-AD4A-DDBCE3DBAD7A}|Domain\\Domain.csproj|solutionrelative:domain\\requestmodels\\statemodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{81914702-48F3-46B9-AD4A-DDBCE3DBAD7A}|Domain\\Domain.csproj|c:\\users\\bharath reddy\\onedrive\\desktop\\project\\dayeaseuserapplatest\\dayeaseuser\\dayeaseuserapp\\domain\\requestmodels\\otpverificationrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{81914702-48F3-46B9-AD4A-DDBCE3DBAD7A}|Domain\\Domain.csproj|solutionrelative:domain\\requestmodels\\otpverificationrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{81914702-48F3-46B9-AD4A-DDBCE3DBAD7A}|Domain\\Domain.csproj|c:\\users\\bharath reddy\\onedrive\\desktop\\project\\dayeaseuserapplatest\\dayeaseuser\\dayeaseuserapp\\domain\\requestmodels\\usermodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{81914702-48F3-46B9-AD4A-DDBCE3DBAD7A}|Domain\\Domain.csproj|solutionrelative:domain\\requestmodels\\usermodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{81914702-48F3-46B9-AD4A-DDBCE3DBAD7A}|Domain\\Domain.csproj|c:\\users\\bharath reddy\\onedrive\\desktop\\project\\dayeaseuserapplatest\\dayeaseuser\\dayeaseuserapp\\domain\\domainmodels\\apidetails.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{81914702-48F3-46B9-AD4A-DDBCE3DBAD7A}|Domain\\Domain.csproj|solutionrelative:domain\\domainmodels\\apidetails.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4336988E-970C-477C-9EBB-438167CB3BC8}|DayEaseUserApp\\DayEaseUserApp.csproj|c:\\users\\bharath reddy\\onedrive\\desktop\\project\\dayeaseuserapplatest\\dayeaseuser\\dayeaseuserapp\\dayeaseuserapp\\pages\\register.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{4336988E-970C-477C-9EBB-438167CB3BC8}|DayEaseUserApp\\DayEaseUserApp.csproj|solutionrelative:dayeaseuserapp\\pages\\register.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{81914702-48F3-46B9-AD4A-DDBCE3DBAD7A}|Domain\\Domain.csproj|c:\\users\\bharath reddy\\onedrive\\desktop\\project\\dayeaseuserapplatest\\dayeaseuser\\dayeaseuserapp\\domain\\requestmodels\\registrationstate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{81914702-48F3-46B9-AD4A-DDBCE3DBAD7A}|Domain\\Domain.csproj|solutionrelative:domain\\requestmodels\\registrationstate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{81914702-48F3-46B9-AD4A-DDBCE3DBAD7A}|Domain\\Domain.csproj|c:\\users\\bharath reddy\\onedrive\\desktop\\project\\dayeaseuserapplatest\\dayeaseuser\\dayeaseuserapp\\domain\\requestmodels\\areamodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{81914702-48F3-46B9-AD4A-DDBCE3DBAD7A}|Domain\\Domain.csproj|solutionrelative:domain\\requestmodels\\areamodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{81914702-48F3-46B9-AD4A-DDBCE3DBAD7A}|Domain\\Domain.csproj|c:\\users\\bharath reddy\\onedrive\\desktop\\project\\dayeaseuserapplatest\\dayeaseuser\\dayeaseuserapp\\domain\\requestmodels\\citymodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{81914702-48F3-46B9-AD4A-DDBCE3DBAD7A}|Domain\\Domain.csproj|solutionrelative:domain\\requestmodels\\citymodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{81914702-48F3-46B9-AD4A-DDBCE3DBAD7A}|Domain\\Domain.csproj|c:\\users\\bharath reddy\\onedrive\\desktop\\project\\dayeaseuserapplatest\\dayeaseuser\\dayeaseuserapp\\domain\\requestmodels\\subareamodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{81914702-48F3-46B9-AD4A-DDBCE3DBAD7A}|Domain\\Domain.csproj|solutionrelative:domain\\requestmodels\\subareamodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4336988E-970C-477C-9EBB-438167CB3BC8}|DayEaseUserApp\\DayEaseUserApp.csproj|c:\\users\\bharath reddy\\onedrive\\desktop\\project\\dayeaseuserapp\\dayeaseuserapp\\dayeaseuserapp\\wwwroot\\index.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "AbsoluteMoniker": "D:0:0:{4336988E-970C-477C-9EBB-438167CB3BC8}|DayEaseUserApp\\DayEaseUserApp.csproj|c:\\users\\bharath reddy\\onedrive\\desktop\\project\\dayeaseuserapplatest\\dayeaseuser\\dayeaseuserapp\\dayeaseuserapp\\wwwroot\\index.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{4336988E-970C-477C-9EBB-438167CB3BC8}|DayEaseUserApp\\DayEaseUserApp.csproj|solutionrelative:dayeaseuserapp\\wwwroot\\index.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{81914702-48F3-46B9-AD4A-DDBCE3DBAD7A}|Domain\\Domain.csproj|c:\\users\\bharath reddy\\onedrive\\desktop\\project\\dayeaseuserapp\\dayeaseuserapp\\domain\\requestmodels\\apisettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{81914702-48F3-46B9-AD4A-DDBCE3DBAD7A}|Domain\\Domain.csproj|c:\\users\\bharath reddy\\onedrive\\desktop\\project\\dayeaseuserapplatest\\dayeaseuser\\dayeaseuserapp\\domain\\requestmodels\\apisettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{81914702-48F3-46B9-AD4A-DDBCE3DBAD7A}|Domain\\Domain.csproj|solutionrelative:domain\\requestmodels\\apisettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{81914702-48F3-46B9-AD4A-DDBCE3DBAD7A}|Domain\\Domain.csproj|c:\\users\\bharath reddy\\onedrive\\desktop\\project\\dayeaseuserapp\\dayeaseuserapp\\domain\\domainmodels\\jwttokenresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{81914702-48F3-46B9-AD4A-DDBCE3DBAD7A}|Domain\\Domain.csproj|c:\\users\\bharath reddy\\onedrive\\desktop\\project\\dayeaseuserapplatest\\dayeaseuser\\dayeaseuserapp\\domain\\domainmodels\\jwttokenresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{81914702-48F3-46B9-AD4A-DDBCE3DBAD7A}|Domain\\Domain.csproj|solutionrelative:domain\\domainmodels\\jwttokenresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{81914702-48F3-46B9-AD4A-DDBCE3DBAD7A}|Domain\\Domain.csproj|c:\\users\\bharath reddy\\onedrive\\desktop\\project\\dayeaseuserapp\\dayeaseuserapp\\domain\\requestmodels\\storeregistrationrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{81914702-48F3-46B9-AD4A-DDBCE3DBAD7A}|Domain\\Domain.csproj|c:\\users\\bharath reddy\\onedrive\\desktop\\project\\dayeaseuserapplatest\\dayeaseuser\\dayeaseuserapp\\domain\\requestmodels\\storeregistrationrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{81914702-48F3-46B9-AD4A-DDBCE3DBAD7A}|Domain\\Domain.csproj|solutionrelative:domain\\requestmodels\\storeregistrationrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4336988E-970C-477C-9EBB-438167CB3BC8}|DayEaseUserApp\\DayEaseUserApp.csproj|c:\\users\\bharath reddy\\onedrive\\desktop\\project\\dayeaseuserapp\\dayeaseuserapp\\dayeaseuserapp\\wwwroot\\css\\bootstrap\\custom.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "AbsoluteMoniker": "D:0:0:{4336988E-970C-477C-9EBB-438167CB3BC8}|DayEaseUserApp\\DayEaseUserApp.csproj|c:\\users\\bharath reddy\\onedrive\\desktop\\project\\dayeaseuserapplatest\\dayeaseuser\\dayeaseuserapp\\dayeaseuserapp\\wwwroot\\css\\bootstrap\\custom.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
       "RelativeMoniker": "D:0:0:{4336988E-970C-477C-9EBB-438167CB3BC8}|DayEaseUserApp\\DayEaseUserApp.csproj|solutionrelative:dayeaseuserapp\\wwwroot\\css\\bootstrap\\custom.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
     },
     {
@@ -137,15 +149,15 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 15,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 8,
               "Title": "UserDetails.razor",
-              "DocumentMoniker": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserApp\\DayEaseUserApp\\DayEaseUserApp\\Pages\\UserDetails.razor",
+              "DocumentMoniker": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserAppLatest\\dayeaseuser\\DayEaseUserApp\\DayEaseUserApp\\Pages\\UserDetails.razor",
               "RelativeDocumentMoniker": "DayEaseUserApp\\Pages\\UserDetails.razor",
-              "ToolTip": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserApp\\DayEaseUserApp\\DayEaseUserApp\\Pages\\UserDetails.razor",
+              "ToolTip": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserAppLatest\\dayeaseuser\\DayEaseUserApp\\DayEaseUserApp\\Pages\\UserDetails.razor",
               "RelativeToolTip": "DayEaseUserApp\\Pages\\UserDetails.razor",
               "ViewState": "AgIAAOYAAAAAAAAAAAAIwPQAAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
@@ -155,29 +167,70 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 27,
               "Title": "CityModel.cs",
-              "DocumentMoniker": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserApp\\DayEaseUserApp\\Domain\\RequestModels\\CityModel.cs",
+              "DocumentMoniker": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserAppLatest\\dayeaseuser\\DayEaseUserApp\\Domain\\RequestModels\\CityModel.cs",
               "RelativeDocumentMoniker": "Domain\\RequestModels\\CityModel.cs",
-              "ToolTip": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserApp\\DayEaseUserApp\\Domain\\RequestModels\\CityModel.cs",
+              "ToolTip": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserAppLatest\\dayeaseuser\\DayEaseUserApp\\Domain\\RequestModels\\CityModel.cs",
               "RelativeToolTip": "Domain\\RequestModels\\CityModel.cs",
-              "ViewState": "AgIAAA0AAAAAAAAAAAA6wA0AAAAhAAAAAAAAAA==",
+              "ViewState": "AgIAAA4AAAAAAAAAAAA4wA0AAAAhAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-23T09:54:13.056Z",
-              "IsPinned": true
+              "IsPinned": true,
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 26,
               "Title": "AreaModel.cs",
-              "DocumentMoniker": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserApp\\DayEaseUserApp\\Domain\\RequestModels\\AreaModel.cs",
+              "DocumentMoniker": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserAppLatest\\dayeaseuser\\DayEaseUserApp\\Domain\\RequestModels\\AreaModel.cs",
               "RelativeDocumentMoniker": "Domain\\RequestModels\\AreaModel.cs",
-              "ToolTip": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserApp\\DayEaseUserApp\\Domain\\RequestModels\\AreaModel.cs",
+              "ToolTip": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserAppLatest\\dayeaseuser\\DayEaseUserApp\\Domain\\RequestModels\\AreaModel.cs",
               "RelativeToolTip": "Domain\\RequestModels\\AreaModel.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAqAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-24T07:15:48.993Z",
-              "IsPinned": true
+              "IsPinned": true,
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "UserLoginService.cs",
+              "DocumentMoniker": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserAppLatest\\dayeaseuser\\DayEaseUserApp\\DayEaseServices\\Services\\UserLoginService.cs",
+              "RelativeDocumentMoniker": "DayEaseServices\\Services\\UserLoginService.cs",
+              "ToolTip": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserAppLatest\\dayeaseuser\\DayEaseUserApp\\DayEaseServices\\Services\\UserLoginService.cs",
+              "RelativeToolTip": "DayEaseServices\\Services\\UserLoginService.cs",
+              "ViewState": "AgIAABYAAAAAAAAAAAAAACEAAAAmAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-30T12:43:38.602Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "IUserLoginService.cs",
+              "DocumentMoniker": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserAppLatest\\dayeaseuser\\DayEaseUserApp\\DayEaseServices\\Services\\IServices\\IUserLoginService.cs",
+              "RelativeDocumentMoniker": "DayEaseServices\\Services\\IServices\\IUserLoginService.cs",
+              "ToolTip": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserAppLatest\\dayeaseuser\\DayEaseUserApp\\DayEaseServices\\Services\\IServices\\IUserLoginService.cs*",
+              "RelativeToolTip": "DayEaseServices\\Services\\IServices\\IUserLoginService.cs*",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAABEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-30T12:43:34.419Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Login.razor",
+              "DocumentMoniker": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserAppLatest\\dayeaseuser\\DayEaseUserApp\\DayEaseUserApp\\Pages\\Login.razor",
+              "RelativeDocumentMoniker": "DayEaseUserApp\\Pages\\Login.razor",
+              "ToolTip": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserAppLatest\\dayeaseuser\\DayEaseUserApp\\DayEaseUserApp\\Pages\\Login.razor",
+              "RelativeToolTip": "DayEaseUserApp\\Pages\\Login.razor",
+              "ViewState": "AgIAAI4AAAAAAAAAAAAAAAIAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-05-30T12:42:33.757Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Bookmark",
@@ -185,11 +238,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 10,
               "Title": "App.razor",
-              "DocumentMoniker": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserApp\\DayEaseUserApp\\DayEaseUserApp\\App.razor",
+              "DocumentMoniker": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserAppLatest\\dayeaseuser\\DayEaseUserApp\\DayEaseUserApp\\App.razor",
               "RelativeDocumentMoniker": "DayEaseUserApp\\App.razor",
-              "ToolTip": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserApp\\DayEaseUserApp\\DayEaseUserApp\\App.razor",
+              "ToolTip": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserAppLatest\\dayeaseuser\\DayEaseUserApp\\DayEaseUserApp\\App.razor",
               "RelativeToolTip": "DayEaseUserApp\\App.razor",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
@@ -198,11 +251,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 11,
               "Title": "Weather.razor",
-              "DocumentMoniker": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserApp\\DayEaseUserApp\\DayEaseUserApp\\Pages\\Weather.razor",
+              "DocumentMoniker": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserAppLatest\\dayeaseuser\\DayEaseUserApp\\DayEaseUserApp\\Pages\\Weather.razor",
               "RelativeDocumentMoniker": "DayEaseUserApp\\Pages\\Weather.razor",
-              "ToolTip": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserApp\\DayEaseUserApp\\DayEaseUserApp\\Pages\\Weather.razor",
+              "ToolTip": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserAppLatest\\dayeaseuser\\DayEaseUserApp\\DayEaseUserApp\\Pages\\Weather.razor",
               "RelativeToolTip": "DayEaseUserApp\\Pages\\Weather.razor",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
@@ -211,11 +264,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 15,
               "Title": "NavMenu.razor",
-              "DocumentMoniker": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserApp\\DayEaseUserApp\\DayEaseUserApp\\Layout\\NavMenu.razor",
+              "DocumentMoniker": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserAppLatest\\dayeaseuser\\DayEaseUserApp\\DayEaseUserApp\\Layout\\NavMenu.razor",
               "RelativeDocumentMoniker": "DayEaseUserApp\\Layout\\NavMenu.razor",
-              "ToolTip": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserApp\\DayEaseUserApp\\DayEaseUserApp\\Layout\\NavMenu.razor",
+              "ToolTip": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserAppLatest\\dayeaseuser\\DayEaseUserApp\\DayEaseUserApp\\Layout\\NavMenu.razor",
               "RelativeToolTip": "DayEaseUserApp\\Layout\\NavMenu.razor",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
@@ -224,11 +277,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 14,
               "Title": "Counter.razor",
-              "DocumentMoniker": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserApp\\DayEaseUserApp\\DayEaseUserApp\\Pages\\Counter.razor",
+              "DocumentMoniker": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserAppLatest\\dayeaseuser\\DayEaseUserApp\\DayEaseUserApp\\Pages\\Counter.razor",
               "RelativeDocumentMoniker": "DayEaseUserApp\\Pages\\Counter.razor",
-              "ToolTip": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserApp\\DayEaseUserApp\\DayEaseUserApp\\Pages\\Counter.razor",
+              "ToolTip": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserAppLatest\\dayeaseuser\\DayEaseUserApp\\DayEaseUserApp\\Pages\\Counter.razor",
               "RelativeToolTip": "DayEaseUserApp\\Pages\\Counter.razor",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
@@ -237,11 +290,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 13,
               "Title": "Home.razor",
-              "DocumentMoniker": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserApp\\DayEaseUserApp\\DayEaseUserApp\\Pages\\Home.razor",
+              "DocumentMoniker": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserAppLatest\\dayeaseuser\\DayEaseUserApp\\DayEaseUserApp\\Pages\\Home.razor",
               "RelativeDocumentMoniker": "DayEaseUserApp\\Pages\\Home.razor",
-              "ToolTip": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserApp\\DayEaseUserApp\\DayEaseUserApp\\Pages\\Home.razor",
+              "ToolTip": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserAppLatest\\dayeaseuser\\DayEaseUserApp\\DayEaseUserApp\\Pages\\Home.razor",
               "RelativeToolTip": "DayEaseUserApp\\Pages\\Home.razor",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
@@ -250,11 +303,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 9,
               "Title": "MainLayout.razor",
-              "DocumentMoniker": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserApp\\DayEaseUserApp\\DayEaseUserApp\\Layout\\MainLayout.razor",
+              "DocumentMoniker": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserAppLatest\\dayeaseuser\\DayEaseUserApp\\DayEaseUserApp\\Layout\\MainLayout.razor",
               "RelativeDocumentMoniker": "DayEaseUserApp\\Layout\\MainLayout.razor",
-              "ToolTip": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserApp\\DayEaseUserApp\\DayEaseUserApp\\Layout\\MainLayout.razor",
+              "ToolTip": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserAppLatest\\dayeaseuser\\DayEaseUserApp\\DayEaseUserApp\\Layout\\MainLayout.razor",
               "RelativeToolTip": "DayEaseUserApp\\Layout\\MainLayout.razor",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
@@ -263,37 +316,37 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 17,
               "Title": "IRegistration.cs",
-              "DocumentMoniker": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserApp\\DayEaseUserApp\\DayEaseServices\\Services\\IServices\\IRegistration.cs",
+              "DocumentMoniker": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserAppLatest\\dayeaseuser\\DayEaseUserApp\\DayEaseServices\\Services\\IServices\\IRegistration.cs",
               "RelativeDocumentMoniker": "DayEaseServices\\Services\\IServices\\IRegistration.cs",
-              "ToolTip": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserApp\\DayEaseUserApp\\DayEaseServices\\Services\\IServices\\IRegistration.cs",
+              "ToolTip": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserAppLatest\\dayeaseuser\\DayEaseUserApp\\DayEaseServices\\Services\\IServices\\IRegistration.cs",
               "RelativeToolTip": "DayEaseServices\\Services\\IServices\\IRegistration.cs",
-              "ViewState": "AgIAAAEAAAAAAAAAAAAAAA4AAABLAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAxwA4AAABLAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-27T12:33:52.137Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 19,
               "Title": "RegistrationRequest.cs",
-              "DocumentMoniker": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserApp\\DayEaseUserApp\\Domain\\RequestModels\\RegistrationRequest.cs",
+              "DocumentMoniker": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserAppLatest\\dayeaseuser\\DayEaseUserApp\\Domain\\RequestModels\\RegistrationRequest.cs",
               "RelativeDocumentMoniker": "Domain\\RequestModels\\RegistrationRequest.cs",
-              "ToolTip": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserApp\\DayEaseUserApp\\Domain\\RequestModels\\RegistrationRequest.cs",
+              "ToolTip": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserAppLatest\\dayeaseuser\\DayEaseUserApp\\Domain\\RequestModels\\RegistrationRequest.cs",
               "RelativeToolTip": "Domain\\RequestModels\\RegistrationRequest.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAABYAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAMAAAAAAAAAAIBJwBYAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-27T10:47:44.828Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 12,
               "Title": "OtpVerification.razor",
-              "DocumentMoniker": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserApp\\DayEaseUserApp\\DayEaseUserApp\\Pages\\OtpVerification.razor",
+              "DocumentMoniker": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserAppLatest\\dayeaseuser\\DayEaseUserApp\\DayEaseUserApp\\Pages\\OtpVerification.razor",
               "RelativeDocumentMoniker": "DayEaseUserApp\\Pages\\OtpVerification.razor",
-              "ToolTip": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserApp\\DayEaseUserApp\\DayEaseUserApp\\Pages\\OtpVerification.razor",
+              "ToolTip": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserAppLatest\\dayeaseuser\\DayEaseUserApp\\DayEaseUserApp\\Pages\\OtpVerification.razor",
               "RelativeToolTip": "DayEaseUserApp\\Pages\\OtpVerification.razor",
               "ViewState": "AgIAALEAAAAAAAAAAAAjwMAAAAAmAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
@@ -302,98 +355,102 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 25,
               "Title": "RegistrationState.cs",
-              "DocumentMoniker": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserApp\\DayEaseUserApp\\Domain\\RequestModels\\RegistrationState.cs",
+              "DocumentMoniker": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserAppLatest\\dayeaseuser\\DayEaseUserApp\\Domain\\RequestModels\\RegistrationState.cs",
               "RelativeDocumentMoniker": "Domain\\RequestModels\\RegistrationState.cs",
-              "ToolTip": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserApp\\DayEaseUserApp\\Domain\\RequestModels\\RegistrationState.cs",
+              "ToolTip": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserAppLatest\\dayeaseuser\\DayEaseUserApp\\Domain\\RequestModels\\RegistrationState.cs",
               "RelativeToolTip": "Domain\\RequestModels\\RegistrationState.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-26T06:44:37.142Z"
+              "WhenOpened": "2025-05-26T06:44:37.142Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 25,
+              "DocumentIndex": 28,
               "Title": "SubAreaModel.cs",
-              "DocumentMoniker": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserApp\\DayEaseUserApp\\Domain\\RequestModels\\SubAreaModel.cs",
+              "DocumentMoniker": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserAppLatest\\dayeaseuser\\DayEaseUserApp\\Domain\\RequestModels\\SubAreaModel.cs",
               "RelativeDocumentMoniker": "Domain\\RequestModels\\SubAreaModel.cs",
-              "ToolTip": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserApp\\DayEaseUserApp\\Domain\\RequestModels\\SubAreaModel.cs",
+              "ToolTip": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserAppLatest\\dayeaseuser\\DayEaseUserApp\\Domain\\RequestModels\\SubAreaModel.cs",
               "RelativeToolTip": "Domain\\RequestModels\\SubAreaModel.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAZAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-24T08:11:06.755Z"
+              "WhenOpened": "2025-05-24T08:11:06.755Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 7,
               "Title": "RegistrationService.cs",
-              "DocumentMoniker": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserApp\\DayEaseUserApp\\DayEaseServices\\Services\\RegistrationService.cs",
+              "DocumentMoniker": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserAppLatest\\dayeaseuser\\DayEaseUserApp\\DayEaseServices\\Services\\RegistrationService.cs",
               "RelativeDocumentMoniker": "DayEaseServices\\Services\\RegistrationService.cs",
-              "ToolTip": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserApp\\DayEaseUserApp\\DayEaseServices\\Services\\RegistrationService.cs",
+              "ToolTip": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserAppLatest\\dayeaseuser\\DayEaseUserApp\\DayEaseServices\\Services\\RegistrationService.cs",
               "RelativeToolTip": "DayEaseServices\\Services\\RegistrationService.cs",
-              "ViewState": "AgIAAEcAAAAAAAAAAAAWwFIAAAAIAAAAAAAAAA==",
+              "ViewState": "AgIAAEAAAAAAAAAAAAAAAE0AAAAYAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-19T12:25:02.272Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
-              "Title": "ApiService.cs",
-              "DocumentMoniker": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserApp\\DayEaseUserApp\\Domain\\Utilities\\ApiService.cs",
-              "RelativeDocumentMoniker": "Domain\\Utilities\\ApiService.cs",
-              "ToolTip": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserApp\\DayEaseUserApp\\Domain\\Utilities\\ApiService.cs",
-              "RelativeToolTip": "Domain\\Utilities\\ApiService.cs",
-              "ViewState": "AgIAABIAAAAAAAAAAAAowCYAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-19T06:12:10.899Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 20,
-              "Title": "IApiService.cs",
-              "DocumentMoniker": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserApp\\DayEaseUserApp\\Domain\\Utilities\\IUtilities\\IApiService.cs",
-              "RelativeDocumentMoniker": "Domain\\Utilities\\IUtilities\\IApiService.cs",
-              "ToolTip": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserApp\\DayEaseUserApp\\Domain\\Utilities\\IUtilities\\IApiService.cs",
-              "RelativeToolTip": "Domain\\Utilities\\IUtilities\\IApiService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAIAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-13T06:53:35.713Z"
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 2,
+              "Title": "ApiService.cs",
+              "DocumentMoniker": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserAppLatest\\dayeaseuser\\DayEaseUserApp\\Domain\\Utilities\\ApiService.cs",
+              "RelativeDocumentMoniker": "Domain\\Utilities\\ApiService.cs",
+              "ToolTip": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserAppLatest\\dayeaseuser\\DayEaseUserApp\\Domain\\Utilities\\ApiService.cs*",
+              "RelativeToolTip": "Domain\\Utilities\\ApiService.cs*",
+              "ViewState": "AgIAAE4AAAAAAAAAAAAWwFkAAAAUAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-19T06:12:10.899Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "IApiService.cs",
+              "DocumentMoniker": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserAppLatest\\dayeaseuser\\DayEaseUserApp\\Domain\\Utilities\\IUtilities\\IApiService.cs",
+              "RelativeDocumentMoniker": "Domain\\Utilities\\IUtilities\\IApiService.cs",
+              "ToolTip": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserAppLatest\\dayeaseuser\\DayEaseUserApp\\Domain\\Utilities\\IUtilities\\IApiService.cs*",
+              "RelativeToolTip": "Domain\\Utilities\\IUtilities\\IApiService.cs*",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAApAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-13T06:53:35.713Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
               "Title": "MobileNumber.razor",
-              "DocumentMoniker": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserApp\\DayEaseUserApp\\DayEaseUserApp\\Pages\\MobileNumber.razor",
+              "DocumentMoniker": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserAppLatest\\dayeaseuser\\DayEaseUserApp\\DayEaseUserApp\\Pages\\MobileNumber.razor",
               "RelativeDocumentMoniker": "DayEaseUserApp\\Pages\\MobileNumber.razor",
-              "ToolTip": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserApp\\DayEaseUserApp\\DayEaseUserApp\\Pages\\MobileNumber.razor",
+              "ToolTip": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserAppLatest\\dayeaseuser\\DayEaseUserApp\\DayEaseUserApp\\Pages\\MobileNumber.razor",
               "RelativeToolTip": "DayEaseUserApp\\Pages\\MobileNumber.razor",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAFgBAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAOEAAAAAAAAAAAAAAO0AAAASAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2025-05-16T06:52:49.885Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 4,
               "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserApp\\DayEaseUserApp\\DayEaseUserApp\\Program.cs",
+              "DocumentMoniker": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserAppLatest\\dayeaseuser\\DayEaseUserApp\\DayEaseUserApp\\Program.cs",
               "RelativeDocumentMoniker": "DayEaseUserApp\\Program.cs",
-              "ToolTip": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserApp\\DayEaseUserApp\\DayEaseUserApp\\Program.cs",
+              "ToolTip": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserAppLatest\\dayeaseuser\\DayEaseUserApp\\DayEaseUserApp\\Program.cs",
               "RelativeToolTip": "DayEaseUserApp\\Program.cs",
-              "ViewState": "AgIAABQAAAAAAAAAAAAAAB8AAAACAAAAAAAAAA==",
+              "ViewState": "AgIAABYAAAAAAAAAAAAAABwAAABCAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-13T06:47:34.202Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 20,
               "Title": "StateModel.cs",
-              "DocumentMoniker": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserApp\\DayEaseUserApp\\Domain\\RequestModels\\StateModel.cs",
+              "DocumentMoniker": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserAppLatest\\dayeaseuser\\DayEaseUserApp\\Domain\\RequestModels\\StateModel.cs",
               "RelativeDocumentMoniker": "Domain\\RequestModels\\StateModel.cs",
-              "ToolTip": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserApp\\DayEaseUserApp\\Domain\\RequestModels\\StateModel.cs",
+              "ToolTip": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserAppLatest\\dayeaseuser\\DayEaseUserApp\\Domain\\RequestModels\\StateModel.cs",
               "RelativeToolTip": "Domain\\RequestModels\\StateModel.cs",
               "ViewState": "AgIAAAIAAAAAAAAAAAAIwBAAAAAnAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -402,11 +459,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 22,
               "Title": "UserModel.cs",
-              "DocumentMoniker": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserApp\\DayEaseUserApp\\Domain\\RequestModels\\UserModel.cs",
+              "DocumentMoniker": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserAppLatest\\dayeaseuser\\DayEaseUserApp\\Domain\\RequestModels\\UserModel.cs",
               "RelativeDocumentMoniker": "Domain\\RequestModels\\UserModel.cs",
-              "ToolTip": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserApp\\DayEaseUserApp\\Domain\\RequestModels\\UserModel.cs",
+              "ToolTip": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserAppLatest\\dayeaseuser\\DayEaseUserApp\\Domain\\RequestModels\\UserModel.cs",
               "RelativeToolTip": "Domain\\RequestModels\\UserModel.cs",
               "ViewState": "AgIAAAsAAAAAAAAAAAAswBcAAAAuAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -415,11 +472,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 21,
               "Title": "OtpVerificationRequest.cs",
-              "DocumentMoniker": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserApp\\DayEaseUserApp\\Domain\\RequestModels\\OtpVerificationRequest.cs",
+              "DocumentMoniker": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserAppLatest\\dayeaseuser\\DayEaseUserApp\\Domain\\RequestModels\\OtpVerificationRequest.cs",
               "RelativeDocumentMoniker": "Domain\\RequestModels\\OtpVerificationRequest.cs",
-              "ToolTip": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserApp\\DayEaseUserApp\\Domain\\RequestModels\\OtpVerificationRequest.cs",
+              "ToolTip": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserAppLatest\\dayeaseuser\\DayEaseUserApp\\Domain\\RequestModels\\OtpVerificationRequest.cs",
               "RelativeToolTip": "Domain\\RequestModels\\OtpVerificationRequest.cs",
               "ViewState": "AgIAAAQAAAAAAAAAAAAIwBIAAAAgAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -428,11 +485,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 24,
               "Title": "Register.razor",
-              "DocumentMoniker": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserApp\\DayEaseUserApp\\DayEaseUserApp\\Pages\\Register.razor",
+              "DocumentMoniker": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserAppLatest\\dayeaseuser\\DayEaseUserApp\\DayEaseUserApp\\Pages\\Register.razor",
               "RelativeDocumentMoniker": "DayEaseUserApp\\Pages\\Register.razor",
-              "ToolTip": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserApp\\DayEaseUserApp\\DayEaseUserApp\\Pages\\Register.razor",
+              "ToolTip": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserAppLatest\\dayeaseuser\\DayEaseUserApp\\DayEaseUserApp\\Pages\\Register.razor",
               "RelativeToolTip": "DayEaseUserApp\\Pages\\Register.razor",
               "ViewState": "AgIAABIAAAAAAAAAAAAqwCUAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
@@ -441,11 +498,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 16,
               "Title": "appsettings.json",
-              "DocumentMoniker": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserApp\\DayEaseUserApp\\DayEaseUserApp\\wwwroot\\appsettings.json",
+              "DocumentMoniker": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserAppLatest\\dayeaseuser\\DayEaseUserApp\\DayEaseUserApp\\wwwroot\\appsettings.json",
               "RelativeDocumentMoniker": "DayEaseUserApp\\wwwroot\\appsettings.json",
-              "ToolTip": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserApp\\DayEaseUserApp\\DayEaseUserApp\\wwwroot\\appsettings.json",
+              "ToolTip": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserAppLatest\\dayeaseuser\\DayEaseUserApp\\DayEaseUserApp\\wwwroot\\appsettings.json",
               "RelativeToolTip": "DayEaseUserApp\\wwwroot\\appsettings.json",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAYAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
@@ -454,11 +511,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 18,
               "Title": "MobileNumberRequest.cs",
-              "DocumentMoniker": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserApp\\DayEaseUserApp\\Domain\\RequestModels\\MobileNumberRequest.cs",
+              "DocumentMoniker": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserAppLatest\\dayeaseuser\\DayEaseUserApp\\Domain\\RequestModels\\MobileNumberRequest.cs",
               "RelativeDocumentMoniker": "Domain\\RequestModels\\MobileNumberRequest.cs",
-              "ToolTip": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserApp\\DayEaseUserApp\\Domain\\RequestModels\\MobileNumberRequest.cs",
+              "ToolTip": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserAppLatest\\dayeaseuser\\DayEaseUserApp\\Domain\\RequestModels\\MobileNumberRequest.cs",
               "RelativeToolTip": "Domain\\RequestModels\\MobileNumberRequest.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAwAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -467,35 +524,37 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 27,
+              "DocumentIndex": 30,
               "Title": "ApiSettings.cs",
-              "DocumentMoniker": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserApp\\DayEaseUserApp\\Domain\\RequestModels\\ApiSettings.cs",
+              "DocumentMoniker": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserAppLatest\\dayeaseuser\\DayEaseUserApp\\Domain\\RequestModels\\ApiSettings.cs",
               "RelativeDocumentMoniker": "Domain\\RequestModels\\ApiSettings.cs",
-              "ToolTip": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserApp\\DayEaseUserApp\\Domain\\RequestModels\\ApiSettings.cs",
+              "ToolTip": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserAppLatest\\dayeaseuser\\DayEaseUserApp\\Domain\\RequestModels\\ApiSettings.cs",
               "RelativeToolTip": "Domain\\RequestModels\\ApiSettings.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAuwAoAAAAKAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-19T05:30:34.029Z"
+              "WhenOpened": "2025-05-19T05:30:34.029Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 28,
+              "DocumentIndex": 31,
               "Title": "JwtTokenResponse.cs",
-              "DocumentMoniker": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserApp\\DayEaseUserApp\\Domain\\DomainModels\\JwtTokenResponse.cs",
+              "DocumentMoniker": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserAppLatest\\dayeaseuser\\DayEaseUserApp\\Domain\\DomainModels\\JwtTokenResponse.cs",
               "RelativeDocumentMoniker": "Domain\\DomainModels\\JwtTokenResponse.cs",
-              "ToolTip": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserApp\\DayEaseUserApp\\Domain\\DomainModels\\JwtTokenResponse.cs",
+              "ToolTip": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserAppLatest\\dayeaseuser\\DayEaseUserApp\\Domain\\DomainModels\\JwtTokenResponse.cs",
               "RelativeToolTip": "Domain\\DomainModels\\JwtTokenResponse.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAWAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-16T05:00:24.058Z"
+              "WhenOpened": "2025-05-16T05:00:24.058Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 23,
               "Title": "ApiDetails.cs",
-              "DocumentMoniker": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserApp\\DayEaseUserApp\\Domain\\DomainModels\\ApiDetails.cs",
+              "DocumentMoniker": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserAppLatest\\dayeaseuser\\DayEaseUserApp\\Domain\\DomainModels\\ApiDetails.cs",
               "RelativeDocumentMoniker": "Domain\\DomainModels\\ApiDetails.cs",
-              "ToolTip": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserApp\\DayEaseUserApp\\Domain\\DomainModels\\ApiDetails.cs",
+              "ToolTip": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserAppLatest\\dayeaseuser\\DayEaseUserApp\\Domain\\DomainModels\\ApiDetails.cs",
               "RelativeToolTip": "Domain\\DomainModels\\ApiDetails.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -504,51 +563,55 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 29,
+              "DocumentIndex": 32,
               "Title": "StoreRegistrationRequest.cs",
-              "DocumentMoniker": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserApp\\DayEaseUserApp\\Domain\\RequestModels\\StoreRegistrationRequest.cs",
+              "DocumentMoniker": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserAppLatest\\dayeaseuser\\DayEaseUserApp\\Domain\\RequestModels\\StoreRegistrationRequest.cs",
               "RelativeDocumentMoniker": "Domain\\RequestModels\\StoreRegistrationRequest.cs",
-              "ToolTip": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserApp\\DayEaseUserApp\\Domain\\RequestModels\\StoreRegistrationRequest.cs",
+              "ToolTip": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserAppLatest\\dayeaseuser\\DayEaseUserApp\\Domain\\RequestModels\\StoreRegistrationRequest.cs",
               "RelativeToolTip": "Domain\\RequestModels\\StoreRegistrationRequest.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-16T06:51:12.308Z"
+              "WhenOpened": "2025-05-16T06:51:12.308Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 30,
+              "DocumentIndex": 33,
               "Title": "Custom.css",
-              "DocumentMoniker": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserApp\\DayEaseUserApp\\DayEaseUserApp\\wwwroot\\css\\bootstrap\\Custom.css",
+              "DocumentMoniker": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserAppLatest\\dayeaseuser\\DayEaseUserApp\\DayEaseUserApp\\wwwroot\\css\\bootstrap\\Custom.css",
               "RelativeDocumentMoniker": "DayEaseUserApp\\wwwroot\\css\\bootstrap\\Custom.css",
-              "ToolTip": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserApp\\DayEaseUserApp\\DayEaseUserApp\\wwwroot\\css\\bootstrap\\Custom.css",
+              "ToolTip": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserAppLatest\\dayeaseuser\\DayEaseUserApp\\DayEaseUserApp\\wwwroot\\css\\bootstrap\\Custom.css",
               "RelativeToolTip": "DayEaseUserApp\\wwwroot\\css\\bootstrap\\Custom.css",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
-              "WhenOpened": "2025-05-20T11:40:04.199Z"
+              "WhenOpened": "2025-05-20T11:40:04.199Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 26,
+              "DocumentIndex": 29,
               "Title": "index.html",
-              "DocumentMoniker": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserApp\\DayEaseUserApp\\DayEaseUserApp\\wwwroot\\index.html",
+              "DocumentMoniker": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserAppLatest\\dayeaseuser\\DayEaseUserApp\\DayEaseUserApp\\wwwroot\\index.html",
               "RelativeDocumentMoniker": "DayEaseUserApp\\wwwroot\\index.html",
-              "ToolTip": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserApp\\DayEaseUserApp\\DayEaseUserApp\\wwwroot\\index.html",
+              "ToolTip": "C:\\Users\\BHARATH REDDY\\OneDrive\\Desktop\\Project\\DayEaseUserAppLatest\\dayeaseuser\\DayEaseUserApp\\DayEaseUserApp\\wwwroot\\index.html",
               "RelativeToolTip": "DayEaseUserApp\\wwwroot\\index.html",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAVAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
-              "WhenOpened": "2025-05-20T10:06:17.163Z"
+              "WhenOpened": "2025-05-20T10:06:17.163Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 31,
+              "DocumentIndex": 34,
               "Title": "FileConfigurationProvider.cs",
               "DocumentMoniker": "C:\\Users\\BHARATH REDDY\\AppData\\Local\\Temp\\.vsdbgsrc\\b38c7bbc046e461a8a58c7e0eb00bea4828feec3606c51aaae6062bc28a1448e\\FileConfigurationProvider.cs",
-              "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\AppData\\Local\\Temp\\.vsdbgsrc\\b38c7bbc046e461a8a58c7e0eb00bea4828feec3606c51aaae6062bc28a1448e\\FileConfigurationProvider.cs",
+              "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\..\\AppData\\Local\\Temp\\.vsdbgsrc\\b38c7bbc046e461a8a58c7e0eb00bea4828feec3606c51aaae6062bc28a1448e\\FileConfigurationProvider.cs",
               "ToolTip": "C:\\Users\\BHARATH REDDY\\AppData\\Local\\Temp\\.vsdbgsrc\\b38c7bbc046e461a8a58c7e0eb00bea4828feec3606c51aaae6062bc28a1448e\\FileConfigurationProvider.cs",
-              "RelativeToolTip": "..\\..\\..\\..\\..\\AppData\\Local\\Temp\\.vsdbgsrc\\b38c7bbc046e461a8a58c7e0eb00bea4828feec3606c51aaae6062bc28a1448e\\FileConfigurationProvider.cs",
+              "RelativeToolTip": "..\\..\\..\\..\\..\\..\\AppData\\Local\\Temp\\.vsdbgsrc\\b38c7bbc046e461a8a58c7e0eb00bea4828feec3606c51aaae6062bc28a1448e\\FileConfigurationProvider.cs",
               "ViewState": "AgIAADsAAAAAAAAAAAApwEUAAAAEAAAAAQAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-19T12:39:00.541Z"
+              "WhenOpened": "2025-05-19T12:39:00.541Z",
+              "EditorCaption": ""
             }
           ]
         }

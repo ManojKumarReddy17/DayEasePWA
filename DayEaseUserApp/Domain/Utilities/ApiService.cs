@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
@@ -38,33 +39,6 @@ namespace Domain.Utilities
         }
 
 
-        //public async Task<string> PostAsync<TRequest, TResponse>(string endpoint, TRequest request)
-        //{
-        //    var jsonContent = new StringContent(
-        //        System.Text.Json.JsonSerializer.Serialize(request),
-        //        System.Text.Encoding.UTF8,
-        //        "application/json");
-
-        //    var response = await _httpclient.PostAsync($"{_settings.DayEase_API}/{endpoint}", jsonContent);
-        //    response.EnsureSuccessStatusCode();
-
-        //    return await response.Content.ReadAsStringAsync();
-        //    //throw new NotImplementedException();
-        //}
-
-        //public async Task<string> States<TRequest, TResponse>(string url, TRequest request)
-        //{
-        //    var jsonContent = new StringContent(
-        //        JsonSerializer.Serialize(request),
-        //        Encoding.UTF8,
-        //        "application/json");
-
-        //    var response = await _httpclient.PostAsync($"{_settings.DayEase_API}/{url}", jsonContent);
-        //    response.EnsureSuccessStatusCode();
-
-        //    return await response.Content.ReadAsStringAsync();
-        //}
-
         public async Task<string> UserRegister<TRequest, TResponse>(string url, TRequest request)
         {
             var jsonContent = new StringContent(
@@ -91,34 +65,38 @@ namespace Domain.Utilities
             return await response.Content.ReadAsStringAsync();
         }
 
-        //public async Task<TResponse> States<TRequest, TResponse>(string url, TRequest model)
-        //{
+        public async Task<TResponse> Post<TRequest, TResponse>(string endpoint, TRequest request)
+        {
+            var jsonContent = new StringContent(JsonSerializer.Serialize(request), Encoding.UTF8, "application/json");
+            var response = await _httpclient.PostAsync($"{_settings.DayEase_API}{endpoint}", jsonContent);
+            var jsonString = await response.Content.ReadAsStringAsync();
+            return JsonSerializer.Deserialize<TResponse>(jsonString);
+        }
 
-        //    var jsonContent = new StringContent(
-        //        JsonSerializer.Serialize(request),
-        //        Encoding.UTF8,
-        //        "application/json");
+        public async Task<TResponse> PostWithoutAuthAsync<TRequest, TResponse>(string endpoint, TRequest request)
+        {
+            var jsonContent = new StringContent(JsonSerializer.Serialize(request), Encoding.UTF8, "application/json");
+            var httpRequest = new HttpRequestMessage(HttpMethod.Post, $"{_settings.DayEase_API}{endpoint}")
+            {
+                Content = jsonContent
+            };
+            httpRequest.Headers.Authorization = null;
+            var response = await _httpclient.SendAsync(httpRequest);
+            response.EnsureSuccessStatusCode();
+            var jsonString = await response.Content.ReadAsStringAsync();
+            return JsonSerializer.Deserialize<TResponse>(jsonString);
+        }
 
-        //    var response = await _httpclient.PostAsync($"{_settings.DayEase_API}/{url}", jsonContent);
-        //    response.EnsureSuccessStatusCode();
+        public void SetAuthorizationHeader(string token)
+        {
+            _httpclient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+        }
 
-        //    return await response.Content.ReadAsStringAsync();
-        //}
+        public void RemoveAuthorizationHeader()
+        {
+            _httpclient.DefaultRequestHeaders.Authorization = null;
+        }
 
-    
     }
 }
-
-        //public async Task<string> PostAsync<TRequest>(string endpoint, TRequest request)
-        //{
-        //    var jsonContent = new StringContent(
-        //        System.Text.Json.JsonSerializer.Serialize(request),
-        //        System.Text.Encoding.UTF8,
-        //        "application/json");
-
-        //    var response = await _httpclient.PostAsync($"{_settings.DayEase_API}/{endpoint}", jsonContent);
-        //    response.EnsureSuccessStatusCode();
-
-        //    return await response.Content.ReadAsStringAsync();
-        //}
 

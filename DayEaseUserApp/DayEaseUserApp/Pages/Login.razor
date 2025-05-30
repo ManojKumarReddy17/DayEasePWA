@@ -1,0 +1,245 @@
+﻿@page "/Login"
+@using Domain.RequestModels
+@inject IUserLoginService userloginservice
+@using DayEaseServices.Services.IServices
+@inject NavigationManager NavigationManager
+@inject HttpClient Http
+
+<style>
+    .main-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 30vh;
+        background-size: cover;
+        padding: 2rem;
+    }
+
+    .card {
+        background-color: #008CFF;
+        background-image: url('/Images/login-bg.png');
+        background-size: 110%;
+        background-repeat: no-repeat;
+        background-position: center;
+        border-radius: 25px;
+        padding: 2rem;
+        width: 550px;
+        text-align: center;
+        box-shadow: 0 0 25px 5px rgba(255, 0, 0, 0.7);
+        position: relative;
+        overflow: hidden;
+    }
+
+        .card .logo {
+            width: 150px;
+            height: auto;
+            margin-bottom: 1rem;
+            margin-left: 170px;
+        }
+
+        .card::before {
+            content: "";
+            background: url('/images/confetti.png') no-repeat center;
+            background-size: cover;
+            position: absolute;
+            inset: 0;
+            opacity: 0.15;
+            z-index: -1;
+        }
+
+    .login-form {
+        background-color: #fff;
+        padding: 2rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        width: 400px;
+        margin-left: 35px;
+        text-align: left;
+    }
+
+        .login-form h5 {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            color: blue;
+            font-size: 1.5rem;
+        }
+
+    .form-group {
+        margin-bottom: 1rem;
+    }
+
+        .form-group label {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            display: block;
+            color: #333;
+        }
+
+    .form-control {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        font-size: 1rem;
+    }
+
+    .btn-primary {
+        width: 100%;
+        background-color: #007bff;
+        border: none;
+        border-radius: 6px;
+        color: white;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+    .alert-danger {
+        color: #721c24;
+        background-color: #f8d7da;
+        border: 1px solid #f5c6cb;
+        padding: 10px;
+        border-radius: 6px;
+        margin-bottom: 15px;
+    }
+
+    .forgot-link {
+        display: flex;
+        justify-content: flex-end;
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
+    }
+
+    .nav-tabs {
+        display: flex;
+        justify-content: center;
+        gap: 1.5rem;
+        margin-bottom: 1.5rem;
+        font-weight: bold;
+    }
+
+        .nav-tabs span {
+            cursor: pointer;
+            padding-bottom: 4px;
+        }
+
+        .nav-tabs .active {
+            color: #007bff;
+            border-bottom: 2px solid #007bff;
+            margin-right: 200px;
+        }
+
+    @@media (max-width: 768px) {
+        .main-container {
+            padding: 1rem;
+        }
+
+        .card {
+            width: 100%;
+            padding: 1rem;
+            background-size: cover;
+            border-radius: 15px;
+            box-shadow: none;
+        }
+
+            .card .logo {
+                margin-left: auto;
+                margin-right: auto;
+                display: block;
+                width: 120px;
+            }
+
+        .login-form {
+            width: 100%;
+            margin-left: 0;
+            padding: 1rem;
+        }
+
+        .nav-tabs .active {
+            margin-right: 0;
+        }
+    }
+
+    @@media (max-width: 480px) {
+        .form-control {
+            font-size: 0.9rem;
+        }
+
+        .btn-primary {
+            font-size: 0.95rem;
+            padding: 8px;
+        }
+
+        .login-form h5 {
+            font-size: 1.2rem;
+        }
+    }
+</style>
+
+<div class="main-container">
+    <div class="card">
+        <img src="Images/login-logo_v01.png" alt="Day Ease Logo" class="logo" />
+
+        <div class="login-form">
+            <h5>Login</h5>
+
+            @if (!string.IsNullOrEmpty(errorMessage))
+            {
+                <div class="alert alert-danger">@errorMessage</div>
+            }
+
+            <EditForm Model="loginModel" OnValidSubmit="HandleLogin">
+                <DataAnnotationsValidator />
+                <ValidationSummary />
+
+                <div class="form-group">
+                    <label>Username:</label>
+                    <InputText @bind-Value="loginModel.phonenumber" class="form-control" />
+                </div>
+
+                <div class="form-group">
+                    <label>Password:</label>
+                    <InputText @bind-Value="loginModel.password" type="password" class="form-control" />
+                </div>
+
+                <div class="form-group d-flex align-items-center justify-content-between">
+                    <div class="forgot-link">
+                        <a href="/forgot-password">Forgot Password?</a>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary">LOGIN</button>
+            </EditForm>
+            <div class="text-center mt-3">
+                <a href="/mobile-number" class="text-decoration-none">Didn't have an account ? Register</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private UserLoginRequest loginModel = new();
+    private string errorMessage;
+
+    private async Task HandleLogin()
+    {
+        errorMessage = null;
+
+        var response = await userloginservice.PostAsync(loginModel);
+
+        if (response != null && !string.IsNullOrEmpty(response.JwtToken))
+        {
+
+            NavigationManager.NavigateTo("/dashboard");
+        }
+        else
+        {
+            errorMessage = response?.Message ?? "Invalid username or password.";
+        }
+
+    }
+}
