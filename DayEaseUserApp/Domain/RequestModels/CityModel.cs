@@ -14,10 +14,4 @@ namespace Domain.RequestModels
             public string StateId { get; set; }
             public bool IsDelete { get; set; }
     }
-    //public class CityResponse
-    //{
-    //    public List<CityModel> Data { get; set; } = new();
-    //}
-
-
 }

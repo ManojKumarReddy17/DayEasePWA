@@ -10,14 +10,6 @@ namespace Domain.RequestModels
     {
         public string MobileNumber { get; set; }
     }
-    //public class RegistrationResponse
-    //{
-    //    public bool IsRegistered { get; set; }
-    //    public bool OtpSent { get; set; }
-    //    public string Message { get; set; }
-    //}
-
-
 
 
 }

@@ -11,26 +11,30 @@
 @inject IJSRuntime JS
 
 <style>
+
     .main-container {
         display: flex;
         justify-content: center;
         align-items: center;
-        min-height: 100vh;
-        background: url('images/login-bg.png') no-repeat center center;
+        min-height: 30vh;
         background-size: cover;
         padding: 2rem;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
 
+   
     .card {
-        background: rgba(0, 140, 255, 0.95);
-        color: white;
+        background-color: #008CFF;
+        background-image: url('/images/login-bg.png');
+        background-size: 110%;
+        background-repeat: no-repeat;
+        background-position: center;
         border-radius: 25px;
-        padding: 2.5rem 2rem;
-        width: 500px;
-        max-width: 90%;
-        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+        padding: 2rem;
+        width: 550px;
         text-align: center;
+        box-shadow: 0 0 25px 5px rgba(255, 0, 0, 0.7);
+        position: relative;
+        overflow: hidden;
     }
 
     .otp-inputs {
@@ -184,10 +188,7 @@
 
     private ElementReference[] OtpRefs => new[] { OtpRef0, OtpRef1, OtpRef2, OtpRef3, OtpRef4, OtpRef5 };
 
-    // protected override async Task OnInitializedAsync()
-    // {
-    //     PhoneNumber = await SessionStorage.GetItemAsync<string>("PhoneNumber");
-    // }
+  
     protected override async Task OnInitializedAsync()
     {
         //PhoneNumber = await LocalStorage.GetItemAsync<string>("userPhone");
