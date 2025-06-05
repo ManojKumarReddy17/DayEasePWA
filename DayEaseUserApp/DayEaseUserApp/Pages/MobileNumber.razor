@@ -14,24 +14,27 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        min-height: 100vh;
-        background: url('images/login-bg.png') no-repeat center center;
+        min-height: 30vh;
         background-size: cover;
         padding: 2rem;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
 
+
     .card {
-        background: rgba(0, 140, 255, 0.95);
-        color: white;
+        background-color: #008CFF;
+        background-image: url('/images/login-bg.png');
+        background-size: 110%;
+        background-repeat: no-repeat;
+        background-position: center;
         border-radius: 25px;
-        padding: 2.5rem 2rem;
-        width: 500px;
-        max-width: 90%;
-        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+        padding: 2rem;
+        width: 550px;
         text-align: center;
-        transition: transform 0.3s ease;
+        box-shadow: 0 0 25px 5px rgba(255, 0, 0, 0.7);
+        position: relative;
+        overflow: hidden;
     }
+
 
         .card:hover {
             transform: scale(1.01);
@@ -93,9 +96,6 @@
         transition: background-color 0.3s ease;
     }
 
-    .text-white-custom {
-        color: white !important;
-    }
         .btn-primary:hover {
             background-color: #009edb;
         }
@@ -131,6 +131,11 @@
             font-size: 1.25rem;
         }
     }
+
+    .text-white-custom {
+        color: white !important;
+    }
+
 
     @@media (max-width: 480px) {
         .card .logo {
@@ -220,10 +225,12 @@
                        class="form-control @(HasValidationError ? "error" : "")"
                        @bind="PhoneNumber"
                        @oninput="LimitToTenDigits"
+                       onkeypress="return isNumberKey(event)"
                        placeholder="Enter mobile number"
                        maxlength="10"
                        inputmode="numeric"
-                       pattern="\d*" />
+                       pattern="[0-9]*" />
+
 
                 @if (HasValidationError && !string.IsNullOrEmpty(errorMessage))
                 {
@@ -236,6 +243,7 @@
             <div class="text-center mt-3">
                 <a href="/login" class="text-decoration-none text-white-custom">Already have an account? Login</a>
             </div>
+
 
         </div>
     </div>
@@ -297,7 +305,7 @@
                     }
                     else if (registrationResponse.StatusCode == 409)
                     {
-                        // Show modal popup instead of alert
+                        
                         ShowUserExistsModal = true;
                     }
                     else
@@ -327,6 +335,7 @@
         PhoneNumber = new string(input.Where(char.IsDigit).Take(10).ToArray());
     }
 
+
     private void NavigateToLogin()
     {
         ShowUserExistsModal = false;
@@ -336,7 +345,6 @@
     private void CloseModal()
     {
         ShowUserExistsModal = false;
-        // Stay on the same page
     }
 
     public class RegistrationResponse

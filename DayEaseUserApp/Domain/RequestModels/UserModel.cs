@@ -6,19 +6,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace Domain.RequestModels
 {
     public class UserModel
     {
-        // PhoneNumber is optional
         public string PhoneNumber { get; set; }
 
-        [Required(ErrorMessage = "First Name is required")]
-        [StringLength(7, MinimumLength = 1, ErrorMessage = "First Name must be between 1 and 7 characters")]
+        [Required(ErrorMessage = "First name is required")]
+        //[RegularExpression(@"^[A-Za-z\s]{1,20}$", ErrorMessage = "First name must be letters and spaces only")]
+
         public string FName { get; set; }
 
-        [Required(ErrorMessage = "Last Name is required")]
-        [StringLength(7, MinimumLength = 1, ErrorMessage = "Last Name must be between 1 and 7 characters")]
+        [Required(ErrorMessage = "Last name is required")]
+        //[RegularExpression(@"^[A-Za-z\s]{1,20}$", ErrorMessage = "Last name can contain only letters and spaces")]
+
         public string LName { get; set; }
 
         public string Country { get; set; } = "India";
@@ -45,11 +47,12 @@ namespace Domain.RequestModels
         public string Gender { get; set; }
 
         [Required(ErrorMessage = "Address is required")]
-        [StringLength(50, ErrorMessage = "Address cannot exceed 50 characters")]
+    
         public string Address { get; set; }
 
         [Required(ErrorMessage = "Password is required")]
-        [StringLength(15, MinimumLength = 7, ErrorMessage = "Password must be between 7 and 15 characters")]
+        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{7,15}$",
+    ErrorMessage = "Password must be 7–15 characters and include uppercase, lowercase, number, and special character.")]
         public string Password { get; set; }
     }
 
