@@ -1,0 +1,305 @@
+﻿@page "/otp-verification"
+@inject NavigationManager Navigation
+@inject IRegistration RegistrationService
+@* @using Blazored.SessionStorage
+@inject ISessionStorageService SessionStorage *@
+@using Blazored.LocalStorage
+@using DayEaseServices.Services.IServices
+@using Domain.RequestModels
+@using System.Text.Json;
+@inject ILocalStorageService LocalStorage
+@inject IJSRuntime JS
+
+<style>
+    .main-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        background: url('images/login-bg.png') no-repeat center center;
+        background-size: cover;
+        padding: 2rem;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .card {
+        background: rgba(0, 140, 255, 0.95);
+        color: white;
+        border-radius: 25px;
+        padding: 2.5rem 2rem;
+        width: 500px;
+        max-width: 90%;
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+        text-align: center;
+    }
+
+    .otp-inputs {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+    }
+
+    .otp-box {
+        width: 40px;
+        height: 40px;
+        font-size: 20px;
+        text-align: center;
+    }
+
+    .logo {
+        width: 150px;
+        margin: 0 auto 1.5rem auto;
+        display: block;
+    }
+
+    .form-group {
+        margin-bottom: 1rem;
+        text-align: left;
+    }
+
+        .form-group label {
+            font-weight: 600;
+            color: #f0f0f0;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+    .form-control {
+        width: 100%;
+        padding: 12px;
+        font-size: 1rem;
+        border-radius: 8px;
+        border: none;
+        outline: none;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn-primary {
+        width: 100%;
+        padding: 14px;
+        font-size: 1rem;
+        border: none;
+        border-radius: 8px;
+        background-color: #00c2ff;
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+        .btn-primary:hover {
+            background-color: #009edb;
+        }
+
+    .error {
+        color: red;
+        margin-top: 1rem;
+    }
+
+    .validation-message {
+        color: #ffdede;
+        font-size: 0.9rem;
+    }
+
+    @@media (max-width: 768px) {
+        .card {
+            padding: 2rem 1.5rem;
+            width: 100%;
+        }
+
+        .inner-box {
+            padding: 1rem 0.5rem 0;
+        }
+
+        .form-control {
+            padding: 10px;
+            font-size: 0.95rem;
+        }
+
+        .btn-primary {
+            padding: 12px;
+            font-size: 0.95rem;
+        }
+
+        .inner-box h3 {
+            font-size: 1.25rem;
+        }
+    }
+
+    @@media (max-width: 480px) {
+        .card .logo {
+            width: 120px;
+        }
+
+        .inner-box h3 {
+            font-size: 1.1rem;
+        }
+
+        .form-group label {
+            font-size: 0.9rem;
+        }
+
+        .form-control, .btn-primary {
+            font-size: 0.9rem;
+        }
+    }
+</style>
+
+
+<div class="main-container">
+    <div class="card">
+        <img src="images/login-logo_v01.png" class="logo" alt="Logo" />
+        <div class="inner-box">
+            <h3>Enter OTP</h3>
+
+            <div class="form-group otp-inputs">
+                <input type="text" maxlength="1" class="otp-box" @ref="OtpRef0" value="@OtpDigits[0]" @oninput="(e) => OnOtpInput(e, 0)" @onkeydown="(e) => OnKeyDown(e, 0)" />
+                <input type="text" maxlength="1" class="otp-box" @ref="OtpRef1" value="@OtpDigits[1]" @oninput="(e) => OnOtpInput(e, 1)" @onkeydown="(e) => OnKeyDown(e, 1)" />
+                <input type="text" maxlength="1" class="otp-box" @ref="OtpRef2" value="@OtpDigits[2]" @oninput="(e) => OnOtpInput(e, 2)" @onkeydown="(e) => OnKeyDown(e, 2)" />
+                <input type="text" maxlength="1" class="otp-box" @ref="OtpRef3" value="@OtpDigits[3]" @oninput="(e) => OnOtpInput(e, 3)" @onkeydown="(e) => OnKeyDown(e, 3)" />
+                <input type="text" maxlength="1" class="otp-box" @ref="OtpRef4" value="@OtpDigits[4]" @oninput="(e) => OnOtpInput(e, 4)" @onkeydown="(e) => OnKeyDown(e, 4)" />
+                <input type="text" maxlength="1" class="otp-box" @ref="OtpRef5" value="@OtpDigits[5]" @oninput="(e) => OnOtpInput(e, 5)" @onkeydown="(e) => OnKeyDown(e, 5)" />
+            </div>
+
+            <button class="btn-primary" @onclick="ValidateOtp">Verify OTP</button>
+
+            @if (!string.IsNullOrEmpty(ErrorMessage))
+            {
+                <p class="error">@ErrorMessage</p>
+            }
+        </div>
+    </div>
+</div>
+
+@code {
+    private string[] OtpDigits = new string[6];
+    private string ErrorMessage;
+    private string PhoneNumber;
+
+    private ElementReference OtpRef0;
+    private ElementReference OtpRef1;
+    private ElementReference OtpRef2;
+    private ElementReference OtpRef3;
+    private ElementReference OtpRef4;
+    private ElementReference OtpRef5;
+
+    private ElementReference[] OtpRefs => new[] { OtpRef0, OtpRef1, OtpRef2, OtpRef3, OtpRef4, OtpRef5 };
+
+    // protected override async Task OnInitializedAsync()
+    // {
+    //     PhoneNumber = await SessionStorage.GetItemAsync<string>("PhoneNumber");
+    // }
+    protected override async Task OnInitializedAsync()
+    {
+        //PhoneNumber = await LocalStorage.GetItemAsync<string>("userPhone");
+        PhoneNumber = await LocalStorage.GetItemAsync<string>("PhoneNumber");
+
+        if (string.IsNullOrEmpty(PhoneNumber))
+        {
+            Navigation.NavigateTo("/mobile-number");
+        }
+    }
+
+
+    private async Task OnOtpInput(ChangeEventArgs e, int index)
+    {
+        if (index < 0 || index >= OtpDigits.Length)
+            return;
+
+        var value = e.Value?.ToString();
+
+        if (!string.IsNullOrEmpty(value) && char.IsDigit(value[0]))
+        {
+            OtpDigits[index] = value;
+
+            if (index < OtpDigits.Length - 1)
+            {
+                await Task.Delay(1); // ensure the DOM updates
+                await OtpRefs[index + 1].FocusAsync();
+            }
+        }
+        else
+        {
+            OtpDigits[index] = "";
+        }
+    }
+
+    private async Task OnKeyDown(KeyboardEventArgs e, int index)
+    {
+        if (index < 0 || index >= OtpDigits.Length)
+            return;
+
+        if (e.Key == "Backspace")
+        {
+            if (!string.IsNullOrEmpty(OtpDigits[index]))
+            {
+                OtpDigits[index] = "";
+            }
+            else if (index > 0)
+            {
+                await OtpRefs[index - 1].FocusAsync();
+                OtpDigits[index - 1] = "";
+            }
+        }
+    }
+
+    private async Task ValidateOtp()
+    {
+        ErrorMessage = "";
+        var otp = string.Concat(OtpDigits);
+
+        if (otp.Length != 6 || OtpDigits.Any(d => string.IsNullOrEmpty(d)))
+        {
+            ErrorMessage = "Please enter a 6-digit OTP.";
+            return;
+        }
+
+        try
+        {
+            var request = new OtpVerificationRequest
+                {
+                    PhoneNumber = PhoneNumber,
+                    Otp = int.Parse(otp)
+                };
+
+            var response = await RegistrationService.ValidateOtp<OtpVerificationRequest, string>(request);
+
+            if (string.IsNullOrWhiteSpace(response))
+            {
+                ErrorMessage = "No response from server.";
+                return;
+            }
+
+            // The response is a JSON string inside a string, so first remove wrapping quotes if any
+            string jsonString = response.Trim('\"').Replace("\\\"", "\"");
+
+            // Deserialize JSON to object
+            var otpResponse = JsonSerializer.Deserialize<OtpResponse>(jsonString);
+
+            if (otpResponse != null && otpResponse.StatusCode == 200)
+            {
+                Navigation.NavigateTo("/user-details");
+            }
+            else
+            {
+                ErrorMessage = otpResponse?.Message ?? "Invalid OTP. Please try again.";
+                await ClearOtpFields();
+            }
+        }
+        catch (Exception ex)
+        {
+            ErrorMessage = $"Error verifying OTP: {ex.Message}";
+        }
+    }
+
+    private async Task ClearOtpFields()
+    {
+        for (int i = 0; i < OtpDigits.Length; i++)
+        {
+            OtpDigits[i] = "";
+        }
+        StateHasChanged();
+        await Task.Delay(50);
+        await OtpRefs[0].FocusAsync();
+    }
+
+} 

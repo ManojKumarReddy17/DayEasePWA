@@ -1,0 +1,65 @@
+# .NET build files
+bin/
+obj/
+out/
+
+# User-specific files
+*.user
+*.suo
+*.userprefs
+
+# Build results
+*.dll
+*.exe
+*.app
+*.log
+
+# Visual Studio Code
+.vscode/
+
+# Visual Studio settings
+.vs/
+
+# NuGet packages
+*.nupkg
+*.snupkg
+packages/
+*.nuspec
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# AWS Lambda tools
+.aws-lambda-tools-defaults.json
+*.aws-lambda-tools-defaults.json.user
+
+# AWS credentials (never commit!)
+.aws/
+
+# dotnet secrets
+secrets.json
+
+# Temporary files
+*.tmp
+*.temp
+
+# IDEs and editors
+.idea/
+*.sln.docstates
+
+# JetBrains Rider
+.idea/
+*.DotSettings.user
+
+# Others
+Thumbs.db
+Desktop.ini
+
+# macOS
+.DS_Store
+
+# Linux
+*~
+
+# Windows
+ehthumbs.db

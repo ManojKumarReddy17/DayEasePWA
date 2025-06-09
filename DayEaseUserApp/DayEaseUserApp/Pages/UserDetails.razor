@@ -1,0 +1,367 @@
+﻿@page "/user-details"
+@using System.ComponentModel.DataAnnotations
+@using Microsoft.AspNetCore.Components.Forms
+@inject IRegistration RegistrationService
+@using DayEaseServices.Services.IServices
+@using Domain.RequestModels
+@using Blazored.LocalStorage
+@inject ILocalStorageService LocalStorage
+
+
+<style>
+    .main-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        background: url('images/login-bg.png') no-repeat center center;
+        background-size: cover;
+        padding: 2rem;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .card {
+        background: rgba(0, 140, 255, 0.95);
+        color: white;
+        border-radius: 25px;
+        padding: 2.5rem 2rem;
+        width: 500px;
+        max-width: 90%;
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+        text-align: left;
+        transition: transform 0.3s ease;
+    }
+
+        .card:hover {
+            transform: scale(1.01);
+        }
+
+        .card .logo {
+            width: 100px;
+            margin: 0 auto 1.5rem auto;
+            display: block;
+        }
+
+    .form-control {
+        width: 100%;
+        padding: 12px;
+        font-size: 1rem;
+        border-radius: 8px;
+        border: none;
+        outline: none;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn-primary {
+        width: 100%;
+        padding: 14px;
+        font-size: 1rem;
+        border: none;
+        border-radius: 8px;
+        background-color: #00c2ff;
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+        .btn-primary:hover {
+            background-color: #009edb;
+        }
+
+    /* .validation-message {
+        color: #ffdede;
+        font-size: 0.9rem;
+    } */
+    .error {
+        color: red;
+        margin-top: 1rem;
+    }
+
+    
+</style>
+
+<div class="container-fluid min-vh-100 d-flex justify-content-center align-items-center p-3"
+     style="background: url('images/login-bg.png') no-repeat center center; background-size: cover;">
+    <div class="card shadow-lg p-4 w-100" style="max-width: 600px;">
+        <img src="images/login-logo_v01.png" alt="Day Ease Logo" class="img-fluid mx-auto d-block mb-4" style="max-width: 100px;" />
+        <div class="text-center mb-3">
+            <h4>User Details</h4>
+        </div>
+
+        <EditForm Model="@user" OnValidSubmit="HandleValidSubmit">
+            <DataAnnotationsValidator />
+            @* <ValidationSummary /> *@
+
+            <div class="mb-3">
+                <label class="form-label">First Name</label>
+                <InputText @bind-Value="user.FName" class="form-control" />
+                <ValidationMessage For="@(() => user.FName)" class="validation-message" />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Last Name</label>
+                <InputText @bind-Value="user.LName" class="form-control" />
+                <ValidationMessage For="@(() => user.LName)" class="validation-message" />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Password</label>
+                <InputText @bind-Value="user.Password" type="password" class="form-control" placeholder="Abcd@1234" />
+                <ValidationMessage For="@(() => user.Password)" class="validation-message" />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Country</label>
+                <InputText @bind-Value="user.Country" class="form-control" readonly />
+                <ValidationMessage For="@(() => user.Country)" class="validation-message" />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">State</label>
+                <select class="form-control" @bind="SelectedStateId">
+                    <option value="">-- Select State --</option>
+                    @foreach (var state in stateList)
+                    {
+                        <option value="@state.StateId">@state.StateName</option>
+                    }
+                </select>
+                <ValidationMessage For="@(() => user.State)" class="validation-message" />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">City</label>
+                <select class="form-control" @bind="SelectedCityId">
+                    <option value="">-- Select City --</option>
+                    @foreach (var city in cityList)
+                    {
+                        <option value="@city.CityId">@city.CityName</option>
+                    }
+                </select>
+                <ValidationMessage For="@(() => user.City)" class="validation-message" />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Area</label>
+                <select class="form-control" @bind="SelectedAreaId">
+                    <option value="">-- Select Area --</option>
+                    @foreach (var area in areaList)
+                    {
+                        <option value="@area.AreaId">@area.AreaName</option>
+                    }
+                </select>
+                <ValidationMessage For="@(() => user.Location)" class="validation-message" />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">SubArea</label>
+                <select class="form-control" @bind="user.Sublocation">
+                    <option value="">-- Select SubArea --</option>
+                    @foreach (var sub in subareaList)
+                    {
+                        <option value="@sub.SubAreaId">@sub.SubAreaName</option>
+                    }
+                </select>
+                <ValidationMessage For="@(() => user.Sublocation)" class="validation-message" />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Gender</label>
+                <InputSelect @bind-Value="user.Gender" class="form-control">
+                    <option value="">-- Select Gender --</option>
+                    <option>Male</option>
+                    <option>Female</option>
+                    <option>Other</option>
+                </InputSelect>
+                <ValidationMessage For="@(() => user.Gender)" class="validation-message" />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Address</label>
+                <InputTextArea @bind-Value="user.Address" class="form-control" rows="3" />
+                <ValidationMessage For="@(() => user.Address)" class="validation-message" />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Latitude</label>
+                <InputText @bind-Value="user.Latitude" class="form-control" />
+                <ValidationMessage For="@(() => user.Latitude)" class="validation-message" />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Longitude</label>
+                <InputText @bind-Value="user.Longitude" class="form-control" />
+                <ValidationMessage For="@(() => user.Longitude)" class="validation-message" />
+            </div>
+
+            <div class="form-check mb-3">
+                <InputCheckbox @bind-Value="AcceptedTerms" class="form-check-input" />
+                <label class="form-check-label">I accept the terms and conditions</label>
+            </div>
+
+            <button type="submit" class="btn btn-primary" disabled="@(!AcceptedTerms)">Register</button>
+            
+        </EditForm>
+
+
+        @if (Submitted)
+        {
+            <div class="alert alert-success text-center mt-3" role="alert">
+                User registered successfully!
+            </div>
+        }
+    </div>
+</div>
+
+@code {
+    private UserModel user = new();
+    private List<StateModel> stateList = new();
+    private List<CityModel> cityList = new();
+    private List<AreaModel> areaList = new();
+    private List<SubAreaModel> subareaList = new();
+    private bool AcceptedTerms = false;
+    private bool Submitted = false;
+
+    // protected override async Task OnInitializedAsync()
+    // {
+    //     stateList = await RegistrationService.GetStatesAsync();
+
+    //     // Load phone number from LocalStorage
+    //     var phoneFromLocalStorage = await LocalStorage.GetItemAsync<string>("PhoneNumber");
+
+    //     if (!string.IsNullOrEmpty(phoneFromLocalStorage))
+    //     {
+    //         user.PhoneNumber = phoneFromLocalStorage;
+    //     }
+    // }
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            stateList = await RegistrationService.GetStatesAsync();
+
+            var phoneFromLocalStorage = await LocalStorage.GetItemAsync<string>("PhoneNumber");
+
+            if (!string.IsNullOrEmpty(phoneFromLocalStorage))
+            {
+                user.PhoneNumber = phoneFromLocalStorage;
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error during initialization: {ex.Message}");
+        }
+    }
+
+
+
+    private string SelectedStateId
+    {
+        get => user.State;
+        set
+        {
+            if (user.State != value)
+            {
+                user.State = value;
+                user.City = null;
+                user.Location = null;
+                user.Sublocation = null;
+                _ = LoadCitiesAsync();
+            }
+        }
+    }
+
+    private string SelectedCityId
+    {
+        get => user.City;
+        set
+        {
+            if (user.City != value)
+            {
+                user.City = value;
+                user.Location = null;
+                user.Sublocation = null;
+                _ = LoadAreasAsync();
+            }
+        }
+    }
+
+    private string SelectedAreaId
+    {
+        get => user.Location;
+        set
+        {
+            if (user.Location != value)
+            {
+                user.Location = value;
+                user.Sublocation = null;
+                _ = LoadSubAreasAsync();
+            }
+        }
+    }
+
+    private async Task LoadCitiesAsync()
+    {
+        if (!string.IsNullOrWhiteSpace(user.State))
+            cityList = await RegistrationService.GetCityAsync(new CityModel { StateId = user.State });
+        else
+            cityList.Clear();
+
+        areaList.Clear();
+        subareaList.Clear();
+        await InvokeAsync(StateHasChanged);
+    }
+
+    private async Task LoadAreasAsync()
+    {
+        if (!string.IsNullOrWhiteSpace(user.City))
+            areaList = await RegistrationService.GetAreaByCityId(new AreaModel { CityId = user.City });
+        else
+            areaList.Clear();
+
+        subareaList.Clear();
+        await InvokeAsync(StateHasChanged);
+    }
+
+    private async Task LoadSubAreasAsync()
+    {
+        if (!string.IsNullOrWhiteSpace(user.Location))
+            subareaList = await RegistrationService.GetSubAreaByAreaId(new SubAreaModel { AreaId = user.Location });
+        else
+            subareaList.Clear();
+
+        await InvokeAsync(StateHasChanged);
+    }
+
+    private async Task HandleValidSubmit()
+    {
+        var response = await RegistrationService.RegisterUserAsync(user);
+
+        if (response != null)
+        {
+            Submitted = true;
+
+            // Clear local storage phone number after successful registration
+            await LocalStorage.RemoveItemAsync("PhoneNumber");
+
+            // Reset the form and related data
+            user = new UserModel();
+            AcceptedTerms = false;
+
+            // Also clear dropdowns
+            stateList = await RegistrationService.GetStatesAsync();
+            cityList.Clear();
+            areaList.Clear();
+            subareaList.Clear();
+
+            await InvokeAsync(StateHasChanged);
+        }
+        else
+        {
+            // Handle error response (optional)
+            Submitted = false;
+            // Optionally, show an error message
+        }
+    }
+
+}
