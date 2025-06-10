@@ -218,6 +218,10 @@
 
         <div class="inner-box">
             <h3>Enter Mobile Number</h3>
+            <div class="form-group">
+                <label>Country Code</label>
+                <input type="text" @bind="CountryCode" class="form-control" placeholder="Country Code" />
+            </div>
 
             <div class="form-group">
                 <label for="mobile">Mobile Number:</label>
@@ -282,13 +286,13 @@
 
         try
         {
-            var request = new RegistrationRequest
+            var request = new MobileNumberRequest
                 {
-                    PhoneNumber = PhoneNumber,
-                    CountryCode = CountryCode
+                    phonenumber = PhoneNumber,
+                    // CountryCode = CountryCode
                 };
 
-            var response = await RegistrationService.PostAsync<RegistrationRequest, string>(request);
+            var response = await RegistrationService.PostAsync<MobileNumberRequest, string>(request);
 
             if (!string.IsNullOrEmpty(response))
             {
@@ -305,7 +309,7 @@
                     }
                     else if (registrationResponse.StatusCode == 409)
                     {
-                        
+
                         ShowUserExistsModal = true;
                     }
                     else
@@ -345,11 +349,5 @@
     private void CloseModal()
     {
         ShowUserExistsModal = false;
-    }
-
-    public class RegistrationResponse
-    {
-        public int StatusCode { get; set; }
-        public string Message { get; set; }
     }
 }

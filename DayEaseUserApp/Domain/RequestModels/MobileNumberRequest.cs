@@ -8,8 +8,16 @@ namespace Domain.RequestModels
 {
     public class MobileNumberRequest
     {
-        public string MobileNumber { get; set; }
+        public string phonenumber { get; set; }
+       // public string CountryCode { get; set; }
+
+    }
+    public class RegistrationResponse
+    {
+        public int StatusCode { get; set; }
+        public string Message { get; set; }
     }
 
 
 }
+

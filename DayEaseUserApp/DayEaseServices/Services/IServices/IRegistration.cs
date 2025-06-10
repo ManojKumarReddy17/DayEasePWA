@@ -11,7 +11,7 @@ namespace DayEaseServices.Services.IServices
 {
     public interface IRegistration
     {
-        Task<string> PostAsync<TRequest,TResponse>(RegistrationRequest model);
+        Task<string> PostAsync<TRequest,TResponse>(MobileNumberRequest model);
         Task<string> ValidateOtp<TRequest, TRespnse>(OtpVerificationRequest model);
         Task<List<StateModel>> GetStatesAsync();
         Task<List<CityModel>> GetCityAsync(CityModel StateId);

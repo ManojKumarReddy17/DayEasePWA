@@ -22,15 +22,20 @@ public class RegistrationService : IRegistration
         _apiservice = apiservice;
     }
 
-    public async Task<string> PostAsync<TRequest, TRespnse>(RegistrationRequest model)
+    public async Task<string> PostAsync<TRequest, TRespnse>(MobileNumberRequest model)
     {
         string endpoint = "User/OTPInitiate";
-        var result = await _apiservice.PostAsync<RegistrationRequest, string>(endpoint, model);
+        var result = await _apiservice.PostAsync<MobileNumberRequest, string>(endpoint, model);
         return result;
     }
 
+    public async Task<string> RegisterUserAsync(UserModel userModel)
+    {
+        string endpoint = "User/Register";
+        var response = await _apiservice.PostAsync<UserModel, string>(endpoint, userModel);
+        return response;
+    }
 
-    
 
     public async Task<List<StateModel>> GetStatesAsync()
     {
@@ -59,12 +64,7 @@ public class RegistrationService : IRegistration
         return result ?? new List<SubAreaModel>();
     }
 
-    public async Task<string> RegisterUserAsync(UserModel userModel)
-    {
-        string endpoint = "User/Register";
-        var response = await _apiservice.PostAsync<UserModel, string>(endpoint, userModel);
-        return response;
-    }
+  
 
     public async Task<string> ValidateOtp<TRequest, TRespnse>(OtpVerificationRequest model)
     {
