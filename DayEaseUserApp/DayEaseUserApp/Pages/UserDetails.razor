@@ -1,45 +1,70 @@
 ﻿@page "/user-details"
 @using System.ComponentModel.DataAnnotations
 @using Microsoft.AspNetCore.Components.Forms
-@inject IRegistration RegistrationService
 @using DayEaseServices.Services.IServices
 @using Domain.RequestModels
 @using Blazored.LocalStorage
+@inject IRegistration RegistrationService
 @inject ILocalStorageService LocalStorage
-
+@inject NavigationManager Navigation
 
 <style>
     .main-container {
         display: flex;
         justify-content: center;
         align-items: center;
-        min-height: 100vh;
-        background: url('images/login-bg.png') no-repeat center center;
+        min-height: 30vh;
         background-size: cover;
         padding: 2rem;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
 
     .card {
-        background: rgba(0, 140, 255, 0.95);
-        color: white;
+        background-color: #008CFF;
+        background-image: url('images/login-bg.png');
+        background-size: 110%;
+        background-repeat: no-repeat;
+        background-position: center;
         border-radius: 25px;
-        padding: 2.5rem 2rem;
-        width: 500px;
-        max-width: 90%;
-        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
-        text-align: left;
-        transition: transform 0.3s ease;
+        padding: 2rem;
+        width: 550px;
+        text-align: center;
+        box-shadow: 0 0 25px 5px rgba(255, 0, 0, 0.7);
+        position: relative;
+        overflow: hidden;
     }
+
 
         .card:hover {
             transform: scale(1.01);
         }
 
         .card .logo {
-            width: 100px;
+            width: 150px;
             margin: 0 auto 1.5rem auto;
             display: block;
+        }
+
+    .inner-box {
+        background-color: transparent;
+        padding: 2rem 1rem 0;
+        text-align: left;
+    }
+
+        .inner-box h3 {
+            text-align: center;
+            color: #fff;
+            margin-bottom: 1.5rem;
+        }
+
+    .form-group {
+        margin-bottom: 1rem;
+    }
+
+        .form-group label {
+            font-weight: 600;
+            color: #f0f0f0;
+            display: block;
+            margin-bottom: 0.5rem;
         }
 
     .form-control {
@@ -51,6 +76,10 @@
         outline: none;
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     }
+
+        .form-control.error {
+            border: 2px solid red;
+        }
 
     .btn-primary {
         width: 100%;
@@ -69,47 +98,179 @@
             background-color: #009edb;
         }
 
-    /* .validation-message {
-        color: #ffdede;
-        font-size: 0.9rem;
-    } */
-    .error {
-        color: red;
-        margin-top: 1rem;
+    .validation-error {
+        color: #ffcccc;
+        font-weight: 500;
+        font-size: 0.95rem;
+        margin-top: 0.5rem;
     }
 
-    
+    @@media (max-width: 768px) {
+        .card {
+            padding: 2rem 1.5rem;
+            width: 100%;
+        }
+
+        .inner-box {
+            padding: 1rem 0.5rem 0;
+        }
+
+        .form-control {
+            padding: 10px;
+            font-size: 0.95rem;
+        }
+
+        .btn-primary {
+            padding: 12px;
+            font-size: 0.95rem;
+        }
+
+        .inner-box h3 {
+            font-size: 1.25rem;
+        }
+    }
+
+    .text-white-custom {
+        color: white !important;
+    }
+
+
+    @@media (max-width: 480px) {
+        .card .logo {
+            width: 120px;
+        }
+
+        .inner-box h3 {
+            font-size: 1.1rem;
+        }
+
+        .form-group label {
+            font-size: 0.9rem;
+        }
+
+        .form-control, .btn-primary {
+            font-size: 0.9rem;
+        }
+    }
+
+    /* Modal Styles */
+    .modal-backdrop {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0,0,0,0.6);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+    }
+
+    .modal-box {
+        background: white;
+        color: black;
+        padding: 1.5rem 2rem;
+        border-radius: 10px;
+        width: 300px;
+        text-align: center;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    }
+
+        .modal-box p {
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+    .btn-primary-modal {
+        background-color: #00c2ff;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        margin-right: 10px;
+        border-radius: 6px;
+        cursor: pointer;
+    }
+
+        .btn-primary-modal:hover {
+            background-color: #009edb;
+        }
+
+    .btn-secondary-modal {
+        background-color: #ccc;
+        color: black;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 6px;
+        cursor: pointer;
+    }
+
+        .btn-secondary-modal:hover {
+            background-color: #aaa;
+        }
 </style>
 
-<div class="container-fluid min-vh-100 d-flex justify-content-center align-items-center p-3"
+
+@* <div class="container-fluid min-vh-100 d-flex justify-content-center align-items-center p-3"
      style="background: url('images/login-bg.png') no-repeat center center; background-size: cover;">
     <div class="card shadow-lg p-4 w-100" style="max-width: 600px;">
         <img src="images/login-logo_v01.png" alt="Day Ease Logo" class="img-fluid mx-auto d-block mb-4" style="max-width: 100px;" />
         <div class="text-center mb-3">
-            <h4>User Details</h4>
-        </div>
+            <h4>Register</h4>
+        </div> *@
+        <div class="main-container">
+        <div class="card">
+            <img src="images/login-logo_v01.png" alt="Day Ease Logo" class="logo" />
+
+            <div class="inner-box">
+                <h3>Register</h3>
 
         <EditForm Model="@user" OnValidSubmit="HandleValidSubmit">
             <DataAnnotationsValidator />
-            @* <ValidationSummary /> *@
 
             <div class="mb-3">
                 <label class="form-label">First Name</label>
-                <InputText @bind-Value="user.FName" class="form-control" />
+                <InputText @bind-Value="user.FName" class="form-control" maxlength="20"
+                           oninput="this.value=this.value.replace(/[^A-Za-z\s]/g,'')" />
                 <ValidationMessage For="@(() => user.FName)" class="validation-message" />
             </div>
 
             <div class="mb-3">
                 <label class="form-label">Last Name</label>
-                <InputText @bind-Value="user.LName" class="form-control" />
+                <InputText @bind-Value="user.LName" class="form-control" maxlength="20"
+                           oninput="this.value=this.value.replace(/[^A-Za-z\s]/g,'')" />
                 <ValidationMessage For="@(() => user.LName)" class="validation-message" />
             </div>
 
-            <div class="mb-3">
-                <label class="form-label">Password</label>
-                <InputText @bind-Value="user.Password" type="password" class="form-control" placeholder="Abcd@1234" />
-                <ValidationMessage For="@(() => user.Password)" class="validation-message" />
-            </div>
+                <div class="mb-3">
+                    <label class="form-label">Password</label>
+                    <div class="input-group">
+                        <InputText @bind-Value="user.Password"
+                                   type="@PasswordInputType"
+                                   class="form-control"
+                                   maxlength="15"
+                                   @oninput="OnPasswordInput"
+                                   @onfocus="() => ShowPasswordRules = true"
+                                   @onblur="() => ShowPasswordRules = false" />
+                        <button type="button" class="btn btn-outline-secondary" @onclick="TogglePasswordVisibility">
+                            @(IsPasswordVisible ? "Hide" : "Show")
+                        </button>
+                    </div>
+                    <ValidationMessage For="@(() => user.Password)" class="validation-message" />
+                    @if (ShowPasswordRules && !IsPasswordValid)
+                    {
+                        <div class="password-rules mt-2">
+                            <ul style="color: white; padding: 10px; border-radius: 8px;">
+                                <li>Password must be 7–15 characters</li>
+                                <li>Contain at least one lowercase letter</li>
+                                <li>Contain at least one uppercase letter</li>
+                                <li>Contain at least one number</li>
+                                <li>Contain at least one special symbol</li>
+                            </ul>
+                        </div>
+                    }
+                </div>
+
 
             <div class="mb-3">
                 <label class="form-label">Country</label>
@@ -178,7 +339,7 @@
 
             <div class="mb-3">
                 <label class="form-label">Address</label>
-                <InputTextArea @bind-Value="user.Address" class="form-control" rows="3" />
+                <InputTextArea @bind-Value="user.Address" class="form-control" rows="2" maxlength="25"  />
                 <ValidationMessage For="@(() => user.Address)" class="validation-message" />
             </div>
 
@@ -200,18 +361,21 @@
             </div>
 
             <button type="submit" class="btn btn-primary" disabled="@(!AcceptedTerms)">Register</button>
-            
         </EditForm>
-
-
-        @if (Submitted)
-        {
-            <div class="alert alert-success text-center mt-3" role="alert">
-                User registered successfully!
-            </div>
-        }
+    </div>
     </div>
 </div>
+
+@if (ShowUserExistsModal)
+{
+    <div class="modal-backdrop">
+        <div class="modal-box">
+            <p>Registered Successfully. Login with username and password.</p>
+            <button class="btn-primary-modal" @onclick="NavigateToLogin">Login</button>
+            <button class="btn-secondary-modal" @onclick="CloseModal">Cancel</button>
+        </div>
+    </div>
+}
 
 @code {
     private UserModel user = new();
@@ -221,25 +385,16 @@
     private List<SubAreaModel> subareaList = new();
     private bool AcceptedTerms = false;
     private bool Submitted = false;
+    private bool ShowUserExistsModal = false;
+    private bool ShowPasswordRules = false;
+    private bool IsPasswordValid = false;
+    private bool IsPasswordVisible = false;
 
-    // protected override async Task OnInitializedAsync()
-    // {
-    //     stateList = await RegistrationService.GetStatesAsync();
-
-    //     // Load phone number from LocalStorage
-    //     var phoneFromLocalStorage = await LocalStorage.GetItemAsync<string>("PhoneNumber");
-
-    //     if (!string.IsNullOrEmpty(phoneFromLocalStorage))
-    //     {
-    //         user.PhoneNumber = phoneFromLocalStorage;
-    //     }
-    // }
     protected override async Task OnInitializedAsync()
     {
         try
         {
             stateList = await RegistrationService.GetStatesAsync();
-
             var phoneFromLocalStorage = await LocalStorage.GetItemAsync<string>("PhoneNumber");
 
             if (!string.IsNullOrEmpty(phoneFromLocalStorage))
@@ -252,8 +407,6 @@
             Console.WriteLine($"Error during initialization: {ex.Message}");
         }
     }
-
-
 
     private string SelectedStateId
     {
@@ -340,28 +493,54 @@
         if (response != null)
         {
             Submitted = true;
-
-            // Clear local storage phone number after successful registration
             await LocalStorage.RemoveItemAsync("PhoneNumber");
-
-            // Reset the form and related data
             user = new UserModel();
             AcceptedTerms = false;
-
-            // Also clear dropdowns
             stateList = await RegistrationService.GetStatesAsync();
             cityList.Clear();
             areaList.Clear();
             subareaList.Clear();
-
+            ShowUserExistsModal = true;
             await InvokeAsync(StateHasChanged);
         }
         else
         {
-            // Handle error response (optional)
             Submitted = false;
-            // Optionally, show an error message
         }
     }
 
+    private void CloseModal()
+    {
+        ShowUserExistsModal = false;
+    }
+
+    private void NavigateToLogin()
+    {
+        Navigation.NavigateTo("/login");
+    }
+
+    private string PasswordInputType => IsPasswordVisible ? "text" : "password";
+
+    private void TogglePasswordVisibility()
+    {
+        IsPasswordVisible = !IsPasswordVisible;
+    }
+
+    private void OnPasswordInput(ChangeEventArgs e)
+    {
+        var password = e.Value?.ToString() ?? "";
+        user.Password = password;
+        IsPasswordValid = IsValidPassword(password);
+    }
+
+    private bool IsValidPassword(string password)
+    {
+        return !string.IsNullOrWhiteSpace(password) &&
+               password.Length >= 7 &&
+               password.Length <= 15 &&
+               password.Any(char.IsLower) &&
+               password.Any(char.IsUpper) &&
+               password.Any(char.IsDigit) &&
+               password.Any(ch => "!@#$%^&*()_+-=[]{}|;:,.<>?".Contains(ch));
+    }
 }

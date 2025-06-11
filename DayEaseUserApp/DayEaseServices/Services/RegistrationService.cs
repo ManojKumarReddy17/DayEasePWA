@@ -22,21 +22,20 @@ public class RegistrationService : IRegistration
         _apiservice = apiservice;
     }
 
-    public async Task<string> PostAsync<TRequest, TRespnse>(RegistrationRequest model)
+    public async Task<string> PostAsync<TRequest, TRespnse>(MobileNumberRequest model)
     {
         string endpoint = "User/OTPInitiate";
-        var result = await _apiservice.PostAsync<RegistrationRequest, string>(endpoint, model);
-
+        var result = await _apiservice.PostAsync<MobileNumberRequest, string>(endpoint, model);
         return result;
     }
 
+    public async Task<string> RegisterUserAsync(UserModel userModel)
+    {
+        string endpoint = "User/Register";
+        var response = await _apiservice.PostAsync<UserModel, string>(endpoint, userModel);
+        return response;
+    }
 
-    //public async Task<OtpResponse> PostAsync<TRequest, TResponse>(TRequest model)
-    //{
-    //    string endpoint = "User/OTPInitiate";
-    //    var result = await _apiservice.PostAsync<TRequest, OtpResponse>(endpoint, model);
-    //    return result;
-    //}
 
     public async Task<List<StateModel>> GetStatesAsync()
     {
@@ -45,12 +44,7 @@ public class RegistrationService : IRegistration
         var result = await _apiservice.PostAsync<object, StateResponse>(endpoint, null);
         return result?.Data ?? new List<StateModel>();
     }
-    //public async Task<List<CityModel>> GetCityAsync(CityModel cityModel)
-    //{
-    //    string endpoint = "Cities/GetCitiesBYStateId";
-    //    var result = await _apiservice.PostAsync<object, CityResponse>(endpoint, cityModel);
-    //    return result?.Data ?? new List<CityModel>();
-    //}
+   
     public async Task<List<CityModel>> GetCityAsync(CityModel cityModel)
     {
         string endpoint = "Cities/GetCitiesBYStateId";
@@ -70,19 +64,7 @@ public class RegistrationService : IRegistration
         return result ?? new List<SubAreaModel>();
     }
 
-
-    //public async Task<string> UserRegister<TRequest, TRespnse>(UserModel model)
-    //{
-    //    string endpoint = "User/Register";
-    //    var result = await _apiservice.UserRegister<UserModel, string>(endpoint, model);
-    //    return result;
-    //}
-    public async Task<string> RegisterUserAsync(UserModel userModel)
-    {
-        string endpoint = "User/Register";
-        var response = await _apiservice.PostAsync<UserModel, string>(endpoint, userModel);
-        return response;
-    }
+  
 
     public async Task<string> ValidateOtp<TRequest, TRespnse>(OtpVerificationRequest model)
     {
