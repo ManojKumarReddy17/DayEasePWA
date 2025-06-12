@@ -11,11 +11,13 @@ namespace Domain.RequestModels
     {
 
         [Required(ErrorMessage = "Username is required.")]
-        [StringLength(10, MinimumLength = 10, ErrorMessage = "Username must be exactly 10 characters.")]
+        [StringLength(10, MinimumLength = 10, ErrorMessage = "Please enter a valid 10-digit mobile number.")]
         public string phonenumber { get; set; }
 
 
-        [Required(ErrorMessage = "Password is required.")]
+        [Required(ErrorMessage = "Password is required")]
+        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{7,15}$",
+           ErrorMessage = "Password must be 7–15 characters and include uppercase, lowercase, number, and special character.")]
         public string password { get; set; }
 
 
