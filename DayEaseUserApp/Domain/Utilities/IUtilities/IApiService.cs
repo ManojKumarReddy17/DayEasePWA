@@ -13,6 +13,16 @@ namespace Registration.IApiService
         void SetAuthorizationHeader(string token);
         void RemoveAuthorizationHeader();
 
+        //product category 
+        Task<TResponse> PostPageAsync<TRequest, TResponse>(string url, TRequest request);
+
+
+        Task<string> GetProductByStoreId<TRequest, TResponse>(string url, TRequest data);
+        Task<TResponse> GetProductCategoriesByStoreId<TRequest, TResponse>(string url, TRequest data);
+
+
+
+
     }
 }
 

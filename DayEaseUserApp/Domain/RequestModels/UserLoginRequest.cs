@@ -16,8 +16,7 @@ namespace Domain.RequestModels
 
 
         [Required(ErrorMessage = "Password is required")]
-        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{7,15}$",
-           ErrorMessage = "Password must be 7–15 characters and include uppercase, lowercase, number, and special character.")]
+        
         public string password { get; set; }
 
 
