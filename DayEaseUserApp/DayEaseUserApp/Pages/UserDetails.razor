@@ -192,12 +192,19 @@
         position: relative;
         width: 320px;
         max-width: 100%;
+        border-radius: 8px;
+        overflow:  hidden;
+
     }
 
     .password-input {
         width: 100%;
-        padding-right: 40px; /* Space for the toggle icon */
+        padding-right: 40px;
         box-sizing: border-box;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        padding: 10px;
+        font-size:  1rem;
     }
 
     .password-toggle {
@@ -368,7 +375,7 @@
 {
     <div class="modal-backdrop">
         <div class="modal-box">
-            <p>User already exists. Please login or use a different number.</p>
+            <p>Successfully registered. Please log in to continue.</p>
             <button class="btn-primary-modal" @onclick="NavigateToLogin">Login</button>
             <button class="btn-secondary-modal" @onclick="CloseModal">Cancel</button>
         </div>

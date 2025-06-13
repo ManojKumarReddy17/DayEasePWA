@@ -1,0 +1,247 @@
+﻿@page "/highlightnew"
+@inject IJSRuntime JS
+@using System.Net.Http.Json
+@using Domain.DomainModels
+
+<style>
+    .card-title {
+        font-size: 1.1rem;
+        font-weight: 600;
+    }
+
+    .card-subtitle {
+        font-size: 0.9rem;
+        color: gray;
+    }
+
+    .badge {
+        font-size: 0.75rem;
+    }
+
+   
+
+    .product-scroll {
+        scroll-behavior: smooth;
+        white-space: nowrap;
+        padding-bottom: 10px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        /* Hide scrollbar for WebKit (Chrome, Safari) */
+        -ms-overflow-style: none; /* IE and Edge */
+        scrollbar-width: none; /* Firefox */
+    }
+
+        .product-scroll::-webkit-scrollbar {
+            display: none; /* Chrome, Safari, Opera */
+        }
+
+
+    .highlight-card-wrapper {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+        .highlight-card-wrapper:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+        }
+
+    .special-offer {
+        color: #0284FF;
+        font-weight: bold;
+        font-size: 1.1rem;
+        background-color: #f8fbe6;
+        padding: 0.5rem 1rem;
+        border-radius: 0.25rem;
+        margin-top: 1rem;
+    }
+
+    .todays-offers {
+        color: #004080;
+        background-color: #f0f0f0;
+        list-style-type: none;
+        margin-top: 0.5rem;
+        margin-bottom: 1rem;
+        padding-left: 0;
+    }
+
+    .logo {
+        width: 80px;
+        height: auto;
+        margin-right: 12px;
+        flex-shrink: 0;
+    }
+
+    .store-offers-heading {
+        /* font-size: 1.5rem; */
+        font-weight: 600;
+        background-color: #f0f0f0;
+        text-align: center;
+        padding: 1rem;
+        border-radius: 8px;
+        color: #0284FF;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start; /* logo aligns left */
+        gap: 0.75rem;
+        vertical-align: middle;
+        font-size: 1.3rem;
+       
+    }
+
+        .store-offers-heading i {
+            font-size: 1.3rem;
+            vertical-align: middle;
+            color: #0284FF;
+        }
+
+
+    .offer-icon {
+        color: #ffd800;
+        margin-right: 0.5rem;
+        font-size: 1rem;
+        vertical-align: middle;
+        transition: transform 0.2s ease;
+    }
+
+    .todays-offers li:hover .offer-icon {
+        transform: scale(1.2) rotate(10deg);
+    }
+
+
+    .btn-outline-primary {
+        font-size: 1rem;
+        font-weight: 500;
+        color: white;
+        background-color: #0284FF;
+        border-color: transparent;
+    }
+
+        .btn-outline-primary:hover {
+            background-color: #28ef32;
+            color: white;
+        }
+</style>
+
+<div>
+    <h2 class="store-offers-heading">
+        <img src="images/Day-Ease-logo-black.png" alt="Day Ease Logo" class="logo" />
+        <span><i class="bi bi-shop me-2"></i>Near By Stores</span>
+       
+    </h2>
+
+
+</div>
+
+<div class="container">
+    <div class="row g-4">
+        @foreach (var store in Stores)
+        {
+            var scrollId = $"scrollDiv_{store.StoreId}";
+            <div class="col-12 col-sm-6 col-lg-4 d-flex">
+                <div class="highlight-card-wrapper w-100 h-100">
+                    <div class="card h-100 shadow-sm">
+                        @* <img src="images/store1.jpg" class="card-img-top" style="height: 180px; object-fit: cover;" alt="@store.StoreName" /> *@
+                        <div class="card-body d-flex flex-column justify-content-between">
+                            <div>
+                                <h5 class="card-title">@store.StoreName</h5>
+                                <p class="card-subtitle">@store.Location</p>
+
+                                @* <ul class="todays-offers"> *@
+                                @*     @foreach (var offer in store.DailyOffers) *@
+                                @*     { *@
+                                @*         <li><i class="bi bi-stars offer-icon"></i> @offer</li> *@
+                                @*     } *@
+                                @* </ul> *@
+
+                                <p class="special-offer">@store.SpecialOffer</p>
+                                <p class="text-muted">Distance: @store.DistanceInKm km</p>
+
+                                @if (store.Products?.Any() == true)
+                                {
+                                    <hr />
+                                    //<h6>Products:</h6>
+                                    <div class="position-relative">
+                                       
+
+                                        <div class="product-scroll d-flex overflow-auto" id="@scrollId">
+                                            @foreach (var product in store.Products.Take(10))
+                                            {
+                                                <div class="card me-2 p-2" style="min-width: 150px; max-width: 160px; flex-shrink: 0;">
+                                                    <img src="images/@product.ProductImg" class="card-img-top" style="height: 120px; object-fit: cover;" />
+                                                    <div class="card-body p-1">
+                                                        <h6 class="card-title mb-1">@product.ProductName</h6>
+                                                        <p class="mb-1">₹@product.Price</p>
+                                                        <span class="badge bg-success">@product.Discount% Off</span>
+                                                    </div>
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+
+                            <a href="/productcategory?storeId=@store.StoreId" class="btn btn-outline-primary mt-3">Shop Now</a>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@code {
+    private List<HighLightModel> Stores = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await FetchStoresAsync();
+    }
+
+    private async Task FetchStoresAsync()
+    {
+        try
+        {
+            var httpClient = new HttpClient
+                {
+                    BaseAddress = new Uri("https://kav38dlyyj.execute-api.ap-south-1.amazonaws.com/stg/")
+                };
+
+            var requestBody = new
+            {
+                Area = "DEA250516102207037",
+                Latitude = "12.949570",
+                Longitude = "77.701735"
+            };
+
+            var response = await httpClient.PostAsJsonAsync("User/GetStoresbyDistance", requestBody);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var apiResponse = await response.Content.ReadFromJsonAsync<NearbyStoresResponse>();
+
+                Stores = apiResponse?.Stores?.Select(s => new HighLightModel
+                    {
+                        StoreId = s.StoreId,
+                        StoreName = s.StoreName,
+                        Location = "Bangalore", // Replace with actual if available
+                        DistanceInKm = Math.Round(s.Distance, 2),
+                        Products = s.Products,
+                        DailyOffers = s.Products.Select(p => $"{p.ProductName} @ ₹{p.Price}").ToList(),
+                        SpecialOffer = $"Up to {s.Products.Max(p => p.Discount)}% off!"
+                    }).ToList() ?? new();
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Error: " + ex.Message);
+        }
+    }
+
+    private async Task Scroll(string elementId, int amount)
+    {
+        await JS.InvokeVoidAsync("scrollHorizontallyById", elementId, amount);
+    }
+
+    
+}
