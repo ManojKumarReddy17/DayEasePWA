@@ -1,0 +1,583 @@
+﻿@page "/productcategory"
+@inject IProductCategory ProductCategoryService
+@using DayEaseServices.Services.IServices
+@using Domain.RequestModels
+@using DayEaseUserApp.Layout
+<style>
+    /* For the DayEase logo */
+    .logo {
+
+        height: clamp(50px, 6vw, 80px); /* Responsive between 50-80px */
+    }
+
+    .logo-container {
+        text-align: center;
+        padding: 20px 0;
+        background: white; /* Or your preferred background */
+        margin-bottom: 20px;
+    }
+    /* Page layout with gradient background */
+    .page-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+        min-height: 100vh;
+    }
+
+    /* Style for page title */
+    .page-title {
+        margin-top: 20px;
+        font-size: 24px;
+    }
+
+    /* Product grid */
+    .product-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 25px;
+        padding: 20px 0;
+    }
+
+    /* Product card with colorful accents */
+    .product-card {
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        transition: all 0.3s ease;
+        background: white;
+        position: relative;
+        border-top: 4px solid #4a90e2; /* Blue accent border */
+    }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+        }
+
+    /* Product image */
+    .product-image-container {
+        position: relative;
+        height: 200px;
+        overflow: hidden;
+        background: #f8f9fa; /* Light gray fallback */
+    }
+
+    .product-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+    }
+
+    .product-card:hover .product-image {
+        transform: scale(1.05);
+    }
+
+    /*cart */
+    .cart-btn {
+    background-color: #007bff; /* Blue */
+    color: white;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 10px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-weight: 500;
+}
+
+.cart-btn:hover {
+    background-color: #28a745; /* Green on hover */
+}
+
+.cart-btn.added {
+    background-color: #007bff !important; /* Blue */
+    color: white;
+}
+
+.cart-btn.added:hover {
+    background-color: #218838 !important; /* Dark Green */
+}
+
+/* New styles for quantity layout */
+.cart-controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 8px;
+    gap: 8px;
+}
+
+/* Plus and minus button specific */
+.cart-btn.plus {
+        background-color: #007bff /* Green */
+}
+
+.cart-btn.minus {
+        background-color: #007bff /* Red */
+}
+
+/* Optional: hover effect for plus/minus */
+.cart-btn.plus:hover {
+    background-color: green;
+}
+
+.cart-btn.minus:hover {
+    background-color: red;
+}
+
+/* Quantity number display */
+.quantity {
+    font-weight: bold;
+    font-size: 16px;
+    width: 32px;
+    text-align: center;
+    color: #333;
+}
+
+
+
+    .top-navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 30px;
+        background-color: #ffffff;
+        border-bottom: 1px solid #e5e5e5;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Logo container */
+    .navbar-left {
+        flex: 1; /* Takes available space */
+    }
+
+    .navbar-right {
+        display: flex;
+        gap: 15px;
+    }
+
+    .nav-btn {
+        padding: 8px 15px;
+        border: none;
+        border-radius: 5px;
+        background: #f0f0f0;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+
+        /* Optional: Hover styles */
+        .nav-btn:hover {
+            background: #e0e0e0;
+        }
+
+    /* Product details with subtle gradient */
+    .product-card {
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        transition: all 0.3s ease;
+        background: white;
+    }
+
+    .product-image-container {
+        position: relative;
+        height: 200px;
+        overflow: hidden;
+    }
+
+    .product-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .product-details {
+        padding: 15px;
+    }
+
+    .price-action-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 15px;
+    }
+
+    .product-price {
+        font-weight: bold;
+        font-size: 1.2rem;
+        color: #2c3e50;
+        margin: 0;
+    }
+
+    .product-description span {
+        color: #666;
+        font-size: 0.9em;
+        margin-left: 5px;
+    }
+
+    /* Delivery Info */
+    .delivery-info {
+        padding: 8px 16px;
+        background-color: #f8f8f8;
+        font-size: 14px;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    /* Search Box */
+    .search-container {
+        display: flex;
+        padding: 10px 16px;
+        background-color: white;
+    }
+
+    .search-input {
+        flex: 1;
+        padding: 8px 12px;
+        border: 1px solid #ddd;
+        border-radius: 4px 0 0 4px;
+        font-size: 14px;
+    }
+
+    .search-button {
+        padding: 8px 12px;
+        background-color: #f8f8f8;
+        border: 1px solid #ddd;
+        border-left: none;
+        border-radius: 0 4px 4px 0;
+        cursor: pointer;
+    }
+
+    /* Categories Navigation */
+    .categories-nav {
+        margin: 1rem 0;
+    }
+
+    .categories-scroll {
+        display: flex;
+        overflow-x: auto;
+        gap: 1rem;
+        padding: 0.5rem 0;
+        scrollbar-width: none; /* Hide scrollbar for Firefox */
+    }
+
+        .categories-scroll::-webkit-scrollbar {
+            display: none; /* Hide scrollbar for Chrome/Safari */
+        }
+
+    .category-btn {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background: none;
+        border: none;
+        padding: 0.5rem;
+        min-width: 70px;
+        cursor: pointer;
+        font-size: 0.8rem;
+        color: #555;
+    }
+
+        .category-btn i {
+            font-size: 1.2rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .category-btn.active {
+            color: #007bff;
+            font-weight: bold;
+        }
+
+            .category-btn.active i {
+                color: #007bff;
+            }
+
+    .fas {
+        font-family: 'Font Awesome 6 Free' !important;
+        font-weight: 900;
+        display: inline-block;
+    }
+    /* Loading spinner with color */
+    .loading-spinner {
+        border: 4px solid rgba(74, 144, 226, 0.1);
+        border-radius: 50%;
+        border-top: 4px solid #4a90e2;
+        width: 40px;
+        height: 40px;
+        animation: spin 1s linear infinite;
+        margin: 50px auto;
+    }
+
+    @@keyframes spin {
+        0%{
+            transform: rotate(0deg);
+        }
+
+    100% {
+        transform: rotate(360deg);
+       }
+    }
+    /* Responsive adjustments*/
+    @@media (max-width: 768px) {
+        .product-container{
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+        gap: 15px;
+    }
+
+    .cart-summary {
+        bottom: 15px;
+        right: 15px;
+        padding: 12px 15px;
+    }
+    @@media (max-width: 768px) {
+            .top-navbar
+
+    {
+        padding: 10px 15px;
+    }
+
+    .logo {
+        height: 50px; /* Smaller on mobile */
+    }
+
+    .nav-btn {
+        padding: 6px 12px;
+        font-size: 14px;
+    }
+    }}
+   
+</style>
+
+
+
+
+<!-- Top Navbar -->
+<nav class="top-navbar">
+    <div class="navbar-left">
+        <img src="images/login-logo_v01.png" class="logo" alt="Your Logo" />
+    </div>
+    <div class="navbar-right">
+        <button class="nav-btn">🛒 Cart (@cart.Values.Sum(item => item.quantity))</button>
+
+        <button class="nav-btn">👤 Login</button>
+    </div>
+</nav>
+
+<!-- Search Box -->
+<div class="search-container">
+    <input type="text" @bind="searchQuery" class="search-input" placeholder='Search for "apple juice"' />
+    <button class="search-button" @onclick="SearchProducts">🔍</button>
+</div>
+
+<!-- Categories Navigation -->
+<div class="categories-nav">
+    <div class="categories-scroll">
+        @foreach (var cat in Categories)
+        {
+            <button class="category-btn @(selectedCategory == cat.Name ? "active" : "")"
+                    @onclick='() => FilterByCategory(cat.Name)'>
+                <i class="@cat.Icon"></i> @cat.Name
+            </button>
+        }
+    </div>
+</div>
+
+
+@if (filteredProducts == null || filteredProducts.Count == 0)
+{
+    <div class="loading-spinner">No products found</div>
+}
+else
+{
+    <div class="product-container">
+        @foreach (var product in filteredProducts)
+        {
+            <div class="product-card">
+                <div class="product-image-container">
+                    <img src="/choco.jpeg" alt="@product.ProductName" class="product-image" />
+
+                    /* <img src="@product.ProductImg" alt="@product.ProductName" class="product-image" /> */
+                </div>
+                <div class="product-details">
+                    <h4>@product.ProductName</h4>
+                    <p class="product-description">@product.ProductDesc</p>
+                    <p class="product-price">@FormatCurrency(product.Price)</p>
+                    @if (cart.ContainsKey(product.ProductId))
+                    {
+                        <div class="cart-controls">
+                            <button class="cart-btn minus" @onclick="() => DecreaseQuantity(product.ProductId)">➖</button>
+                            <span class="quantity">@cart[product.ProductId].quantity</span>
+                            <button class="cart-btn plus" @onclick="() => IncreaseQuantity(product.ProductId)">➕</button>
+                        </div>
+                    }
+                    else
+                    {
+                        <button class="cart-btn" @onclick="() => AddToCart(product)">Add to Cart</button>
+                    }
+
+
+
+                </div>
+            </div>
+        }
+    </div>
+}
+
+@code {
+    private List<ProductRequestModel> products = new();
+    private List<ProductRequestModel> filteredProducts = new();
+   
+    private Dictionary<string, (ProductRequestModel product, int quantity)> cart = new();
+
+
+
+   
+
+    private List<CategoryRequest> Categories = new()
+    {
+        new CategoryRequest { Name = "All", Icon = "fas fa-th" },
+        new CategoryRequest { Name = "Cake", Icon = "fas fa-coffee" },
+        new CategoryRequest { Name = "Home", Icon = "fas fa-home" },
+        new CategoryRequest { Name = "Toys", Icon = "fas fa-gamepad" },
+        new CategoryRequest { Name = "Fresh", Icon = "fas fa-apple-alt" },
+        new CategoryRequest { Name = "Electronics", Icon = "fas fa-laptop" },
+        new CategoryRequest { Name = "Mobiles", Icon = "fas fa-mobile-alt" },
+        new CategoryRequest { Name = "Beauty", Icon = "fas fa-spa" },
+        new CategoryRequest { Name = "Fashion", Icon = "fas fa-tshirt" },
+        new CategoryRequest { Name = "Deal Zone", Icon = "fas fa-tag" },
+        new CategoryRequest { Name = "Baby Store", Icon = "fas fa-baby" }
+    };
+
+    private string selectedCategory = "All";
+    private string searchQuery = "";
+   
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            var request = new PaginationQueryInput
+                {
+                    Product = new ProductRequestModel { StoreId = "2" },
+                    PaginationInput = new PaginationInput { PageNumber = 1, PageSize = 5 }
+                };
+            var result = await ProductCategoryService.GetProductsByStoreId(request);
+
+            if (result?.Result?.Items != null)
+            {
+                products = result.Result.Items.Select(p => new ProductRequestModel
+                    {
+                        ProductId = p.ProductId,
+                        StoreId = p.StoreId,
+                        CategoryId = p.CategoryId,
+                        ProductName = p.ProductName,
+                        ProductDesc = p.ProductDesc,
+                        Price = p.Price,
+                        Discount = p.Discount,
+                        ProductImg = p.ProductImg
+                    }).ToList();
+            }
+
+            FilterByCategory("All");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error: {ex.Message}");
+        }
+    }
+
+
+
+    private void FilterByCategory(string category)
+    {
+        selectedCategory = category;
+
+        if (category == "All")
+        {
+            filteredProducts = products.ToList();
+        }
+        else
+        {
+            filteredProducts = products
+                .Where(p => p.CategoryId != null && p.CategoryId.Equals(category, StringComparison.OrdinalIgnoreCase))
+                .ToList();
+        }
+
+        StateHasChanged();
+    }
+
+    private void SearchProducts()
+    {
+        if (string.IsNullOrWhiteSpace(searchQuery))
+        {
+            FilterByCategory(selectedCategory);
+            return;
+        }
+
+        filteredProducts = products
+            .Where(p => (!string.IsNullOrEmpty(p.ProductName) && p.ProductName.Contains(searchQuery, StringComparison.OrdinalIgnoreCase)) ||
+                        (!string.IsNullOrEmpty(p.ProductDesc) && p.ProductDesc.Contains(searchQuery, StringComparison.OrdinalIgnoreCase)))
+            .ToList();
+
+        StateHasChanged();
+    }
+
+    private string FormatCurrency(decimal amount)
+    {
+        return "₹" + amount.ToString("0.00");
+    }
+
+    private void AddToCart(ProductRequestModel product)
+    {
+        if (cart.ContainsKey(product.ProductId))
+        {
+            cart[product.ProductId] = (product, cart[product.ProductId].quantity + 1);
+        }
+        else
+        {
+            cart[product.ProductId] = (product, 1);
+        }
+    }
+    private int GetProductQuantity(string productId)
+    {
+        return cart.ContainsKey(productId) ? cart[productId].quantity : 0;
+
+    }
+
+    private string GetCartButtonClass(string productId)
+    {
+        return cart.ContainsKey(productId) ? "cart-btn added" : "cart-btn";
+    }
+
+    private void IncreaseQuantity(string productId)
+    {
+        if (cart.ContainsKey(productId))
+        {
+            cart[productId] = (cart[productId].product, cart[productId].quantity + 1);
+        }
+    }
+
+    private void DecreaseQuantity(string productId)
+    {
+        if (cart.ContainsKey(productId))
+        {
+            int newQty = cart[productId].quantity - 1;
+            if (newQty > 0)
+            {
+                cart[productId] = (cart[productId].product, newQty);
+            }
+            else
+            {
+                cart.Remove(productId); // remove from cart if qty is 0
+            }
+        }
+    }
+
+
+
+}
+}
