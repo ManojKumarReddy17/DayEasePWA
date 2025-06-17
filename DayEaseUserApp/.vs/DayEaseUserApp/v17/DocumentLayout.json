@@ -3,156 +3,44 @@
   "WorkspaceRootPath": "C:\\web application\\DayEaseUser\\dayeaseuser\\DayEaseUserApp\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{4336988E-970C-477C-9EBB-438167CB3BC8}|DayEaseUserApp\\DayEaseUserApp.csproj|c:\\web application\\dayeaseuser\\dayeaseuser\\dayeaseuserapp\\dayeaseuserapp\\pages\\productcategory.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{4336988E-970C-477C-9EBB-438167CB3BC8}|DayEaseUserApp\\DayEaseUserApp.csproj|solutionrelative:dayeaseuserapp\\pages\\productcategory.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{4336988E-970C-477C-9EBB-438167CB3BC8}|DayEaseUserApp\\DayEaseUserApp.csproj|c:\\web application\\dayeaseuser\\dayeaseuser\\dayeaseuserapp\\dayeaseuserapp\\pages\\login.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{4336988E-970C-477C-9EBB-438167CB3BC8}|DayEaseUserApp\\DayEaseUserApp.csproj|solutionrelative:dayeaseuserapp\\pages\\login.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{4336988E-970C-477C-9EBB-438167CB3BC8}|DayEaseUserApp\\DayEaseUserApp.csproj|c:\\web application\\dayeaseuser\\dayeaseuser\\dayeaseuserapp\\dayeaseuserapp\\pages\\highlightpage.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{4336988E-970C-477C-9EBB-438167CB3BC8}|DayEaseUserApp\\DayEaseUserApp.csproj|solutionrelative:dayeaseuserapp\\pages\\highlightpage.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4336988E-970C-477C-9EBB-438167CB3BC8}|DayEaseUserApp\\DayEaseUserApp.csproj|c:\\web application\\dayeaseuser\\dayeaseuser\\dayeaseuserapp\\dayeaseuserapp\\pages\\login.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{4336988E-970C-477C-9EBB-438167CB3BC8}|DayEaseUserApp\\DayEaseUserApp.csproj|solutionrelative:dayeaseuserapp\\pages\\login.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{4336988E-970C-477C-9EBB-438167CB3BC8}|DayEaseUserApp\\DayEaseUserApp.csproj|c:\\web application\\dayeaseuser\\dayeaseuser\\dayeaseuserapp\\dayeaseuserapp\\pages\\home.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{4336988E-970C-477C-9EBB-438167CB3BC8}|DayEaseUserApp\\DayEaseUserApp.csproj|solutionrelative:dayeaseuserapp\\pages\\home.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{4336988E-970C-477C-9EBB-438167CB3BC8}|DayEaseUserApp\\DayEaseUserApp.csproj|c:\\web application\\dayeaseuser\\dayeaseuser\\dayeaseuserapp\\dayeaseuserapp\\pages\\userdetails.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{4336988E-970C-477C-9EBB-438167CB3BC8}|DayEaseUserApp\\DayEaseUserApp.csproj|solutionrelative:dayeaseuserapp\\pages\\userdetails.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{81914702-48F3-46B9-AD4A-DDBCE3DBAD7A}|Domain\\Domain.csproj|c:\\web application\\dayeaseuser\\dayeaseuser\\dayeaseuserapp\\domain\\requestmodels\\userloginrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{81914702-48F3-46B9-AD4A-DDBCE3DBAD7A}|Domain\\Domain.csproj|solutionrelative:domain\\requestmodels\\userloginrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{4336988E-970C-477C-9EBB-438167CB3BC8}|DayEaseUserApp\\DayEaseUserApp.csproj|c:\\web application\\dayeaseuser\\dayeaseuser\\dayeaseuserapp\\dayeaseuserapp\\layout\\mainlayout.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{4336988E-970C-477C-9EBB-438167CB3BC8}|DayEaseUserApp\\DayEaseUserApp.csproj|solutionrelative:dayeaseuserapp\\layout\\mainlayout.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{4336988E-970C-477C-9EBB-438167CB3BC8}|DayEaseUserApp\\DayEaseUserApp.csproj|c:\\web application\\dayeaseuser\\dayeaseuser\\dayeaseuserapp\\dayeaseuserapp\\layout\\navmenu.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{4336988E-970C-477C-9EBB-438167CB3BC8}|DayEaseUserApp\\DayEaseUserApp.csproj|solutionrelative:dayeaseuserapp\\layout\\navmenu.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{4336988E-970C-477C-9EBB-438167CB3BC8}|DayEaseUserApp\\DayEaseUserApp.csproj|c:\\web application\\dayeaseuser\\dayeaseuser\\dayeaseuserapp\\dayeaseuserapp\\_imports.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{4336988E-970C-477C-9EBB-438167CB3BC8}|DayEaseUserApp\\DayEaseUserApp.csproj|solutionrelative:dayeaseuserapp\\_imports.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{4336988E-970C-477C-9EBB-438167CB3BC8}|DayEaseUserApp\\DayEaseUserApp.csproj|c:\\web application\\dayeaseuser\\dayeaseuser\\dayeaseuserapp\\dayeaseuserapp\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4336988E-970C-477C-9EBB-438167CB3BC8}|DayEaseUserApp\\DayEaseUserApp.csproj|solutionrelative:dayeaseuserapp\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{4336988E-970C-477C-9EBB-438167CB3BC8}|DayEaseUserApp\\DayEaseUserApp.csproj|c:\\web application\\dayeaseuser\\dayeaseuser\\dayeaseuserapp\\dayeaseuserapp\\app.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{4336988E-970C-477C-9EBB-438167CB3BC8}|DayEaseUserApp\\DayEaseUserApp.csproj|solutionrelative:dayeaseuserapp\\app.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{81914702-48F3-46B9-AD4A-DDBCE3DBAD7A}|Domain\\Domain.csproj|c:\\web application\\dayeaseuser\\dayeaseuser\\dayeaseuserapp\\domain\\utilities\\apiservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{81914702-48F3-46B9-AD4A-DDBCE3DBAD7A}|Domain\\Domain.csproj|solutionrelative:domain\\utilities\\apiservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{4336988E-970C-477C-9EBB-438167CB3BC8}|DayEaseUserApp\\DayEaseUserApp.csproj|c:\\web application\\dayeaseuser\\dayeaseuser\\dayeaseuserapp\\dayeaseuserapp\\pages\\otpverification.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{4336988E-970C-477C-9EBB-438167CB3BC8}|DayEaseUserApp\\DayEaseUserApp.csproj|solutionrelative:dayeaseuserapp\\pages\\otpverification.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{4336988E-970C-477C-9EBB-438167CB3BC8}|DayEaseUserApp\\DayEaseUserApp.csproj|c:\\web application\\dayeaseuser\\dayeaseuser\\dayeaseuserapp\\dayeaseuserapp\\pages\\mobilenumber.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{4336988E-970C-477C-9EBB-438167CB3BC8}|DayEaseUserApp\\DayEaseUserApp.csproj|solutionrelative:dayeaseuserapp\\pages\\mobilenumber.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{4336988E-970C-477C-9EBB-438167CB3BC8}|DayEaseUserApp\\DayEaseUserApp.csproj|c:\\web application\\dayeaseuser\\dayeaseuser\\dayeaseuserapp\\dayeaseuserapp\\wwwroot\\index.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{4336988E-970C-477C-9EBB-438167CB3BC8}|DayEaseUserApp\\DayEaseUserApp.csproj|solutionrelative:dayeaseuserapp\\wwwroot\\index.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{4336988E-970C-477C-9EBB-438167CB3BC8}|DayEaseUserApp\\DayEaseUserApp.csproj|c:\\web application\\dayeaseuser\\dayeaseuser\\dayeaseuserapp\\dayeaseuserapp\\wwwroot\\manifest.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{4336988E-970C-477C-9EBB-438167CB3BC8}|DayEaseUserApp\\DayEaseUserApp.csproj|solutionrelative:dayeaseuserapp\\wwwroot\\manifest.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{81914702-48F3-46B9-AD4A-DDBCE3DBAD7A}|Domain\\Domain.csproj|c:\\web application\\dayeaseuser\\dayeaseuser\\dayeaseuserapp\\domain\\domainmodels\\apidetails.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{81914702-48F3-46B9-AD4A-DDBCE3DBAD7A}|Domain\\Domain.csproj|solutionrelative:domain\\domainmodels\\apidetails.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{4336988E-970C-477C-9EBB-438167CB3BC8}|DayEaseUserApp\\DayEaseUserApp.csproj|c:\\web application\\dayeaseuser\\dayeaseuser\\dayeaseuserapp\\dayeaseuserapp\\pages\\productcategory.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{4336988E-970C-477C-9EBB-438167CB3BC8}|DayEaseUserApp\\DayEaseUserApp.csproj|solutionrelative:dayeaseuserapp\\pages\\productcategory.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{81914702-48F3-46B9-AD4A-DDBCE3DBAD7A}|Domain\\Domain.csproj|c:\\web application\\dayeaseuser\\dayeaseuser\\dayeaseuserapp\\domain\\domainmodels\\userloginresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{81914702-48F3-46B9-AD4A-DDBCE3DBAD7A}|Domain\\Domain.csproj|solutionrelative:domain\\domainmodels\\userloginresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{81914702-48F3-46B9-AD4A-DDBCE3DBAD7A}|Domain\\Domain.csproj|c:\\web application\\dayeaseuser\\dayeaseuser\\dayeaseuserapp\\domain\\requestmodels\\citymodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{81914702-48F3-46B9-AD4A-DDBCE3DBAD7A}|Domain\\Domain.csproj|solutionrelative:domain\\requestmodels\\citymodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{81914702-48F3-46B9-AD4A-DDBCE3DBAD7A}|Domain\\Domain.csproj|c:\\web application\\dayeaseuser\\dayeaseuser\\dayeaseuserapp\\domain\\requestmodels\\userlocationstate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{81914702-48F3-46B9-AD4A-DDBCE3DBAD7A}|Domain\\Domain.csproj|solutionrelative:domain\\requestmodels\\userlocationstate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4336988E-970C-477C-9EBB-438167CB3BC8}|DayEaseUserApp\\DayEaseUserApp.csproj|c:\\web application\\dayeaseuser\\dayeaseuser\\dayeaseuserapp\\dayeaseuserapp\\pages\\weather.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{4336988E-970C-477C-9EBB-438167CB3BC8}|DayEaseUserApp\\DayEaseUserApp.csproj|solutionrelative:dayeaseuserapp\\pages\\weather.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{81914702-48F3-46B9-AD4A-DDBCE3DBAD7A}|Domain\\Domain.csproj|c:\\web application\\dayeaseuser\\dayeaseuser\\dayeaseuserapp\\domain\\requestmodels\\nearbystoresrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{81914702-48F3-46B9-AD4A-DDBCE3DBAD7A}|Domain\\Domain.csproj|solutionrelative:domain\\requestmodels\\nearbystoresrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{81914702-48F3-46B9-AD4A-DDBCE3DBAD7A}|Domain\\Domain.csproj|c:\\web application\\dayeaseuser\\dayeaseuser\\dayeaseuserapp\\domain\\requestmodels\\usermodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{81914702-48F3-46B9-AD4A-DDBCE3DBAD7A}|Domain\\Domain.csproj|solutionrelative:domain\\requestmodels\\usermodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{1D0DAB53-98BD-410F-B0CC-93603F493FD5}|DayEaseServices\\DayEaseServices.csproj|c:\\web application\\dayeaseuser\\dayeaseuser\\dayeaseuserapp\\dayeaseservices\\services\\iservices\\istoreservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1D0DAB53-98BD-410F-B0CC-93603F493FD5}|DayEaseServices\\DayEaseServices.csproj|solutionrelative:dayeaseservices\\services\\iservices\\istoreservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{1D0DAB53-98BD-410F-B0CC-93603F493FD5}|DayEaseServices\\DayEaseServices.csproj|c:\\web application\\dayeaseuser\\dayeaseuser\\dayeaseuserapp\\dayeaseservices\\services\\userloginservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1D0DAB53-98BD-410F-B0CC-93603F493FD5}|DayEaseServices\\DayEaseServices.csproj|solutionrelative:dayeaseservices\\services\\userloginservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{81914702-48F3-46B9-AD4A-DDBCE3DBAD7A}|Domain\\Domain.csproj|c:\\web application\\dayeaseuser\\dayeaseuser\\dayeaseuserapp\\domain\\domainmodels\\highlightmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{81914702-48F3-46B9-AD4A-DDBCE3DBAD7A}|Domain\\Domain.csproj|solutionrelative:domain\\domainmodels\\highlightmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{81914702-48F3-46B9-AD4A-DDBCE3DBAD7A}|Domain\\Domain.csproj|c:\\web application\\dayeaseuser\\dayeaseuser\\dayeaseuserapp\\domain\\requestmodels\\mobilenumberrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{81914702-48F3-46B9-AD4A-DDBCE3DBAD7A}|Domain\\Domain.csproj|solutionrelative:domain\\requestmodels\\mobilenumberrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{81914702-48F3-46B9-AD4A-DDBCE3DBAD7A}|Domain\\Domain.csproj|c:\\web application\\dayeaseuser\\dayeaseuser\\dayeaseuserapp\\domain\\requestmodels\\otpverificationrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{81914702-48F3-46B9-AD4A-DDBCE3DBAD7A}|Domain\\Domain.csproj|solutionrelative:domain\\requestmodels\\otpverificationrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{4336988E-970C-477C-9EBB-438167CB3BC8}|DayEaseUserApp\\DayEaseUserApp.csproj|c:\\web application\\dayeaseuser\\dayeaseuser\\dayeaseuserapp\\dayeaseuserapp\\pages\\userforgotpassword.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{4336988E-970C-477C-9EBB-438167CB3BC8}|DayEaseUserApp\\DayEaseUserApp.csproj|solutionrelative:dayeaseuserapp\\pages\\userforgotpassword.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{81914702-48F3-46B9-AD4A-DDBCE3DBAD7A}|Domain\\Domain.csproj|c:\\web application\\dayeaseuser\\dayeaseuser\\dayeaseuserapp\\domain\\requestmodels\\refreshtokenrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{81914702-48F3-46B9-AD4A-DDBCE3DBAD7A}|Domain\\Domain.csproj|solutionrelative:domain\\requestmodels\\refreshtokenrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{81914702-48F3-46B9-AD4A-DDBCE3DBAD7A}|Domain\\Domain.csproj|c:\\web application\\dayeaseuser\\dayeaseuser\\dayeaseuserapp\\domain\\requestmodels\\statemodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{81914702-48F3-46B9-AD4A-DDBCE3DBAD7A}|Domain\\Domain.csproj|solutionrelative:domain\\requestmodels\\statemodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{81914702-48F3-46B9-AD4A-DDBCE3DBAD7A}|Domain\\Domain.csproj|c:\\web application\\dayeaseuser\\dayeaseuser\\dayeaseuserapp\\domain\\utilities\\apiservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{81914702-48F3-46B9-AD4A-DDBCE3DBAD7A}|Domain\\Domain.csproj|solutionrelative:domain\\utilities\\apiservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{1D0DAB53-98BD-410F-B0CC-93603F493FD5}|DayEaseServices\\DayEaseServices.csproj|c:\\web application\\dayeaseuser\\dayeaseuser\\dayeaseuserapp\\dayeaseservices\\services\\registrationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1D0DAB53-98BD-410F-B0CC-93603F493FD5}|DayEaseServices\\DayEaseServices.csproj|solutionrelative:dayeaseservices\\services\\registrationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1D0DAB53-98BD-410F-B0CC-93603F493FD5}|DayEaseServices\\DayEaseServices.csproj|c:\\web application\\dayeaseuser\\dayeaseuser\\dayeaseuserapp\\dayeaseservices\\services\\iservices\\iregistration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1D0DAB53-98BD-410F-B0CC-93603F493FD5}|DayEaseServices\\DayEaseServices.csproj|solutionrelative:dayeaseservices\\services\\iservices\\iregistration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{81914702-48F3-46B9-AD4A-DDBCE3DBAD7A}|Domain\\Domain.csproj|c:\\web application\\dayeaseuser\\dayeaseuser\\dayeaseuserapp\\domain\\requestmodels\\apisettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{81914702-48F3-46B9-AD4A-DDBCE3DBAD7A}|Domain\\Domain.csproj|solutionrelative:domain\\requestmodels\\apisettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1D0DAB53-98BD-410F-B0CC-93603F493FD5}|DayEaseServices\\DayEaseServices.csproj|c:\\web application\\dayeaseuser\\dayeaseuser\\dayeaseuserapp\\dayeaseservices\\services\\iservices\\iuserloginservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1D0DAB53-98BD-410F-B0CC-93603F493FD5}|DayEaseServices\\DayEaseServices.csproj|solutionrelative:dayeaseservices\\services\\iservices\\iuserloginservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{81914702-48F3-46B9-AD4A-DDBCE3DBAD7A}|Domain\\Domain.csproj|c:\\web application\\dayeaseuser\\dayeaseuser\\dayeaseuserapp\\domain\\utilities\\iutilities\\iapiservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{81914702-48F3-46B9-AD4A-DDBCE3DBAD7A}|Domain\\Domain.csproj|solutionrelative:domain\\utilities\\iutilities\\iapiservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{4336988E-970C-477C-9EBB-438167CB3BC8}|DayEaseUserApp\\DayEaseUserApp.csproj|c:\\web application\\dayeaseuser\\dayeaseuser\\dayeaseuserapp\\dayeaseuserapp\\wwwroot\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{4336988E-970C-477C-9EBB-438167CB3BC8}|DayEaseUserApp\\DayEaseUserApp.csproj|solutionrelative:dayeaseuserapp\\wwwroot\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{81914702-48F3-46B9-AD4A-DDBCE3DBAD7A}|Domain\\Domain.csproj|c:\\web application\\dayeaseuser\\dayeaseuser\\dayeaseuserapp\\domain\\requestmodels\\areamodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{81914702-48F3-46B9-AD4A-DDBCE3DBAD7A}|Domain\\Domain.csproj|solutionrelative:domain\\requestmodels\\areamodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{81914702-48F3-46B9-AD4A-DDBCE3DBAD7A}|Domain\\Domain.csproj|c:\\web application\\dayeaseuser\\dayeaseuser\\dayeaseuserapp\\domain\\requestmodels\\subareamodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{81914702-48F3-46B9-AD4A-DDBCE3DBAD7A}|Domain\\Domain.csproj|solutionrelative:domain\\requestmodels\\subareamodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{81914702-48F3-46B9-AD4A-DDBCE3DBAD7A}|Domain\\Domain.csproj|c:\\web application\\dayeaseuser\\dayeaseuser\\dayeaseuserapp\\domain\\domainmodels\\jwttokenresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{81914702-48F3-46B9-AD4A-DDBCE3DBAD7A}|Domain\\Domain.csproj|solutionrelative:domain\\domainmodels\\jwttokenresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{81914702-48F3-46B9-AD4A-DDBCE3DBAD7A}|Domain\\Domain.csproj|c:\\web application\\dayeaseuser\\dayeaseuser\\dayeaseuserapp\\domain\\requestmodels\\storeregistrationrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{81914702-48F3-46B9-AD4A-DDBCE3DBAD7A}|Domain\\Domain.csproj|solutionrelative:domain\\requestmodels\\storeregistrationrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{4336988E-970C-477C-9EBB-438167CB3BC8}|DayEaseUserApp\\DayEaseUserApp.csproj|c:\\web application\\dayeaseuser\\dayeaseuser\\dayeaseuserapp\\dayeaseuserapp\\wwwroot\\css\\bootstrap\\custom.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
-      "RelativeMoniker": "D:0:0:{4336988E-970C-477C-9EBB-438167CB3BC8}|DayEaseUserApp\\DayEaseUserApp.csproj|solutionrelative:dayeaseuserapp\\wwwroot\\css\\bootstrap\\custom.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\BHARATH REDDY\\AppData\\Local\\Temp\\.vsdbgsrc\\b38c7bbc046e461a8a58c7e0eb00bea4828feec3606c51aaae6062bc28a1448e\\FileConfigurationProvider.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
@@ -168,102 +56,56 @@
           "SelectedChildIndex": 6,
           "Children": [
             {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "UserDetails.razor",
-              "DocumentMoniker": "C:\\web application\\DayEaseUser\\dayeaseuser\\DayEaseUserApp\\DayEaseUserApp\\Pages\\UserDetails.razor",
-              "RelativeDocumentMoniker": "DayEaseUserApp\\Pages\\UserDetails.razor",
-              "ToolTip": "C:\\web application\\DayEaseUser\\dayeaseuser\\DayEaseUserApp\\DayEaseUserApp\\Pages\\UserDetails.razor",
-              "RelativeToolTip": "DayEaseUserApp\\Pages\\UserDetails.razor",
-              "ViewState": "AgIAAPYAAAAAAAAAAAAQwAoBAAA3AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-05-19T12:22:04.271Z",
-              "IsPinned": true,
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 18,
-              "Title": "CityModel.cs",
-              "DocumentMoniker": "C:\\web application\\DayEaseUser\\dayeaseuser\\DayEaseUserApp\\Domain\\RequestModels\\CityModel.cs",
-              "RelativeDocumentMoniker": "Domain\\RequestModels\\CityModel.cs",
-              "ToolTip": "C:\\web application\\DayEaseUser\\dayeaseuser\\DayEaseUserApp\\Domain\\RequestModels\\CityModel.cs",
-              "RelativeToolTip": "Domain\\RequestModels\\CityModel.cs",
-              "ViewState": "AgIAAAUAAAAAAAAAAIBJwA8AAAAFAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-23T09:54:13.056Z",
-              "IsPinned": true,
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 33,
-              "Title": "AreaModel.cs",
-              "DocumentMoniker": "C:\\web application\\DayEaseUser\\dayeaseuser\\DayEaseUserApp\\Domain\\RequestModels\\AreaModel.cs",
-              "RelativeDocumentMoniker": "Domain\\RequestModels\\AreaModel.cs",
-              "ToolTip": "C:\\web application\\DayEaseUser\\dayeaseuser\\DayEaseUserApp\\Domain\\RequestModels\\AreaModel.cs",
-              "RelativeToolTip": "Domain\\RequestModels\\AreaModel.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAqAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-24T07:15:48.993Z",
-              "IsPinned": true,
-              "EditorCaption": ""
-            },
-            {
               "$type": "Bookmark",
               "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "Home.razor",
-              "DocumentMoniker": "C:\\web application\\DayEaseUser\\dayeaseuser\\DayEaseUserApp\\DayEaseUserApp\\Pages\\Home.razor",
-              "RelativeDocumentMoniker": "DayEaseUserApp\\Pages\\Home.razor",
-              "ToolTip": "C:\\web application\\DayEaseUser\\dayeaseuser\\DayEaseUserApp\\DayEaseUserApp\\Pages\\Home.razor",
-              "RelativeToolTip": "DayEaseUserApp\\Pages\\Home.razor",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-05-27T17:36:16.99Z",
-              "EditorCaption": ""
+              "Title": "UserLoginResponse.cs",
+              "DocumentMoniker": "C:\\web application\\DayEaseUser\\dayeaseuser\\DayEaseUserApp\\Domain\\DomainModels\\UserLoginResponse.cs",
+              "RelativeDocumentMoniker": "Domain\\DomainModels\\UserLoginResponse.cs",
+              "ToolTip": "C:\\web application\\DayEaseUser\\dayeaseuser\\DayEaseUserApp\\Domain\\DomainModels\\UserLoginResponse.cs",
+              "RelativeToolTip": "Domain\\DomainModels\\UserLoginResponse.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAABQAAAAqAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-16T11:25:46.007Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "UserLocationState.cs",
+              "DocumentMoniker": "C:\\web application\\DayEaseUser\\dayeaseuser\\DayEaseUserApp\\Domain\\RequestModels\\UserLocationState.cs",
+              "RelativeDocumentMoniker": "Domain\\RequestModels\\UserLocationState.cs",
+              "ToolTip": "C:\\web application\\DayEaseUser\\dayeaseuser\\DayEaseUserApp\\Domain\\RequestModels\\UserLocationState.cs",
+              "RelativeToolTip": "Domain\\RequestModels\\UserLocationState.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAtAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-16T11:11:22.496Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "NearbyStoresRequest.cs",
+              "DocumentMoniker": "C:\\web application\\DayEaseUser\\dayeaseuser\\DayEaseUserApp\\Domain\\RequestModels\\NearbyStoresRequest.cs",
+              "RelativeDocumentMoniker": "Domain\\RequestModels\\NearbyStoresRequest.cs",
+              "ToolTip": "C:\\web application\\DayEaseUser\\dayeaseuser\\DayEaseUserApp\\Domain\\RequestModels\\NearbyStoresRequest.cs",
+              "RelativeToolTip": "Domain\\RequestModels\\NearbyStoresRequest.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-16T09:56:18.852Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "Login.razor",
-              "DocumentMoniker": "C:\\web application\\DayEaseUser\\dayeaseuser\\DayEaseUserApp\\DayEaseUserApp\\Pages\\Login.razor",
-              "RelativeDocumentMoniker": "DayEaseUserApp\\Pages\\Login.razor",
-              "ToolTip": "C:\\web application\\DayEaseUser\\dayeaseuser\\DayEaseUserApp\\DayEaseUserApp\\Pages\\Login.razor",
-              "RelativeToolTip": "DayEaseUserApp\\Pages\\Login.razor",
-              "ViewState": "AgIAALIAAAAAAAAAAAAIwOIAAAAIAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-06-10T07:29:01.175Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
               "Title": "ProductCategory.razor",
               "DocumentMoniker": "C:\\web application\\DayEaseUser\\dayeaseuser\\DayEaseUserApp\\DayEaseUserApp\\Pages\\ProductCategory.razor",
               "RelativeDocumentMoniker": "DayEaseUserApp\\Pages\\ProductCategory.razor",
               "ToolTip": "C:\\web application\\DayEaseUser\\dayeaseuser\\DayEaseUserApp\\DayEaseUserApp\\Pages\\ProductCategory.razor",
               "RelativeToolTip": "DayEaseUserApp\\Pages\\ProductCategory.razor",
-              "ViewState": "AgIAADoCAAAAAAAAAAAAAE8CAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAYAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-06-13T13:11:01.081Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "UserLoginRequest.cs",
-              "DocumentMoniker": "C:\\web application\\DayEaseUser\\dayeaseuser\\DayEaseUserApp\\Domain\\RequestModels\\UserLoginRequest.cs",
-              "RelativeDocumentMoniker": "Domain\\RequestModels\\UserLoginRequest.cs",
-              "ToolTip": "C:\\web application\\DayEaseUser\\dayeaseuser\\DayEaseUserApp\\Domain\\RequestModels\\UserLoginRequest.cs",
-              "RelativeToolTip": "Domain\\RequestModels\\UserLoginRequest.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAIAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-13T14:28:12.452Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-13T13:11:01.081Z"
             },
             {
               "$type": "Document",
@@ -273,404 +115,75 @@
               "RelativeDocumentMoniker": "DayEaseUserApp\\Pages\\HighLightPage.razor",
               "ToolTip": "C:\\web application\\DayEaseUser\\dayeaseuser\\DayEaseUserApp\\DayEaseUserApp\\Pages\\HighLightPage.razor",
               "RelativeToolTip": "DayEaseUserApp\\Pages\\HighLightPage.razor",
-              "ViewState": "AgIAAJ8AAAAAAAAAAAAgwKkAAAA0AAAAAAAAAA==",
+              "ViewState": "AgIAANoAAAAAAAAAAAAwwMgAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2025-06-13T14:47:49.661Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "MainLayout.razor",
-              "DocumentMoniker": "C:\\web application\\DayEaseUser\\dayeaseuser\\DayEaseUserApp\\DayEaseUserApp\\Layout\\MainLayout.razor",
-              "RelativeDocumentMoniker": "DayEaseUserApp\\Layout\\MainLayout.razor",
-              "ToolTip": "C:\\web application\\DayEaseUser\\dayeaseuser\\DayEaseUserApp\\DayEaseUserApp\\Layout\\MainLayout.razor",
-              "RelativeToolTip": "DayEaseUserApp\\Layout\\MainLayout.razor",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 0,
+              "Title": "Login.razor",
+              "DocumentMoniker": "C:\\web application\\DayEaseUser\\dayeaseuser\\DayEaseUserApp\\DayEaseUserApp\\Pages\\Login.razor",
+              "RelativeDocumentMoniker": "DayEaseUserApp\\Pages\\Login.razor",
+              "ToolTip": "C:\\web application\\DayEaseUser\\dayeaseuser\\DayEaseUserApp\\DayEaseUserApp\\Pages\\Login.razor",
+              "RelativeToolTip": "DayEaseUserApp\\Pages\\Login.razor",
+              "ViewState": "AgIAAGMAAAAAAAAAAAAAAIkAAABQAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-05-27T17:35:21.683Z",
+              "WhenOpened": "2025-06-10T07:29:01.175Z",
               "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "IStoreService.cs",
+              "DocumentMoniker": "C:\\web application\\DayEaseUser\\dayeaseuser\\DayEaseUserApp\\DayEaseServices\\Services\\IServices\\IStoreService.cs",
+              "RelativeDocumentMoniker": "DayEaseServices\\Services\\IServices\\IStoreService.cs",
+              "ToolTip": "C:\\web application\\DayEaseUser\\dayeaseuser\\DayEaseUserApp\\DayEaseServices\\Services\\IServices\\IStoreService.cs",
+              "RelativeToolTip": "DayEaseServices\\Services\\IServices\\IStoreService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-16T10:09:34.384Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 7,
-              "Title": "NavMenu.razor",
-              "DocumentMoniker": "C:\\web application\\DayEaseUser\\dayeaseuser\\DayEaseUserApp\\DayEaseUserApp\\Layout\\NavMenu.razor",
-              "RelativeDocumentMoniker": "DayEaseUserApp\\Layout\\NavMenu.razor",
-              "ToolTip": "C:\\web application\\DayEaseUser\\dayeaseuser\\DayEaseUserApp\\DayEaseUserApp\\Layout\\NavMenu.razor",
-              "RelativeToolTip": "DayEaseUserApp\\Layout\\NavMenu.razor",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-05-28T11:05:41.474Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "_Imports.razor",
-              "DocumentMoniker": "C:\\web application\\DayEaseUser\\dayeaseuser\\DayEaseUserApp\\DayEaseUserApp\\_Imports.razor",
-              "RelativeDocumentMoniker": "DayEaseUserApp\\_Imports.razor",
-              "ToolTip": "C:\\web application\\DayEaseUser\\dayeaseuser\\DayEaseUserApp\\DayEaseUserApp\\_Imports.razor",
-              "RelativeToolTip": "DayEaseUserApp\\_Imports.razor",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-06-13T14:22:48.332Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "App.razor",
-              "DocumentMoniker": "C:\\web application\\DayEaseUser\\dayeaseuser\\DayEaseUserApp\\DayEaseUserApp\\App.razor",
-              "RelativeDocumentMoniker": "DayEaseUserApp\\App.razor",
-              "ToolTip": "C:\\web application\\DayEaseUser\\dayeaseuser\\DayEaseUserApp\\DayEaseUserApp\\App.razor",
-              "RelativeToolTip": "DayEaseUserApp\\App.razor",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-05-28T11:10:51.743Z",
-              "EditorCaption": ""
+              "Title": "HighLightModel.cs",
+              "DocumentMoniker": "C:\\web application\\DayEaseUser\\dayeaseuser\\DayEaseUserApp\\Domain\\DomainModels\\HighLightModel.cs",
+              "RelativeDocumentMoniker": "Domain\\DomainModels\\HighLightModel.cs",
+              "ToolTip": "C:\\web application\\DayEaseUser\\dayeaseuser\\DayEaseUserApp\\Domain\\DomainModels\\HighLightModel.cs",
+              "RelativeToolTip": "Domain\\DomainModels\\HighLightModel.cs",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAxwBIAAAAaAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-16T09:42:20.25Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 9,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\web application\\DayEaseUser\\dayeaseuser\\DayEaseUserApp\\DayEaseUserApp\\Program.cs",
-              "RelativeDocumentMoniker": "DayEaseUserApp\\Program.cs",
-              "ToolTip": "C:\\web application\\DayEaseUser\\dayeaseuser\\DayEaseUserApp\\DayEaseUserApp\\Program.cs",
-              "RelativeToolTip": "DayEaseUserApp\\Program.cs",
-              "ViewState": "AgIAAAcAAAAAAAAAAAAAABwAAABCAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-13T06:47:34.202Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "ApiService.cs",
-              "DocumentMoniker": "C:\\web application\\DayEaseUser\\dayeaseuser\\DayEaseUserApp\\Domain\\Utilities\\ApiService.cs",
-              "RelativeDocumentMoniker": "Domain\\Utilities\\ApiService.cs",
-              "ToolTip": "C:\\web application\\DayEaseUser\\dayeaseuser\\DayEaseUserApp\\Domain\\Utilities\\ApiService.cs",
-              "RelativeToolTip": "Domain\\Utilities\\ApiService.cs",
-              "ViewState": "AgIAABAAAAAAAAAAAAAtwBcAAAAPAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-19T06:12:10.899Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "OtpVerification.razor",
-              "DocumentMoniker": "C:\\web application\\DayEaseUser\\dayeaseuser\\DayEaseUserApp\\DayEaseUserApp\\Pages\\OtpVerification.razor",
-              "RelativeDocumentMoniker": "DayEaseUserApp\\Pages\\OtpVerification.razor",
-              "ToolTip": "C:\\web application\\DayEaseUser\\dayeaseuser\\DayEaseUserApp\\DayEaseUserApp\\Pages\\OtpVerification.razor",
-              "RelativeToolTip": "DayEaseUserApp\\Pages\\OtpVerification.razor",
-              "ViewState": "AgIAANAAAAAAAAAAAAAAwOEAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-05-16T06:57:47.73Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "MobileNumber.razor",
-              "DocumentMoniker": "C:\\web application\\DayEaseUser\\dayeaseuser\\DayEaseUserApp\\DayEaseUserApp\\Pages\\MobileNumber.razor",
-              "RelativeDocumentMoniker": "DayEaseUserApp\\Pages\\MobileNumber.razor",
-              "ToolTip": "C:\\web application\\DayEaseUser\\dayeaseuser\\DayEaseUserApp\\DayEaseUserApp\\Pages\\MobileNumber.razor",
-              "RelativeToolTip": "DayEaseUserApp\\Pages\\MobileNumber.razor",
-              "ViewState": "AgIAAK4AAAAAAAAAAAAAwKYAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-05-16T06:52:49.885Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 17,
-              "Title": "UserLoginResponse.cs",
-              "DocumentMoniker": "C:\\web application\\DayEaseUser\\dayeaseuser\\DayEaseUserApp\\Domain\\DomainModels\\UserLoginResponse.cs",
-              "RelativeDocumentMoniker": "Domain\\DomainModels\\UserLoginResponse.cs",
-              "ToolTip": "C:\\web application\\DayEaseUser\\dayeaseuser\\DayEaseUserApp\\Domain\\DomainModels\\UserLoginResponse.cs",
-              "RelativeToolTip": "Domain\\DomainModels\\UserLoginResponse.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-13T10:51:37.027Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 14,
-              "Title": "index.html",
-              "DocumentMoniker": "C:\\web application\\DayEaseUser\\dayeaseuser\\DayEaseUserApp\\DayEaseUserApp\\wwwroot\\index.html",
-              "RelativeDocumentMoniker": "DayEaseUserApp\\wwwroot\\index.html",
-              "ToolTip": "C:\\web application\\DayEaseUser\\dayeaseuser\\DayEaseUserApp\\DayEaseUserApp\\wwwroot\\index.html",
-              "RelativeToolTip": "DayEaseUserApp\\wwwroot\\index.html",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
-              "WhenOpened": "2025-06-13T09:55:31.766Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 15,
-              "Title": "manifest.json",
-              "DocumentMoniker": "C:\\web application\\DayEaseUser\\dayeaseuser\\DayEaseUserApp\\DayEaseUserApp\\wwwroot\\manifest.json",
-              "RelativeDocumentMoniker": "DayEaseUserApp\\wwwroot\\manifest.json",
-              "ToolTip": "C:\\web application\\DayEaseUser\\dayeaseuser\\DayEaseUserApp\\DayEaseUserApp\\wwwroot\\manifest.json",
-              "RelativeToolTip": "DayEaseUserApp\\wwwroot\\manifest.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAgAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-06-13T11:16:23.892Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 16,
-              "Title": "ApiDetails.cs",
-              "DocumentMoniker": "C:\\web application\\DayEaseUser\\dayeaseuser\\DayEaseUserApp\\Domain\\DomainModels\\ApiDetails.cs",
-              "RelativeDocumentMoniker": "Domain\\DomainModels\\ApiDetails.cs",
-              "ToolTip": "C:\\web application\\DayEaseUser\\dayeaseuser\\DayEaseUserApp\\Domain\\DomainModels\\ApiDetails.cs",
-              "RelativeToolTip": "Domain\\DomainModels\\ApiDetails.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-19T05:16:39.81Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 24,
-              "Title": "UserForgotPassword.razor",
-              "DocumentMoniker": "C:\\web application\\DayEaseUser\\dayeaseuser\\DayEaseUserApp\\DayEaseUserApp\\Pages\\UserForgotPassword.razor",
-              "RelativeDocumentMoniker": "DayEaseUserApp\\Pages\\UserForgotPassword.razor",
-              "ToolTip": "C:\\web application\\DayEaseUser\\dayeaseuser\\DayEaseUserApp\\DayEaseUserApp\\Pages\\UserForgotPassword.razor",
-              "RelativeToolTip": "DayEaseUserApp\\Pages\\UserForgotPassword.razor",
-              "ViewState": "AgIAAAIAAAAAAAAAAIBJwAoAAAAgAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-06-10T12:20:59.731Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 21,
-              "Title": "UserLoginService.cs",
-              "DocumentMoniker": "C:\\web application\\DayEaseUser\\dayeaseuser\\DayEaseUserApp\\DayEaseServices\\Services\\UserLoginService.cs",
-              "RelativeDocumentMoniker": "DayEaseServices\\Services\\UserLoginService.cs",
-              "ToolTip": "C:\\web application\\DayEaseUser\\dayeaseuser\\DayEaseUserApp\\DayEaseServices\\Services\\UserLoginService.cs",
-              "RelativeToolTip": "DayEaseServices\\Services\\UserLoginService.cs",
-              "ViewState": "AgIAABkAAAAAAAAAAIBJwAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-10T07:28:36.155Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 25,
-              "Title": "RefreshTokenRequest.cs",
-              "DocumentMoniker": "C:\\web application\\DayEaseUser\\dayeaseuser\\DayEaseUserApp\\Domain\\RequestModels\\RefreshTokenRequest.cs",
-              "RelativeDocumentMoniker": "Domain\\RequestModels\\RefreshTokenRequest.cs",
-              "ToolTip": "C:\\web application\\DayEaseUser\\dayeaseuser\\DayEaseUserApp\\Domain\\RequestModels\\RefreshTokenRequest.cs",
-              "RelativeToolTip": "Domain\\RequestModels\\RefreshTokenRequest.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-10T07:17:28.241Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 30,
-              "Title": "IUserLoginService.cs",
-              "DocumentMoniker": "C:\\web application\\DayEaseUser\\dayeaseuser\\DayEaseUserApp\\DayEaseServices\\Services\\IServices\\IUserLoginService.cs",
-              "RelativeDocumentMoniker": "DayEaseServices\\Services\\IServices\\IUserLoginService.cs",
-              "ToolTip": "C:\\web application\\DayEaseUser\\dayeaseuser\\DayEaseUserApp\\DayEaseServices\\Services\\IServices\\IUserLoginService.cs",
-              "RelativeToolTip": "DayEaseServices\\Services\\IServices\\IUserLoginService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-10T05:27:38.539Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 19,
-              "Title": "Weather.razor",
-              "DocumentMoniker": "C:\\web application\\DayEaseUser\\dayeaseuser\\DayEaseUserApp\\DayEaseUserApp\\Pages\\Weather.razor",
-              "RelativeDocumentMoniker": "DayEaseUserApp\\Pages\\Weather.razor",
-              "ToolTip": "C:\\web application\\DayEaseUser\\dayeaseuser\\DayEaseUserApp\\DayEaseUserApp\\Pages\\Weather.razor",
-              "RelativeToolTip": "DayEaseUserApp\\Pages\\Weather.razor",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-05-28T11:06:59.424Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 28,
-              "Title": "IRegistration.cs",
-              "DocumentMoniker": "C:\\web application\\DayEaseUser\\dayeaseuser\\DayEaseUserApp\\DayEaseServices\\Services\\IServices\\IRegistration.cs",
-              "RelativeDocumentMoniker": "DayEaseServices\\Services\\IServices\\IRegistration.cs",
-              "ToolTip": "C:\\web application\\DayEaseUser\\dayeaseuser\\DayEaseUserApp\\DayEaseServices\\Services\\IServices\\IRegistration.cs",
-              "RelativeToolTip": "DayEaseServices\\Services\\IServices\\IRegistration.cs",
-              "ViewState": "AgIAAAEAAAAAAAAAAIBJwA0AAAAHAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-27T12:33:52.137Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 34,
-              "Title": "SubAreaModel.cs",
-              "DocumentMoniker": "C:\\web application\\DayEaseUser\\dayeaseuser\\DayEaseUserApp\\Domain\\RequestModels\\SubAreaModel.cs",
-              "RelativeDocumentMoniker": "Domain\\RequestModels\\SubAreaModel.cs",
-              "ToolTip": "C:\\web application\\DayEaseUser\\dayeaseuser\\DayEaseUserApp\\Domain\\RequestModels\\SubAreaModel.cs",
-              "RelativeToolTip": "Domain\\RequestModels\\SubAreaModel.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAZAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-24T08:11:06.755Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 27,
               "Title": "RegistrationService.cs",
               "DocumentMoniker": "C:\\web application\\DayEaseUser\\dayeaseuser\\DayEaseUserApp\\DayEaseServices\\Services\\RegistrationService.cs",
               "RelativeDocumentMoniker": "DayEaseServices\\Services\\RegistrationService.cs",
               "ToolTip": "C:\\web application\\DayEaseUser\\dayeaseuser\\DayEaseUserApp\\DayEaseServices\\Services\\RegistrationService.cs",
               "RelativeToolTip": "DayEaseServices\\Services\\RegistrationService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAjAAAAAAAAAA==",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAABIAAAAgAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-19T12:25:02.272Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-19T12:25:02.272Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 31,
-              "Title": "IApiService.cs",
-              "DocumentMoniker": "C:\\web application\\DayEaseUser\\dayeaseuser\\DayEaseUserApp\\Domain\\Utilities\\IUtilities\\IApiService.cs",
-              "RelativeDocumentMoniker": "Domain\\Utilities\\IUtilities\\IApiService.cs",
-              "ToolTip": "C:\\web application\\DayEaseUser\\dayeaseuser\\DayEaseUserApp\\Domain\\Utilities\\IUtilities\\IApiService.cs",
-              "RelativeToolTip": "Domain\\Utilities\\IUtilities\\IApiService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAApAAAAAAAAAA==",
+              "DocumentIndex": 8,
+              "Title": "ApiService.cs",
+              "DocumentMoniker": "C:\\web application\\DayEaseUser\\dayeaseuser\\DayEaseUserApp\\Domain\\Utilities\\ApiService.cs",
+              "RelativeDocumentMoniker": "Domain\\Utilities\\ApiService.cs",
+              "ToolTip": "C:\\web application\\DayEaseUser\\dayeaseuser\\DayEaseUserApp\\Domain\\Utilities\\ApiService.cs",
+              "RelativeToolTip": "Domain\\Utilities\\ApiService.cs",
+              "ViewState": "AgIAABMAAAAAAAAAAAAowCgAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-13T06:53:35.713Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-19T06:12:10.899Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 26,
-              "Title": "StateModel.cs",
-              "DocumentMoniker": "C:\\web application\\DayEaseUser\\dayeaseuser\\DayEaseUserApp\\Domain\\RequestModels\\StateModel.cs",
-              "RelativeDocumentMoniker": "Domain\\RequestModels\\StateModel.cs",
-              "ToolTip": "C:\\web application\\DayEaseUser\\dayeaseuser\\DayEaseUserApp\\Domain\\RequestModels\\StateModel.cs",
-              "RelativeToolTip": "Domain\\RequestModels\\StateModel.cs",
-              "ViewState": "AgIAAAIAAAAAAAAAAAAIwBAAAAAnAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-23T06:58:50.64Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 20,
-              "Title": "UserModel.cs",
-              "DocumentMoniker": "C:\\web application\\DayEaseUser\\dayeaseuser\\DayEaseUserApp\\Domain\\RequestModels\\UserModel.cs",
-              "RelativeDocumentMoniker": "Domain\\RequestModels\\UserModel.cs",
-              "ToolTip": "C:\\web application\\DayEaseUser\\dayeaseuser\\DayEaseUserApp\\Domain\\RequestModels\\UserModel.cs",
-              "RelativeToolTip": "Domain\\RequestModels\\UserModel.cs",
-              "ViewState": "AgIAACIAAAAAAAAAAIBQwDYAAAB4AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-20T07:19:52.468Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 23,
-              "Title": "OtpVerificationRequest.cs",
-              "DocumentMoniker": "C:\\web application\\DayEaseUser\\dayeaseuser\\DayEaseUserApp\\Domain\\RequestModels\\OtpVerificationRequest.cs",
-              "RelativeDocumentMoniker": "Domain\\RequestModels\\OtpVerificationRequest.cs",
-              "ToolTip": "C:\\web application\\DayEaseUser\\dayeaseuser\\DayEaseUserApp\\Domain\\RequestModels\\OtpVerificationRequest.cs",
-              "RelativeToolTip": "Domain\\RequestModels\\OtpVerificationRequest.cs",
-              "ViewState": "AgIAAAQAAAAAAAAAAAAIwBIAAAAgAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-22T11:11:27.797Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 32,
-              "Title": "appsettings.json",
-              "DocumentMoniker": "C:\\web application\\DayEaseUser\\dayeaseuser\\DayEaseUserApp\\DayEaseUserApp\\wwwroot\\appsettings.json",
-              "RelativeDocumentMoniker": "DayEaseUserApp\\wwwroot\\appsettings.json",
-              "ToolTip": "C:\\web application\\DayEaseUser\\dayeaseuser\\DayEaseUserApp\\DayEaseUserApp\\wwwroot\\appsettings.json",
-              "RelativeToolTip": "DayEaseUserApp\\wwwroot\\appsettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAYAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-05-19T05:18:08.014Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 22,
-              "Title": "MobileNumberRequest.cs",
-              "DocumentMoniker": "C:\\web application\\DayEaseUser\\dayeaseuser\\DayEaseUserApp\\Domain\\RequestModels\\MobileNumberRequest.cs",
-              "RelativeDocumentMoniker": "Domain\\RequestModels\\MobileNumberRequest.cs",
-              "ToolTip": "C:\\web application\\DayEaseUser\\dayeaseuser\\DayEaseUserApp\\Domain\\RequestModels\\MobileNumberRequest.cs",
-              "RelativeToolTip": "Domain\\RequestModels\\MobileNumberRequest.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAuwAgAAAAkAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-19T06:13:24.6Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 29,
-              "Title": "ApiSettings.cs",
-              "DocumentMoniker": "C:\\web application\\DayEaseUser\\dayeaseuser\\DayEaseUserApp\\Domain\\RequestModels\\ApiSettings.cs",
-              "RelativeDocumentMoniker": "Domain\\RequestModels\\ApiSettings.cs",
-              "ToolTip": "C:\\web application\\DayEaseUser\\dayeaseuser\\DayEaseUserApp\\Domain\\RequestModels\\ApiSettings.cs",
-              "RelativeToolTip": "Domain\\RequestModels\\ApiSettings.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAlAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-19T05:30:34.029Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 35,
-              "Title": "JwtTokenResponse.cs",
-              "DocumentMoniker": "C:\\web application\\DayEaseUser\\dayeaseuser\\DayEaseUserApp\\Domain\\DomainModels\\JwtTokenResponse.cs",
-              "RelativeDocumentMoniker": "Domain\\DomainModels\\JwtTokenResponse.cs",
-              "ToolTip": "C:\\web application\\DayEaseUser\\dayeaseuser\\DayEaseUserApp\\Domain\\DomainModels\\JwtTokenResponse.cs",
-              "RelativeToolTip": "Domain\\DomainModels\\JwtTokenResponse.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAWAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-16T05:00:24.058Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 36,
-              "Title": "StoreRegistrationRequest.cs",
-              "DocumentMoniker": "C:\\web application\\DayEaseUser\\dayeaseuser\\DayEaseUserApp\\Domain\\RequestModels\\StoreRegistrationRequest.cs",
-              "RelativeDocumentMoniker": "Domain\\RequestModels\\StoreRegistrationRequest.cs",
-              "ToolTip": "C:\\web application\\DayEaseUser\\dayeaseuser\\DayEaseUserApp\\Domain\\RequestModels\\StoreRegistrationRequest.cs",
-              "RelativeToolTip": "Domain\\RequestModels\\StoreRegistrationRequest.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAFAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-16T06:51:12.308Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 37,
-              "Title": "Custom.css",
-              "DocumentMoniker": "C:\\web application\\DayEaseUser\\dayeaseuser\\DayEaseUserApp\\DayEaseUserApp\\wwwroot\\css\\bootstrap\\Custom.css",
-              "RelativeDocumentMoniker": "DayEaseUserApp\\wwwroot\\css\\bootstrap\\Custom.css",
-              "ToolTip": "C:\\web application\\DayEaseUser\\dayeaseuser\\DayEaseUserApp\\DayEaseUserApp\\wwwroot\\css\\bootstrap\\Custom.css",
-              "RelativeToolTip": "DayEaseUserApp\\wwwroot\\css\\bootstrap\\Custom.css",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
-              "WhenOpened": "2025-05-20T11:40:04.199Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 38,
+              "DocumentIndex": 10,
               "Title": "FileConfigurationProvider.cs",
               "DocumentMoniker": "C:\\Users\\BHARATH REDDY\\AppData\\Local\\Temp\\.vsdbgsrc\\b38c7bbc046e461a8a58c7e0eb00bea4828feec3606c51aaae6062bc28a1448e\\FileConfigurationProvider.cs",
               "RelativeDocumentMoniker": "..\\..\\..\\..\\Users\\BHARATH REDDY\\AppData\\Local\\Temp\\.vsdbgsrc\\b38c7bbc046e461a8a58c7e0eb00bea4828feec3606c51aaae6062bc28a1448e\\FileConfigurationProvider.cs",

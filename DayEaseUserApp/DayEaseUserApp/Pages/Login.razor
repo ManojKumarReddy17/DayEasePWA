@@ -1,6 +1,7 @@
 ﻿@page "/Login"
 @using Domain.RequestModels
 @inject IUserLoginService userloginservice
+@inject UserLocationState UserLocation
 @using DayEaseServices.Services.IServices
 @inject NavigationManager NavigationManager
 @inject HttpClient Http
@@ -226,15 +227,20 @@
 
         if (response != null && !string.IsNullOrEmpty(response.JwtToken))
         {
+            // ✅ Save AreaId, Latitude, Longitude to shared state
+            UserLocation.AreaId = response.AreaId;
+            UserLocation.Latitude = response.Latitude;
+            UserLocation.Longitude = response.Longitude;
 
+            // ✅ Redirect to highlight page
             NavigationManager.NavigateTo("/highlightnew");
         }
         else
         {
             errorMessage = response?.Message ?? "Invalid username or password.";
         }
-
     }
+
     private void LimitToTenDigits(ChangeEventArgs e)
     {
         var input = e.Value?.ToString();
