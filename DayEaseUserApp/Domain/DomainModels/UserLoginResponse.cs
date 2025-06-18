@@ -18,6 +18,7 @@ namespace Domain.DomainModels
         public string LName { get; set; }
         public string Latitude { get; set; }
         public string Longitude { get; set; }
+        public string AreaId { get; set; }
         public string RefreshTokenExpiry { get; set; }
         public string JwtToken { get; set; }
         public string RefreshToken { get; set; }
