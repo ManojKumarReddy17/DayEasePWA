@@ -37,7 +37,7 @@ namespace Domain.Utilities
             response.EnsureSuccessStatusCode();
 
             var jsonString = await response.Content.ReadAsStringAsync();
-            return System.Text.Json.JsonSerializer.Deserialize<TResponse>(jsonString);
+            return JsonSerializer.Deserialize<TResponse>(jsonString);
         }
 
 
@@ -145,4 +145,5 @@ namespace Domain.Utilities
         }
     }
 }
+
 
