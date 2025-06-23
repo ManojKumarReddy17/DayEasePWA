@@ -101,3 +101,25 @@ a, .btn-link {
 code {
     color: #c02d76;
 }
+
+
+
+/* 
+  ==================================================================
+  SIDEBAR NAVIGATION HOVER/ACTIVE OVERRIDES
+  Moved from NavMenu.razor.css to fix Blazor CSS isolation issue
+  where pseudo-classes like :hover were not being applied correctly.
+  ==================================================================
+*/
+.sidebar-menu nav a.nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.15) !important;
+    transform: scale(1.03) !important;
+}
+
+.sidebar-menu nav a.nav-link.active {
+    background-color: rgba(255, 255, 255, 0.25) !important; /* Brighter for active link */
+    transform: scale(1.03) !important;
+    font-weight: 600 !important;
+}
+
+
