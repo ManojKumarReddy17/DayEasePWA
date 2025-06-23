@@ -1,108 +1,16 @@
-﻿@page "/highlightnew"
+﻿@page "/highlightcompact"
 @inject IJSRuntime JS
 @inject IStoreService StoreService
 @inject UserLocationState UserLocation
 @using Domain.DomainModels
 @using Domain.RequestModels
 @using DayEaseServices.Services.IServices
+@layout NavMenu
 
 <style>
     body {
-        background-color: aliceblue;
+        background-color: ghostwhite;
     }
-
-    
-
-    .card {
-        background-color: white;
-        border-radius: 10px;
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-
-        .card:hover {
-            transform: translateY(-4px);
-            box-shadow: 3px 8px 8px rgba(0, 0, 0, 0.1);
-        }
-
-    .card-body {
-        background-color: white;
-        border-radius: 12px;
-    }
-
-    .card-title {
-        font-size: 1.1rem;
-        font-weight: 600;
-    }
-
-    .special-offer {
-        background-color: #e8f7ff;
-        color: #007bff;
-        border-left: 5px solid #007bff;
-        padding: 0.5rem;
-        border-radius: 6px;
-        font-size: 0.9rem;
-        margin-top: 0.5rem;
-    }
-
-    .product-scroll {
-        scroll-behavior: smooth;
-        white-space: nowrap;
-        overflow-x: auto;
-        padding-bottom: 10px;
-    }
-
-        .product-scroll::-webkit-scrollbar {
-            display: none;
-        }
-
-    .product-card {
-        background: #fff;
-        padding: 8px;
-        margin-right: 10px;
-        min-width: 150px;
-        max-width: 160px;
-        flex-shrink: 0;
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        text-align: center;
-    }
-
-        .product-card img {
-            height: 120px;
-            width: 100%;
-            object-fit: cover;
-            border-radius: 6px;
-        }
-
-        .product-card h6 {
-            margin: 0.5rem 0 0.2rem 0;
-            font-size: 0.95rem;
-        }
-
-        .product-card p {
-            margin: 0;
-            font-size: 0.9rem;
-        }
-        .product-card:hover{
-            transform: translateY(-4px);
-            box-shadow: 3px 8px 8px rgba(0, 0, 0, 0.1);
-        }
-    .badge {
-        font-size: 0.75rem;
-    }
-
-    .btn-outline-primary {
-        font-size: 1rem;
-        font-weight: 500;
-        color: white;
-        background-color: #0284FF;
-        border-color: transparent;
-    }
-
-        .btn-outline-primary:hover {
-            background-color: #028f32;
-            color: white;
-        }
 
     .loading-wrapper {
         display: flex;
@@ -126,17 +34,6 @@
         border-radius: 50%;
         animation: spin 1s linear infinite;
     }
-
-    .spinner-image {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 40px;
-        height: 40px;
-        transform: translate(-50%, -50%);
-        z-index: 1;
-    }
-
     @@keyframes spin {
         0%
 
@@ -150,55 +47,211 @@
 
     }
 
-    .store-heading {
+    .spinner-image {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 40px;
+        height: 40px;
+        transform: translate(-50%, -50%);
+        z-index: 1;
+    }
+    .store-offers-heading {
         font-weight: 600;
-        background-color: white;
+        background-color: #fff0f0;
+        color: dodgerblue;
         text-align: center;
         padding: 1rem;
         border-radius: 8px;
-        color: #0284FF;
         display: flex;
         align-items: center;
         justify-content: flex-start;
         gap: 0.75rem;
         font-size: 1.3rem;
+        flex-wrap: wrap;
     }
 
-        .store-heading img {
-            width: 80px;
+    @@media (max-width: 500px) {
+        .store-offers-heading
+
+    {
+        font-size: 1rem;
+        padding: 0.75rem;
+        justify-content: center; /* center align on small screens */
+    }
+
+    }
+
+
+        .store-offers-heading img {
+            width: 60px;
             height: auto;
         }
 
-    @@media (max-width: 576px) {
-        .product-card img
+    .store-grid {
+        display: flex;
+        flex-wrap: wrap;
+        padding:10px;
+        gap: 0.8rem;
+        justify-content: center;
+    }
+
+    .store-card-wrapper {
+        flex: 1 1 33.33%;
+        max-width: 33.33%;
+        box-sizing: border-box;
+        font-size: 0.72rem;
+    }
+
+    @@media (max-width: 768px) {
+        .store-card-wrapper
 
     {
-        height: 100px;
-    }
-     .container{
-        
-        max-width: 400px;
-        margin: auto;
-     }
-    .highlight-card-wrapper {
-        padding: 0 5px;
-    }
-
-    .product-card {
-        min-width: 130px;
-        max-width: 140px;
+        flex: 1 1 50%;
+        max-width: 50%;
     }
 
     }
+
+    @@media (max-width: 500px) {
+        .store-card-wrapper
+
+    {
+        flex: 1 1 33.33%;
+        max-width: 33.33%;
+    }
+
+    }
+
+    .custom-card {
+        border: 1px solid #ddd;
+        border-radius: 16px;
+        overflow: hidden;
+        background: white;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 100%;
+    }
+
+    .card-img-custom {
+        width: 100%;
+        object-fit: cover;
+        border-bottom: 1px solid #eee;
+    }
+
+    .card-img-customs {
+        width: 100%;
+        object-fit: cover;
+    }
+
+    .offer-badge {
+        position: absolute;
+        top: 5px;
+        right: 0.5px;
+        background-color: #5a4fff;
+        color: white;
+        font-size: 0.75rem;
+        padding: 2px 1px;
+        border-radius: 10px;
+        font-weight: 600;
+    }
+
+    .store-info {
+        padding: 10px;
+    }
+
+    .store-name {
+        font-weight: 500;
+        margin-bottom: 5px;
+    }
+
+    .rating-stars {
+        font-size: 0.85rem;
+        color: #ffaa00;
+        margin-bottom: 5px;
+    }
+
+    .location {
+        font-size: 0.8rem;
+        color: #555;
+    }
+
+    .btn-shop {
+        margin: 10px;
+        background-color: #006aff;
+        color: white;
+        padding: 6px 12px;
+        border: none;
+        border-radius: 8px;
+        text-align: center;
+        text-decoration: none;
+        font-weight: 500;
+    }
+
+    .card {
+        background-color: #ffffff;
+        border: 1px solid #ffe0e0;
+        border-radius: 10px;
+        padding: 0.5rem;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    }
+
+    .card-title {
+        font-size: 0.8rem;
+        font-weight: 600;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .special-offer {
+        color: dodgerblue;
+        background-color: #ffe6e9;
+        padding: 0.2rem 0.4rem;
+        font-size: 0.7rem;
+        border-radius: 4px;
+        margin: 0.3rem 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .text-muted {
+        font-size: 0.68rem;
+        display: flex;
+        align-items: center;
+        gap: 0.2rem;
+        margin-bottom: 0.3rem;
+    }
+
+    .store-link {
+        text-decoration: none;
+        color: inherit;
+        display: block;
+    }
+
+        .store-link:hover .custom-card {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transform: scale(1.01);
+            transition: all 0.2s ease;
+        }
+
+    .badge {
+        font-size: 0.65rem;
+        padding: 2px 5px;
+        border-radius: 4px;
+    }
+
+    .btn-outline-primary {
+        font-size: 0.65rem;
+        padding: 0.3rem 0.5rem;
+        width: 100%;
+    }
+
+
 </style>
-
-<div>
-    <h2 class="store-heading">
-        <img src="images/Day-Ease-logo-black.png" alt="Day Ease Logo" />
-        <span><i class="bi bi-shop me-2"></i>Near By Stores</span>
-    </h2>
-</div>
-
 @if (isLoading)
 {
     <div class="loading-wrapper">
@@ -216,44 +269,95 @@ else if (!string.IsNullOrEmpty(ErrorMessage))
 }
 else
 {
-    <div class="container">
-        <div class="row g-4">
-            @foreach (var store in Stores)
-            {
-                var scrollId = $"scrollDiv_{store.StoreId}";
-                <div class="col-12 col-sm-6 col-lg-4 d-flex">
-                    <div class="card h-100 shadow-sm highlight-card-wrapper w-100">
-                        <div class="card-body d-flex flex-column justify-content-between">
-                            @if (store.Products?.Any() == true)
-                            {
-                                <div class="product-scroll d-flex" id="@scrollId">
-                                    @foreach (var product in store.Products.Take(10))
+    @if (Stores.Take(VisibleStoreCount).Any())
+    {
+        <div class="container mt-3">
+            <h2 class="store-offers-heading">
+                <span><i class="bi bi-shop me-2"></i>Recent Orders</span>
+            </h2>
+
+            <div class="store-grid">
+                @foreach (var store in Stores.Take(VisibleStoreCount))
+                {
+                    <div class="store-card-wrapper">
+                        <a href="/productcategory?storeId=@store.StoreId" class="store-link">
+                            <div class="custom-card">
+                                <div class="position-relative">
+                                    <img src="images/@store.Products.First().ProductImg" class="card-img-customs" />
+                                    @if (!string.IsNullOrEmpty(store.SpecialOffer))
                                     {
-                                        <div class="product-card">
-                                            <img src="images/@product.ProductImg" alt="@product.ProductName" />
-                                            <h6>@product.ProductName</h6>
-                                            <p>₹@product.Price</p>
-                                            <span class="badge bg-success">@product.Discount% Off</span>
-                                        </div>
+                                        <div class="offer-badge">Save @store.SpecialOffer</div>
                                     }
                                 </div>
-                            }
-                            <h5 class="card-title mt-2">@store.StoreName</h5>
-                            <p class="special-offer">@store.SpecialOffer</p>
-                            <p class="text-muted">Distance: @store.DistanceInKm km</p>
-                            <a href="/productcategory?storeId=@store.StoreId" class="btn btn-outline-primary mt-3">Shop Now</a>
-                        </div>
+                                <div class="store-info">
+                                    <div class="store-name">@store.StoreName</div>
+                                    <div class="location">📍 @store.DistanceInKm km</div>
+                                    <div>20-30 mins</div>
+                                </div>
+                            </div>
+                        </a>
                     </div>
+                }
+            </div>
+
+            @if (VisibleStoreCount < Stores.Count)
+            {
+                <div class="text-center mt-3">
+                    <button class="btn btn-outline-primary" @onclick="LoadMoreStores">See More</button>
                 </div>
             }
         </div>
-    </div>
+    }
+
+    @if (Stores.Take(VisibleStoreCount).Any())
+    {
+        <div class="container mt-3">
+            <h2 class="store-offers-heading">
+                <span><i class="bi bi-shop me-2"></i>Near by Stores</span>
+            </h2>
+
+            <div class="store-grid">
+                @foreach (var store in Stores.Take(VisibleStoreCount))
+                {
+                    <div class="store-card-wrapper">
+                        <a href="/productcategory?storeId=@store.StoreId" class="store-link">
+                            <div class="custom-card">
+                                <div class="position-relative">
+                                    <img src="images/@store.Products.First().ProductImg" class="card-img-customs" />
+                                    @if (!string.IsNullOrEmpty(store.SpecialOffer))
+                                    {
+                                        <div class="offer-badge">Save @store.SpecialOffer</div>
+                                    }
+                                </div>
+                                <div class="store-info">
+                                    <div class="store-name">@store.StoreName</div>
+                                    <div class="location">📍 @store.DistanceInKm km</div>
+                                    <div>20-30 mins</div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                }
+            </div>
+
+            @if (VisibleStoreCount < Stores.Count)
+            {
+                <div class="text-center mt-3">
+                    <button class="btn btn-outline-primary" @onclick="LoadMoreStores">See More</button>
+                </div>
+            }
+        </div>
+    }
+
 }
+
+
 
 @code {
     private List<HighLightModel> Stores = new();
     private string ErrorMessage = string.Empty;
     private bool isLoading = true;
+    private int VisibleStoreCount = 6;
 
     protected override async Task OnInitializedAsync()
     {
@@ -266,24 +370,24 @@ else
         try
         {
             var request = new NearbyStoresRequest
-                {
-                    AreaId = UserLocation.AreaId,
-                    Latitude = UserLocation.Latitude,
-                    Longitude = UserLocation.Longitude
-                };
+            {
+                AreaId = UserLocation.AreaId,
+                Latitude = UserLocation.Latitude,
+                Longitude = UserLocation.Longitude
+            };
 
             var apiResponse = await StoreService.GetNearbyStoresAsync(request);
 
             if (apiResponse?.Success == true && apiResponse.Stores?.Any() == true)
             {
                 Stores = apiResponse.Stores.Select(s => new HighLightModel
-                    {
-                        StoreId = s.StoreId,
-                        StoreName = s.StoreName,
-                        DistanceInKm = Math.Round(s.Distance, 2),
-                        Products = s.Products,
-                        SpecialOffer = $"Up to {s.Products.Max(p => p.Discount)}% off!"
-                    }).ToList();
+                {
+                    StoreId = s.StoreId,
+                    StoreName = s.StoreName,
+                    DistanceInKm = Math.Round(s.Distance, 2),
+                    Products = s.Products,
+                    SpecialOffer = $"{s.Products.Max(p => p.Discount)} off!"
+                }).ToList();
             }
             else
             {
@@ -294,6 +398,12 @@ else
         {
             ErrorMessage = $"Error fetching stores: {ex.Message}";
         }
+
         isLoading = false;
+    }
+
+    private void LoadMoreStores()
+    {
+        VisibleStoreCount += 6;
     }
 }

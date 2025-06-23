@@ -135,18 +135,18 @@
 
 <div class="main-container">
 
-        <img src="images/login-logo_v01.png" alt="Day Ease Logo" class="logo" />
+    <img src="images/login-logo_v01.png" alt="Day Ease Logo" class="logo" />
 
-        <div class="login-form">
-            <h5>Login</h5>
+    <div class="login-form">
+        <h5>Login</h5>
 
-            @if (!string.IsNullOrEmpty(errorMessage))
-            {
-                <div class="alert alert-danger">@errorMessage</div>
-            }
+        @if (!string.IsNullOrEmpty(errorMessage))
+        {
+            <div class="alert alert-danger">@errorMessage</div>
+        }
 
-            <EditForm Model="loginModel" OnValidSubmit="HandleLogin">
-                <DataAnnotationsValidator />
+        <EditForm Model="loginModel" OnValidSubmit="HandleLogin">
+            <DataAnnotationsValidator />
 
 
             <div class="form-group">
@@ -184,24 +184,24 @@
                 </div>
                 <ValidationMessage For="@(() => loginModel.password)" class="validation-message" />
 
-          
+
             </div>
 
-             
 
-                <div class="form-group d-flex align-items-center justify-content-between">
-                    <div class="forgot-link">
-                        <a href="/forgotpassword">Forgot Password?</a>
-                        
-                    </div>
+
+            <div class="form-group d-flex align-items-center justify-content-between">
+                <div class="forgot-link">
+                    <a href="/forgotpassword">Forgot Password?</a>
+
                 </div>
-
-                <button type="submit" class="btn btn-primary">LOGIN</button>
-            </EditForm>
-            <div class="text-center mt-3">
-                <a href="/mobile-number" class="text-decoration-none">Didn't have an account ? Register</a>
             </div>
+
+            <button type="submit" class="btn btn-primary">LOGIN</button>
+        </EditForm>
+        <div class="text-center mt-3">
+            <a href="/mobile-number" class="text-decoration-none">Didn't have an account ? Register</a>
         </div>
+    </div>
 
 </div>
 
@@ -233,7 +233,8 @@
             UserLocation.Longitude = response.Longitude;
 
             // ✅ Redirect to highlight page
-            NavigationManager.NavigateTo("/highlightnew");
+            //NavigationManager.NavigateTo("/highlightnew");
+            NavigationManager.NavigateTo("/highlightcompact");
         }
         else
         {
