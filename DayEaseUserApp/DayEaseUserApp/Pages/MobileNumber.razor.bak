@@ -8,94 +8,94 @@
 @using System.Text.Json
 @inject IJSRuntime JS
 @inject ILocalStorageService LocalStorage
-@using Microsoft.AspNetCore.WebUtilities
+
 <style>
-    html, body {
-        margin: 0;
-        padding: 0;
-        height: 100%;
-        width: 100%;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        background-color: #008CFF;
-        background-image: url('/images/login-bg.png');
-        background-size: cover;
-        background-position: center;
-        overflow-x: hidden;
-        overflow-y: auto;
-    }
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #008CFF;
+    background-image: url('/images/login-bg.png');
+    background-size: cover;
+    background-position: center;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
 
-    .main-container {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        min-height: 100vh;
-        width: 100%;
-        max-width: 500px;
-        margin: 0 auto;
-        padding: 2rem 1rem;
-        box-sizing: border-box;
-    }
+.main-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+    box-sizing: border-box;
+}
 
-    .logo {
-        width: 35vw;
-        max-width: 160px;
-        min-width: 100px;
-        height: auto;
-        margin-bottom: 1.5rem;
-    }
+.logo {
+    width: 35vw;
+    max-width: 160px;
+    min-width: 100px;
+    height: auto;
+    margin-bottom: 1.5rem;
+}
 
-    h3 {
-        color: #ffffff;
-        margin-bottom: 1rem;
-        font-size: clamp(1.2rem, 5vw, 2rem);
-        text-align: center;
-    }
+h3 {
+    color: #ffffff;
+    margin-bottom: 1rem;
+    font-size: clamp(1.2rem, 5vw, 2rem);
+    text-align: center;
+}
 
-    .form-group {
-        width: 100%;
-        margin-bottom: 1rem;
-    }
+.form-group {
+    width: 100%;
+    margin-bottom: 1rem;
+}
 
-    label {
-        display: block;
-        margin-bottom: 0.25rem;
-        color: #ffffff;
-        font-size: clamp(0.9rem, 3.5vw, 1.1rem);
-    }
+label {
+    display: block;
+    margin-bottom: 0.25rem;
+    color: #ffffff;
+    font-size: clamp(0.9rem, 3.5vw, 1.1rem);
+}
 
-    input.form-control {
-        width: 100%;
-        padding: 0.75rem;
-        border-radius: 10px;
-        border: none;
-        font-size: clamp(1rem, 4vw, 1.1rem);
-    }
+input.form-control {
+    width: 100%;
+    padding: 0.75rem;
+    border-radius: 10px;
+    border: none;
+    font-size: clamp(1rem, 4vw, 1.1rem);
+}
 
-    button.btn-primary {
-        width: 100%;
-        background: #00CFFF;
-        color: #fff;
-        font-weight: bold;
-        padding: 0.75rem;
-        border: none;
-        border-radius: 10px;
-        font-size: clamp(1rem, 4vw, 1.1rem);
-        margin-top: 1rem;
-    }
+button.btn-primary {
+    width: 100%;
+    background: #00CFFF;
+    color: #fff;
+    font-weight: bold;
+    padding: 0.75rem;
+    border: none;
+    border-radius: 10px;
+    font-size: clamp(1rem, 4vw, 1.1rem);
+    margin-top: 1rem;
+}
 
-    p {
-        margin-top: 1.5rem;
-        color: #ffffff;
-        font-size: clamp(0.9rem, 3.5vw, 1rem);
-        text-align: center;
-    }
+p {
+    margin-top: 1.5rem;
+    color: #ffffff;
+    font-size: clamp(0.9rem, 3.5vw, 1rem);
+    text-align: center;
+}
 
-    a {
-        color: #ffffff;
-        font-weight: 600;
-        text-decoration: underline;
-    }
+a {
+    color: #ffffff;
+    font-weight: 600;
+    text-decoration: underline;
+}
 
     .validation-error {
         color: #ff0000;
@@ -103,11 +103,11 @@
         font-size: 0.95rem;
         margin-top: 0.5rem;
     }
-    /* @@media (max-width: 360px) {
-        .logo {
-            width: 90px;
-        }
-    } */
+/* @@media (max-width: 360px) {
+    .logo {
+        width: 90px;
+    }
+} */
 
 /* Modal Styles */
 .modal-backdrop {
@@ -133,11 +133,11 @@
     box-shadow: 0 4px 15px rgba(0,0,0,0.3);
 }
 
-        .modal-box p {
-            margin-bottom: 1rem;
-            font-weight: 600;
-            color: black;
-        }
+.modal-box p {
+    margin-bottom: 1rem;
+    font-weight: 600;
+    color:black;
+}
 
 .btn-primary-modal {
     background-color: #00c2ff;
@@ -162,9 +162,9 @@
     cursor: pointer;
 }
 
-        .btn-secondary-modal:hover {
-            background-color: #aaa;
-        }
+.btn-secondary-modal:hover {
+    background-color: #aaa;
+}
 
 </style>
 
@@ -185,13 +185,11 @@
                class="form-control @(HasValidationError ? "error" : "")"
                @bind="PhoneNumber"
                @oninput="LimitToTenDigits"
-               @onblur="ValidatePhoneNumber"
                onkeypress="return isNumberKey(event)"
                placeholder="Enter mobile number"
                maxlength="10"
                inputmode="numeric"
                pattern="[0-9]*" />
-
 
         @if (HasValidationError && !string.IsNullOrEmpty(errorMessage))
         {
@@ -223,35 +221,8 @@
     private string CountryCode = "+91";
     private string errorMessage = "";
     private bool HasValidationError = false;
+
     private bool ShowUserExistsModal = false;
-    private bool IsForgot = false;
-   
-
-    protected override void OnInitialized()
-    {
-        var uri = Navigation.ToAbsoluteUri(Navigation.Uri);
-        var queryParams = QueryHelpers.ParseQuery(uri.Query);
-
-        if (queryParams.TryGetValue("isForgot", out var isForgotValue))
-        {
-            bool.TryParse(isForgotValue, out IsForgot);
-        }
-    }
-    private void ValidatePhoneNumber(FocusEventArgs e)
-    {
-        if (PhoneNumber.Length != 10 || !PhoneNumber.All(char.IsDigit))
-        {
-            errorMessage = "Please enter a valid 10-digit mobile number.";
-            HasValidationError = true;
-        }
-        else
-        {
-            HasValidationError = false;
-            errorMessage = "";
-        }
-    }
-
-
 
     private async Task RegisterUser()
     {
@@ -270,8 +241,7 @@
             var request = new MobileNumberRequest
                 {
                     phonenumber = PhoneNumber,
-                    IsForgot=IsForgot
-
+                    // CountryCode = CountryCode
                 };
 
             var response = await RegistrationService.PostAsync<MobileNumberRequest, string>(request);
@@ -287,21 +257,13 @@
                     if (registrationResponse.StatusCode == 200)
                     {
                         await LocalStorage.SetItemAsync("PhoneNumber", PhoneNumber);
-                        Navigation.NavigateTo($"/otp-verification?isForgot={IsForgot.ToString().ToLower()}");
+                        Navigation.NavigateTo("/otp-verification");
                     }
                     else if (registrationResponse.StatusCode == 409)
                     {
-                        if (IsForgot)
-                        {
-                            await LocalStorage.SetItemAsync("PhoneNumber", PhoneNumber);
-                            Navigation.NavigateTo("/otp-verification?isForgot=true");
-                        }
-                        else
-                        {
-                            ShowUserExistsModal = true;
-                        }
-                    }
 
+                        ShowUserExistsModal = true;
+                    }
                     else
                     {
                         await JS.InvokeVoidAsync("alert", registrationResponse.Message ?? "Unexpected response.");

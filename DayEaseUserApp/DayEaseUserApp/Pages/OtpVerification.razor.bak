@@ -4,7 +4,6 @@
 @inject ILocalStorageService LocalStorage
 @inject IJSRuntime JS
 
-@using Microsoft.AspNetCore.WebUtilities
 @using Blazored.LocalStorage
 @using DayEaseServices.Services.IServices
 @using Domain.RequestModels
@@ -171,7 +170,7 @@
 <div class="main-container">
     <div class="inner-box">
         <img src="images/login-logo_v01.png" class="logo" alt="Logo" />
-        <h3>@("Enter OTP")</h3>
+        <h3>Enter OTP</h3>
 
         <div class="form-group otp-inputs">
             <input type="text" maxlength="1" class="otp-box" @ref="OtpRef0" value="@OtpDigits[0]" @oninput="(e) => OnOtpInput(e, 0)" @onkeydown="(e) => OnKeyDown(e, 0)" />
@@ -211,7 +210,6 @@
     private string[] OtpDigits = new string[6];
     private string ErrorMessage;
     private string PhoneNumber;
-    private bool IsForgot = false;
 
     private ElementReference OtpRef0;
     private ElementReference OtpRef1;
@@ -225,19 +223,6 @@
     protected override async Task OnInitializedAsync()
     {
         PhoneNumber = await LocalStorage.GetItemAsync<string>("PhoneNumber");
-
-        var uri = Navigation.ToAbsoluteUri(Navigation.Uri);
-        var queryParams = QueryHelpers.ParseQuery(uri.Query);
-
-        if (queryParams.TryGetValue("isForgot", out var isForgotValue))
-        {
-            IsForgot = bool.TryParse(isForgotValue, out var result) && result;
-        }
-        else
-        {
-
-            IsForgot = false;
-        }
 
         if (string.IsNullOrEmpty(PhoneNumber))
         {
@@ -255,11 +240,12 @@
 
     private async Task OnOtpInput(ChangeEventArgs e, int index)
     {
-        if (index < 0 || index >= OtpDigits.Length) return;
+        if (index < 0 || index >= OtpDigits.Length)
+            return;
 
-        var value = e.Value?.ToString() ?? "";
+        var value = e.Value?.ToString();
 
-        if (value.Length == 1 && char.IsDigit(value[0]))
+        if (!string.IsNullOrEmpty(value) && char.IsDigit(value[0]))
         {
             OtpDigits[index] = value;
 
@@ -277,6 +263,9 @@
 
     private async Task OnKeyDown(KeyboardEventArgs e, int index)
     {
+        if (index < 0 || index >= OtpDigits.Length)
+            return;
+
         if (e.Key == "Backspace")
         {
             if (!string.IsNullOrEmpty(OtpDigits[index]))
@@ -307,9 +296,7 @@
             var request = new OtpVerificationRequest
                 {
                     PhoneNumber = PhoneNumber,
-                    Otp = int.Parse(otp),
-                    IsForgot = IsForgot
-
+                    Otp = int.Parse(otp)
                 };
 
             var response = await RegistrationService.ValidateOtp<OtpVerificationRequest, string>(request);
@@ -321,14 +308,10 @@
             }
 
             string jsonString = response.Trim('\"').Replace("\\\"", "\"");
+
             var otpResponse = JsonSerializer.Deserialize<OtpResponse>(jsonString);
 
-            if (otpResponse?.StatusCode == 200 && IsForgot == true)
-            {
-                Navigation.NavigateTo("/forgotpassword");
-
-            }
-            else if (otpResponse?.StatusCode == 200)
+            if (otpResponse != null && otpResponse.StatusCode == 200)
             {
                 Navigation.NavigateTo("/user-details");
             }

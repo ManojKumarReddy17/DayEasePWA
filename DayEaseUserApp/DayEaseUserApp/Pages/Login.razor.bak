@@ -1,10 +1,11 @@
 ﻿@page "/Login"
 @using Domain.RequestModels
 @inject IUserLoginService userloginservice
+@inject UserLocationState UserLocation
 @using DayEaseServices.Services.IServices
 @inject NavigationManager NavigationManager
 @inject HttpClient Http
-@inject UserLocationState UserLocation
+
 <style>
     html, body {
         margin: 0;
@@ -13,7 +14,7 @@
         width: 100%;
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         background-color: #008CFF;
-        background-image: url('/images/login-bg.png');
+        background-image: url('/images/login-bg.png'); /* Confetti-style background */
         background-size: cover;
         background-repeat: no-repeat;
         background-position: center;
@@ -116,10 +117,10 @@
     }
 
     .password-input {
-        padding-right: 45px; /* Make room for the toggle icon */
+        padding-right: 45px; /* space for the eye icon */
     }
 
-    .password-toggle {
+     .password-toggle {
         position: absolute;
         top: 50%;
         right: 10px;
@@ -137,8 +138,7 @@
         width: 30px;
         height: 30px;
     }
-
-        /* Black icon when showing password */
+      /* Black icon when showing password */
         .password-toggle.show {
             color: #000000;
         }
@@ -153,10 +153,12 @@
             background-color: rgba(255, 255, 255, 1); /* Brighter background on hover */
             box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
         }
-
 </style>
 
+
+
 <div class="main-container">
+
     <img src="images/login-logo_v01.png" alt="Day Ease Logo" class="logo" />
 
     <div class="login-form">
@@ -170,7 +172,27 @@
         <EditForm Model="loginModel" OnValidSubmit="HandleLogin">
             <DataAnnotationsValidator />
 
+
             <div class="form-group">
+                <label for="phonenumber">Mobile Number:</label>
+
+                <div class="input-group">
+                    <span class="input-group-text">+91</span>
+                    <input id="phonenumber"
+                           class="form-control"
+                           @bind="loginModel.phonenumber"
+                           @oninput="LimitToTenDigits"
+                           onkeypress="return isNumberKey(event)"
+                           placeholder="Enter 10-digit mobile number"
+                           maxlength="10"
+                           inputmode="numeric"
+                           pattern="[0-9]*" />
+                </div>
+
+                <ValidationMessage For="@(() => loginModel.phonenumber)" />
+            </div>
+
+                <div class="form-group">
                 <label for="phonenumber">Mobile Number:</label>
                 <div class="input-group">
                     <span class="input-group-text">+91</span>
@@ -221,6 +243,7 @@
             <a href="/mobile-number" class="text-decoration-none">Didn't have an account? Register</a>
         </div>
     </div>
+
 </div>
 
 @code {
@@ -237,16 +260,6 @@
         ShowPassword = !ShowPassword;
     }
 
-    private void OnPasswordFocus(FocusEventArgs e)
-    {
-        ShowPasswordRules = true;
-    }
-
-    private void OnPasswordBlur(FocusEventArgs e)
-    {
-        ShowPasswordRules = false;
-    }
-
     private async Task HandleLogin()
     {
         errorMessage = null;
@@ -260,7 +273,8 @@
             UserLocation.Latitude = response.Latitude;
             UserLocation.Longitude = response.Longitude;
 
-           
+            // ✅ Redirect to highlight page
+            //NavigationManager.NavigateTo("/highlightnew");
             NavigationManager.NavigateTo("/highlightcompact");
         }
         else
@@ -277,14 +291,12 @@
             loginModel.phonenumber = new string(input.Where(char.IsDigit).Take(10).ToArray());
         }
     }
-
     private void OnPasswordInput(ChangeEventArgs e)
     {
         var password = e.Value?.ToString() ?? "";
         loginModel.password = password;
         IsPasswordValid = IsValidPassword(password);
     }
-
     private bool IsValidPassword(string password)
     {
         return !string.IsNullOrWhiteSpace(password) &&
