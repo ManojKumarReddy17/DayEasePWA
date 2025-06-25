@@ -9,7 +9,7 @@ namespace Domain.RequestModels
     public class MobileNumberRequest
     {
         public string phonenumber { get; set; }
-        public bool IsForgot { get; set; } 
+       // public string CountryCode { get; set; }
 
     }
     public class RegistrationResponse
