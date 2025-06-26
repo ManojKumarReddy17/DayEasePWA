@@ -6,11 +6,9 @@ using System.Threading.Tasks;
 
 namespace Domain.RequestModels
 {
-    public class CategoryRequest
+    public class ProductCategoryMapDto
     {
         public string ProductCategoryId { get; set; }
-        public string StoreId { get; set; }
-        public string Name { get; set; }
-        public string Icon { get; set; }
+        public string ProductCategoryName { get; set; }
     }
 }
