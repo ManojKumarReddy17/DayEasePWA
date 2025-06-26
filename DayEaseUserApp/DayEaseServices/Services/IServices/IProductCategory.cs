@@ -8,15 +8,18 @@ using System.Threading.Tasks;
 
 namespace DayEaseServices.Services.IServices
 {
-      public  interface IProductCategory
-      {
-        Task<List<CategoryRequest>> GetProductcategoByStoreId(CategoryRequest model);
+    public interface IProductCategory
+
+    {
+
+        Task<List<ProductCategoryMapDto>> GetProductcategoByStoreId(StoreProdCategoryRequestModel model);
 
         Task<MysqlResponse<Pagination<ProductRequestModel>>> GetProductsByStoreId(PaginationQueryInput model);
 
-        //Task<List<ProductCategoriesModel>> GetProductsByStoreId(StoreProdCategoryRequestModel model);
-        
+        Task<List<ProductCategoriesModel>> GetProductsByCategoryId(ProductCategoriesModel model);
 
 
-      }
+
+
+    }
 }

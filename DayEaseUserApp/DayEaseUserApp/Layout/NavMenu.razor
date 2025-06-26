@@ -1,18 +1,21 @@
 ﻿@inherits LayoutComponentBase
+@inject NavigationManager NavigationManager
+@using DayEaseServices.Services.IServices
+@inject ICartService CartService
 
 <div class="top-bar">
     <div class="header-left">
         <button class="hamburger" @onclick="ToggleNavMenu">
-            <i class="bi bi-list"></i>
+            <img src="images/Cart-Logo.png" alt="Menu" class="logo-img" />
         </button>
-        <img src="images/Day-Ease-logo-black.png" alt="DayEase Logo" class="header-logo" />
+        @* <img src="images/Day-Ease-logo-black.png" alt="DayEase Logo" class="header-logo" /> *@
     </div>
 
     <div class="header-right">
         <button class="cart-btn" @onclick="OpenCart">
             <i class="bi bi-cart3"></i>
             <span class="cart-text">Cart</span>
-            <span class="cart-count">0</span>
+            <span class="cart-count">@CartService.CartItemCount</span>
         </button>
     </div>
 </div>
@@ -48,7 +51,7 @@
     @Body
 </div>
 
-@code {
+@* @code {
     private bool collapseNavMenu = true;
     private int cartItemCount = 0; // You can bind this to your cart service
 
@@ -62,5 +65,28 @@
         // Navigate to cart page or open cart modal
         // NavigationManager.NavigateTo("/cart");
     }
-}
+} *@
 
+@code {
+    private bool collapseNavMenu = true;
+
+    protected override void OnInitialized()
+    {
+        CartService.OnChange += StateHasChanged;
+    }
+
+    private void ToggleNavMenu()
+    {
+        collapseNavMenu = !collapseNavMenu;
+    }
+
+    private void OpenCart()
+    {
+        NavigationManager.NavigateTo("/cart");
+    }
+
+    public void Dispose()
+    {
+        CartService.OnChange -= StateHasChanged;
+    }
+}
