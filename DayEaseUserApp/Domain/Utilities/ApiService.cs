@@ -111,50 +111,7 @@ namespace Domain.Utilities
             _httpclient.DefaultRequestHeaders.Authorization = null;
         }
 
-        public async Task<string> GetProductByStoreId<TRequest, TResponse>(string url, TRequest request)
-        {
-            var jsonContent = new StringContent(
-               JsonSerializer.Serialize(request),
-               Encoding.UTF8,
-               "application/json");
-
-            var response = await _httpclient.PostAsync($"{_settings.DayEase_API}/{url}", jsonContent);
-            response.EnsureSuccessStatusCode();
-
-            return await response.Content.ReadAsStringAsync();
-
-        }
-
-        public async Task<TResponse> GetProductCategoriesByStoreId<TRequest, TResponse>(string url, TRequest request)
-        {
-            var jsonContent = new StringContent(
-              JsonSerializer.Serialize(request),
-              Encoding.UTF8,
-              "application/json");
-
-            var response = await _httpclient.PostAsync($"{_settings.DayEase_API}/{url}", jsonContent);
-            response.EnsureSuccessStatusCode();
-            var jsonString = await response.Content.ReadAsStringAsync();
-            return JsonSerializer.Deserialize<TResponse>(jsonString);
-
-        }
-
-        public async Task<TResponse> PostPageAsync<TRequest, TResponse>(string url, TRequest request)
-        {
-            var jsonContent = new StringContent(
-                JsonSerializer.Serialize(request),
-                Encoding.UTF8,
-                "application/json");
-
-            var response = await _httpclient.PostAsync($"{_settings.DayEase_API}/{url}", jsonContent);
-            response.EnsureSuccessStatusCode();
-
-            var jsonString = await response.Content.ReadAsStringAsync();
-            return JsonSerializer.Deserialize<TResponse>(jsonString, new JsonSerializerOptions
-            {
-                PropertyNameCaseInsensitive = true
-            });
-        }
+       
     }
 }
 

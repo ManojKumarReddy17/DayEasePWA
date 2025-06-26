@@ -280,7 +280,8 @@ else
                 @foreach (var store in Stores.Take(VisibleStoreCount))
                 {
                     <div class="store-card-wrapper">
-                        <a href="/productcategory?storeId=@store.StoreId" class="store-link">
+                        <a href="/productcategory?storeId=@store.StoreId&storeName=@Uri.EscapeDataString(store.StoreName)" class="store-link">
+
                             <div class="custom-card">
                                 <div class="position-relative">
                                     <img src="images/@store.Products.First().ProductImg" class="card-img-customs" />
