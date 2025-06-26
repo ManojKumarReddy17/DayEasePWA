@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using Amazon.Runtime;
+using Domain.DomainModels;
+using System.Threading.Tasks;
 
 namespace Registration.IApiService
 {
@@ -12,17 +14,15 @@ namespace Registration.IApiService
         Task<TResponse> PostWithoutAuthAsync<TRequest, TResponse>(string endpoint, TRequest request);
         void SetAuthorizationHeader(string token);
         void RemoveAuthorizationHeader();
+        
 
         //product category 
-        Task<TResponse> PostPageAsync<TRequest, TResponse>(string url, TRequest request);
-
-
-        Task<string> GetProductByStoreId<TRequest, TResponse>(string url, TRequest data);
-        Task<TResponse> GetProductCategoriesByStoreId<TRequest, TResponse>(string url, TRequest data);
+       
+      
 
 
 
-
+        Task<string> ForgotPassword<TRequest, TResponse>(string url, TRequest data);
     }
 }
 

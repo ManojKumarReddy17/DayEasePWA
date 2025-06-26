@@ -9,20 +9,13 @@ namespace Domain.RequestModels
 {
     public class ForgotPasswordModel
     {
-        [Required(ErrorMessage = "Phone number is required")]
-        [Phone(ErrorMessage = "Invalid phone number")]
+       
         public string PhoneNumber { get; set; }
 
-        [Required(ErrorMessage = "OTP is required")]
-        [StringLength(6, MinimumLength = 4, ErrorMessage = "OTP must be 4 to 6 digits")]
-        public string OTP { get; set; }
-
-        [Required(ErrorMessage = "New password is required")]
-        [StringLength(100, MinimumLength = 6, ErrorMessage = "Password must be at least 6 characters")]
+        [Required(ErrorMessage = "Password is required")]
+        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{7,15}$",
+         ErrorMessage = "Password must be 7–15 characters and include uppercase, lowercase, number, and special character.")]
         public string NewPassword { get; set; }
 
-        [Required(ErrorMessage = "Please confirm your password")]
-        [Compare(nameof(NewPassword), ErrorMessage = "Passwords do not match")]
-        public string ConfirmPassword { get; set; }
     }
 }

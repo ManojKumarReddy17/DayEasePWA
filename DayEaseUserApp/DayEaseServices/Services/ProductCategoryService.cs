@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace DayEaseServices.Services
 {
-     public class ProductCategoryService:IProductCategory
+    public class ProductCategoryService : IProductCategory
     {
         private readonly IApiService _apiservice;
         public ProductCategoryService(IApiService apiservice)
@@ -21,38 +21,35 @@ namespace DayEaseServices.Services
         }
 
 
-        public async Task<List<CategoryRequest>> GetProductcategoByStoreId(CategoryRequest model)
+
+
+        public async Task<List<ProductCategoriesModel>> GetProductsByCategoryId(ProductCategoriesModel model)
+        {
+            string endpoint = "ProductCategory/GetProductCategoryById";
+            var response = await _apiservice.PostAsync<ProductCategoriesModel, List<ProductCategoriesModel>>(endpoint, model);
+            return response;
+        }
+
+        public async Task<List<ProductCategoryMapDto>> GetProductcategoByStoreId(StoreProdCategoryRequestModel model)
         {
             string endpoint = "ProductCategories/GetStoreProductCategorybyId";
-            var response = await _apiservice.GetProductCategoriesByStoreId<CategoryRequest, List<CategoryRequest>>(endpoint, model);
-           
+            var response = await _apiservice.PostAsync<StoreProdCategoryRequestModel, List<ProductCategoryMapDto>>(endpoint, model);
+
             return response;
         }
 
 
 
-        //public async Task<List<ProductCategoriesModel>> GetProductsByStoreId(StoreProdCategoryRequestModel model)
-        //{
-        //    string endpoint = "Products/GetProductsByStoreId";
-
-        //    var jsonResponse = await _apiservice.GetProductByStoreId<StoreProdCategoryRequestModel, string>(endpoint, model);
-
-        //    var response = JsonSerializer.Deserialize<List<ProductCategoriesModel>>(jsonResponse, new JsonSerializerOptions
-        //    {
-        //        PropertyNameCaseInsensitive = true
-        //    });
-
-        //    return response!;
-        //}
         public async Task<MysqlResponse<Pagination<ProductRequestModel>>> GetProductsByStoreId(PaginationQueryInput model)
         {
             string endpoint = "Products/GetProductsByStoreId";
-            var details = await _apiservice.PostPageAsync<PaginationQueryInput, MysqlResponse<Pagination<ProductRequestModel>>>(
+            var details = await _apiservice.PostAsync<PaginationQueryInput, MysqlResponse<Pagination<ProductRequestModel>>>(
                 endpoint,
                 model
             );
             return details;
         }
+
 
     }
 }

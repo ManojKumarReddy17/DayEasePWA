@@ -73,5 +73,10 @@ public class RegistrationService : IRegistration
         return result;
     }
 
-    
+      public async Task<string> ForgotPassword<TRequest, TResponse>(ForgotPasswordModel model)
+    {
+        string endpoint = "User/ForgotPassword";
+        var result = await _apiservice.ValidateOtp<ForgotPasswordModel, string>(endpoint, model);
+        return result;
+    }
 }

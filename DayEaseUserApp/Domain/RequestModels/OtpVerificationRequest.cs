@@ -12,6 +12,7 @@ namespace Domain.RequestModels
        
         public string PhoneNumber { get; set; }
         public int Otp { get; set; }
+        public bool IsForgot { get; set; }
     }
     public class OtpResponse
     {

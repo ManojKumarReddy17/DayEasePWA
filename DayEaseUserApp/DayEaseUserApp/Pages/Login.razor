@@ -1,11 +1,10 @@
 ﻿@page "/Login"
 @using Domain.RequestModels
 @inject IUserLoginService userloginservice
-@inject UserLocationState UserLocation
 @using DayEaseServices.Services.IServices
 @inject NavigationManager NavigationManager
 @inject HttpClient Http
-
+@inject UserLocationState UserLocation
 <style>
     html, body {
         margin: 0;
@@ -14,7 +13,7 @@
         width: 100%;
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         background-color: #008CFF;
-        background-image: url('/images/login-bg.png'); /* Confetti-style background */
+        background-image: url('/images/login-bg.png');
         background-size: cover;
         background-repeat: no-repeat;
         background-position: center;
@@ -117,7 +116,7 @@
     }
 
     .password-input {
-        padding-right: 40px; /* space for the eye icon */
+        padding-right: 45px; /* Make room for the toggle icon */
     }
 
     .password-toggle {
@@ -126,32 +125,53 @@
         right: 10px;
         transform: translateY(-50%);
         cursor: pointer;
-        color: #999;
-        font-size: 1.1rem;
+        font-size: 1.2rem;
+        z-index: 2;
+        background-color: rgba(255, 255, 255, 0.8); /* Soft white background */
+        padding: 6px;
+        border-radius: 50%;
+        transition: background-color 0.2s, color 0.2s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 30px;
+        height: 30px;
     }
+
+        /* Black icon when showing password */
+        .password-toggle.show {
+            color: #000000;
+        }
+
+        /* Dark gray icon when hiding password */
+        .password-toggle.hide {
+            color: #555555;
+        }
+
+        /* Add hover effect */
+        .password-toggle:hover {
+            background-color: rgba(255, 255, 255, 1); /* Brighter background on hover */
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+        }
+
 </style>
 
-
-
 <div class="main-container">
+    <img src="images/login-logo_v01.png" alt="Day Ease Logo" class="logo" />
 
-        <img src="images/login-logo_v01.png" alt="Day Ease Logo" class="logo" />
+    <div class="login-form">
+        <h5>Login</h5>
 
-        <div class="login-form">
-            <h5>Login</h5>
+        @if (!string.IsNullOrEmpty(errorMessage))
+        {
+            <div class="alert alert-danger">@errorMessage</div>
+        }
 
-            @if (!string.IsNullOrEmpty(errorMessage))
-            {
-                <div class="alert alert-danger">@errorMessage</div>
-            }
-
-            <EditForm Model="loginModel" OnValidSubmit="HandleLogin">
-                <DataAnnotationsValidator />
-
+        <EditForm Model="loginModel" OnValidSubmit="HandleLogin">
+            <DataAnnotationsValidator />
 
             <div class="form-group">
                 <label for="phonenumber">Mobile Number:</label>
-
                 <div class="input-group">
                     <span class="input-group-text">+91</span>
                     <input id="phonenumber"
@@ -164,7 +184,6 @@
                            inputmode="numeric"
                            pattern="[0-9]*" />
                 </div>
-
                 <ValidationMessage For="@(() => loginModel.phonenumber)" />
             </div>
 
@@ -176,33 +195,32 @@
                                class="form-control password-input"
                                maxlength="15"
                                @oninput="OnPasswordInput"
-                               @onfocus="() => ShowPasswordRules = true"
-                               @onblur="() => ShowPasswordRules = false" />
-                    <span class="password-toggle" @onclick="TogglePasswordVisibility">
-                        <i class="@((ShowPassword ? "fa fa-eye-slash" : "fa fa-eye"))"></i>
+                               @onfocus="OnPasswordFocus"
+                               @onblur="OnPasswordBlur" />
+
+                    <span class="password-toggle @(ShowPassword ? "show" : "hide")" @onclick="TogglePasswordVisibility">
+                        <i class="@((ShowPassword ? "fas fa-eye-slash" : "fas fa-eye"))"></i>
                     </span>
+
                 </div>
                 <ValidationMessage For="@(() => loginModel.password)" class="validation-message" />
-
-          
             </div>
 
-             
+            <div class="form-group d-flex align-items-center justify-content-between">
+                <div class="forgot-link">
+                    @*  <a href="/forgotpassword">Forgot Password?</a> *@
+                    <a href="/mobile-number?IsForgot=true" class="btn btn-outline-primary mt-3">Forgot Password?</a>
 
-                <div class="form-group d-flex align-items-center justify-content-between">
-                    <div class="forgot-link">
-                        <a href="/forgotpassword">Forgot Password?</a>
-                        
-                    </div>
                 </div>
-
-                <button type="submit" class="btn btn-primary">LOGIN</button>
-            </EditForm>
-            <div class="text-center mt-3">
-                <a href="/mobile-number" class="text-decoration-none">Didn't have an account ? Register</a>
             </div>
-        </div>
 
+            <button type="submit" class="btn btn-primary">LOGIN</button>
+        </EditForm>
+
+        <div class="text-center mt-3">
+            <a href="/mobile-number" class="text-decoration-none">Didn't have an account? Register</a>
+        </div>
+    </div>
 </div>
 
 @code {
@@ -219,6 +237,16 @@
         ShowPassword = !ShowPassword;
     }
 
+    private void OnPasswordFocus(FocusEventArgs e)
+    {
+        ShowPasswordRules = true;
+    }
+
+    private void OnPasswordBlur(FocusEventArgs e)
+    {
+        ShowPasswordRules = false;
+    }
+
     private async Task HandleLogin()
     {
         errorMessage = null;
@@ -232,8 +260,8 @@
             UserLocation.Latitude = response.Latitude;
             UserLocation.Longitude = response.Longitude;
 
-            // ✅ Redirect to highlight page
-            NavigationManager.NavigateTo("/highlightnew");
+           
+            NavigationManager.NavigateTo("/highlightcompact");
         }
         else
         {
@@ -249,12 +277,14 @@
             loginModel.phonenumber = new string(input.Where(char.IsDigit).Take(10).ToArray());
         }
     }
+
     private void OnPasswordInput(ChangeEventArgs e)
     {
         var password = e.Value?.ToString() ?? "";
         loginModel.password = password;
         IsPasswordValid = IsValidPassword(password);
     }
+
     private bool IsValidPassword(string password)
     {
         return !string.IsNullOrWhiteSpace(password) &&
