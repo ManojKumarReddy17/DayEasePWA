@@ -92,7 +92,11 @@
     }
 
     /*cart */
+
     .cart-btn {
+        display: flex;
+        justify-content: flex-end; /* Pushes the button to the right */
+        margin-top: 10px; /* optional spacing */
         background-color: #007bff; /* Blue */
         color: white;
         padding: 8px 12px;
@@ -247,28 +251,60 @@
     }
 
     /* Search Box */
+    /* Search Box - Upgraded */
     .search-container {
         display: flex;
-        padding: 10px 16px;
-        background-color: white;
+        align-items: center;
+        justify-content: center;
+        padding: 12px 20px;
+        max-width: 600px;
+        margin: 30px auto;
+        background-color: #ffffff;
+        border-radius: 50px;
+        box-shadow: 0 6px 20px rgba(0, 123, 255, 0.1);
+        transition: box-shadow 0.3s ease;
     }
+
+        .search-container:hover,
+        .search-container:focus-within {
+            box-shadow: 0 8px 28px rgba(0, 123, 255, 0.25);
+        }
 
     .search-input {
         flex: 1;
-        padding: 8px 12px;
-        border: 1px solid #ddd;
-        border-radius: 4px 0 0 4px;
-        font-size: 14px;
+        padding: 12px 18px;
+        border: none;
+        outline: none;
+        font-size: 16px;
+        border-radius: 50px 0 0 50px;
+        background-color: #f9f9f9;
+        transition: background-color 0.3s ease;
     }
 
+        .search-input::placeholder {
+            color: #999;
+            font-style: italic;
+        }
+
     .search-button {
-        padding: 8px 12px;
-        background-color: #f8f8f8;
-        border: 1px solid #ddd;
-        border-left: none;
-        border-radius: 0 4px 4px 0;
+        padding: 12px 18px;
+        border: none;
+        border-radius: 0 50px 50px 0;
+        background-color: #007bff;
+        color: white;
+        font-size: 18px;
         cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.2s ease;
     }
+
+        .search-button:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+
+        .search-button i {
+            pointer-events: none;
+        }
 
     /* Categories Navigation */
     .categories-nav {
@@ -398,24 +434,309 @@
         }
     }
 
+    .store-header-wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        padding: 10px 16px;
+    }
+
+    .store-title-box {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        background: linear-gradient(to right, #007bff, #00c6ff);
+        color: white;
+        padding: 12px 24px;
+        border-radius: 50px;
+        box-shadow: 0 8px 24px rgba(0, 123, 255, 0.35);
+        width: 100%;
+        max-width: 500px;
+        height: 60px;
+    }
+
+    .page-title {
+        font-size: 22px;
+        font-weight: 600;
+        margin: 0;
+    }
+
+    .shop-icon {
+        font-size: 28px;
+        color: white;
+    }
+
+    /* Match height and alignment with store title box */
+    .search-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-radius: 50px;
+        background: #fff;
+        box-shadow: 0 6px 20px rgba(0, 123, 255, 0.1);
+        padding: 0 12px;
+        height: 60px; /* Match store-title height */
+        width: 100%;
+        max-width: 500px;
+    }
+
+    .search-input {
+        flex: 1;
+        border: none;
+        background: transparent;
+        font-size: 16px;
+        padding: 12px;
+        outline: none;
+        border-radius: 50px;
+    }
+
+    .search-button {
+        background-color: #007bff;
+        border: none;
+        color: white;
+        padding: 10px 16px;
+        border-radius: 50px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+        .search-button:hover {
+            background-color: #0056b3;
+        }
+
+    @@media (min-width: 768px) {
+        .store-header-wrapper {
+            flex-direction: row;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto 30px auto;
+        }
+    }
+
+    /* ---------------------------------
+           MODAL BACKDROP & ANIMATION
+        ---------------------------------- */
+    .modal-backdrop {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0.6);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+        padding: 10px;
+        box-sizing: border-box;
+    }
+
+    @@keyframes fadeInScale {
+        0% {
+            opacity: 0;
+            transform: scale(0.9);
+        }
+
+        100% {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+
+    /* ---------------------------------
+           MODAL CONTENT BOX
+        ---------------------------------- */
+    .modal-content {
+        background-color: #ffffff;
+        border-radius: 20px;
+        padding: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+        width: 100%;
+        max-width: 500px;
+        animation: fadeInScale 0.3s ease;
+        position: relative;
+        overflow-y: auto;
+        max-height: 90vh;
+        box-sizing: border-box;
+    }
+
+    /* ---------------------------------
+           PRODUCT IMAGE INSIDE MODAL
+        ---------------------------------- */
+    .popup-image {
+        width: 100%;
+        max-height: 250px;
+        object-fit: contain;
+        border-radius: 12px;
+        margin-bottom: 15px;
+    }
+
+    /* ---------------------------------
+           PRODUCT DETAILS IN MODAL
+        ---------------------------------- */
+    .modal-content h4 {
+        font-size: 1.4rem;
+        font-weight: 600;
+        margin-bottom: 10px;
+        color: #333;
+        text-align: center;
+    }
+
+    .modal-content p {
+        font-size: 1rem;
+        margin: 8px 0;
+        color: #555;
+        text-align: center;
+    }
+
+    /* ---------------------------------
+           QUANTITY CONTROLS
+        ---------------------------------- */
+    .cart-controls {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 12px;
+        margin: 15px 0;
+    }
+
+    .cart-btn.plus,
+    .cart-btn.minus {
+        background-color: #007bff;
+        border: none;
+        border-radius: 8px;
+        padding: 8px 14px;
+        font-size: 1.2rem;
+        color: white;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+    }
+
+        .cart-btn.plus:hover {
+            background-color: green;
+        }
+
+        .cart-btn.minus:hover {
+            background-color: red;
+        }
+
+    .quantity {
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: #333;
+        min-width: 40px;
+        text-align: center;
+    }
+
+    /* ---------------------------------
+           ACTION BUTTON ROW
+        ---------------------------------- */
+    .popup-button-row {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        margin-top: 20px;
+    }
+
+    .cart-btn.add-btn {
+        background-color: #007bff;
+        color: white;
+        flex: 1;
+        border: none;
+        border-radius: 10px;
+        padding: 10px 16px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+    }
+
+    .cart-btn.close-btn {
+        background-color: #6c757d;
+        color: white;
+        flex: 1;
+        border: none;
+        border-radius: 10px;
+        padding: 10px 16px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+    }
+
+    .cart-btn.add-btn:hover {
+        background-color: #0056b3;
+    }
+
+    .cart-btn.close-btn:hover {
+        background-color: #5a6268;
+    }
+
+    /* ---------------------------------
+           RESPONSIVE STYLES
+        ---------------------------------- */
+    @@media (max-width: 600px) {
+        .modal-content {
+            padding: 16px;
+            border-radius: 16px;
+            max-height: 95vh;
+        }
+
+        .popup-image {
+            max-height: 180px;
+        }
+
+        .cart-btn.plus,
+        .cart-btn.minus {
+            padding: 6px 12px;
+        }
+
+        .quantity {
+            font-size: 1rem;
+        }
+
+        .popup-button-row {
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .cart-btn.add-btn,
+        .cart-btn.close-btn {
+            width: 100%;
+        }
+    }
+
+    @@media (min-width: 601px) and (max-width: 1024px) {
+        .modal-content {
+            max-width: 450px;
+        }
+
+        .popup-image {
+            max-height: 220px;
+        }
+    }
 </style>
+    <!--StoreName-->
+<div class="store-header-wrapper">
+    <div class="store-title-box">
+        <i class="bi bi-shop shop-icon"></i>
+        <h2 class="page-title">@StoreName</h2>
+    </div>
 
-
-
-<h2 class="page-title text-center">@StoreName</h2>
-
-
-<!-- Search Box -->
-<div class="search-container">
-    <input type="text"
-           @bind="searchQuery"
-           class="search-input"
-           placeholder='Search for "apple juice"'
-           @onkeydown="HandleSearchKey" />
-    <button class="search-button" @onclick="SearchProducts" aria-label="Search">
-        <i class="bi bi-search"></i>
-    </button>
+    <!--Search bar-->
+    <div class="search-container">
+        <input type="text"
+               @bind="searchQuery"
+               class="search-input"
+               placeholder='Search for "apple juice"'
+               @onkeydown="HandleSearchKey" />
+        <button class="search-button" @onclick="SearchProducts" aria-label="Search">
+            <i class="bi bi-search"></i>
+        </button>
+    </div>
 </div>
+
+
 
 <!-- Categories Navigation -->
 <div class="categories-nav">
@@ -464,7 +785,7 @@ else
                 @if (CartService.CartItems.ContainsKey(product.ProductId))
                 {
                     <div class="cart-controls">
-                        <span class="added-message">Item added to cart</span>
+                       
                         <div class="quantity-controls">
                             <button class="cart-btn minus" @onclick="() => CartService.DecreaseQuantity(product.ProductId)">➖</button>
                             <span class="quantity">@CartService.CartItems[product.ProductId].quantity</span>
@@ -489,7 +810,7 @@ else
            
     
 </div>
-}
+   }
 
 @code {
     private string searchQuery = "";
@@ -510,6 +831,9 @@ else
 
     private ElementReference sentinel;
     private DotNetObjectReference<ProductCategory> objRef;
+    bool showPopup = false;
+    ProductRequestModel selectedProduct;
+
 
     protected override async Task OnInitializedAsync()
     {
@@ -685,7 +1009,7 @@ else
     //     else
     //         cart[product.ProductId] = (product, 1);
     // }
-    @code {
+  
     private void AddToCart(string productId, string name)
     {
         CartService.AddToCart(productId, name, 1);
@@ -731,5 +1055,22 @@ else
     public void Dispose() => objRef?.Dispose();
 
     private string FormatCurrency(decimal amount) => "₹" + amount.ToString("0.00");
+
+
+
+      private  void OpenPopup(ProductRequestModel product)
+        {
+    selectedProduct = product;
+    showPopup = true;
+        }
+
+       private void ClosePopup()
+        {
+    showPopup = false;
+    selectedProduct = null;
+        }
+
+
+
 }
-}
+
