@@ -1,0 +1,292 @@
+﻿@page "/MyOrders"
+@using DayEaseServices.Services
+@using Domain.DomainModels
+@inject IOrderService orderservices
+@using DayEaseServices.Services.IServices
+@using Domain.RequestModels
+@inject NavigationManager Navigation
+
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .flex-heading {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px; /* gap between image and text */
+    }
+
+    .logo {
+        height: 40px; /* adjust based on your layout */
+    }
+
+    .page-wrapper {
+        background-color: aliceblue;
+        min-height: 100vh;
+        padding: 2rem 1rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .order-heading {
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin-bottom: 2rem;
+        text-align: center;
+        color: #111827;
+    }
+
+    .order-card {
+        background-color: #ffffff;
+        border-radius: 1rem;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
+        padding: 1.5rem;
+        width: 100%;
+        max-width: 700px;
+        margin-bottom: 1.5rem;
+        transition: transform 0.3s ease;
+    }
+
+        .order-card:hover {
+            transform: translateY(-4px);
+        }
+
+    .order-id {
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: #2563eb;
+        margin-bottom: 0.25rem;
+    }
+
+    .order-date {
+        font-size: 0.95rem;
+        color: #6b7280;
+        font-style: italic;
+        margin-bottom: 0.75rem;
+    }
+
+    .order-detail {
+        display: flex;
+        align-items: center;
+        font-size: 1rem;
+        margin: 0.35rem 0;
+        gap: 0.4rem;
+    }
+
+        .order-detail .label {
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            width: 70px;
+        }
+
+        .order-detail .value {
+            font-weight: 500;
+        }
+
+    .order-store .value {
+        color: #059669;
+    }
+
+    .order-items .value {
+        color: #e11d48;
+    }
+
+    .order-total .value {
+        color: #f59e0b;
+        font-weight: bold;
+    }
+
+    .order-status {
+        margin-top: 0.75rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .status-text {
+        font-weight: 600;
+        color: #1e40af;
+    }
+
+    .status {
+        padding: 0.4rem 1rem;
+        border-radius: 9999px;
+        font-size: 0.875rem;
+        font-weight: 600;
+        text-transform: capitalize;
+        color: white;
+    }
+
+    .pending {
+        background-color: #ffca28;
+        color: #4b5563;
+    }
+
+    .order-actions {
+        margin-top: 1.25rem;
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        flex-wrap: wrap;
+    }
+
+    .order-button {
+        border: none;
+        padding: 0.6rem 0.9rem;
+        border-radius: 0.9rem;
+        font-weight: 600;
+        font-size: 0.75rem;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        text-decoration: none;
+        text-align: center;
+    }
+
+    .order-id-display {
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: #1a237e;
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        margin-bottom: 1rem;
+    }
+
+        .order-id-display .label {
+            color: #1a237e;
+        }
+
+        .order-id-display .value {
+            color: #263238;
+        }
+
+
+        .order-button.reorder {
+            background-color: #2563eb;
+            color: white;
+        }
+
+            .order-button.reorder:hover {
+                background-color: #1d4ed8;
+            }
+
+        .order-button.view {
+            background-color: #1f2937;
+            color: white;
+        }
+
+            .order-button.view:hover {
+                background-color: #111827;
+            }
+
+    .order-detail i {
+        margin-right: 0.3rem;
+        color: #6b7280;
+    }
+
+    @@media (min-width: 640px) {
+        .page-wrapper {
+            padding: 2rem;
+        }
+
+        .order-heading {
+            font-size: 1.5rem;
+        }
+    }
+
+    @@media (min-width: 1024px) {
+        .page-wrapper {
+            max-width: 900px;
+            margin: auto;
+        }
+
+        .logo {
+            height: 40px; /* or any desired height */
+            margin-right: 10px; /* adds space between image and text */
+            vertical-align: middle;
+        }
+    }
+</style>
+
+
+<div class="page-wrapper">
+    @* <h2 class="order-heading"> *@
+    @*     <img src="images/Day-Ease-logo-black.png" class="logo" alt="Day Ease Logo" />My Orders *@
+    @* </h2> *@
+    <h2 class="order-heading flex-heading">
+        <img src="images/Day-Ease-logo-black.png" class="logo" alt="Day Ease Logo" />
+        My Orders
+    </h2>
+
+    @foreach (var order in OrderDetails.OrderItems)
+    {
+        <div class="order-card">
+            <div class="order-header">
+                @* <p class="order-id">Order #@order.OrderId</p> *@
+                <div class="order-id-header">
+                    <span class="label">Order ID:</span>
+                    <span class="value">@OrderDetails.OrderId</span>
+                </div>
+                <p class="order-date">@OrderDetails.CreatedAt</p>
+            </div>
+
+            <p><span class="order-label">Store:</span> @OrderDetails.StoreId</p>
+            <p><span class="order-label">Items:</span> @order.ProductId</p>
+            <p><span class="order-label">Total:</span> ₹@order.Price</p>
+
+            <div class="order-status">
+                <span>Status:</span>
+                <span class="@GetStatusBadgeClass(OrderDetails.OrderStatus)">
+                    @OrderDetails.OrderStatus
+                </span>
+            </div>
+
+            <div class="order-actions">
+                <button class="order-button reorder">Reorder</button>
+                @* <button  class="order-button view" @onclick="() => GoToDetails(order.Id)">View Details</button> *@
+                <a href="/order?orderId=@order.OrderId" class="order-button view">View Details</a>
+            </div>
+        </div>
+    }
+</div>
+
+
+
+@code {
+
+    private OrderRequestModel OrderDetails { get; set; }
+    private bool isLoading = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+
+
+            var request = new OrderRequestModel { UserId = "DEUS20250523093506" };
+            OrderDetails = await orderservices.OrderDetailsbyUser<OrderRequestModel, OrderResponseModel>(request);
+        }
+        catch
+        {
+            OrderDetails = null;
+        }
+
+        isLoading = false;
+    }
+    private string GetStatusBadgeClass(string status) => status?.ToLower() switch
+    {
+        "delivered" => "status delivered",
+        "outfordelivery" => "status out-for-delivery",
+        "cancelled" => "status cancelled",
+        "pending" => "status pending",
+        _ => "status"
+    };
+
+}
