@@ -9,714 +9,883 @@
 @layout NavMenu
 @inject IJSRuntime JS
 @using System.Linq
-@implements  IDisposable
+@implements IDisposable
 
 
 <style>
     /* For the DayEase logo */
     .logo {
-        height: clamp(50px, 6vw, 80px); /* Responsive between 50-80px */
+    height: clamp(50px, 6vw, 80px); /* Responsive between 50-80px */
     }
 
     .logo-container {
-        text-align: center;
-        padding: 20px 0;
-        background: white; /* Or your preferred background */
-        margin-bottom: 20px;
+    text-align: center;
+    padding: 20px 0;
+    background: white; /* Or your preferred background */
+    margin-bottom: 20px;
     }
     /* Page layout with gradient background */
     .page-container {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 20px;
-        background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
-        min-height: 100vh;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+    min-height: 100vh;
     }
 
     /* Style for page title */
     .page-title {
-        margin-top: 20px;
-        font-size: 24px;
+    margin-top: 20px;
+    font-size: 24px;
     }
 
     /* Product grid */
     .product-container {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-        gap: 25px;
-        padding: 20px 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 25px;
+    padding: 10px;
     }
 
     /* Product card with colorful accents */
     .product-card {
-        border-radius: 12px;
-        overflow: hidden;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        transition: all 0.3s ease;
-        background: white;
-        position: relative;
-        border-top: 4px solid #4a90e2; /* Blue accent border */
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    background: white;
+    position: relative;
+    border-top: 4px solid #4a90e2; /* Blue accent border */
     }
 
-        .product-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
-        }
+    .product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+    }
 
     /* Product image */
     .product-image-container {
-        position: relative;
-        height: 200px;
-        overflow: hidden;
-        background: #f8f9fa; /* Light gray fallback */
-        display: grid;
-        place-items: center; /* Centers the image both horizontally and vertically */
+    position: relative;
+    height: 200px;
+    overflow: hidden;
+    background: #f8f9fa; /* Light gray fallback */
+    display: grid;
+    place-items: center; /* Centers the image both horizontally and vertically */
     }
 
-        .product-image-container img {
-            max-height: 100%;
-            max-width: 100%;
-            object-fit: cover;
-        }
+    .product-image-container img {
+    max-height: 100%;
+    max-width: 100%;
+    object-fit: cover;
+    }
 
 
     .product-image {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        transition: transform 0.3s ease;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
     }
 
     .product-card:hover .product-image {
-        transform: scale(1.05);
+    transform: scale(1.05);
     }
 
-    /*cart */
-
+    /* Cart button */
     .cart-btn {
-        display: flex;
-        justify-content: flex-end; /* Pushes the button to the right */
-        margin-top: 10px; /* optional spacing */
-        background-color: #007bff; /* Blue */
-        color: white;
-        padding: 8px 12px;
-        border: none;
-        border-radius: 10px;
-        font-size: 14px;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-        font-weight: 500;
+    background-color: #007bff;
+    color: white;
+    padding: 6px 12px;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    height: 36px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    white-space: nowrap;
     }
 
-        .cart-btn:hover {
-            background-color: #28a745; /* Green on hover */
-        }
+    .cart-btn:hover {
+    background-color: forestgreen /* Green on hover */
+    }
 
-        .cart-btn.added {
-            background-color: #007bff !important; /* Blue */
-            color: white;
-        }
+    .cart-btn.added {
+    background-color: #007bff !important; /* Blue */
+    color: white;
+    }
 
-            .cart-btn.added:hover {
-                background-color: #218838 !important; /* Dark Green */
-            }
+    .cart-btn.added:hover {
+    background-color: #1E90FF !important; /* Dark Green */
+    }
 
     /* New styles for quantity layout */
     .cart-controls {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        margin-top: 8px;
-        gap: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 8px;
+    gap: 8px;
     }
 
-    /* Plus and minus button specific */
-    .cart-btn.plus {
-        background-color: #007bff /* Green */
-    }
-
-    .cart-btn.minus {
-        background-color: #007bff /* Red */
-    }
-
-    /* Optional: hover effect for plus/minus */
-    .cart-btn.plus:hover {
-        background-color: green;
-    }
-
-    .cart-btn.minus:hover {
-        background-color: red;
-    }
-
+    /* Plus and minus button specific */ */
+    /* .cart-btn.plus { */
+    /*     background-color: #007bff /* Green */ */
+    /* } */
+    /* .cart-btn.minus { */
+    /*     background-color: #007bff /* Red */ */
+    /* } */
+    /* /* Optional: hover effect for plus/minus */
+    /* .cart-btn.plus:hover { */
+    /*     background-color: green; */
+    /* } */
+    /* .cart-btn.minus:hover { */
+    /*     background-color: red; */
+    /* } */
     /* Quantity number display */
     .quantity {
-        font-weight: bold;
-        font-size: 16px;
-        width: 32px;
-        text-align: center;
-        color: #333;
+    font-weight: bold;
+    font-size: 16px;
+    width: 32px;
+    text-align: center;
+    color: #333;
     }
 
 
 
     .top-navbar {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 15px 30px;
-        background-color: #ffffff;
-        border-bottom: 1px solid #e5e5e5;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    background-color: #ffffff;
+    border-bottom: 1px solid #e5e5e5;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     }
 
     /* Logo container */
     .navbar-left {
-        flex: 1; /* Takes available space */
+    flex: 1; /* Takes available space */
     }
 
     .navbar-right {
-        display: flex;
-        gap: 15px;
+    display: flex;
+    gap: 15px;
     }
 
     .nav-btn {
-        padding: 8px 15px;
-        border: none;
-        border-radius: 5px;
-        background: #f0f0f0;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        display: flex;
-        align-items: center;
-        gap: 5px;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    background: #f0f0f0;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 5px;
     }
 
-        /* Optional: Hover styles */
-        .nav-btn:hover {
-            background: #e0e0e0;
-        }
+    /* Optional: Hover styles */
+    .nav-btn:hover {
+    background: #e0e0e0;
+    }
 
     /* Product details with subtle gradient */
     .product-card {
-        border-radius: 12px;
-        overflow: hidden;
-        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        transition: all 0.3s ease;
-        background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    background: white;
     }
 
     .product-image-container {
-        position: relative;
-        height: 200px;
-        overflow: hidden;
+    position: relative;
+    height: 200px;
+    overflow: hidden;
     }
 
     .product-image {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
     }
 
     .product-details {
-        padding: 15px;
+    padding: 15px;
     }
 
-    .price-action-row {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-top: 15px;
-    }
+    /* .price-action-row { */
+    /*     display: flex; */
+    /*     justify-content: space-between; */
+    /*     align-items: center; */
+    /*     margin-top: 15px; */
+    /* } */
 
     .product-price {
-        font-weight: bold;
-        font-size: 1.2rem;
-        color: #2c3e50;
-        margin: 0;
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: #2c3e50;
+    margin: 5px;
     }
 
     .product-description span {
-        color: #666;
-        font-size: 0.9em;
-        margin-left: 5px;
+    color: #666;
+    font-size: 0.9em;
+    margin-left: 5px;
     }
 
     /* Delivery Info */
     .delivery-info {
-        padding: 8px 16px;
-        background-color: #f8f8f8;
-        font-size: 14px;
-        display: flex;
-        justify-content: space-between;
+    padding: 8px 16px;
+    background-color: #f8f8f8;
+    font-size: 14px;
+    display: flex;
+    justify-content: space-between;
     }
 
     /* Search Box */
     /* Search Box - Upgraded */
     .search-container {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 12px 20px;
-        max-width: 600px;
-        margin: 30px auto;
-        background-color: #ffffff;
-        border-radius: 50px;
-        box-shadow: 0 6px 20px rgba(0, 123, 255, 0.1);
-        transition: box-shadow 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 20px;
+    max-width: 600px;
+    margin: 10px auto;
+    background-color: #ffffff;
+    border-radius: 50px;
+    border: 2px solid #007bff;
+    box-shadow: 0 6px 20px rgba(0, 123, 255, 0.1);
+    transition: box-shadow 0.3s ease;
     }
 
-        .search-container:hover,
-        .search-container:focus-within {
-            box-shadow: 0 8px 28px rgba(0, 123, 255, 0.25);
-        }
+    .search-container:hover,
+    .search-container:focus-within {
+    box-shadow: 0 8px 28px rgba(0, 123, 255, 0.25);
+    }
 
     .search-input {
-        flex: 1;
-        padding: 12px 18px;
-        border: none;
-        outline: none;
-        font-size: 16px;
-        border-radius: 50px 0 0 50px;
-        background-color: #f9f9f9;
-        transition: background-color 0.3s ease;
+    flex: 1;
+    padding: 12px 18px;
+    border-color: #007bff;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    border-radius: 50px 0 0 50px;
+    background-color: #f9f9f9;
+    transition: background-color 0.3s ease;
     }
 
-        .search-input::placeholder {
-            color: #999;
-            font-style: italic;
-        }
+    .search-input::placeholder {
+    color: #999;
+    font-style: italic;
+    }
 
     .search-button {
-        padding: 12px 18px;
-        border: none;
-        border-radius: 0 50px 50px 0;
-        background-color: #007bff;
-        color: white;
-        font-size: 18px;
-        cursor: pointer;
-        transition: background-color 0.3s ease, transform 0.2s ease;
+    padding: 12px 18px;
+    border: none;
+    border-radius: 0 50px 50px 0;
+    background-color: #007bff;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
     }
 
-        .search-button:hover {
-            background-color: #0056b3;
-            transform: scale(1.05);
-        }
+    .search-button:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+    }
 
-        .search-button i {
-            pointer-events: none;
-        }
+    .search-button i {
+    pointer-events: none;
+    }
 
     /* Categories Navigation */
     .categories-nav {
-        margin: 1rem 0;
+    margin: 1rem 0;
     }
 
     .categories-scroll {
-        display: flex;
-        overflow-x: auto;
-        gap: 1rem;
-        padding: 0.5rem 0;
-        scrollbar-width: none; /* Hide scrollbar in Firefox */
+    display: flex;
+    overflow-x: auto;
+    gap: 1rem;
+    padding: 0.5rem 0;
+    scrollbar-width: none; /* Hide scrollbar in Firefox */
     }
 
-        .categories-scroll::-webkit-scrollbar {
-            display: none; /* Hide scrollbar in Chrome/Safari */
-        }
+    .categories-scroll::-webkit-scrollbar {
+    display: none; /* Hide scrollbar in Chrome/Safari */
+    }
 
     .category-btn {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        background: none;
-        border: none;
-        padding: 0.5rem;
-        min-width: 70px;
-        cursor: pointer;
-        font-size: 0.8rem;
-        color: #555;
-        transition: color 0.2s ease, border-bottom 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: none;
+    border: none;
+    padding: 0.5rem;
+    min-width: 70px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    color: #555;
+    transition: color 0.2s ease, border-bottom 0.2s ease;
     }
 
-        .category-btn i {
-            font-size: 1.2rem;
-            margin-bottom: 0.3rem;
-            transition: color 0.2s ease;
-        }
+    .category-btn i {
+    font-size: 1.2rem;
+    margin-bottom: 0.3rem;
+    transition: color 0.2s ease;
+    }
 
-        /* Active (selected) category style */
-        .category-btn.active {
-            color: #007bff;
-            font-weight: bold;
-            border-bottom: 2px solid #007bff; /* ✅ Visual underline */
-        }
+    /* Active (selected) category style */
+    .category-btn.active {
+    color: #007bff;
+    font-weight: bold;
+    border-bottom: 2px solid #007bff; /* ✅ Visual underline */
+    }
 
-            .category-btn.active i {
-                color: #007bff;
-            }
+    .category-btn.active i {
+    color: #007bff;
+    }
 
     .fas {
-        font-family: 'Font Awesome 6 Free' !important;
-        font-weight: 900;
-        display: inline-block;
+    font-family: 'Font Awesome 6 Free' !important;
+    font-weight: 900;
+    display: inline-block;
     }
 
     .loading-wrapper {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        min-height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 300px;
     }
 
     .loading-spinner {
-        position: relative;
-        width: 80px;
-        height: 80px;
+    position: relative;
+    width: 80px;
+    height: 80px;
     }
 
     .spinner-border {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 80px;
-        height: 80px;
-        border: 6px solid #f3f3f3;
-        border-top: 6px solid #007bff;
-        border-radius: 50%;
-        animation: spin 1s linear infinite;
-        box-sizing: border-box;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 80px;
+    height: 80px;
+    border: 6px solid #f3f3f3;
+    border-top: 6px solid #007bff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    box-sizing: border-box;
     }
 
     .spinner-image {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 40px;
-        height: 40px;
-        transform: translate(-50%, -50%);
-        z-index: 1;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 40px;
+    height: 40px;
+    transform: translate(-50%, -50%);
+    z-index: 1;
     }
 
     @@keyframes spin {
-        0% {
-            transform: rotate(0deg);
-        }
+    0% {
+    transform: rotate(0deg);
+    }
 
-        100% {
-            transform: rotate(360deg);
-        }
+    100% {
+    transform: rotate(360deg);
+    }
     }
     /* Responsive adjustments*/
     @@media (max-width: 768px) {
-        .product-container {
-            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-            gap: 15px;
-        }
+    .product-container {
+    grid-template-columns: repeat(2, 1fr);
+    */ gap: 15px;
+    }
 
-        .cart-summary {
-            bottom: 15px;
-            right: 15px;
-            padding: 12px 15px;
-        }
+    .cart-summary {
+    bottom: 15px;
+    right: 15px;
+    padding: 12px 15px;
+    }
 
-        @@media (max-width: 768px) {
-            .top-navbar {
-                padding: 10px 15px;
-            }
+    @@media (max-width: 768px) {
+    .top-navbar {
+    padding: 10px 15px;
+    }
 
-            .logo {
-                height: 50px; /* Smaller on mobile */
-            }
+    .logo {
+    height: 50px; /* Smaller on mobile */
+    }
 
-            .nav-btn {
-                padding: 6px 12px;
-                font-size: 14px;
-            }
-        }
+    .nav-btn {
+    padding: 6px 12px;
+    font-size: 14px;
+    }
+    }
     }
 
     .store-header-wrapper {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 20px;
-        padding: 10px 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 12px;
     }
 
     .store-title-box {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 12px;
-        background: linear-gradient(to right, #007bff, #00c6ff);
-        color: white;
-        padding: 12px 24px;
-        border-radius: 50px;
-        box-shadow: 0 8px 24px rgba(0, 123, 255, 0.35);
-        width: 100%;
-        max-width: 500px;
-        height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    background: linear-gradient(to right, #007bff, #00c6ff);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 50px;
+    box-shadow: 0 8px 24px rgba(0, 123, 255, 0.35);
+    width: 100%;
+    max-width: 500px;
+    height: 60px;
     }
 
     .page-title {
-        font-size: 22px;
-        font-weight: 600;
-        margin: 0;
+    font-size: 22px;
+    font-weight: 600;
+    margin: 0;
     }
 
     .shop-icon {
-        font-size: 28px;
-        color: white;
+    font-size: 28px;
+    color: white;
     }
 
     /* Match height and alignment with store title box */
     .search-container {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        border-radius: 50px;
-        background: #fff;
-        box-shadow: 0 6px 20px rgba(0, 123, 255, 0.1);
-        padding: 0 12px;
-        height: 60px; /* Match store-title height */
-        width: 100%;
-        max-width: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 50px;
+    background: #fff;
+    box-shadow: 0 6px 20px rgba(0, 123, 255, 0.1);
+    padding: 0 12px;
+    height: 60px; /* Match store-title height */
+    width: 100%;
+    max-width: 500px;
     }
 
     .search-input {
-        flex: 1;
-        border: none;
-        background: transparent;
-        font-size: 16px;
-        padding: 12px;
-        outline: none;
-        border-radius: 50px;
+    flex: 1;
+    border: none;
+    background: transparent;
+    font-size: 16px;
+    padding: 12px;
+    outline: none;
+    border-radius: 50px;
     }
 
     .search-button {
-        background-color: #007bff;
-        border: none;
-        color: white;
-        padding: 10px 16px;
-        border-radius: 50px;
-        cursor: pointer;
-        transition: all 0.3s ease;
+    background-color: #007bff;
+    border: none;
+    color: white;
+    padding: 10px 16px;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
     }
 
-        .search-button:hover {
-            background-color: #0056b3;
-        }
+    .search-button:hover {
+    background-color: #0056b3;
+    }
 
     @@media (min-width: 768px) {
-        .store-header-wrapper {
-            flex-direction: row;
-            justify-content: space-between;
-            max-width: 1200px;
-            margin: 0 auto 30px auto;
-        }
+    .store-header-wrapper {
+    flex-direction: row;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto 30px auto;
+    }
     }
 
     /* ---------------------------------
-           MODAL BACKDROP & ANIMATION
-        ---------------------------------- */
+    MODAL BACKDROP & ANIMATION
+    ---------------------------------- */
     .modal-backdrop {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        background-color: rgba(0, 0, 0, 0.6);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        z-index: 1000;
-        padding: 10px;
-        box-sizing: border-box;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    padding: 10px;
+    box-sizing: border-box;
     }
 
     @@keyframes fadeInScale {
-        0% {
-            opacity: 0;
-            transform: scale(0.9);
-        }
+    0% {
+    opacity: 0;
+    transform: scale(0.9);
+    }
 
-        100% {
-            opacity: 1;
-            transform: scale(1);
-        }
+    100% {
+    opacity: 1;
+    transform: scale(1);
+    }
     }
 
     /* ---------------------------------
-           MODAL CONTENT BOX
-        ---------------------------------- */
+    MODAL CONTENT BOX
+    ---------------------------------- */
+    .popup-action-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+    gap: 10px;
+    }
+
+    .product-price {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #333;
+    }
+
+    /* For inline add-to-cart button */
+    .add-btn-inline {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    }
+
+    .add-btn-inline:hover {
+    background-color: #0056b3;
+    }
+
+    /* Inline version of cart controls */
+    .cart-controls-inline {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    }
+
+    .cart-controls-inline .cart-btn {
+    padding: 8px 14px;
+    font-size: 1.2rem;
+    border-radius: 8px;
+    }
+
+
+    .modal-close-icon {
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    background: transparent;
+    border: none;
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #555;
+    cursor: pointer;
+    transition: color 0.2s ease;
+    z-index: 2;
+    }
+
+    .modal-close-icon:hover {
+    color: #000;
+    }
+
     .modal-content {
-        background-color: #ffffff;
-        border-radius: 20px;
-        padding: 20px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
-        width: 100%;
-        max-width: 500px;
-        animation: fadeInScale 0.3s ease;
-        position: relative;
-        overflow-y: auto;
-        max-height: 90vh;
-        box-sizing: border-box;
+    background-color: #ffffff;
+    border-radius: 20px;
+    padding: 10px 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+    width: 300px;
+    max-width: 500px;
+    animation: fadeInScale 0.3s ease;
+    position: relative;
+    overflow-y: auto;
+    max-height: 90vh;
+    box-sizing: border-box;
     }
 
     /* ---------------------------------
-           PRODUCT IMAGE INSIDE MODAL
-        ---------------------------------- */
+    PRODUCT IMAGE INSIDE MODAL
+    ---------------------------------- */
     .popup-image {
-        width: 100%;
-        max-height: 250px;
-        object-fit: contain;
-        border-radius: 12px;
-        margin-bottom: 15px;
+    width: 100px;
+    max-height: 250px;
+    object-fit: contain;
+    border-radius: 12px;
+    margin-bottom: 15px;
+    margin-left:50px;
     }
 
     /* ---------------------------------
-           PRODUCT DETAILS IN MODAL
-        ---------------------------------- */
+    PRODUCT DETAILS IN MODAL
+    ---------------------------------- */
     .modal-content h4 {
-        font-size: 1.4rem;
-        font-weight: 600;
-        margin-bottom: 10px;
-        color: #333;
-        text-align: center;
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: #333;
+    text-align: left;
     }
 
     .modal-content p {
-        font-size: 1rem;
-        margin: 8px 0;
-        color: #555;
-        text-align: center;
+    font-size: 1rem;
+    margin: 8px 0;
+    color: #555;
+    text-align: left;
     }
 
     /* ---------------------------------
-           QUANTITY CONTROLS
-        ---------------------------------- */
+    QUANTITY CONTROLS
+    ---------------------------------- */
     .cart-controls {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 12px;
-        margin: 15px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    margin: 15px 0;
     }
 
     .cart-btn.plus,
     .cart-btn.minus {
-        background-color: #007bff;
-        border: none;
-        border-radius: 8px;
-        padding: 8px 14px;
-        font-size: 1.2rem;
-        color: white;
-        cursor: pointer;
-        transition: background-color 0.2s ease;
+    background-color: #007bff;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 14px;
+    font-size: 1.2rem;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
     }
 
-        .cart-btn.plus:hover {
-            background-color: green;
-        }
+    .cart-btn.plus:hover {
+    background-color: green;
+    }
 
-        .cart-btn.minus:hover {
-            background-color: red;
-        }
+    .cart-btn.minus:hover {
+    background-color: red;
+    }
 
     .quantity {
-        font-size: 1.2rem;
-        font-weight: bold;
-        color: #333;
-        min-width: 40px;
-        text-align: center;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #333;
+    min-width: 40px;
+    text-align: center;
     }
 
     /* ---------------------------------
-           ACTION BUTTON ROW
-        ---------------------------------- */
+    ACTION BUTTON ROW
+    ---------------------------------- */
     .popup-button-row {
-        display: flex;
-        justify-content: space-between;
-        gap: 10px;
-        margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 20px;
     }
 
     .cart-btn.add-btn {
-        background-color: #007bff;
-        color: white;
-        flex: 1;
-        border: none;
-        border-radius: 10px;
-        padding: 10px 16px;
-        font-size: 16px;
-        cursor: pointer;
-        transition: background-color 0.2s ease;
+    background-color: #007bff;
+    color: white;
+    flex: 1;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 16px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
     }
 
     .cart-btn.close-btn {
-        background-color: #6c757d;
-        color: white;
-        flex: 1;
-        border: none;
-        border-radius: 10px;
-        padding: 10px 16px;
-        font-size: 16px;
-        cursor: pointer;
-        transition: background-color 0.2s ease;
+    background-color: #6c757d;
+    color: white;
+    flex: 1;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 16px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
     }
 
     .cart-btn.add-btn:hover {
-        background-color: #0056b3;
+    background-color: #0056b3;
     }
 
     .cart-btn.close-btn:hover {
-        background-color: #5a6268;
+    background-color: #5a6268;
     }
 
     /* ---------------------------------
-           RESPONSIVE STYLES
-        ---------------------------------- */
+    RESPONSIVE STYLES
+    ---------------------------------- */
     @@media (max-width: 600px) {
-        .modal-content {
-            padding: 16px;
-            border-radius: 16px;
-            max-height: 95vh;
-        }
+    .modal-content {
+    padding: 16px;
+    border-radius: 16px;
+    max-height: 95vh;
+    }
 
-        .popup-image {
-            max-height: 180px;
-        }
+    .popup-image {
+    max-height: 180px;
+    }
 
-        .cart-btn.plus,
-        .cart-btn.minus {
-            padding: 6px 12px;
-        }
+    .cart-btn.plus,
+    .cart-btn.minus {
+    padding: 6px 12px;
+    }
 
-        .quantity {
-            font-size: 1rem;
-        }
+    .quantity {
+    font-size: 1rem;
+    }
 
-        .popup-button-row {
-            flex-direction: column;
-            gap: 12px;
-        }
+    .popup-button-row {
+    flex-direction: column;
+    gap: 12px;
+    }
 
-        .cart-btn.add-btn,
-        .cart-btn.close-btn {
-            width: 100%;
-        }
+    .cart-btn.add-btn,
+    .cart-btn.close-btn {
+    width: 100%;
+    }
     }
 
     @@media (min-width: 601px) and (max-width: 1024px) {
-        .modal-content {
-            max-width: 450px;
-        }
-
-        .popup-image {
-            max-height: 220px;
-        }
+    .modal-content {
+    max-width: 450px;
     }
+
+    .popup-image {
+    max-height: 220px;
+    }
+    }
+
+
+
+    /* Unified stepper style */
+    .price-action-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 12px;
+    }
+
+    .stepper {
+    display: flex;
+    align-items: center;
+    gap: 1px;
+    background-color: #007bff;
+    border-radius: 10px;
+    padding: 5px 5px;
+    height: 36px;
+    }
+
+    .stepper button {
+    background: transparent;
+    border: none;
+    font-size: 1.2rem;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+    }
+
+    .stepper span {
+    min-width: 24px;
+    text-align: center;
+    font-size: 1rem;
+    color: white;
+    font-weight: 600;
+    }
+
+    .popup-inline-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-top: 16px;
+    }
+
+    .product-price {
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #333;
+    }
+
+    /* Unified cart button styling */
+    .cart-toggle-button {
+    display: flex;
+    align-items: center;
+    background-color: #007bff;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 10px;
+    gap: 1px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: default;
+    min-width: 100px;
+    justify-content: center;
+    }
+
+    .cart-toggle-button  {
+    cursor: pointer;
+            color: white;
+    font-weight: bold;
+    font-size: 1.2rem;
+    user-select: none;
+    transition: color 0.2s ease;
+    }
+    .toggle-icon{
+        background: transparent;
+        border: none;
+        font-size: 1.2rem;
+        color: white;
+        cursor: pointer;
+        font-weight: bold;
+    }
+
+    .cart-toggle-button .toggle-icon:hover {
+    color: #ccc;
+    }
+
+    .cart-toggle-button .toggle-qty {
+    min-width: 24px;
+    text-align: center;
+    }
+
+    /* "Add to Cart" fallback button style (if not yet in cart) */
+    .cart-btn.add-btn-inline {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    font-size: 1rem;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    }
+
+    .cart-btn.add-btn-inline:hover {
+    background-color: #0056b3;
+    }
+
 </style>
-    <!--StoreName-->
+<!--StoreName-->
 <div class="store-header-wrapper">
     <div class="store-title-box">
         <i class="bi bi-shop shop-icon"></i>
@@ -726,10 +895,10 @@
     <!--Search bar-->
     <div class="search-container">
         <input type="text"
-               @bind="searchQuery"
-               class="search-input"
-               placeholder='Search for "apple juice"'
-               @onkeydown="HandleSearchKey" />
+        @bind="searchQuery"
+        class="search-input"
+        placeholder='Search for "apple juice"'
+        @onkeydown="HandleSearchKey" />
         <button class="search-button" @onclick="SearchProducts" aria-label="Search">
             <i class="bi bi-search"></i>
         </button>
@@ -744,7 +913,7 @@
         @foreach (var cat in Categories)
         {
             <button class="category-btn @(selectedCategory == cat.Name ? "active" : "")"
-                    @onclick="() => FilterByCategory(cat.Name, cat.ProductCategoryId)">
+            @onclick="() => FilterByCategory(cat.Name, cat.ProductCategoryId)">
                 <i class="@(!string.IsNullOrWhiteSpace(cat.Icon) ? cat.Icon : "bi bi-box")"></i> @cat.Name
             </button>
         }
@@ -752,7 +921,7 @@
 </div>
 
 <!-- Display Logic -->
-@if (isLoading)
+@if (isLoading && products.Count == 0)
 {
     <div class="loading-wrapper">
         <div class="loading-spinner text-center">
@@ -763,54 +932,104 @@
         </div>
     </div>
 }
-else if (filteredProducts == null || filteredProducts.Count == 0)
-{
-    <div class="no-products">No products found</div>
-}
-else
+
+else if(filteredProducts.Count != 0)
 {
     <div class="product-container">
-    @foreach (var product in filteredProducts)
+        @foreach (var product in filteredProducts)
 
-    {
-        <div class="product-card">
-            <div class="product-image-container">
-                <img src="images/@product.ProductImg" alt="@product.ProductName" />
-            </div>
-            <div class="product-details">
-                <h4>@product.ProductName</h4>
-                <p class="product-description">@product.ProductDesc</p>
-                <p class="product-price">@FormatCurrency(product.Price)</p>
+        {
+            <div class="product-card">
+                <div class="product-image-container" @onclick="() => OpenPopup(product)" style="cursor: pointer;">
+                    <img src="images/@product.ProductImg" alt="@product.ProductName" />
+                </div>
 
-                @if (CartService.CartItems.ContainsKey(product.ProductId))
-                {
-                    <div class="cart-controls">
-                       
-                        <div class="quantity-controls">
-                            <button class="cart-btn minus" @onclick="() => CartService.DecreaseQuantity(product.ProductId)">➖</button>
-                            <span class="quantity">@CartService.CartItems[product.ProductId].quantity</span>
-                            <button class="cart-btn plus" @onclick="() => CartService.IncreaseQuantity(product.ProductId)">➕</button>
-                        </div>
+                <div class="product-details">
+                    <h4>@product.ProductName</h4>
+                    <p class="product-description">@product.ProductDesc</p>
+
+                    <div class="price-action-row">
+                        <p class="product-price">@FormatCurrency(product.Price)</p>
+
+                        @if (CartService.CartItems.ContainsKey(product.ProductId))
+                        {
+                            <div class="stepper">
+                                <button @onclick="() => CartService.DecreaseQuantity(product.ProductId)">−</button>
+                                <span class="quantity">@CartService.CartItems[product.ProductId].quantity</span>
+                                <button @onclick="() => CartService.IncreaseQuantity(product.ProductId)">+</button>
+                            </div>
+                        }
+                        else
+                        {
+                            <button class="cart-btn" @onclick="() => AddToCart(product.ProductId, product.ProductName)">
+                                Add to Cart
+                            </button>
+                        }
                     </div>
-                }
-                else
-                {
-                    <div class="action-buttons">
-                        <button class="cart-btn" @onclick="() => AddToCart(product.ProductId, product.ProductName)">Add to Cart</button>
-                    </div>
-                }
+
+
+                </div>
             </div>
-        </div>
         }
 
         <div @ref="sentinel"
              class="scroll-sentinel"
              style="height: 1px; visibility:@(allProductsLoaded ? "hidden" : "visible");">
         </div>
-           
-    
-</div>
-   }
+
+
+    </div>
+    @if (showPopup && selectedProduct != null)
+    {
+        <div class="modal-backdrop" @onclick="ClosePopup">
+            <div class="modal-content" @onclick:stopPropagation="true">
+
+                <!-- Close Icon Button -->
+                <button class="modal-close-icon" @onclick="ClosePopup" aria-label="Close">
+                    &times;
+                </button>
+
+                <img src="images/@selectedProduct.ProductImg" class="popup-image" alt="Selected Product" />
+                <h4>@selectedProduct.ProductName</h4>
+                <p>@selectedProduct.ProductDesc</p>
+
+
+                <div class="popup-inline-row">
+                    <span class="product-price">@FormatCurrency(selectedProduct.Price)</span>
+
+                    @if (CartService.CartItems.ContainsKey(selectedProduct.ProductId))
+                    {
+                        <div class="cart-toggle-button">
+                            <span class="toggle-icon" @onclick="() => CartService.DecreaseQuantity(selectedProduct.ProductId)">➖</span>
+                            <span class="toggle-qty">@CartService.CartItems[selectedProduct.ProductId].quantity</span>
+                            <span class="toggle-icon" @onclick="() => CartService.IncreaseQuantity(selectedProduct.ProductId)">➕</span>
+                        </div>
+                    }
+                    else
+                    {
+                        <button class="cart-btn add-btn-inline" @onclick="() => AddToCart(selectedProduct.ProductId, selectedProduct.ProductName)">
+                            Add to Cart
+                        </button>
+                    }
+                </div>
+
+              
+                @* </div> *@
+
+            </div>
+        </div>
+    }
+
+
+
+}
+ else if(filteredProducts.Count==0) 
+{
+    if (!isLoading)
+    {
+        <div class="no-products">No products found</div>
+    }
+}
 
 @code {
     private string searchQuery = "";
@@ -856,20 +1075,20 @@ else
             var categoryDtos = await ProductCategoryService.GetProductcategoByStoreId(categoryInput);
 
             Categories = categoryDtos.Select(dto => new CategoryRequest
-            {
-                Name = dto.ProductCategoryName,
-                Icon = "bi bi-grid",
-                StoreId = StoreId,
-                ProductCategoryId = dto.ProductCategoryId
-            }).ToList();
+                {
+                    Name = dto.ProductCategoryName,
+                    Icon = "bi bi-grid",
+                    StoreId = StoreId,
+                    ProductCategoryId = dto.ProductCategoryId
+                }).ToList();
 
             Categories.Insert(0, new CategoryRequest
-            {
-                Name = "All",
-                Icon = "bi bi-grid",
-                StoreId = StoreId,
-                ProductCategoryId = null
-            });
+                {
+                    Name = "All",
+                    Icon = "bi bi-grid",
+                    StoreId = StoreId,
+                    ProductCategoryId = null
+                });
 
             await FilterByCategory("All", null);
         }
@@ -923,36 +1142,38 @@ else
         if (isLoading || allProductsLoaded) return;
 
         isLoading = true;
+        StateHasChanged();           // show spinner immediately
+
 
         var request = new PaginationQueryInput
-        {
-            Product = new ProductRequestModel
             {
-                StoreId = StoreId,
-                CategoryId = string.IsNullOrWhiteSpace(categoryId) ? null : categoryId
-            },
-            PaginationInput = new PaginationInput
-            {
-                PageNumber = currentPage,
-                PageSize = pageSize
-            }
-        };
+                Product = new ProductRequestModel
+                {
+                    StoreId = StoreId,
+                    CategoryId = string.IsNullOrWhiteSpace(categoryId) ? null : categoryId
+                },
+                PaginationInput = new PaginationInput
+                {
+                    PageNumber = currentPage,
+                    PageSize = pageSize
+                }
+            };
 
         var result = await ProductCategoryService.GetProductsByStoreId(request);
 
         if (result?.Result?.Items != null && result.Result.Items.Any())
         {
             var newProducts = result.Result.Items.Select(p => new ProductRequestModel
-            {
-                ProductId = p.ProductId,
-                StoreId = p.StoreId,
-                CategoryId = p.CategoryId,
-                ProductName = p.ProductName,
-                ProductDesc = p.ProductDesc,
-                Price = p.Price,
-                Discount = p.Discount,
-                ProductImg = p.ProductImg
-            }).ToList();
+                {
+                    ProductId = p.ProductId,
+                    StoreId = p.StoreId,
+                    CategoryId = p.CategoryId,
+                    ProductName = p.ProductName,
+                    ProductDesc = p.ProductDesc,
+                    Price = p.Price,
+                    Discount = p.Discount,
+                    ProductImg = p.ProductImg
+                }).ToList();
 
             products.AddRange(newProducts);
             currentPage++;
@@ -963,6 +1184,8 @@ else
         }
 
         isLoading = false;
+        ApplyFilters();
+        StateHasChanged();
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -994,38 +1217,25 @@ else
     private void ApplyFilters()
     {
         filteredProducts = products
-            .Where(p =>
-                (string.IsNullOrEmpty(selectedCategoryId) || p.CategoryId == selectedCategoryId) &&
-                (string.IsNullOrWhiteSpace(searchQuery) ||
-                    (!string.IsNullOrEmpty(p.ProductName) && p.ProductName.Contains(searchQuery, StringComparison.OrdinalIgnoreCase)) ||
-                    (!string.IsNullOrEmpty(p.ProductDesc) && p.ProductDesc.Contains(searchQuery, StringComparison.OrdinalIgnoreCase)))
-            ).ToList();
+            .Where(p => (string.IsNullOrEmpty(selectedCategoryId) || p.CategoryId == selectedCategoryId)
+                        && (string.IsNullOrWhiteSpace(searchQuery)
+                            || ((p.ProductName?.Contains(searchQuery, StringComparison.OrdinalIgnoreCase) ?? false)
+                                || (p.ProductDesc?.Contains(searchQuery, StringComparison.OrdinalIgnoreCase) ?? false))))
+            .ToList();
     }
 
-    // private void AddToCart(ProductRequestModel product)
-    // {
-    //     if (cart.ContainsKey(product.ProductId))
-    //         cart[product.ProductId] = (product, cart[product.ProductId].quantity + 1);
-    //     else
-    //         cart[product.ProductId] = (product, 1);
-    // }
-  
+
+
     private void AddToCart(string productId, string name)
     {
         CartService.AddToCart(productId, name, 1);
+        StateHasChanged();
     }
 
     protected override void OnInitialized()
     {
         CartService.OnChange += StateHasChanged;
     }
-
-//     public void Dispose()
-//     {
-//         CartService.OnChange -= StateHasChanged;
-//     }
-// }
-
 
     private void IncreaseQuantity(string productId)
     {
@@ -1058,17 +1268,17 @@ else
 
 
 
-      private  void OpenPopup(ProductRequestModel product)
-        {
-    selectedProduct = product;
-    showPopup = true;
-        }
+    private void OpenPopup(ProductRequestModel product)
+    {
+        selectedProduct = product;
+        showPopup = true;
+    }
 
-       private void ClosePopup()
-        {
-    showPopup = false;
-    selectedProduct = null;
-        }
+    private void ClosePopup()
+    {
+        showPopup = false;
+        selectedProduct = null;
+    }
 
 
 
