@@ -6,41 +6,59 @@
 <div class="top-bar">
     <div class="header-left">
         <button class="hamburger" @onclick="ToggleNavMenu">
-            <img src="images/Cart-Logo.png" alt="Menu" class="logo-img" />
+            <img src="images/Logo-black.png" alt="Menu" class="logo-img" />
         </button>
         @* <img src="images/Day-Ease-logo-black.png" alt="DayEase Logo" class="header-logo" /> *@
     </div>
 
     <div class="header-right">
-        <button class="cart-btn" @onclick="OpenCart">
-            <i class="bi bi-cart3"></i>
-            <span class="cart-text">Cart</span>
-            <span class="cart-count">@CartService.CartItemCount</span>
+        <!-- Cart Button -->
+        <button class="icon-btn" @onclick="OpenCart">
+            <div class="icon-wrapper">
+                <i class="bi bi-cart3 icon-default"></i>
+                <i class="bi bi-cart-fill icon-hover"></i>
+                @if (CartService.CartItemCount > 0)
+                {
+                    <span class="cart-count">@CartService.CartItemCount</span>
+                }
+            </div>
+        </button>
+
+        <!-- Profile Button -->
+        <button class="icon-btn" @onclick="OpenProfile">
+            <div class="icon-wrapper">
+                <i class="bi bi-person icon-default"></i>
+                <i class="bi bi-person-fill icon-hover"></i>
+            </div>
         </button>
     </div>
+
 </div>
 
-<div class="sidebar-overlay @(collapseNavMenu ? "" : "show")" @onclick="ToggleNavMenu"></div>
+<!-- Sidebar Overlay -->
+<div class="sidebar-overlay @(collapseNavMenu ? "is-visible" : "")" @onclick="ToggleNavMenu"></div>
 
-<div class="sidebar-menu @(collapseNavMenu ? "" : "open")">
+<!-- Sidebar Menu -->
+<div class="sidebar-menu @(collapseNavMenu ? "is-open" : "")">
+
     <div class="sidebar-header">
         <img src="images/Day-Ease-logo-black.png" alt="DayEase Logo" class="sidebar-logo" />
         @* <span class="sidebar-title">DayEaseUserApp</span> *@
     </div>
-    <nav>
-        <NavLink class="nav-link border-bottom py-3 text-white" href="MyOrders">
+    <nav class="sidebar-nav">
+        <NavLink class="nav-link border-bottom py-3 text-white" href="MyOrders" style="padding-left: 4rem;">
             <i class="bi bi-receipt me-2"></i> MyOrders
         </NavLink>
-        <NavLink class="nav-link border-bottom py-3 text-white" href="profile">
+        <NavLink class="nav-link border-bottom py-3 text-white" href="profile" style="padding-left: 4rem;">
             <i class="bi bi-person me-2"></i> Profile
         </NavLink>
-        <NavLink class="nav-link border-bottom py-3 text-white" href="stores">
+        <NavLink class="nav-link border-bottom py-3 text-white" href="stores" style="padding-left: 4rem;">
             <i class="bi bi-shop me-2"></i> Stores
         </NavLink>
-        <NavLink class="nav-link border-bottom py-3 text-white" href="support">
+        <NavLink class="nav-link border-bottom py-3 text-white" href="support" style="padding-left: 4rem;">
             <i class="bi bi-headset me-2"></i> Support
         </NavLink>
-        <NavLink class="nav-link py-3 text-white" href="logout">
+        <NavLink class="nav-link py-3 text-white" href="logout" style="padding-left:4rem;">
             <i class="bi bi-box-arrow-left me-2"></i> Logout
         </NavLink>
     </nav>
@@ -51,21 +69,6 @@
     @Body
 </div>
 
-@* @code {
-    private bool collapseNavMenu = true;
-    private int cartItemCount = 0; // You can bind this to your cart service
-
-    private void ToggleNavMenu()
-    {
-        collapseNavMenu = !collapseNavMenu;
-    }
-
-    private void OpenCart()
-    {
-        // Navigate to cart page or open cart modal
-        // NavigationManager.NavigateTo("/cart");
-    }
-} *@
 
 @code {
     private bool collapseNavMenu = true;
@@ -83,6 +86,11 @@
     private void OpenCart()
     {
         NavigationManager.NavigateTo("/cart");
+    }
+
+    private void OpenProfile()
+    {
+        NavigationManager.NavigateTo("/profile"); 
     }
 
     public void Dispose()
