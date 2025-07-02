@@ -15,8 +15,7 @@
         <!-- Cart Button -->
         <button class="icon-btn" @onclick="OpenCart">
             <div class="icon-wrapper">
-                <i class="bi bi-cart3 icon-default"></i>
-                <i class="bi bi-cart-fill icon-hover"></i>
+                <i class="bi bi-cart3 cart-icon"></i>
                 @if (CartService.CartItemCount > 0)
                 {
                     <span class="cart-count">@CartService.CartItemCount</span>
@@ -27,8 +26,7 @@
         <!-- Profile Button -->
         <button class="icon-btn" @onclick="OpenProfile">
             <div class="icon-wrapper">
-                <i class="bi bi-person icon-default"></i>
-                <i class="bi bi-person-fill icon-hover"></i>
+                <i class="bi bi-person cart-icon"></i>
             </div>
         </button>
     </div>
@@ -58,6 +56,9 @@
         <NavLink class="nav-link border-bottom py-3 text-white" href="support" style="padding-left: 4rem;">
             <i class="bi bi-headset me-2"></i> Support
         </NavLink>
+        <NavLink class="nav-link border-bottom py-3 text-white" href="about-us" style="padding-left: 4rem;">
+            <i class="bi bi-chat-dots"></i> About Us
+        </NavLink>
         <NavLink class="nav-link py-3 text-white" href="logout" style="padding-left:4rem;">
             <i class="bi bi-box-arrow-left me-2"></i> Logout
         </NavLink>
@@ -71,7 +72,7 @@
 
 
 @code {
-    private bool collapseNavMenu = true;
+    private bool collapseNavMenu = false;
 
     protected override void OnInitialized()
     {

@@ -1,0 +1,182 @@
+﻿@page "/about-us"
+@layout NavMenu
+
+<style>
+    /* General Container */
+    .about-container {
+        max-width: 1100px;
+        margin: auto;
+        padding: 1.5rem;
+    }
+    /* Main Title */
+    .main-title {
+        text-align: center;
+        font-size: 3rem;
+        font-weight: 700;
+        color: #0D47A1;
+        margin-bottom: 2rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+    /* Section Styling */
+    .about-section {
+        border-radius: 1rem;
+        padding: 1.8rem;
+        box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+        margin-bottom: 2rem;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+        .about-section:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.2);
+        }
+    /* Blue Gradient Background */
+    .blue-gradient-card {
+        background: linear-gradient(135deg, #2196F3, #1E88E5, #1565C0);
+        color: white;
+    }
+    /* Light Blue Card */
+    .light-blue-card {
+        background: #E3F2FD;
+        color: #0D47A1;
+    }
+    /* Section Divider */
+    .section-divider {
+        border-top: 2px solid #90CAF9;
+        margin: 2rem 0;
+    }
+    /* Text Styling */
+    h2 {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+        font-weight: 600;
+    }
+
+    p, li {
+        font-size: 1.05rem;
+        line-height: 1.8;
+    }
+
+    ul {
+        padding-left: 1.5rem;
+        list-style-type: disc;
+    }
+
+    li {
+        margin-bottom: 0.6rem;
+    }
+    /* Animations */
+    .fade-in {
+        opacity: 0;
+        transform: translateY(20px);
+        animation: fadeInUp 1s ease-out forwards;
+    }
+
+    .delay-1 {
+        animation-delay: 0.2s;
+    }
+
+    .delay-2 {
+        animation-delay: 0.4s;
+    }
+
+    .delay-3 {
+        animation-delay: 0.6s;
+    }
+
+    .delay-4 {
+        animation-delay: 0.8s;
+    }
+
+    .delay-5 {
+        animation-delay: 1s;
+    }
+
+    .delay-6 {
+        animation-delay: 1.2s;
+    }
+
+    @@keyframes fadeInUp {
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    /* Mobile Responsive Styles */
+    @@media (max-width: 768px) {
+        .main-title {
+            font-size: 2rem;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+        }
+
+        .about-section {
+            padding: 1rem;
+        }
+
+        p, li {
+            font-size: 0.95rem;
+        }
+    }
+</style>
+<h1 class="main-title">About Us</h1>
+<div class="about-container">
+    <!-- Our Story -->
+    <section class="about-section blue-gradient-card fade-in delay-1">
+        <h2>Our Story</h2>
+        <p>
+            We started with a dream to simplify urban living.
+            Our platform connects customers to essential products and services with speed, care, and reliability.
+            Innovation and customer obsession drive everything we do.
+        </p>
+    </section>
+    <div class="section-divider"></div>
+    <!-- Our Mission -->
+    <section class="about-section light-blue-card fade-in delay-2">
+        <h2>Our Mission</h2>
+        <p>
+            To deliver convenience at your fingertips! Whether it's groceries, daily essentials, or instant services,
+            we promise to bring it to you faster than you expect, while ensuring quality, safety, and satisfaction.
+        </p>
+    </section>
+    <div class="section-divider"></div>
+    <!-- Why Choose Us -->
+    <section class="about-section blue-gradient-card fade-in delay-3">
+        <h2>Why Choose Us?</h2>
+        <ul>
+            <li>:white_tick: Wide product selection</li>
+            <li>:white_tick: Real-time order tracking</li>
+            <li>:white_tick: Round-the-clock customer support</li>
+        </ul>
+    </section>
+    <div class="section-divider"></div>
+    <!-- Terms and Conditions -->
+    <section class="about-section light-blue-card fade-in delay-4">
+        <h2>Terms and Conditions</h2>
+        <p>
+            By using this platform, you agree to abide by all applicable laws. Unauthorized usage, content extraction,
+            or data scraping is strictly prohibited. Service availability may vary by location and time.
+        </p>
+    </section>
+    <div class="section-divider"></div>
+    <!-- Privacy Policy -->
+    <section class="about-section blue-gradient-card fade-in delay-5">
+        <h2>Privacy Policy</h2>
+        <p>
+            Your privacy is our top priority. We collect only minimal, necessary data for improving your app experience.
+            Your personal details are never sold or shared without your explicit consent.
+        </p>
+    </section>
+    <div class="section-divider"></div>
+    <!-- Licenses -->
+    <section class="about-section light-blue-card fade-in delay-6">
+        <h2>Licenses</h2>
+        <p>
+            This app utilizes open-source components under licenses like MIT, Apache 2.0, and others.
+            You can find full license details in our documentation or GitHub repository.
+        </p>
+    </section>
+</div>
