@@ -1,315 +1,3 @@
-/* Top bar */
-/*.top-bar {
-    height: 60px;
-    padding: 0 16px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background-color: #fff; 
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-.header-right {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-}*/
-
-/* Shared button style */
-/*.icon-btn {
-    background: transparent;
-    border: none;
-    padding: 0;
-    cursor: pointer;
-    display: flex;
-    font-size: 30px;
-    align-items: center;
-    margin-left: 16px;
-    margin-right:10px;
-}*/
-
-/* Default icon styles */
-/*.icon-wrapper {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-    .icon-wrapper i {
-        
-        transition: opacity 0.3s ease;
-    }*/
-
-/* Only show outline by default */
-/*.icon-default {
-    color: #007bff;
-    opacity: 1;
-    position: absolute;
-}*/
-
-/* Filled icon is hidden initially */
-/*.icon-hover {
-    color: #007bff;
-    opacity: 0;
-    position: absolute;
-}
-.icon-default,
-.icon-hover {
-    font-size: 28px !important;*/ /* Increase size */
-    /*color: #007bff !important;*/ /* Blue color */
-    /*transition: opacity 0.3s ease;
-}*/
-
-/* On hover: swap icons */
-/*.icon-btn:hover .icon-default {
-    opacity: 0;
-
-}
-
-.icon-btn:hover .icon-hover {
-    opacity: 1;
-}*/
-
-/* Badge styling */
-/*.cart-count {
-    position: absolute;
-    top: -6px;
-    right: -10px;
-    background-color: red;
-    color: white;
-    font-size: 12px;
-    font-weight: bold;
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    line-height: 1;
-}
-
-.header-left,
-.header-right {
-    display: flex;
-    align-items: center;
-    gap: 12px;*/ /* Optional spacing between items */
-/*}
-
-.top-bar img,
-.top-bar i,
-.top-bar button {
-    height: 40px;*/ /* or adjust icon/image sizes */
-    /*font-size: 20px;
-}
-
-.logo-img {
-    width: 40px;*/ /* Adjust size as needed */
-    /*height: 60px;
-    object-fit:contain;
-}
-.hamburger {
-    background-color: white;*/ /* White background */
-    /*border: 2px solid #4a90e2; 
-    border-radius: 8px; 
-    padding: 4px 4px; 
-    cursor: pointer; 
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-}
-
-    .hamburger i {
-        color: #333 !important;*/ /* or your default color */
-    /*}
-
-    .hamburger:hover i {
-        color: #fff !important;
-    }*/
-
-
-/* Sidebar */
-/*.sidebar-menu {
-    position: fixed;
-    top: 0;
-    left: -250px;
-    width: 250px;
-    height: 100vh;
-    font-family: 'Segoe UI', sans-serif;
-    font-size: 1.2rem;
-    background-color: #007bff;
-    box-shadow: 2px 0 10px rgba(0,0,0,0.1);
-    overflow-y: auto;
-    padding: 1rem;
-    transition: left 0.3s ease;
-    z-index: 1002;
-}
-    .sidebar-menu.open {
-        left: 0;
-    }
-
-.sidebar-header {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    margin-bottom: 1.5rem;
-    font-family: 'Segoe UI', sans-serif;
-    background-color: #ffffff;
-    padding: 1rem;
-    border-radius: 8px;
-}
-
-.sidebar-logo {
-    width: 100px;*/
-    /*height:40px;
-    margin-bottom: 0.5rem;*/ /* Space between logo and title */
-/*}
-
-.sidebar-title {
-    font-weight: bold;
-    font-size: 0.95rem;
-    color: #333;
-}
-
-.sidebar-menu.open {
-    left: 0;
-}*/
-
-/* Sidebar wrapper */
-/*.sidebar-menu {
-    width: 250px;
-    height: 100vh;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 1000;
-    background-color: #004a99;
-    color: white;
-    overflow-y: auto;
-    transition: transform 0.3s ease-in-out;
-}*/
-
-/* Sidebar header */
-/*.sidebar-header {
-    background-color: white;
-    padding: 16px;
-    text-align: center;
-    border-bottom: 1px solid #ccc;
-    height : 60px;
-}
-
-.sidebar-logo {
-    width: 90px;
-    height:40px;
-}*/
-
-/* Sidebar nav section */
-/*.sidebar-nav {
-    background-color: #004a99;*/ /* Blue background continues here */
-    /*padding: 12px 0;
-}
-
-    .sidebar-nav .nav-link {
-        color: white;
-        display: block;
-        padding: 12px 20px;
-        text-decoration: none;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        transition: background-color 0.2s;
-    }
-
-        .sidebar-nav .nav-link:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-        }*/
-/* Collapsed = moved off screen */
-/*.sidebar-menu.collapsed {
-    transform: translateX(-100%);
-}*/
-
-/* Open = fully visible */
-/*.sidebar-menu.open {
-    transform: translateX(0);
-}*/
-
-/* Optional overlay for mobile dimming */
-/*.sidebar-overlay {
-    position: fixed;
-    inset: 0;
-    background-color: rgba(0,0,0,0.3);
-    display: none;
-    z-index: 999;
-}
-
-    .sidebar-overlay.show {
-        display: block;
-    }*/
-/* Overlay */
-/*.sidebar-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: rgba(0, 0, 0, 0.3);
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.3s ease;
-    z-index: 1000;
-}
-
-    .sidebar-overlay.show {
-        opacity: 1;
-        pointer-events: auto;
-    }*/
-
-/* Nav links - targeting <a> tag specifically to override Bootstrap */
-/*.sidebar-menu nav a.nav-link,
-.sidebar-menu a.nav-link {
-    display: flex !important;
-    align-items: center !important;
-    padding: 1.5rem 4rem !important;
-    color: #ffffff !important;
-    border-radius: 8px !important;
-    text-decoration: none !important;
-    margin-bottom: 1rem !important;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2) !important;
-    box-shadow: none !important;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
- Explicitly style the icons to ensure they are also white 
-.sidebar-menu a.nav-link i {
-    color: #ffffff !important;
-}
-
-    .sidebar-menu nav a.nav-link:last-child,
-    .sidebar-menu a.nav-link:last-child {
-        border-bottom: none !important;
-    }
-
- Ensure icons also stay white on hover/active states 
-.sidebar-menu a.nav-link:hover i,
-    .sidebar-menu a.nav-link:active i,
-    .sidebar-menu a.nav-link.active i {
-        color: #ffffff !important;
-    }
-    .sidebar-menu a.nav-link:active i {
-        color: #ffffff !important;
-    }
-    .main-layout {
-        display: flex;
-        flex-direction: column;
-        height: 100vh;
-    }
-
-.content-area {*/
-/* No margin-left! */
-    /*width: 100%;
-    min-height: 100vh;
-    transition: filter 0.3s;
-}*/
-
 /* === HEADER === */
 .top-bar {
     display: flex;
@@ -320,24 +8,7 @@
     border-bottom: 1px solid #ccc;
     height :60px;
 }
-/*.hamburger {
-    background-color: white;
-    border: 2px solid #4a90e2; 
-    border-radius: 8px; 
-    padding: 4px 4px; 
-    cursor: pointer; 
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-}
 
-    .hamburger i {
-        color: #333 !important; 
-    }
-
-    .hamburger:hover i {
-        color: #fff !important;
-    }*/
 .hamburger {
     background-color: transparent;
     border: none;
@@ -370,7 +41,7 @@
     align-items: center;
     gap: 16px;
 }
-
+/*
 .icon-btn {
     background: transparent;
     border: none;
@@ -387,14 +58,14 @@
     height: 32px;
 }
 
-    .icon-wrapper i {
+.icon-wrapper i {
         font-size: 28px;
         color: #007bff;
         position: absolute;
         top: 0;
         left: 0;
         transition: opacity 0.2s ease;
-    }
+}
 
 .icon-default {
     opacity: 1;
@@ -410,6 +81,49 @@
 
 .icon-btn:hover .icon-hover {
     opacity: 1;
+}
+
+*/
+
+.icon-btn {
+    background: transparent;
+    border: none;
+    padding: 8px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s, border 0.3s;
+    position: relative;
+}
+
+    /* Hover: grey background and border */
+    .icon-btn:hover {
+        background-color: #f0f0f0;
+       
+    }
+
+/* Icon styling */
+.cart-icon {
+    font-size: 1.75rem !important;
+    color: #007bff !important;
+    transition: transform 0.3s ease;
+}
+
+/* Optional: hover color or scale effect */
+.icon-btn:hover .cart-icon {
+    color: #007bff;
+    transform: scale(1.1);
+}
+
+/* Badge */
+.cart-count {
+    position: absolute;
+    top: -6px;
+    right: -10px;
+    background-color: red;
+    color: white;
+    font-size: 0.65rem;
+    padding: 2px 6px;
+    border-radius: 999px;
 }
 
 /* === CART COUNT BADGE === */
