@@ -34,17 +34,15 @@
         border-radius: 50%;
         animation: spin 1s linear infinite;
     }
+
     @@keyframes spin {
-        0%
+        0% {
+            transform: rotate(0deg);
+        }
 
-    {
-        transform: rotate(0deg);
-    }
-
-    100% {
-        transform: rotate(360deg);
-    }
-
+        100% {
+            transform: rotate(360deg);
+        }
     }
 
     .spinner-image {
@@ -56,10 +54,11 @@
         transform: translate(-50%, -50%);
         z-index: 1;
     }
+
     .store-offers-heading {
         font-weight: 600;
-        background-color: #007bff;
-        color: white;
+        background-color: #fff0f0;
+        color: dodgerblue;
         text-align: center;
         padding: 1rem;
         border-radius: 8px;
@@ -72,53 +71,46 @@
     }
 
     @@media (max-width: 500px) {
-        .store-offers-heading
-
-    {
-        font-size: 1rem;
-        padding: 0.75rem;
-        justify-content: center; /* center align on small screens */
-    }
-
-    }
-        .store-offers-heading img {
-            width: 60px;
-            height: auto;
+        .store-offers-heading {
+            font-size: 1rem;
+            padding: 0.75rem;
+            justify-content: center; /* center align on small screens */
         }
+    }
+
+
+    .store-offers-heading img {
+        width: 60px;
+        height: auto;
+    }
 
     .store-grid {
         display: flex;
         flex-wrap: wrap;
-        padding:10px;
+        padding: 10px;
         gap: 0.8rem;
         justify-content: center;
     }
 
     .store-card-wrapper {
-        flex: 1 1 25%;
-        max-width: 25%;
+        flex: 1 1 33.33%;
+        max-width: 33.33%;
         box-sizing: border-box;
         font-size: 0.72rem;
     }
 
     @@media (max-width: 768px) {
-        .store-card-wrapper
-
-    {
-        flex: 1 1 50%;
-        max-width: 50%;
-    }
-
+        .store-card-wrapper {
+            flex: 1 1 50%;
+            max-width: 50%;
+        }
     }
 
     @@media (max-width: 500px) {
-        .store-card-wrapper
-
-    {
-        flex: 1 1 33.33%;
-        max-width: 33.33%;
-    }
-
+        .store-card-wrapper {
+            flex: 1 1 33.33%;
+            max-width: 33.33%;
+        }
     }
 
     .custom-card {
@@ -148,7 +140,7 @@
         position: absolute;
         top: 5px;
         right: 0.5px;
-        background-color: #dc3545;
+        background-color: #5a4fff;
         color: white;
         font-size: 0.75rem;
         padding: 2px 1px;
@@ -248,7 +240,6 @@
         width: 100%;
     }
 
-
 </style>
 @if (isLoading)
 {
@@ -278,7 +269,7 @@ else
                 @foreach (var store in Stores.Take(VisibleStoreCount))
                 {
                     <div class="store-card-wrapper">
-                        <a href="/productcategory?storeId=@store.StoreId&storeName=@Uri.EscapeDataString(store.StoreName)" class="store-link">
+                        <a href="/productcategory?storeId=@store.StoreId&storeName=@Uri.EscapeDataString(store.StoreName)&DistanceInKm=@store.DistanceInKm" class="store-link">
 
                             <div class="custom-card">
                                 <div class="position-relative">
@@ -291,6 +282,7 @@ else
                                 <div class="store-info">
                                     <div class="store-name">@store.StoreName</div>
                                     <div class="location">📍 @store.DistanceInKm km</div>
+                                    <div>20-30 mins</div>
                                 </div>
                             </div>
                         </a>
@@ -318,7 +310,8 @@ else
                 @foreach (var store in Stores.Take(VisibleStoreCount))
                 {
                     <div class="store-card-wrapper">
-                        <a href="/productcategory?storeId=@store.StoreId" class="store-link">
+                        <a href="/productcategory?storeId=@store.StoreId&storeName=@Uri.EscapeDataString(store.StoreName)&DistanceInKm=@store.DistanceInKm" class="store-link">
+
                             <div class="custom-card">
                                 <div class="position-relative">
                                     <img src="images/@store.Products.First().ProductImg" class="card-img-customs" />
@@ -329,7 +322,9 @@ else
                                 </div>
                                 <div class="store-info">
                                     <div class="store-name">@store.StoreName</div>
-                                    <div class="location">📍 @store.DistanceInKm km</div>                                </div>
+                                    <div class="location">📍 @store.DistanceInKm km</div>
+                                    <div>20-30 mins</div>
+                                </div>
                             </div>
                         </a>
                     </div>
