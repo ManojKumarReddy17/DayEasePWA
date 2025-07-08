@@ -14,36 +14,36 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <meta name="theme-color" content="#000000">
-    
+
     <!--map-->
     <!--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDRhAU9sfJQUfRWxyy3ly08jcXvpHb8OuQ&callback=locateCoordinates"></script>
     <script src="js/mapInterop.js"></script>-->
 
+    <script>
+        function isNumberKey(evt) {
+            var charCode = (evt.which) ? evt.which : evt.keyCode;
+            // Allow only digits (0-9)
+            if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+                return false;
+            }
+            return true;
+        }
+    </script>
+            <script>
+                window.restrictOtpInput = function (e) {
+            const key = e.key;
+                if (!/^[0-9]$/.test(key)) {
+                    e.preventDefault();
+            }
+        };
 
+                window.preventPaste = function (e) {
+                    e.preventDefault();
+        };
+    </script>
 
 </head>
-<script>
-    function isNumberKey(evt) {
-        var charCode = (evt.which) ? evt.which : evt.keyCode;
-        // Allow only digits (0-9)
-        if (charCode > 31 && (charCode < 48 || charCode > 57)) {
-            return false;
-        }
-        return true;
-    }
-</>
-<script>
-    window.restrictOtpInput = function (e) {
-        const key = e.key;
-        if (!/^[0-9]$/.test(key)) {
-            e.preventDefault();
-        }
-    };
 
-    window.preventPaste = function (e) {
-        e.preventDefault();
-    };
-</script>
 
 
 <body>

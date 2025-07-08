@@ -14,6 +14,8 @@ namespace DayEaseServices.Services.IServices
         Task<MysqlResponse<int>> UpdateCartItems(CartModel model);
         Task<MysqlResponse<int>> RemoveCartItems(CartModel model);
 
+        Task LoadCartItemCountAsync(CartModel model);
+
         event Action OnChange;
 
         int CartItemCount { get; }
