@@ -375,7 +375,7 @@ else
                 {
                     StoreId = s.StoreId,
                     StoreName = s.StoreName,
-                    DistanceInKm = Math.Round(s.Distance, 2),
+                    DistanceInKm = Math.Round(s.Distance, 3),
                     Products = s.Products,
                     SpecialOffer = $"{s.Products.Max(p => p.Discount)} off!"
                 }).ToList();

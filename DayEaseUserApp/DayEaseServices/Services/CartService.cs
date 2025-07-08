@@ -49,6 +49,19 @@ namespace DayEaseServices.Services
 
             return response;
         }
+
+        public async Task LoadCartItemCountAsync(CartModel model)
+        {
+            var items = await GetCartItemsByUserId(model);
+            _cart.Clear();
+
+            foreach (var item in items)
+            {
+                _cart[item.ProductId.ToString()] = (item.Quantity, item.ProductName);
+            }
+
+            OnChange?.Invoke();
+        }
         public void AddToCart(string productId, string productName, int quantity = 1)
         {
             if (_cart.ContainsKey(productId))
