@@ -256,6 +256,7 @@
         if (response != null && !string.IsNullOrEmpty(response.JwtToken))
         {
             // ✅ Save AreaId, Latitude, Longitude to shared state
+            UserLocation.UserId = response.UserId;
             UserLocation.AreaId = response.AreaId;
             UserLocation.Latitude = response.Latitude;
             UserLocation.Longitude = response.Longitude;

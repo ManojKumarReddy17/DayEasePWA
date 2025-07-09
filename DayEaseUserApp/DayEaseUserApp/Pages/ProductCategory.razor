@@ -11,7 +11,7 @@
 @using System.Linq
 @implements IDisposable
 
-
+@inject UserLocationState UserLocation
 <style>
     .page-container {
         max-width: 1200px;
@@ -185,15 +185,13 @@
     }
 
     .product-details {
-        padding: 15px;
+        padding: 10px;
+        text-align: center;
     }
 
-
-    .product-price {
+    .price {
         font-weight: bold;
-        font-size: 1.2rem;
-        color: #2c3e50;
-        margin: 5px;
+        margin: 8px 0;
     }
 
     .product-description span {
@@ -210,64 +208,6 @@
         display: flex;
         justify-content: space-between;
     }
-
-    /* Search Box */
-    /* Search Box - Upgraded */
-    /* .search-container {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 12px 20px;
-        max-width: 600px;
-        margin: 10px auto;
-        background-color: #ffffff;
-        border-radius: 50px;
-        border: 2px solid #007bff;
-        box-shadow: 0 6px 20px rgba(0, 123, 255, 0.1);
-        transition: box-shadow 0.3s ease;
-        } */
-
-    /* .search-container:hover,
-        .search-container:focus-within {
-        box-shadow: 0 8px 28px rgba(0, 123, 255, 0.25);
-        } */
-
-    /* .search-input {
-        flex: 1;
-        padding: 12px 18px;
-        border-color: #007bff;
-        border: none;
-        outline: none;
-        font-size: 16px;
-        border-radius: 50px 0 0 50px;
-        background-color: #f9f9f9;
-        transi,k,kltion: background-color 0.3s ease;
-        } */
-
-    /* .search-input::placeholder {
-        color: #999;
-        font-style: italic;
-        } */
-
-    /*   .search-button {
-        padding: 12px 18px;
-        border: none;
-        border-radius: 0 50px 50px 0;
-        background-color: #007bff;
-        color: white;
-        font-size: 18px;
-        cursor: pointer;
-        transition: background-color 0.3s ease, transform 0.2s ease;
-        }
-
-        .search-button:hover {
-        background-color: #0056b3;
-        transform: scale(1.05);
-        }
-
-        .search-button i {
-        pointer-events: none;
-        } */
 
     /* Categories Navigation */
     .categories-nav {
@@ -469,11 +409,9 @@
         transition: all 0.3s ease;
     }
 
-    */
-
-    .search-button:hover {
-        background-color: #0056b3;
-    }
+        .search-button:hover {
+            background-color: #0056b3;
+        }
 
     @@media (min-width: 768px) {
         .store-header-wrapper {
@@ -485,8 +423,8 @@
     }
 
     /* ---------------------------------
-        MODAL BACKDROP & ANIMATION
-        ---------------------------------- */
+                MODAL BACKDROP & ANIMATION
+                ---------------------------------- */
     .modal-backdrop {
         position: fixed;
         top: 0;
@@ -515,8 +453,8 @@
     }
 
     /* ---------------------------------
-        MODAL CONTENT BOX
-        ---------------------------------- */
+                MODAL CONTENT BOX
+                ---------------------------------- */
     .popup-action-row {
         display: flex;
         justify-content: space-between;
@@ -594,8 +532,8 @@
     }
 
     /* ---------------------------------
-        PRODUCT IMAGE INSIDE MODAL
-        ---------------------------------- */
+                PRODUCT IMAGE INSIDE MODAL
+                ---------------------------------- */
     .popup-image {
         width: 100px;
         max-height: 250px;
@@ -608,8 +546,8 @@
     }
 
     /* ---------------------------------
-        PRODUCT DETAILS IN MODAL
-        ---------------------------------- */
+                PRODUCT DETAILS IN MODAL
+                ---------------------------------- */
     .modal-content h4 {
         font-size: 1.4rem;
         font-weight: 600;
@@ -626,8 +564,8 @@
     }
 
     /* ---------------------------------
-        QUANTITY CONTROLS
-        ---------------------------------- */
+                QUANTITY CONTROLS
+                ---------------------------------- */
     .cart-controls {
         display: flex;
         justify-content: center;
@@ -665,8 +603,8 @@
     }
 
     /* ---------------------------------
-        ACTION BUTTON ROW
-        ---------------------------------- */
+                ACTION BUTTON ROW
+                ---------------------------------- */
     .popup-button-row {
         display: flex;
         justify-content: space-between;
@@ -707,13 +645,19 @@
     }
 
     /* ---------------------------------
-        RESPONSIVE STYLES
-        ---------------------------------- */
+                RESPONSIVE STYLES
+                ---------------------------------- */
     @@media (max-width: 600px) {
         .modal-content {
             padding: 16px;
             border-radius: 16px;
             max-height: 95vh;
+        }
+
+        .product-price {
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: #333;
         }
 
         .popup-image {
@@ -780,14 +724,13 @@
         gap: 1px;
         background-color: #007bff;
         border-radius: 10px;
-        padding: 5px 5px;
         height: 36px;
     }
 
         .stepper button {
             background: transparent;
             border: none;
-            font-size: 1.2rem;
+            font-size: 0.8rem;
             color: white;
             cursor: pointer;
             font-weight: bold;
@@ -809,11 +752,7 @@
         margin-top: 16px;
     }
 
-    .product-price {
-        font-weight: bold;
-        font-size: 1.1rem;
-        color: #333;
-    }
+
 
     /* Unified cart button styling */
     .cart-toggle-button {
@@ -994,7 +933,7 @@ else if (filteredProducts != null && filteredProducts.Count > 0)
                     <img src="images/@product.ProductImg" alt="@product.ProductName" />
                 </div>
 
-                <div class="product-details">
+                @* <div class="product-details">
                     <h4>@product.ProductName</h4>
                     <p class="product-description">@product.ProductDesc</p>
 
@@ -1016,6 +955,28 @@ else if (filteredProducts != null && filteredProducts.Count > 0)
                             </button>
                         }
                     </div>
+                </div> *@
+                <div class="product-details">
+                    <h4>@product.ProductName</h4>
+                    <p class="product-description">@product.ProductDesc</p>
+
+                    <div class="price-action-row">
+                        <p class="product-price">@FormatCurrency(product.Price)</p>
+
+                        @if (CartService.CartItems.ContainsKey(product.ProductId))
+                        {
+                            <div class="stepper">
+                                <button @onclick="() => UpdateQuantity(product.ProductId, false)">➖</button>
+                                <span class="quantity">@CartService.CartItems[product.ProductId].quantity</span>
+                                <button @onclick="() => UpdateQuantity(product.ProductId, true)">➕</button>
+                            </div>
+                        }
+                        else
+                        {
+                            <button class="cart-btn" @onclick="() => AddToCart(product)">Add to Cart</button>
+                        }
+                    </div>
+
                 </div>
             </div>
         }
@@ -1044,16 +1005,19 @@ else if (filteredProducts != null && filteredProducts.Count > 0)
                     @if (CartService.CartItems.ContainsKey(selectedProduct.ProductId))
                     {
                         <div class="stepper">
-                            <button @onclick="() => CartService.DecreaseQuantity(selectedProduct.ProductId)">−</button>
+
+
+                            <button @onclick="() => UpdateQuantity(selectedProduct.ProductId, false)">➖</button>
                             <span class="quantity">@CartService.CartItems[selectedProduct.ProductId].quantity</span>
-                            <button @onclick="() => CartService.IncreaseQuantity(selectedProduct.ProductId)">+</button>
+                            <button @onclick="() => UpdateQuantity(selectedProduct.ProductId, true)">➕</button>
+
                         </div>
                     }
                     else
                     {
-                        <button class="cart-btn" @onclick="() => AddToCart(selectedProduct.ProductId, selectedProduct.ProductName)">
-                            Add to Cart
-                        </button>
+                        <div class="action-buttons">
+                            <button class="cart-btn" @onclick="() => AddToCart(selectedProduct)">Add to Cart</button>
+                        </div>
                     }
                 </div>
             </div>
@@ -1076,7 +1040,7 @@ else
     private bool isLoading = false;
     private bool allProductsLoaded = false;
     private bool isFirstLoad = true;
-
+    private List<CartModel> cartItems = new();
     private string selectedCategoryId = null;
     private string selectedCategory = "All";
     private string StoreId;
@@ -1130,40 +1094,7 @@ else
     }
 
 
-    // protected override async Task OnInitializedAsync()
-    // {
-    //     var uri = Navigation.ToAbsoluteUri(Navigation.Uri);
-    //     var queryParams = QueryHelpers.ParseQuery(uri.Query);
 
-    //     if (queryParams.TryGetValue("storeId", out var storeId))
-    //     {
-    //         StoreId = storeId;
-    //         StoreName = queryParams.TryGetValue("storeName", out var name) ? name : "Store";
-    //         DistanceInKm = queryParams.TryGetValue("DistanceInKm", out var distanceStr) &&
-    //                        double.TryParse(distanceStr, out var dist) ? dist : 0;
-
-    //         var categoryInput = new StoreProdCategoryRequestModel { StoreId = StoreId };
-    //         var categoryDtos = await ProductCategoryService.GetProductcategoByStoreId(categoryInput);
-
-    //         Categories = categoryDtos.Select(dto => new CategoryRequest
-    //         {
-    //             Name = dto.ProductCategoryName,
-    //             Icon = "bi bi-grid",
-    //             StoreId = StoreId,
-    //             ProductCategoryId = dto.ProductCategoryId
-    //         }).ToList();
-
-    //         Categories.Insert(0, new CategoryRequest
-    //         {
-    //             Name = "All",
-    //             Icon = "bi bi-grid",
-    //             StoreId = StoreId,
-    //             ProductCategoryId = null
-    //         });
-
-    //         await FilterByCategory("All", null);
-    //     }
-    // }
 
     private async Task FilterByCategory(string categoryName, string categoryId)
     {
@@ -1249,56 +1180,7 @@ else
     }
 
 
-    // private async Task LoadMoreProducts(string categoryId = null)
-    // {
-    //     if (isLoading || allProductsLoaded) return;
 
-    //     isLoading = true;
-    //     StateHasChanged();
-
-    //     var request = new PaginationQueryInput
-    //     {
-    //         Product = new ProductRequestModel
-    //         {
-    //             StoreId = StoreId,
-    //             CategoryId = string.IsNullOrWhiteSpace(categoryId) ? null : categoryId
-    //         },
-    //         PaginationInput = new PaginationInput
-    //         {
-    //             PageNumber = currentPage,
-    //             PageSize = pageSize
-    //         }
-    //     };
-
-    //     var result = await ProductCategoryService.GetProductsByStoreId(request);
-
-    //     if (result?.Result?.Items != null && result.Result.Items.Any())
-    //     {
-    //         var newProducts = result.Result.Items.Select(p => new ProductRequestModel
-    //         {
-    //             ProductId = p.ProductId,
-    //             StoreId = p.StoreId,
-    //             CategoryId = p.CategoryId,
-    //             ProductName = p.ProductName,
-    //             ProductDesc = p.ProductDesc,
-    //             Price = p.Price,
-    //             Discount = p.Discount,
-    //             ProductImg = p.ProductImg
-    //         }).ToList();
-
-    //         products.AddRange(newProducts);
-    //         currentPage++;
-    //     }
-    //     else
-    //     {
-    //         allProductsLoaded = true;
-    //     }
-
-    //     ApplyFilters();
-    //     isLoading = false;
-    //     isFirstLoad = false;
-    //     StateHasChanged();
-    // }
 
     private void ApplyFilters()
     {
@@ -1340,11 +1222,11 @@ else
 
     public void Dispose() => objRef?.Dispose();
 
-    private void AddToCart(string productId, string name)
-    {
-        CartService.AddToCart(productId, name, 1);
-        StateHasChanged();
-    }
+    // private void AddToCart(string productId, string name)
+    // {
+    //     CartService.AddToCart(productId, name, 1);
+    //     StateHasChanged();
+    // }
 
     private void OpenPopup(ProductRequestModel product)
     {
@@ -1357,7 +1239,105 @@ else
         showPopup = false;
         selectedProduct = null;
     }
+    @code {
 
+        private async Task AddToCart(ProductRequestModel product)
+        {
+            CartService.AddToCart(product.ProductId, null, 1);
+
+            var model = new CartModel
+            {
+                UserId = UserLocation.UserId,
+                ProductId = product.ProductId,
+                StoreId = StoreId,
+                Quantity = 1
+
+
+            };
+
+            await CartService.AddCartItems(model); // <-- POST to API
+
+        }
+
+        private async Task UpdateQuantity(string productId, bool increase)
+        {
+            var cartItem = CartService.CartItems.GetValueOrDefault(productId);
+            if (cartItems == null)
+                return;
+
+            if (increase)
+            {
+                CartService.IncreaseQuantity(productId);
+
+                var request = new CartModel
+                {
+                    UserId = UserLocation.UserId
+                };
+
+                var result = await CartService.GetCartItemsByUserId(request);
+                var lst = result.Where(x => x.ProductId == productId).FirstOrDefault();
+
+                var cartupdate = new CartModel
+                {
+                    CartItemId = lst.CartItemId,
+                    UserId = UserLocation.UserId,
+                    ProductId = productId,
+                    StoreId = StoreId,
+                    Quantity = cartItem.quantity + 1
+
+                };
+                await CartService.UpdateCartItems(cartupdate);
+
+            }
+            else
+            {
+                if (cartItem.quantity <= 1)
+                {
+
+                    var request = new CartModel
+                    {
+                        UserId = UserLocation.UserId
+                    };
+                    var result = await CartService.GetCartItemsByUserId(request);
+                    var lst = result.Where(x => x.ProductId == productId).FirstOrDefault();
+
+
+                    var cartremove = new CartModel
+                    {
+                        CartItemId = lst.CartItemId,
+                        UserId = UserLocation.UserId,
+                        ProductId = productId,
+                        StoreId = StoreId,
+
+
+                    };
+                    await CartService.RemoveCartItems(cartremove);
+                }
+                else
+                {
+                    CartService.DecreaseQuantity(productId);
+
+                    var request = new CartModel
+                    {
+                        UserId = UserLocation.UserId
+                    };
+                    var result = await CartService.GetCartItemsByUserId(request);
+                    var lst = result.Where(x => x.ProductId == productId).FirstOrDefault();
+
+                    var cartupdate = new CartModel
+                    {
+                        CartItemId = lst.CartItemId,
+                        UserId = UserLocation.UserId,
+                        ProductId = productId,
+                        StoreId = StoreId,
+                        Quantity = cartItem.quantity - 1
+
+                    };
+                    await CartService.UpdateCartItems(cartupdate);
+                }
+            }
+        }
+    }
     private void IncreaseQuantity(string productId)
     {
         if (cart.ContainsKey(productId))

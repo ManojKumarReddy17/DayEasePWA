@@ -1,0 +1,395 @@
+﻿@page "/checkout"
+@inject CartState CartState
+@inject NavigationManager Navigation
+@using Domain.RequestModels
+
+<style>
+    .checkout-container {
+        max-width: 540px;
+        margin: auto;
+        background: #fff;
+        border-radius: 18px;
+        overflow: hidden;
+        box-shadow: 0 6px 24px rgba(0, 0, 0, 0.1);
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+    .checkout-header {
+        background: linear-gradient(135deg, #007bff, #00c6ff);
+        color: #fff;
+        padding: 20px;
+        text-align: center;
+    }
+
+    .checkout-header h2 {
+        font-size: 22px;
+        margin: 0;
+    }
+
+    .checkout-container section {
+        padding: 20px;
+        border-bottom: 1px solid #eee;
+    }
+
+    .checkout-container h4 {
+        font-size: 18px;
+        color: #333;
+        margin-bottom: 14px;
+    }
+
+    .form-select {
+        width: 100%;
+        padding: 12px;
+        border-radius: 10px;
+        border: 1px solid #ccc;
+        font-size: 15px;
+        background-color: #fdfdfd;
+    }
+
+    .checkout-item {
+        display: flex;
+        gap: 14px;
+        margin-bottom: 16px;
+        /* flex-direction: column; */
+    }
+
+    .item-image {
+        width: 60px;
+        height: 60px;
+        border-radius: 12px;
+        object-fit: cover;
+        background-color: #f0f0f0;
+        padding: 4px;
+    }
+
+    .item-right {
+        flex: 1;
+    }
+
+    .item-name {
+        font-weight: 600;
+        font-size: 15px;
+        color: #333;
+    }
+
+    .item-variant {
+        font-size: 13px;
+        color: #777;
+    }
+
+    .item-qty-price {
+        display: flex;
+        justify-content: space-between;
+        font-size: 14px;
+        margin-top: 6px;
+        color: #444;
+    }
+
+    .price-summary {
+        margin-top: 20px;
+    }
+
+    .price-row {
+        display: flex;
+        justify-content: space-between;
+        padding: 6px 0;
+        font-size: 15px;
+        color: #555;
+    }
+
+    .price-row.total {
+        border-top: 1px solid #ccc;
+        font-weight: bold;
+        padding-top: 12px;
+        margin-top: 10px;
+        color: #000;
+        font-size: 17px;
+    }
+
+    .custom-payment-options {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .payment-option {
+        display: flex;
+        align-items: center;
+    }
+
+    .payment-option input[type="radio"] {
+        margin-right: 10px;
+    }
+
+    .payment-option label {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 15px;
+        cursor: pointer;
+        color: #333;
+    }
+
+    .payment-icon {
+        width: 24px;
+        height: 24px;
+        object-fit: contain;
+    }
+
+   .place-order-btn {
+    width: 100%;
+    background: linear-gradient(135deg, #007bff, #00c6ff); /* Blue */
+    border: none;
+    padding: 14px;
+    font-size: 16px;
+    font-weight: 600;
+    color: white;
+    border-radius: 0 0 18px 18px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 123, 255, 0.25);
+}
+
+.place-order-btn:hover {
+    background: linear-gradient(135deg, #28a745, #20e195); /* Green on hover */
+    box-shadow: 0 4px 14px rgba(40, 167, 69, 0.3);
+}
+.price-row.total {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    font-weight: bold;
+    margin-top: 1rem;
+    padding: 0.5rem 0;
+    border-top: 1px solid #ccc;
+}
+
+.price-row.total small {
+    font-size: 0.85em;
+    color: gray;
+}
+
+
+
+    /* 📱 Responsive Styles */
+@@media (max-width: 768px) {
+    .checkout-container {
+        margin: 16px;
+        border-radius: 14px;
+    }
+
+    .checkout-header h2 {
+        font-size: 20px;
+    }
+
+    .checkout-container h4 {
+        font-size: 16px;
+        margin-bottom: 12px;
+    }
+
+    .form-select {
+        font-size: 14px;
+        padding: 10px;
+        border-radius: 8px;
+    }
+
+    .checkout-item {
+        flex-direction: column;
+        gap: 10px;
+        margin-bottom: 14px;
+    }
+
+    .item-image {
+        width: 100%;
+        height: auto;
+        border-radius: 10px;
+    }
+
+    .item-name {
+        font-size: 14px;
+    }
+
+    .item-variant {
+        font-size: 12px;
+    }
+
+    .item-qty-price {
+        flex-direction: column;
+        align-items: flex-start;
+        font-size: 13px;
+    }
+
+    .price-row {
+        font-size: 14px;
+    }
+
+    .price-row.total {
+        font-size: 16px;
+    }
+
+    .payment-option label {
+        font-size: 14px;
+    }
+
+    .payment-icon {
+        width: 20px;
+        height: 20px;
+    }
+
+    .place-order-btn {
+        font-size: 15px;
+        padding: 12px;
+        border-radius: 0 0 14px 14px;
+    }
+}
+
+@@media (max-width: 480px) {
+    .checkout-header h2 {
+        font-size: 18px;
+    }
+
+    .place-order-btn {
+        font-size: 14px;
+        padding: 10px;
+    }
+
+    .checkout-container {
+        margin: 10px;
+    }
+}
+
+</style>
+
+<div class="checkout-container">
+
+    <div class="checkout-header">
+        <h2>Checkout</h2>
+    </div>
+
+    <section class="address-section">
+        <h4>Delivery Address</h4>
+        <select class="form-select">
+            <option selected>Select address</option>
+            <option>Home - 123 Street, City</option>
+            <option>Work - Office Complex</option>
+        </select>
+    </section>
+
+    <section class="items-section">
+        <h4>Cart Items</h4>
+        @if (cartItems.Any())
+        {
+            @foreach (var item in cartItems)
+            {
+                <div class="checkout-item">
+                    <img src="@item.ProductImage" alt="@item.ProductName" class="item-image" />
+                    <div class="item-right">
+                        <div class="item-name">@item.ProductName</div>
+                        <div class="item-variant">@item.Variant</div>
+                        <div class="item-qty-price">
+                            <span>@item.Quantity x ₹@item.Price</span>
+                            <span>= ₹@(item.Quantity * item.Price)</span>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <p>Your cart is empty. <a href="/cart">Go back to cart</a></p>
+        }
+    </section>
+
+    @if (cartItems.Any())
+    {
+        <section class="price-summary">
+            <h4>Price Details</h4>
+            <div class="price-row">
+                <span>Subtotal</span>
+                <span>₹@Subtotal</span>
+            </div>
+            <div class="price-row">
+                <span>Delivery Charges</span>
+                <span>₹@DeliveryCharges</span>
+            </div>
+            <div class="price-row">
+                <span>Handling Charges</span>
+                <span>₹@HandlingCharges</span>
+            </div>
+            @* <div class="price-row">
+                <span>GST and Charges</span>
+                <span>₹@GstCharges</span>
+            </div> *@
+            <div class="price-row">
+                <span>Small Cart Fee</span>
+                <span>₹@SmallCartFee</span>
+            </div>
+           <div class="price-row total">
+    <div>
+        <strong>Total</strong><br />
+        <small>(incl. all taxes and charges)</small>
+    </div>
+    <strong>₹@Total</strong>
+</div>
+
+
+        </section>
+
+        <section class="payment-method">
+            <h4>Payment Method</h4>
+            <div class="custom-payment-options">
+                <div class="payment-option">
+                    <input type="radio" id="cod" name="payment" checked>
+                    <label for="cod">
+                        <img src="images/rupee-note-img.png" alt="COD" class="payment-icon" />
+                        Cash on Delivery (COD)
+                    </label>
+                </div>
+                <div class="payment-option">
+                    <input type="radio" id="upi" name="payment">
+                    <label for="upi">
+                        <img src="images/UPI-img.png" alt="UPI" class="payment-icon" />
+                        UPI
+                    </label>
+                </div>
+                <div class="payment-option">
+                    <input type="radio" id="card" name="payment">
+                    <label for="card">
+                        <img src="images/debit-card-img.png" alt="Card" class="payment-icon" />
+                        Credit/Debit Card
+                    </label>
+                </div>
+            </div>
+        </section>
+
+        <button class="place-order-btn">Place Order</button>
+    }
+</div>
+
+@code {
+    private List<CartModel> cartItems = new();
+
+    protected override void OnInitialized()
+    {
+        if (!CartState.CartItems.Any())
+        {
+            Navigation.NavigateTo("/cart");
+        }
+
+        cartItems = CartState.CartItems.Select(c => new CartModel
+        {
+            ProductName = c.ProductName,
+            Variant = c.Variant,
+            Quantity = c.Quantity,
+            Price = c.Price,
+            ProductImage = c.ProductImage
+        }).ToList();
+    }
+
+    decimal Subtotal => cartItems.Sum(i => i.Price * i.Quantity);
+    decimal DeliveryCharges => 20;
+    decimal HandlingCharges => 10;
+    decimal GstCharges => Subtotal * 0.05m;
+    decimal SmallCartFee => Subtotal < 100 ? 5 : 0;
+    decimal Total => Subtotal + DeliveryCharges + HandlingCharges + GstCharges + SmallCartFee;
+}

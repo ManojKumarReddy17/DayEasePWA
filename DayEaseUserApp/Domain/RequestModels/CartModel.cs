@@ -8,14 +8,9 @@ namespace Domain.RequestModels
 {
     public class CartModel
     {
-        //public List<CartItem> Items { get; set; } = new();
-
-        //public decimal TotalAmount => Items.Sum(i => i.Price * i.Quantity);
-
-        //public decimal OriginalTotal => Items.Sum(i => i.OriginalPrice * i.Quantity);
+        
         public string UserId { get; set; }
 
-        public string StoreProductKey { get; set; }
 
         public string CartItemId { get; set; }
 
@@ -28,14 +23,15 @@ namespace Domain.RequestModels
         public int Quantity { get; set; }
 
 
-        public DateTime AddedAt { get; set; }
+        public DateTime CreateDate { get; set; }
 
 
-        public DateTime UpdatedAt { get; set; }
+        public DateTime UpdatedDate { get; set; }
 
         // Enriched fields
 
         public string ProductName { get; set; }
+
         public string ProductImage { get; set; }
 
 
@@ -49,5 +45,7 @@ namespace Domain.RequestModels
 
 
         public decimal NetPrice { get; set; }
+
+        public string Variant { get; set; } // <-- USE THIS if it's defined
     }
 }

@@ -3,450 +3,76 @@
 @using Domain.RequestModels
 @inject ICartService cartService
 @layout NavMenu
+@inject CartState CartState
+@inject NavigationManager Navigation
+@inject UserLocationState UserLocation
 <style>
     .cart-wrapper {
-        /* padding: 1rem; */
-        background-color: #f0f8ff; /* sky blue tone */
+        background-color: #f8f9fa;
+        padding: 20px 0 80px;
+        border-radius: 16px;
+        max-width: 800px;
+        margin: auto;
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
     }
 
     .cart-header {
-        font-weight: bold;
-        font-size: 1.5rem;
-        margin-bottom: 1rem;
+        background: linear-gradient(135deg, #007bff, #00c6ff);
+        color: white;
         text-align: center;
+        padding: 16px;
+        font-size: 20px;
+        font-weight: bold;
+        border-radius: 16px 16px 0 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
     }
 
-    .cart-item {
-        background: #fff;
-        display: flex;
-        padding: 12px;
-        border-radius: 12px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-        margin-bottom: 16px;
-        gap: 1px;
+    .cart-icon {
+        font-size: 24px;
+    }
+
+    .delivery-timer {
+        background-color: #e0f8eb;
+        color: #0b8e2d;
+        border-radius: 20px;
+        padding: 10px 16px;
+        font-weight: 600;
+        display: inline-flex;
         align-items: center;
+        gap: 8px;
+        margin: 12px;
+        font-size: 14px;
+    }
+
+    .cart-item-box {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        background: #fff;
+        padding: 16px;
+        margin: 12px;
+        border-radius: 12px;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+        gap: 16px;
+    }
+
+    .item-left {
+        display: flex;
+        gap: 12px;
+        flex: 1;
     }
 
     .cart-image {
         width: 60px;
         height: 60px;
-        object-fit: contain;
-        border-radius: 8px;
-        background: #f9f9f9;
-    }
-
-    .cart-details {
-        flex: 1;
-    }
-
-    .product-title {
-        font-weight: 600;
-        font-size: 16px;
-    }
-
-    .product-quantity {
-        font-size: 13px;
-        color: #555;
-        margin-bottom: 4px;
-    }
-
-    .price-and-qty {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-
-    .price .discounted {
-        font-weight: 600;
-        color: green;
-        font-size: 16px;
-        margin-right: 8px;
-    }
-
-    .price .original {
-        text-decoration: line-through;
-        color: #aaa;
-        font-size: 14px;
-    }
-
-    .qty-control {
-        background: #fff0f5;
-        padding: 4px 12px;
-        border-radius: 20px;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-    }
-
-    .qty-btn {
-        background: #fff;
-        border: 1px solid #ff3c6f;
-        color: #ff3c6f;
-        border-radius: 50%;
-        width: 28px;
-        height: 28px;
-        font-weight: bold;
-        font-size: 16px;
-    }
-
-    .checkout-bar {
-        background: white;
-        padding: 1rem;
-        position: sticky;
-        bottom: 0;
-        box-shadow: 0 -2px 8px rgba(0,0,0,0.05);
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        z-index: 99;
-    }
-
-    .btn-select {
-        background-color: #ff3c6f;
-        color: white;
-        border: none;
-        padding: 10px 20px;
-        font-weight: bold;
-        border-radius: 10px;
-    }
-
-    .checkout-footer {
-        position: sticky;
-        bottom: 0;
-        width: 100%;
-        background-color: #fff;
-        box-shadow: 0 -2px 6px rgba(0,0,0,0.05);
-        padding: 16px;
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        z-index: 10;
-    }
-
-    .subtotal-bar {
-        font-size: 16px;
-        font-weight: 600;
-        text-align: center;
-    }
-
-    .btn-checkout {
-        background-color: #ff3c6f;
-        color: white;
-        border: none;
-        font-weight: bold;
-        padding: 12px;
-        width: 100%;
-        border-radius: 8px;
-        font-size: 16px;
-        cursor: pointer;
-    }
-
-    .btn-clear {
-        background-color: #f0f0f0;
-        border: none;
-        padding: 6px 12px;
-        font-size: 14px;
-        border-radius: 6px;
-        cursor: pointer;
-        font-weight: 500;
-    }
-
-    .btn-remove {
-        background: transparent;
-        border: none;
-        font-size: 20px;
-        color: #cc0000;
-        cursor: pointer;
-    }
-
-        .btn-remove:hover {
-            color: #ff0000;
-        }
-
-    .text-muted {
-        color: #777;
-    }
-
-    .cart-item {
-        display: flex;
-        background: #fff;
-        padding: 12px;
-        margin-bottom: 16px;
-        border-radius: 12px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-    }
-
-    .cart-image {
-        width: 80px;
-        height: 80px;
-        object-fit: cover;
-        margin-right: 12px;
-        border-radius: 8px;
-    }
-
-    .cart-details {
-        flex: 1;
-    }
-
-    .product-title {
-        font-weight: bold;
-        font-size: 16px;
-        margin-bottom: 2px;
-    }
-
-    .product-quantity {
-        font-size: 13px;
-        color: #555;
-        margin-bottom: 4px;
-    }
-
-    .price-info {
-        font-size: 14px;
-        margin-bottom: 4px;
-    }
-
-    .price-final {
-        font-weight: 600;
-        color: #000;
-    }
-
-    .original {
-        text-decoration: line-through;
-        color: #999;
-        margin-left: 8px;
-    }
-
-    .availability {
-        font-size: 13px;
-        color: green;
-    }
-
-    .return-info {
-        font-size: 12px;
-        color: #0066c0;
-        margin-bottom: 8px;
-    }
-
-    .qty-block {
-        display: flex;
-        align-items: center;
-        border: 2px solid #ffd814;
-        border-radius: 25px;
-        padding: 4px 12px;
-        margin-right: 12px;
-        background-color: #fff9d0;
-    }
-
-    .qty-icon {
-        background: transparent;
-        border: none;
-        font-size: 18px;
-        padding: 4px;
-        font-weight: bold;
-        cursor: pointer;
-    }
-
-        .qty-icon.danger {
-            color: #cc0000;
-        }
-
-    .qty-text {
-        font-size: 14px;
-        padding: 0 8px;
-        font-weight: 600;
-    }
-
-    .action-row {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-top: 10px;
-        flex-wrap: wrap;
-    }
-
-    .btn-action {
-        background-color: #f0f0f0;
-        border: 1px solid #ccc;
-        padding: 4px 12px;
-        margin: 2px;
-        font-size: 14px;
-        border-radius: 6px;
-        cursor: pointer;
-    }
-
-    .checkout-footer {
-        position: sticky;
-        bottom: 0;
-        width: 100%;
-        background-color: #fff;
-        padding: 16px;
-        box-shadow: 0 -2px 5px rgba(0,0,0,0.05);
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-    }
-
-    .btn-checkout {
-        background-color: #ffd814;
-        color: #111;
-        font-weight: bold;
-        border: none;
-        padding: 12px;
-        font-size: 16px;
-        border-radius: 6px;
-        cursor: pointer;
-    }
-
-    .cart-item {
-        display: flex;
-        background: #fff;
-        padding: 12px;
-        margin-bottom: 16px;
-        border-radius: 10px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-    }
-
-    .cart-image {
-        width: 80px;
-        height: 80px;
         object-fit: cover;
         border-radius: 8px;
-        margin-right: 12px;
     }
 
-    .cart-details {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-    }
-
-    .product-info {
-        margin-bottom: 4px;
-    }
-
-    .product
-    .cart-item {
-        display: flex;
-        background: #fff;
-        padding: 12px;
-        margin-bottom: 16px;
-        border-radius: 10px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-    }
-
-    .cart-image {
-        width: 80px;
-        height: 80px;
-        object-fit: cover;
-        border-radius: 8px;
-        margin-right: 12px;
-    }
-
-    .cart-details {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        gap: 6px;
-    }
-
-    .product-title {
-        font-weight: 600;
-        font-size: 15px;
-    }
-
-    .product-quantity {
-        font-size: 13px;
-        color: #666;
-    }
-
-    .price {
-        font-size: 14px;
-    }
-
-    .price-final {
-        color: green;
-        font-weight: 600;
-    }
-
-    .original {
-        text-decoration: line-through;
-        color: #aaa;
-        margin-left: 8px;
-    }
-
-    .qty-control {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        background-color: #fff0f3;
-        padding: 6px 12px;
-        border-radius: 25px;
-        width: fit-content;
-        border: 1px solid #ffd6d6;
-    }
-
-    .qty-btn {
-        border: none;
-        background: none;
-        font-size: 18px;
-        font-weight: bold;
-        color: #ff3366;
-        cursor: pointer;
-    }
-
-    .qty-count {
-        font-size: 15px;
-        font-weight: bold;
-        width: 20px;
-        text-align: center;
-    }
-
-    .btn-delete {
-        background: none;
-        color: #cc0000;
-        font-size: 13px;
-        border: none;
-        cursor: pointer;
-        align-self: flex-start;
-    }
-
-    .checkout-footer {
-        position: sticky;
-        bottom: 0;
-        background: #fff;
-        padding: 16px;
-        box-shadow: 0 -2px 6px rgba(0,0,0,0.05);
-    }
-
-    .btn-checkout {
-        width: 100%;
-        background-color: #ff3366;
-        color: white;
-        padding: 12px;
-        font-size: 16px;
-        border: none;
-        border-radius: 6px;
-        font-weight: bold;
-    }
-
-    .cart-item-horizontal {
-        display: flex;
-        align-items: center;
-        background: #fff;
-        padding: 10px;
-        border-bottom: 1px solid #eee;
-    }
-
-    .cart-image {
-        width: 50px;
-        height: 50px;
-        object-fit: contain;
-        margin-right: 10px;
-    }
-
-    .cart-info {
-        flex: 1;
+    .item-info {
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -455,7 +81,7 @@
     .product-title {
         font-weight: 600;
         font-size: 14px;
-        color: #000;
+        margin-bottom: 4px;
     }
 
     .product-quantity {
@@ -463,35 +89,49 @@
         color: #777;
     }
 
-    .cart-right {
+    .price-box {
         display: flex;
         flex-direction: column;
         align-items: flex-end;
-        gap: 4px;
+        gap: 6px;
     }
 
-    .qty-control {
+    .price-qty-wrapper {
         display: flex;
         align-items: center;
-        background: #ffeef1;
-        border: 1px solid #ffcfd6;
-        border-radius: 25px;
-        padding: 2px 8px;
+        border: 1px solid #ccc;
+        border-radius: 20px;
+        padding: 4px 10px;
+        background-color: #f8f9fa;
+        gap: 10px;
     }
 
     .qty-btn {
-        background: none;
+        background-color: #ffffff;
         border: none;
-        font-weight: bold;
-        color: #ff3366;
+        color: #007bff;
         font-size: 18px;
+        font-weight: bold;
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        transition: background 0.2s ease;
         cursor: pointer;
+    }
+
+    .qty-btn:hover {
+        background-color: #e6f0ff;
     }
 
     .qty-count {
         font-size: 14px;
         font-weight: 600;
-        margin: 0 6px;
+        min-width: 20px;
+        text-align: center;
     }
 
     .price-final {
@@ -507,155 +147,172 @@
     }
 
     .checkout-footer {
+        position: sticky;
+        bottom: 0;
         background: #fff;
         padding: 16px;
         box-shadow: 0 -2px 6px rgba(0,0,0,0.05);
+        z-index: 10;
     }
 
-    .btn-checkout {
-        width: 100%;
-        background-color: #ff3366;
-        color: white;
-        padding: 12px;
+    .subtotal-box {
+        background: #f1f1f1;
+        padding: 16px;
+        border-radius: 12px;
+        text-align: center;
+        margin-bottom: 16px;
+    }
+
+    .subtotal-box strong {
         font-size: 16px;
-        border: none;
-        border-radius: 6px;
-        font-weight: bold;
-    }
-
-    .cart-item-horizontal {
-        display: flex;
-        align-items: flex-start;
-        background: #fff;
-        padding: 12px;
-        border-bottom: 1px solid #eee;
-        gap: 12px;
-    }
-
-    .cart-image {
-        width: 50px;
-        height: 50px;
-        object-fit: contain;
-    }
-
-    .cart-info {
-        flex: 1;
-    }
-
-    .product-title {
-        font-weight: 600;
-        font-size: 14px;
-        margin-bottom: 4px;
-    }
-
-    .product-quantity {
-        font-size: 12px;
-        color: #777;
-    }
-
-    .cart-right {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-end;
-        gap: 4px;
-    }
-
-    .price-qty-wrapper {
-        display: flex;
-        gap: 10px;
-        align-items: center;
-    }
-
-    .qty-control {
-        display: flex;
-        align-items: center;
-        background: #ffeef1;
-        border: 1px solid #ffcfd6;
-        border-radius: 25px;
-        padding: 2px 10px;
-    }
-
-    .qty
-    .delivery-timer {
-        background-color: #e6f4ea;
-        color: #0b8e2d;
-        border-radius: 25px;
-        padding: 8px 16px;
-        font-weight: 600;
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        margin: 12px 0;
-        font-size: 14px;
-        width: fit-content;
-    }
-
-    .timer-icon {
-        font-size: 18px;
-    }
-
-    .subtotal-bar {
-        display: flex;
-        flex-direction: column;
-        gap: 4px;
-        font-size: 14px;
-    }
-
-    .original-total {
-        color: #555;
     }
 
     .savings {
         color: #0b8e2d;
         font-weight: 600;
+        margin-top: 4px;
+        font-size: 14px;
     }
 
+    .btn-checkout {
+        width: 100%;
+        background: linear-gradient(135deg, #007bff, #00c6ff);
+        color: white;
+        padding: 14px;
+        font-size: 16px;
+        border: none;
+        border-radius: 8px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 10px rgba(0, 123, 255, 0.25);
+        cursor: pointer;
+    }
+
+    .btn-checkout:hover {
+        background: linear-gradient(135deg, #28a745, #20e195);
+        box-shadow: 0 4px 14px rgba(40, 167, 69, 0.3);
+    }
+
+    /* Responsive Fix */
+    @@media (max-width: 768px) {
+        .cart-item-box {
+            flex-direction: row;
+            align-items: center;
+        }
+
+        .item-left {
+            flex: 2;
+        }
+
+        .price-box {
+            align-items: flex-end;
+            flex: 1;
+        }
+
+        .price-qty-wrapper {
+            justify-content: flex-end;
+            width: auto;
+        }
+    }
+
+    @@media (max-width: 480px) {
+        .product-title {
+            font-size: 13px;
+        }
+
+        .price-qty-wrapper {
+            gap: 6px;
+            padding: 4px 8px;
+        }
+
+        .qty-btn {
+            width: 24px;
+            height: 24px;
+            font-size: 16px;
+        }
+
+        .qty-count {
+            font-size: 13px;
+        }
+    }
+
+    /* Empty Cart UI */
+    .empty-cart-container {
+        background-color: #f8f9fc;
+        border-radius: 16px;
+        padding: 40px 20px;
+        text-align: center;
+        max-width: 400px;
+        margin: 60px auto;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+
+    .empty-cart-icon {
+        width: 80px;
+        margin-bottom: 20px;
+        opacity: 0.5;
+    }
+
+    .empty-text {
+        font-weight: 600;
+        font-size: 16px;
+        margin-bottom: 20px;
+        color: #333;
+    }
+
+    .btn-browse {
+        background-color: #212529;
+        color: white;
+        font-weight: 600;
+        padding: 12px 20px;
+        border-radius: 8px;
+        border: none;
+        cursor: pointer;
+        transition: background 0.3s ease;
+    }
+
+    .btn-browse:hover {
+        background-color: #343a40;
+    }
 </style>
+
 <div class="cart-wrapper">
-    <div class="cart-header d-flex justify-content-between align-items-center">
-        <h3>🛒 Your Cart</h3>
-        <button class="btn-clear" @onclick="ClearCart">🧹 Clear Cart</button>
+    <div class="cart-header">
+        <i class="fas fa-shopping-cart cart-icon"></i>
+        Your Cart
     </div>
 
     <div class="delivery-timer">
-        <span class="timer-icon">⏱️</span>
-        <span>Delivery in 15 mins</span>
+        ⏱️ Delivery in 15 mins
     </div>
 
     @if (cartItems.Any())
     {
         @foreach (var item in cartItems)
         {
-            <div class="cart-item-horizontal">
-                <!-- If you don't have image, you can skip this line or add a placeholder -->
-                <img src="placeholder.jpg" alt="@item.ProductImage" class="cart-image" />
-
-                <div class="cart-info">
-                    <div class="product-title">@item.ProductName</div>
-                    <div class="product-quantity">Qty: @item.Quantity</div>
+            <div class="cart-item-box">
+                <div class="item-left">
+                    <img src="placeholder.jpg" alt="@item.ProductImage" class="cart-image" />
+                    <div class="item-info">
+                        <div class="product-title">@item.ProductName</div>
+                        <div class="product-quantity">Qty: @item.Quantity</div>
+                    </div>
                 </div>
 
-                <div class="cart-right">
+                <div class="price-box">
                     <div class="price-qty-wrapper">
-
                         <button class="qty-btn" @onclick="async () => await DecreaseQuantity(item)">−</button>
                         <span class="qty-count">@item.Quantity</span>
                         <button class="qty-btn" @onclick="async () => await IncreaseQuantity(item)">+</button>
-
-                        <div class="price">
-                            <span class="price-final">₹@item.TotalPrice</span>
-                        </div>
                     </div>
-                    <div><span class="original text-muted">₹@(item.Price* item.Quantity)</span></div>
-                    @* <button class="btn-delete" @onclick="() => RemoveItem(item)">Remove</button> *@
-                    <button class="btn-delete" @onclick="async () => await RemoveItem(item)">Remove</button>
-
+                    <div class="price-final">₹@item.TotalPrice</div>
+                    <div class="original">₹@(item.Price * item.Quantity)</div>
                 </div>
             </div>
         }
 
         <div class="checkout-footer">
-            <div class="subtotal-bar">
+            <div class="subtotal-box">
                 <div><strong>Subtotal:</strong> ₹@cartItems.Sum(i => i.TotalPrice)</div>
                 <div class="savings">You Save: ₹@cartItems.Sum(i => (i.Price * i.Quantity) - i.TotalPrice)</div>
             </div>
@@ -664,7 +321,11 @@
     }
     else
     {
-        <p class="text-muted text-center mt-5">🛍️ Your cart is empty.</p>
+        <div class="empty-cart-container">
+            <img src="images/empty-cart-icon.svg" alt="Empty Cart" class="empty-cart-icon" />
+            <p class="empty-text">Your cart is empty</p>
+            <button class="btn-browse" @onclick="@(() => Navigation.NavigateTo("/highlightcompact"))">Browse Products</button>
+        </div>
     }
 </div>
 
@@ -675,87 +336,70 @@
     {
         var request = new CartModel
         {
-            UserId = "DEUS20250708053403"// Replace with actual user ID logic
+            UserId = UserLocation.UserId
         };
 
         cartItems = await cartService.GetCartItemsByUserId(request);
         await cartService.LoadCartItemCountAsync(request);
     }
 
-    // private void IncreaseQuantity(CartModel item)
-    // {
-    //     item.Quantity++;
-    //     item.TotalPrice = item.Quantity * (item.Price - item.Discount);
-    //     StateHasChanged();
-    // }
-
-    // private void DecreaseQuantity(CartModel item)
-    // {
-    //     if (item.Quantity > 1)
-    //     {
-    //         item.Quantity--;
-    //         item.TotalPrice = item.Quantity * (item.Price - item.Discount);
-    //         StateHasChanged();
-    //     }
-    // }
     private async Task IncreaseQuantity(CartModel item)
     {
         item.Quantity++;
         item.TotalPrice = item.Quantity * (item.Price - item.Discount);
 
         var response = await cartService.UpdateCartItems(item);
-
         if (response?.Result != null)
         {
-            await RefreshCart(); // ✅ Refresh both UI and count
+            StateHasChanged();
         }
     }
 
     private async Task DecreaseQuantity(CartModel item)
     {
-        if (item.Quantity > 1)
+        if (item.Quantity > 0)
         {
             item.Quantity--;
             item.TotalPrice = item.Quantity * (item.Price - item.Discount);
 
-            var response = await cartService.UpdateCartItems(item);
-
+            if (item.Quantity == 0)
+            {
+                var responses = await cartService.RemoveCartItems(item);
+                if (responses?.Result != null)
+                {
+                    cartItems.Remove(item);
+                    StateHasChanged();
+                }
+            }
+            else
+            {
+                var response = await cartService.UpdateCartItems(item);
+                if (response?.Result != null)
+                {
+                    StateHasChanged();
+                }
+            }
+        }
+        else
+        {
+            var response = await cartService.RemoveCartItems(item);
             if (response?.Result != null)
             {
-                await RefreshCart(); // ✅ Refresh both UI and count
+                cartItems.Remove(item);
+                StateHasChanged();
             }
         }
     }
 
-    private async Task RemoveItem(CartModel item)
-    {
-        var response = await cartService.RemoveCartItems(item);
-
-        if (response?.Result != null)
-        {
-            await RefreshCart(); // ✅ Refresh both UI and count
-        }
-    }
-    private async Task RefreshCart()
-    {
-        var request = new CartModel
-        {
-            UserId = "DEUS20250516064806" // Replace with dynamic later
-        };
-
-        cartItems = await cartService.GetCartItemsByUserId(request);
-        await cartService.LoadCartItemCountAsync(request);
-        StateHasChanged();
-    }
-
-    private void ClearCart()
-    {
-        cartItems.Clear();
-        StateHasChanged();
-    }
-
     private void Checkout()
     {
-        // Add your checkout logic here
+        CartState.CartItems = cartItems;
+        CartState.UserId = UserLocation.UserId;
+        Navigation.NavigateTo("/checkout");
     }
+    private void BrowseProducts()
+    {
+        Navigation.NavigateTo("/productcategory");
+    }
+
 }
