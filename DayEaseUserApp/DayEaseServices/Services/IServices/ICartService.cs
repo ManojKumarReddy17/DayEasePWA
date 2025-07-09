@@ -10,6 +10,7 @@ namespace DayEaseServices.Services.IServices
 {
     public interface ICartService
     {
+        Task<MysqlResponse<int>> AddCartItems(CartModel model);
         Task<List<CartModel>> GetCartItemsByUserId(CartModel model);
         Task<MysqlResponse<int>> UpdateCartItems(CartModel model);
         Task<MysqlResponse<int>> RemoveCartItems(CartModel model);
@@ -24,6 +25,6 @@ namespace DayEaseServices.Services.IServices
         void AddToCart(string productId, string productName, int quantity = 1);
         void IncreaseQuantity(string productId);
         void DecreaseQuantity(string productId);
-        void ClearCart();
+        //void ClearCart();
     }
 }
