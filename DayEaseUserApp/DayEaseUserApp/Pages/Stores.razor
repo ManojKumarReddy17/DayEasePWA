@@ -8,42 +8,58 @@
 
 <style>
 
-    .store-grid {
-        display: flex;
-        flex-wrap: wrap;
+    .product-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 25px;
         padding: 10px;
-        gap: 0.8rem;
-        justify-content: center;
     }
+
+    .product-card {
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        transition: all 0.3s ease;
+        background: white;
+        position: relative;
+        border-top: 4px solid #4a90e2; /* Blue accent border */
+    }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+        }
+
+            .product-card:hover .product-image {
+                transform: scale(1.05);
+            }
+
+    .product-image-container {
+        position: relative;
+        height: 200px;
+        overflow: hidden;
+        background: #f8f9fa; /* Light gray fallback */
+        display: grid;
+        place-items: center; /* Centers the image both horizontally and vertically */
+    }
+
+        .product-image-container img {
+            max-height: 100%;
+            max-width: 100%;
+            object-fit: cover;
+        }
+
+    .product-details {
+        padding: 15px;
+    }
+
 
     .store-header{
         color: #007bff;
         font-family: 'Segoe UI', sans-serif;
     }
 
-    .custom-card {
-        border: 1px solid #ddd;
-        border-radius: 16px;
-        overflow: hidden;
-        background: white;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        height: 100%;
-        transition: box-shadow 0.2s, transform 0.2s;
-    }
 
-     .custom-card:hover {
-        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        transform: scale(1.01);
-        transition: all 0.2s ease;
-    }
-
-    .card-img-customs {
-        width: 100%;
-        object-fit: cover;
-    }
 
     .offer-badge {
         position: absolute;
@@ -57,9 +73,7 @@
         font-weight: 600;
     }
 
-    .store-info {
-        padding: 15px;
-    }
+
 
     .store-name {
         font-weight: 500;
@@ -75,9 +89,7 @@
         font-family: 'Segoe UI', sans-serif;
     }
 
-    .store-link, .store-link * {
-        text-decoration: none !important;
-    }
+
 
     .loading-wrapper {
         display: flex;
@@ -122,26 +134,15 @@
         z-index: 1;
     }
 
-    .store-card-wrapper {
-        flex: 1 1 25%;
-        max-width: 25%;
-        box-sizing: border-box;
-        font-size: 0.72rem;
-    }
+
 
     @@media (max-width: 768px) {
-        .store-card-wrapper {
-            flex: 1 1 50%;
-            max-width: 50%;
+        .product-container {
+            grid-template-columns: repeat(2, 1fr);
+             gap: 15px;
         }
     }
-
-    @@media (max-width: 500px) {
-        .store-card-wrapper {
-            flex: 1 1 33.33%;
-            max-width: 33.33%;
-        }
-    }
+    
 </style>
 
 @if (isLoading)
@@ -163,28 +164,26 @@ else if (NearbyStores.Any())
 {
     <div class="container mt-3">
         <h2 class="store-offers-heading">
-            <span class=" store-header"><i class="bi bi-shop me-2"></i>Stores near you</span>
+            <span class="store-header"><i class="bi bi-shop me-2"></i>Stores near you</span>
         </h2>
-        <div class="store-grid">
+        <div class="product-container">
             @foreach (var store in NearbyStores)
             {
-                <div class="store-card-wrapper">
-                    <a href="/productcategory?storeId=@store.StoreId&storeName=@Uri.EscapeDataString(store.StoreName)" class="store-link">
-                        <div class="custom-card">
-                            <div class="position-relative">
-                                <img src="images/@store.Products.First().ProductImg" class="card-img-customs" />
-                                @if (!string.IsNullOrEmpty(store.SpecialOffer))
-                                {
-                                    <div class="offer-badge">Save @store.SpecialOffer</div>
-                                }
-                            </div>
-                            <div class="store-info">
-                                <div class="store-name">@store.StoreName</div>
-                                <div class="location"><i class="bi bi-geo-alt-fill"></i> @store.DistanceInKm km</div>
-                            </div>
+                <a href="/productcategory?storeId=@store.StoreId&storeName=@Uri.EscapeDataString(store.StoreName)" style="text-decoration:none; color:inherit;">
+                    <div class="product-card">
+                        <div class="product-image-container">
+                            <img src="images/@store.Products.First().ProductImg" alt="@store.StoreName" />
+                            @if (!string.IsNullOrEmpty(store.SpecialOffer))
+                            {
+                                <div class="offer-badge">Save @store.SpecialOffer</div>
+                            }
                         </div>
-                    </a>
-                </div>
+                        <div class="product-details">
+                            <div class="store-name">@store.StoreName</div>
+                            <div class="location"><i class="bi bi-geo-alt-fill"></i> @store.DistanceInKm km</div>
+                        </div>
+                    </div>
+                </a>
             }
         </div>
     </div>
