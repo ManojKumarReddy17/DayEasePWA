@@ -32,6 +32,15 @@ namespace DayEaseServices.Services
             string endpoint = "Cart/GetCartItemsByUserId";
             var response = await _apiservice.PostAsync<CartModel, List<CartModel>>(endpoint, model);
 
+            Console.WriteLine("Fetched Cart Items: " + (response?.Count ?? 0));
+
+            return response;
+        }
+        public async Task<MysqlResponse<int>> AddCartItems(CartModel model)
+        {
+            string endpoint = "Cart/AddCartItem";
+            var response = await _apiservice.PostAsync<CartModel, MysqlResponse<int>>(endpoint, model);
+
             return response;
         }
 
@@ -49,6 +58,19 @@ namespace DayEaseServices.Services
 
             return response;
         }
+
+        public async Task LoadCartItemCountAsync(CartModel model)
+        {
+            var items = await GetCartItemsByUserId(model);
+            _cart.Clear();
+
+            foreach (var item in items)
+            {
+                _cart[item.ProductId.ToString()] = (item.Quantity, item.ProductName);
+            }
+
+            OnChange?.Invoke();
+        }
         public void AddToCart(string productId, string productName, int quantity = 1)
         {
             if (_cart.ContainsKey(productId))
@@ -56,7 +78,7 @@ namespace DayEaseServices.Services
             else
                 _cart[productId] = (quantity, productName);
 
-            NotifyStateChanged();
+            
         }
 
         public void IncreaseQuantity(string productId)
@@ -64,7 +86,7 @@ namespace DayEaseServices.Services
             if (_cart.ContainsKey(productId))
             {
                 _cart[productId] = (_cart[productId].quantity + 1, _cart[productId].name);
-                NotifyStateChanged();
+               
             }
         }
 
@@ -78,17 +100,11 @@ namespace DayEaseServices.Services
                 else
                     _cart.Remove(productId);
 
-                NotifyStateChanged();
+               
             }
         }
 
-        public void ClearCart()
-        {
-            _cart.Clear();
-            NotifyStateChanged();
-        }
-
-        private void NotifyStateChanged() => OnChange?.Invoke();
+        
     }
 }
 

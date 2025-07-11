@@ -34,17 +34,15 @@
         border-radius: 50%;
         animation: spin 1s linear infinite;
     }
+
     @@keyframes spin {
-        0%
+        0% {
+            transform: rotate(0deg);
+        }
 
-    {
-        transform: rotate(0deg);
-    }
-
-    100% {
-        transform: rotate(360deg);
-    }
-
+        100% {
+            transform: rotate(360deg);
+        }
     }
 
     .spinner-image {
@@ -56,6 +54,7 @@
         transform: translate(-50%, -50%);
         z-index: 1;
     }
+
     .store-offers-heading {
         font-weight: 600;
         background-color: #fff0f0;
@@ -72,26 +71,23 @@
     }
 
     @@media (max-width: 500px) {
-        .store-offers-heading
-
-    {
-        font-size: 1rem;
-        padding: 0.75rem;
-        justify-content: center; /* center align on small screens */
-    }
-
-    }
-
-
-        .store-offers-heading img {
-            width: 60px;
-            height: auto;
+        .store-offers-heading {
+            font-size: 1rem;
+            padding: 0.75rem;
+            justify-content: center; /* center align on small screens */
         }
+    }
+
+
+    .store-offers-heading img {
+        width: 60px;
+        height: auto;
+    }
 
     .store-grid {
         display: flex;
         flex-wrap: wrap;
-        padding:10px;
+        padding: 10px;
         gap: 0.8rem;
         justify-content: center;
     }
@@ -104,23 +100,17 @@
     }
 
     @@media (max-width: 768px) {
-        .store-card-wrapper
-
-    {
-        flex: 1 1 50%;
-        max-width: 50%;
-    }
-
+        .store-card-wrapper {
+            flex: 1 1 50%;
+            max-width: 50%;
+        }
     }
 
     @@media (max-width: 500px) {
-        .store-card-wrapper
-
-    {
-        flex: 1 1 33.33%;
-        max-width: 33.33%;
-    }
-
+        .store-card-wrapper {
+            flex: 1 1 33.33%;
+            max-width: 33.33%;
+        }
     }
 
     .custom-card {
@@ -250,7 +240,6 @@
         width: 100%;
     }
 
-
 </style>
 @if (isLoading)
 {
@@ -280,7 +269,7 @@ else
                 @foreach (var store in Stores.Take(VisibleStoreCount))
                 {
                     <div class="store-card-wrapper">
-                        <a href="/productcategory?storeId=@store.StoreId&storeName=@Uri.EscapeDataString(store.StoreName)" class="store-link">
+                        <a href="/productcategory?storeId=@store.StoreId&storeName=@Uri.EscapeDataString(store.StoreName)&DistanceInKm=@store.DistanceInKm" class="store-link">
 
                             <div class="custom-card">
                                 <div class="position-relative">
@@ -321,7 +310,8 @@ else
                 @foreach (var store in Stores.Take(VisibleStoreCount))
                 {
                     <div class="store-card-wrapper">
-                        <a href="/productcategory?storeId=@store.StoreId" class="store-link">
+                        <a href="/productcategory?storeId=@store.StoreId&storeName=@Uri.EscapeDataString(store.StoreName)&DistanceInKm=@store.DistanceInKm" class="store-link">
+
                             <div class="custom-card">
                                 <div class="position-relative">
                                     <img src="images/@store.Products.First().ProductImg" class="card-img-customs" />
@@ -385,7 +375,7 @@ else
                 {
                     StoreId = s.StoreId,
                     StoreName = s.StoreName,
-                    DistanceInKm = Math.Round(s.Distance, 2),
+                    DistanceInKm = Math.Round(s.Distance, 3),
                     Products = s.Products,
                     SpecialOffer = $"{s.Products.Max(p => p.Discount)} off!"
                 }).ToList();

@@ -6,11 +6,9 @@ using System.Threading.Tasks;
 
 namespace Domain.RequestModels
 {
-    public class UserLocationState
+    public class CartState 
     {
-        public string AreaId { get; set; }
+        public List<CartModel> CartItems { get; set; } = new();
         public string UserId { get; set; }
-        public string Latitude { get; set; }
-        public string Longitude { get; set; }
     }
 }

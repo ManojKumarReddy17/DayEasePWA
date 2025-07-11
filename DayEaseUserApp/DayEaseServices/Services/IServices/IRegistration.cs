@@ -19,7 +19,8 @@ namespace DayEaseServices.Services.IServices
         Task<List<SubAreaModel>> GetSubAreaByAreaId(SubAreaModel areaModel);
 
         Task<string> RegisterUserAsync(UserModel userModel);
-Task<string>ForgotPassword<TRequest,TResponse>(ForgotPasswordModel model);
+        Task<UserResponseModel> UpdateUser(UserModel userModel);
+        Task<string>ForgotPassword<TRequest,TResponse>(ForgotPasswordModel model);
     }
 
 }

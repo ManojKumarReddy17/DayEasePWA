@@ -1,0 +1,95 @@
+﻿
+@page "/wallet"
+@using System.Globalization
+@using DayEaseUserApp.Layout
+@inject NavigationManager Navigation
+@layout NavMenu
+<div class="container mt-4">
+    <div class="card shadow rounded p-4">
+        <h3 class="text-center text-primary mb-4">Dayease Pay Wallet</h3>
+
+        <div class="row mb-4">
+            <div class="col-md-6 mb-3">
+                <div class="border rounded p-3 bg-light text-center">
+                    <h5>Wallet Balance</h5>
+                    <h3 class="text-success">₹@WalletBalance.ToString("F2", CultureInfo.InvariantCulture)</h3>
+                </div>
+            </div>
+            <div class="col-md-6 mb-3">
+                <div class="border rounded p-3 bg-light text-center">
+                    <h5>Reward Points</h5>
+                    <h3 class="text-warning">@RewardPoints pts</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-center gap-3 mb-4">
+            <button class="btn btn-outline-primary" @onclick="ConvertPointsToMoney">Convert to Money</button>
+            <button class="btn btn-outline-success" @onclick="OrderUsingPoints">Order with Points</button>
+        </div>
+
+        @if (Message != null)
+        {
+            <div class="alert alert-info text-center">@Message</div>
+        }
+
+        <hr />
+        <h5 class="text-muted">Transaction History</h5>
+        <ul class="list-group">
+            @foreach (var tx in TransactionHistory)
+            {
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>@tx.Description</span>
+                    <span>@tx.Date.ToShortDateString() - ₹@tx.Amount</span>
+                </li>
+            }
+        </ul>
+    </div>
+</div>
+
+@code {
+
+    private decimal WalletBalance = 150.00m;
+    private int RewardPoints = 120;
+    private string? Message;
+
+    private List<Transaction> TransactionHistory = new()
+    {
+        new Transaction { Description = "Points Converted", Amount = 50, Date = DateTime.Now.AddDays(-2) },
+        new Transaction { Description = "Ordered using points", Amount = 30, Date = DateTime.Now.AddDays(-1) }
+    };
+
+    private void ConvertPointsToMoney()
+    {
+        if (RewardPoints >= 100)
+        {
+            WalletBalance += 50;
+            RewardPoints -= 100;
+            Message = "100 points converted to ₹50 successfully.";
+        }
+        else
+        {
+            Message = "You need at least 100 points to convert.";
+        }
+    }
+
+    private void OrderUsingPoints()
+    {
+        if (RewardPoints >= 50)
+        {
+            RewardPoints -= 50;
+            Message = "You have successfully placed an order using points.";
+        }
+        else
+        {
+            Message = "Insufficient points to place an order.";
+        }
+    }
+
+    public class Transaction
+    {
+        public string Description { get; set; } = string.Empty;
+        public decimal Amount { get; set; }
+        public DateTime Date { get; set; }
+    }
+}

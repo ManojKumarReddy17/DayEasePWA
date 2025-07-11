@@ -228,7 +228,7 @@
             </div>
 
             <div class="row">
-                <div > <span>Store ID:</span><span>@OrderDetails.StoreId</span></div>
+                <div > <span>Store Name:</span><span>@OrderDetails.StoreName</span></div>
                 </div>
         </div>
 
@@ -249,7 +249,7 @@
                         @foreach (var item in OrderDetails.OrderItems)
                         {
                             <tr>
-                                 <td>@item.ProductId</td>
+                                 <td>@item.ProductName</td>
                                 <td>@item.Quantity</td>
                                 <td>₹@item.Price</td>
                                 <td>₹@(item.Price * item.Quantity)</td>

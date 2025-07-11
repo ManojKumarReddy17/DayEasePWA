@@ -1,0 +1,238 @@
+﻿@page "/stores"
+@using Domain.RequestModels
+@using Domain.DomainModels
+@using DayEaseServices.Services.IServices
+@inject UserLocationState UserLocation
+@inject IStoreService StoreService
+@layout NavMenu
+
+<style>
+
+    .product-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 25px;
+        padding: 10px;
+    }
+
+    .product-card {
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        transition: all 0.3s ease;
+        background: white;
+        position: relative;
+        border-top: 4px solid #4a90e2; /* Blue accent border */
+    }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+        }
+
+            .product-card:hover .product-image {
+                transform: scale(1.05);
+            }
+
+    .product-image-container {
+        position: relative;
+        height: 200px;
+        overflow: hidden;
+        background: #f8f9fa; /* Light gray fallback */
+        display: grid;
+        place-items: center; /* Centers the image both horizontally and vertically */
+    }
+
+        .product-image-container img {
+            max-height: 100%;
+            max-width: 100%;
+            object-fit: cover;
+        }
+
+    .product-details {
+        padding: 15px;
+    }
+
+
+    .store-header{
+        color: #007bff;
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+
+
+    .offer-badge {
+        position: absolute;
+        top: 5px;
+        right: 0.5px;
+        background-color: #dc3545;
+        color: white;
+        font-size: 0.75rem;
+        padding: 2px 1px;
+        border-radius: 10px;
+        font-weight: 600;
+    }
+
+
+
+    .store-name {
+        font-weight: 500;
+        font-size: 1rem;
+        margin-bottom: 5px;
+        font-family: 'Segoe UI', sans-serif;
+        color :black;
+
+    }
+    .location {
+        font-size: 0.85rem;
+        color: black;
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+
+
+    .loading-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 300px;
+    }
+
+    .loading-spinner {
+        position: relative;
+        width: 80px;
+        height: 80px;
+    }
+
+    .spinner-border {
+        position: absolute;
+        width: 80px;
+        height: 80px;
+        border: 6px solid #f3f3f3;
+        border-top: 6px solid #007bff;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+    }
+
+    @@keyframes spin {
+        0% {
+            transform: rotate(0deg);
+        }
+
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
+    .spinner-image {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 40px;
+        height: 40px;
+        transform: translate(-50%, -50%);
+        z-index: 1;
+    }
+
+
+
+    @@media (max-width: 768px) {
+        .product-container {
+            grid-template-columns: repeat(2, 1fr);
+             gap: 15px;
+        }
+    }
+    
+</style>
+
+@if (isLoading)
+{
+    <div class="loading-wrapper">
+        <div class="loading-spinner">
+            <div class="spinner-border"></div>
+            <img src="images/login-logo_v01.png" alt="Loading" class="spinner-image" />
+        </div>
+    </div>
+}
+else if (!string.IsNullOrEmpty(ErrorMessage))
+{
+    <div class="alert alert-warning text-center mt-3" role="alert">
+        @ErrorMessage
+    </div>
+}
+else if (NearbyStores.Any())
+{
+    <div class="container mt-3">
+        <h2 class="store-offers-heading">
+            <span class="store-header"><i class="bi bi-shop me-2"></i>Stores near you</span>
+        </h2>
+        <div class="product-container">
+            @foreach (var store in NearbyStores)
+            {
+                <a href="/productcategory?storeId=@store.StoreId&storeName=@Uri.EscapeDataString(store.StoreName)" style="text-decoration:none; color:inherit;">
+                    <div class="product-card">
+                        <div class="product-image-container">
+                            <img src="images/@store.Products.First().ProductImg" alt="@store.StoreName" />
+                            @if (!string.IsNullOrEmpty(store.SpecialOffer))
+                            {
+                                <div class="offer-badge">Save @store.SpecialOffer</div>
+                            }
+                        </div>
+                        <div class="product-details">
+                            <div class="store-name">@store.StoreName</div>
+                            <div class="location"><i class="bi bi-geo-alt-fill"></i> @store.DistanceInKm km</div>
+                        </div>
+                    </div>
+                </a>
+            }
+        </div>
+    </div>
+}
+
+@code {
+    private List<HighLightModel> NearbyStores = new();
+    private string ErrorMessage = string.Empty;
+    private bool isLoading = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await FetchStoresAsync();
+    }
+
+    private async Task FetchStoresAsync()
+    {
+        isLoading = true;
+        try
+        {
+            var request = new NearbyStoresRequest
+            {
+                AreaId = UserLocation.AreaId,
+                Latitude = UserLocation.Latitude,
+                Longitude = UserLocation.Longitude
+            };
+
+            var apiResponse = await StoreService.GetNearbyStoresAsync(request);
+
+            if (apiResponse?.Success == true && apiResponse.Stores?.Any() == true)
+            {
+                NearbyStores = apiResponse.Stores.Select(s => new HighLightModel
+                {
+                    StoreId = s.StoreId,
+                    StoreName = s.StoreName,
+                    DistanceInKm = Math.Round(s.Distance, 2),
+                    Products = s.Products,
+                    SpecialOffer = $"{s.Products.Max(p => p.Discount)} off!"
+                }).ToList();
+            }
+            else
+            {
+                ErrorMessage = apiResponse?.Message ?? "No stores found.";
+            }
+        }
+        catch (Exception ex)
+        {
+            ErrorMessage = $"Error fetching stores: {ex.Message}";
+        }
+        isLoading = false;
+    }
+}
