@@ -3,6 +3,7 @@
 @using DayEaseServices.Services.IServices
 @using Domain.RequestModels
 @inject ICartService CartService
+@inject UserLocationState UserLocation
 
 <div class="top-bar">
     <div class="header-left">
@@ -102,11 +103,11 @@
     {
         var request = new CartModel
         {
-            UserId = "DEUS20250708053403"// Replace with actual user ID logic
+            UserId = UserLocation.UserId// Replace with actual user ID logic
         };
 
-        cartItems = await CartService.GetCartItemsByUserId(request);
-        await CartService.LoadCartItemCountAsync(request);
+        // cartItems = await CartService.GetCartItemsByUserId(request);
+       await CartService.LoadCartItemCountAsync(request);
     }
     protected override void OnInitialized()
     {
