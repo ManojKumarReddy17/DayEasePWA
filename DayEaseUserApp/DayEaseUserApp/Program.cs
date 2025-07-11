@@ -28,7 +28,7 @@ builder.Services.AddScoped<IApiService, ApiService>();
 builder.Services.AddScoped<IRegistration, RegistrationService>();
 builder.Services.AddScoped<IUserLoginService, UserLoginService>();
 builder.Services.AddScoped<IOrderService,OrderServices>();
-
+builder.Services.AddScoped<CartState>();
 builder.Services.AddScoped<IProductCategory, ProductCategoryService>();
 builder.Services.AddScoped<IStoreService, StoreService>();
 builder.Services.AddScoped<UserLocationState>();
