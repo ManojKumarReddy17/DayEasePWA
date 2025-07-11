@@ -351,8 +351,11 @@
         var response = await cartService.UpdateCartItems(item);
         if (response?.Result != null)
         {
+            await cartService.LoadCartItemCountAsync(item);
             StateHasChanged();
         }
+       
+
     }
 
     private async Task DecreaseQuantity(CartModel item)
@@ -368,14 +371,17 @@
                 if (responses?.Result != null)
                 {
                     cartItems.Remove(item);
+                    await cartService.LoadCartItemCountAsync(item);
                     StateHasChanged();
                 }
+
             }
             else
             {
                 var response = await cartService.UpdateCartItems(item);
                 if (response?.Result != null)
                 {
+                    await cartService.LoadCartItemCountAsync(item);
                     StateHasChanged();
                 }
             }
@@ -387,6 +393,8 @@
             {
                 cartItems.Remove(item);
                 StateHasChanged();
+                await cartService.LoadCartItemCountAsync(item);
+
             }
         }
     }

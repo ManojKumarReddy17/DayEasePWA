@@ -1251,12 +1251,11 @@ else
                 ProductId = product.ProductId,
                 StoreId = StoreId,
                 Quantity = 1
-
-
             };
 
             await CartService.AddCartItems(model); // <-- POST to API
-
+           
+        await CartService.LoadCartItemCountAsync(model);
         }
 
         private async Task UpdateQuantity(string productId, bool increase)
@@ -1287,7 +1286,7 @@ else
 
                 };
                 await CartService.UpdateCartItems(cartupdate);
-
+                await CartService.LoadCartItemCountAsync(cartupdate);
             }
             else
             {
@@ -1312,6 +1311,7 @@ else
 
                     };
                     await CartService.RemoveCartItems(cartremove);
+                    await CartService.LoadCartItemCountAsync(cartremove);
                 }
                 else
                 {
@@ -1334,6 +1334,7 @@ else
 
                     };
                     await CartService.UpdateCartItems(cartupdate);
+                    await CartService.LoadCartItemCountAsync(cartupdate);
                 }
             }
         }
