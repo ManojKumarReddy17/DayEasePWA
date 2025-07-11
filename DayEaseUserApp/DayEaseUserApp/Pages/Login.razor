@@ -5,6 +5,8 @@
 @inject NavigationManager NavigationManager
 @inject HttpClient Http
 @inject UserLocationState UserLocation
+@inject ILocalStorageService LocalStorage
+@using Blazored.LocalStorage
 <style>
     html, body {
         margin: 0;
@@ -252,9 +254,11 @@
         errorMessage = null;
 
         var response = await userloginservice.PostAsync(loginModel);
+        
 
         if (response != null && !string.IsNullOrEmpty(response.JwtToken))
         {
+            await LocalStorage.SetItemAsync("JwtToken", response.JwtToken);
             // ✅ Save AreaId, Latitude, Longitude to shared state
             UserLocation.UserId = response.UserId;
             UserLocation.AreaId = response.AreaId;
