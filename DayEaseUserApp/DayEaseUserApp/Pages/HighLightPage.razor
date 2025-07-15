@@ -93,23 +93,51 @@
     }
 
     .store-card-wrapper {
-        flex: 1 1 33.33%;
-        max-width: 33.33%;
+        padding: 0.4rem;
         box-sizing: border-box;
         font-size: 0.72rem;
+        flex: 1 1 15%;
+        max-width: calc(20% - 10px);
+    }
+    @@media (max-width: 992px) {
+        .store-card-wrapper
+
+    {
+            flex: 1 1 calc(33.33% - 10px);
+            max-width: calc(33.33% - 0.8rem);
+    }
+    
+    .card-img-customs {
+        height: 120px;
+    }
+
     }
 
     @@media (max-width: 768px) {
         .store-card-wrapper {
-            flex: 1 1 50%;
-            max-width: 50%;
+            flex: 1 1 calc(33.33% - 10px);
+            max-width: calc(33.33% - 0.8rem);
+        }
+
+        .card-img-customs {
+            width: 100%;
+            height: 100px;
+            object-fit: cover;
+            border-bottom: 1px solid #eee;
         }
     }
 
     @@media (max-width: 500px) {
         .store-card-wrapper {
-            flex: 1 1 33.33%;
-            max-width: 33.33%;
+            flex: 1 1 calc(33.33% - 10px);
+            max-width: calc(33.33% - 10px);
+        }
+
+        .card-img-customs {
+            width: 100%;
+            height: 100px;
+            object-fit: cover;
+            border-bottom: 1px solid #eee;
         }
     }
 
@@ -133,7 +161,9 @@
 
     .card-img-customs {
         width: 100%;
+        height: 180px;
         object-fit: cover;
+        border-bottom: 1px solid #eee;
     }
 
     .offer-badge {
@@ -240,6 +270,7 @@
         width: 100%;
     }
 
+ 
 </style>
 @if (isLoading)
 {
@@ -273,7 +304,13 @@ else
 
                             <div class="custom-card">
                                 <div class="position-relative">
-                                    <img src="images/@store.Products.First().ProductImg" class="card-img-customs" />
+                                    @* <img src="images/@store.Products.First().ProductImg" class="card-img-customs" /> *@
+                                    <img src="@GetProductImage(store)"
+                                         class="card-img-customs"
+                                         alt="@store.StoreName"
+                                         onerror="this.onerror=null; this.src='/images/default-image.jpeg';" />
+
+
                                     @if (!string.IsNullOrEmpty(store.SpecialOffer))
                                     {
                                         <div class="offer-badge">Save @store.SpecialOffer</div>
@@ -314,7 +351,12 @@ else
 
                             <div class="custom-card">
                                 <div class="position-relative">
-                                    <img src="images/@store.Products.First().ProductImg" class="card-img-customs" />
+                                    @* <img src="images/@store.Products.First().ProductImg" class="card-img-customs" /> *@
+                                    <img src="@GetProductImage(store)"
+                                         class="card-img-customs"
+                                         alt="@store.StoreName"
+                                         onerror="this.onerror=null; this.src='/images/default-image.jpeg';" />
+
                                     @if (!string.IsNullOrEmpty(store.SpecialOffer))
                                     {
                                         <div class="offer-badge">Save @store.SpecialOffer</div>
@@ -391,6 +433,17 @@ else
         }
 
         isLoading = false;
+    }
+    private string GetProductImage(HighLightModel store)
+    {
+        var product = store.Products.FirstOrDefault();
+
+        if (product == null || string.IsNullOrWhiteSpace(product.ProductImg))
+        {
+            return "images/default-image.jpeg"; // fallback image if null or empty
+        }
+
+        return $"images/{product.ProductImg}";
     }
 
     private void LoadMoreStores()
