@@ -1,11 +1,14 @@
 ﻿@page "/Login"
+@using DayEaseServices.Services
 @using Domain.RequestModels
+@using Microsoft.AspNetCore.Components.Authorization;
 @inject IUserLoginService userloginservice
 @using DayEaseServices.Services.IServices
 @inject NavigationManager NavigationManager
 @inject HttpClient Http
 @inject UserLocationState UserLocation
 @inject ILocalStorageService LocalStorage
+@inject AuthenticationStateProvider AuthProvider
 @using Blazored.LocalStorage
 <style>
     html, body {
@@ -249,23 +252,37 @@
         ShowPasswordRules = false;
     }
 
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await AuthProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+
+        if (user.Identity != null && user.Identity.IsAuthenticated)
+        {
+            NavigationManager.NavigateTo("/highlightcompact", forceLoad: true);
+        }
+    }
+
     private async Task HandleLogin()
     {
         errorMessage = null;
 
         var response = await userloginservice.PostAsync(loginModel);
-        
+
 
         if (response != null && !string.IsNullOrEmpty(response.JwtToken))
         {
             await LocalStorage.SetItemAsync("JwtToken", response.JwtToken);
+            // ✅ Notify the AuthenticationStateProvider
+            ((CustomAuthStateProvider)AuthProvider).NotifyUserAuthentication(response.JwtToken);
+
             // ✅ Save AreaId, Latitude, Longitude to shared state
             UserLocation.UserId = response.UserId;
             UserLocation.AreaId = response.AreaId;
             UserLocation.Latitude = response.Latitude;
             UserLocation.Longitude = response.Longitude;
 
-           
+
             NavigationManager.NavigateTo("/highlightcompact");
         }
         else

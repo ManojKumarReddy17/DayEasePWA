@@ -2,6 +2,7 @@
 @using DayEaseServices.Services.IServices
 @using Domain.RequestModels
 @inject ICartService cartService
+@inject IUserLocationService userLocationService
 @layout NavMenu
 @inject CartState CartState
 @inject NavigationManager Navigation
@@ -123,9 +124,9 @@
         cursor: pointer;
     }
 
-    .qty-btn:hover {
-        background-color: #e6f0ff;
-    }
+        .qty-btn:hover {
+            background-color: #e6f0ff;
+        }
 
     .qty-count {
         font-size: 14px;
@@ -163,9 +164,9 @@
         margin-bottom: 16px;
     }
 
-    .subtotal-box strong {
-        font-size: 16px;
-    }
+        .subtotal-box strong {
+            font-size: 16px;
+        }
 
     .savings {
         color: #0b8e2d;
@@ -188,10 +189,10 @@
         cursor: pointer;
     }
 
-    .btn-checkout:hover {
-        background: linear-gradient(135deg, #28a745, #20e195);
-        box-shadow: 0 4px 14px rgba(40, 167, 69, 0.3);
-    }
+        .btn-checkout:hover {
+            background: linear-gradient(135deg, #28a745, #20e195);
+            box-shadow: 0 4px 14px rgba(40, 167, 69, 0.3);
+        }
 
     /* Responsive Fix */
     @@media (max-width: 768px) {
@@ -271,9 +272,9 @@
         transition: background 0.3s ease;
     }
 
-    .btn-browse:hover {
-        background-color: #343a40;
-    }
+        .btn-browse:hover {
+            background-color: #343a40;
+        }
 </style>
 
 <div class="cart-wrapper">
@@ -306,7 +307,7 @@
                         <button class="qty-btn" @onclick="async () => await IncreaseQuantity(item)">+</button>
                     </div>
                     <div class="price-final">₹@item.TotalPrice</div>
-                    <div class="original">₹@(item.Price * item.Quantity)</div>
+                    <div class="original">₹@(item.Price* item.Quantity)</div>
                 </div>
             </div>
         }
@@ -334,6 +335,7 @@
 
     protected override async Task OnInitializedAsync()
     {
+        UserLocation = await userLocationService.GetUserLocationAsync();
         var request = new CartModel
         {
             UserId = UserLocation.UserId
@@ -354,7 +356,7 @@
             await cartService.LoadCartItemCountAsync(item);
             StateHasChanged();
         }
-       
+
 
     }
 

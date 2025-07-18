@@ -8,7 +8,7 @@
 @inject ILocalStorageService LocalStorage
 @inject NavigationManager Navigation
 @inject IJSRuntime JS
-
+@layout NavMenu
 
 <style>
     html, body {
@@ -112,27 +112,27 @@
         max-width: 320px;
     }
 
-  /*   @@media (max-width: 480px) {
-        .main-container {
-            padding: 1rem 0.5rem;
-        }
+    /*   @@media (max-width: 480px) {
+            .main-container {
+                padding: 1rem 0.5rem;
+            }
 
-        .logo {
-            width: 90px;
-        }
+            .logo {
+                width: 90px;
+            }
 
-        input.form-control,
-        select.form-control,
-        textarea.form-control {
-            font-size: 1.1rem;
-            height: 50px;
-        }
+            input.form-control,
+            select.form-control,
+            textarea.form-control {
+                font-size: 1.1rem;
+                height: 50px;
+            }
 
-        button.btn-primary {
-            font-size: 1.2rem;
-            height: 55px;
-        }
-    } */
+            button.btn-primary {
+                font-size: 1.2rem;
+                height: 55px;
+            }
+        } */
     /* Modal Styles */
     .modal-backdrop {
         position: fixed;
@@ -196,7 +196,6 @@
         max-width: 100%;
         border-radius: 8px;
         overflow:  hidden;
-
     }
 
 
@@ -209,6 +208,7 @@
         font-size: 1rem;
         background-color: white;
     }
+
     .password-toggle {
         position: absolute;
         top: 50%;
@@ -243,33 +243,32 @@
             box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
         }
 
-
 </style>
 
 
-        <div class="main-container">
+<div class="main-container">
 
-            <img src="images/login-logo_v01.png" alt="Day Ease Logo" class="logo" />
+    <img src="images/login-logo_v01.png" alt="Day Ease Logo" class="logo" />
 
-           
-                <h3>Register</h3>
 
-        <EditForm Model="@user" OnValidSubmit="HandleValidSubmit">
-            <DataAnnotationsValidator />
+    <h3>Register</h3>
 
-            <div class="mb-3">
-                <label class="form-label">First Name</label>
-                <InputText @bind-Value="user.FName" class="form-control" maxlength="25"
-                           oninput="this.value=this.value.replace(/[^A-Za-z\s]/g,'')" />
-                <ValidationMessage For="@(() => user.FName)" class="validation-message" />
-            </div>
+    <EditForm Model="@user" OnValidSubmit="HandleValidSubmit">
+        <DataAnnotationsValidator />
 
-            <div class="mb-3">
-                <label class="form-label">Last Name</label>
-                <InputText @bind-Value="user.LName" class="form-control" maxlength="25"
-                           oninput="this.value=this.value.replace(/[^A-Za-z\s]/g,'')" />
-                <ValidationMessage For="@(() => user.LName)" class="validation-message" />
-            </div>
+        <div class="mb-3">
+            <label class="form-label">First Name</label>
+            <InputText @bind-Value="user.FName" class="form-control" maxlength="25"
+                       oninput="this.value=this.value.replace(/[^A-Za-z\s]/g,'')" />
+            <ValidationMessage For="@(() => user.FName)" class="validation-message" />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Last Name</label>
+            <InputText @bind-Value="user.LName" class="form-control" maxlength="25"
+                       oninput="this.value=this.value.replace(/[^A-Za-z\s]/g,'')" />
+            <ValidationMessage For="@(() => user.LName)" class="validation-message" />
+        </div>
 
         <div class="mb-3">
             <label class="form-label">Password</label>
@@ -307,76 +306,76 @@
             }
         </div>
 
-            <div class="mb-3">
-                <label class="form-label">Country</label>
-                <InputText @bind-Value="user.Country" class="form-control" readonly />
-                <ValidationMessage For="@(() => user.Country)" class="validation-message" />
-            </div>
+        <div class="mb-3">
+            <label class="form-label">Country</label>
+            <InputText @bind-Value="user.Country" class="form-control" readonly />
+            <ValidationMessage For="@(() => user.Country)" class="validation-message" />
+        </div>
 
-            <div class="mb-3">
-                <label class="form-label">State</label>
-                <select class="form-control" @bind="SelectedStateId">
-                    <option value="">-- Select State --</option>
-                    @foreach (var state in stateList)
-                    {
-                        <option value="@state.StateId">@state.StateName</option>
-                    }
-                </select>
-                <ValidationMessage For="@(() => user.State)" class="validation-message" />
-            </div>
+        <div class="mb-3">
+            <label class="form-label">State</label>
+            <select class="form-control" @bind="SelectedStateId">
+                <option value="">-- Select State --</option>
+                @foreach (var state in stateList)
+                {
+                    <option value="@state.StateId">@state.StateName</option>
+                }
+            </select>
+            <ValidationMessage For="@(() => user.State)" class="validation-message" />
+        </div>
 
-            <div class="mb-3">
-                <label class="form-label">City</label>
-                <select class="form-control" @bind="SelectedCityId">
-                    <option value="">-- Select City --</option>
-                    @foreach (var city in cityList)
-                    {
-                        <option value="@city.CityId">@city.CityName</option>
-                    }
-                </select>
-                <ValidationMessage For="@(() => user.City)" class="validation-message" />
-            </div>
+        <div class="mb-3">
+            <label class="form-label">City</label>
+            <select class="form-control" @bind="SelectedCityId">
+                <option value="">-- Select City --</option>
+                @foreach (var city in cityList)
+                {
+                    <option value="@city.CityId">@city.CityName</option>
+                }
+            </select>
+            <ValidationMessage For="@(() => user.City)" class="validation-message" />
+        </div>
 
-            <div class="mb-3">
-                <label class="form-label">Area</label>
-                <select class="form-control" @bind="SelectedAreaId">
-                    <option value="">-- Select Area --</option>
-                    @foreach (var area in areaList)
-                    {
-                        <option value="@area.AreaId">@area.AreaName</option>
-                    }
-                </select>
-                <ValidationMessage For="@(() => user.Location)" class="validation-message" />
-            </div>
+        <div class="mb-3">
+            <label class="form-label">Area</label>
+            <select class="form-control" @bind="SelectedAreaId">
+                <option value="">-- Select Area --</option>
+                @foreach (var area in areaList)
+                {
+                    <option value="@area.AreaId">@area.AreaName</option>
+                }
+            </select>
+            <ValidationMessage For="@(() => user.Location)" class="validation-message" />
+        </div>
 
-            <div class="mb-3">
-                <label class="form-label">SubArea</label>
-                <select class="form-control" @bind="user.Sublocation">
-                    <option value="">-- Select SubArea --</option>
-                    @foreach (var sub in subareaList)
-                    {
-                        <option value="@sub.SubAreaId">@sub.SubAreaName</option>
-                    }
-                </select>
-                <ValidationMessage For="@(() => user.Sublocation)" class="validation-message" />
-            </div>
+        <div class="mb-3">
+            <label class="form-label">SubArea</label>
+            <select class="form-control" @bind="user.Sublocation">
+                <option value="">-- Select SubArea --</option>
+                @foreach (var sub in subareaList)
+                {
+                    <option value="@sub.SubAreaId">@sub.SubAreaName</option>
+                }
+            </select>
+            <ValidationMessage For="@(() => user.Sublocation)" class="validation-message" />
+        </div>
 
-            <div class="mb-3">
-                <label class="form-label">Gender</label>
-                <InputSelect @bind-Value="user.Gender" class="form-control">
-                    <option value="">-- Select Gender --</option>
-                    <option>Male</option>
-                    <option>Female</option>
-                    <option>Other</option>
-                </InputSelect>
-                <ValidationMessage For="@(() => user.Gender)" class="validation-message" />
-            </div>
+        <div class="mb-3">
+            <label class="form-label">Gender</label>
+            <InputSelect @bind-Value="user.Gender" class="form-control">
+                <option value="">-- Select Gender --</option>
+                <option>Male</option>
+                <option>Female</option>
+                <option>Other</option>
+            </InputSelect>
+            <ValidationMessage For="@(() => user.Gender)" class="validation-message" />
+        </div>
 
-            <div class="mb-3">
-                <label class="form-label">Address</label>
-                <InputTextArea @bind-Value="user.Address" class="form-control" rows="2" maxlength="25"  />
-                <ValidationMessage For="@(() => user.Address)" class="validation-message" />
-            </div>
+        <div class="mb-3">
+            <label class="form-label">Address</label>
+            <InputTextArea @bind-Value="user.Address" class="form-control" rows="2" maxlength="25" />
+            <ValidationMessage For="@(() => user.Address)" class="validation-message" />
+        </div>
 
         <div class="mb-3">
             <label class="form-label">Location (select on map)</label>
@@ -393,7 +392,7 @@
             <InputText @bind-Value="user.Longitude" class="form-control" readonly />
         </div>
 
-            @* <div class="mb-3">
+        @* <div class="mb-3">
                 <label class="form-label">Latitude</label>
                 <InputText @bind-Value="user.Latitude" class="form-control" />
                 <ValidationMessage For="@(() => user.Latitude)" class="validation-message" />
@@ -405,14 +404,14 @@
                 <ValidationMessage For="@(() => user.Longitude)" class="validation-message" />
             </div> *@
 
-            <div class="form-check mb-3">
-                <InputCheckbox @bind-Value="AcceptedTerms" class="form-check-input" />
-                <label class="form-check-label">I accept the terms and conditions</label>
-            </div>
+        <div class="form-check mb-3">
+            <InputCheckbox @bind-Value="AcceptedTerms" class="form-check-input" />
+            <label class="form-check-label">I accept the terms and conditions</label>
+        </div>
 
-            <button type="submit" class="btn btn-primary" disabled="@(!AcceptedTerms)">Register</button>
-        </EditForm>
-   
+        <button type="submit" class="btn btn-primary" disabled="@(!AcceptedTerms)">Register</button>
+    </EditForm>
+
 </div>
 
 @if (ShowUserExistsModal)
@@ -441,7 +440,7 @@
     private bool ShowPassword = false;
     private string PasswordErrorMessage = string.Empty;
 
-   
+
 
     private string PasswordInputType => ShowPassword ? "text" : "password";
 
@@ -497,7 +496,7 @@
         }
     }
 
-  
+
 
     protected override async Task OnInitializedAsync()
     {
@@ -627,7 +626,7 @@
         Navigation.NavigateTo("/login");
     }
 
-   
+
 
     private void OnPasswordInput(ChangeEventArgs e)
     {
