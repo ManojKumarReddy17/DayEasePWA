@@ -1,10 +1,13 @@
 ﻿@page "/highlightcompact"
 @inject IJSRuntime JS
 @inject IStoreService StoreService
-@inject UserLocationState UserLocation
+@inject AuthenticationStateProvider AuthProvider
+@inject IUserLocationService UserLocationService
+@using DayEaseServices.Services
 @using Domain.DomainModels
 @using Domain.RequestModels
 @using DayEaseServices.Services.IServices
+@using Microsoft.AspNetCore.Components.Authorization
 @layout NavMenu
 
 <style>
@@ -349,9 +352,11 @@ else
     private string ErrorMessage = string.Empty;
     private bool isLoading = true;
     private int VisibleStoreCount = 6;
+    private UserLocationState UserLocation;
 
     protected override async Task OnInitializedAsync()
     {
+        UserLocation = await UserLocationService.GetUserLocationAsync();
         await FetchStoresAsync();
     }
 
@@ -389,7 +394,6 @@ else
         {
             ErrorMessage = $"Error fetching stores: {ex.Message}";
         }
-
         isLoading = false;
     }
 

@@ -2,7 +2,10 @@
 @using Domain.RequestModels
 @using Domain.DomainModels
 @using DayEaseServices.Services.IServices
-@inject UserLocationState UserLocation
+@using Microsoft.AspNetCore.Components.Authorization
+@using DayEaseServices.Services
+@inject IUserLocationService UserLocationService
+@inject AuthenticationStateProvider AuthProvider
 @inject IStoreService StoreService
 @layout NavMenu
 
@@ -54,7 +57,7 @@
     }
 
 
-    .store-header{
+    .store-header {
         color: #007bff;
         font-family: 'Segoe UI', sans-serif;
     }
@@ -80,9 +83,9 @@
         font-size: 1rem;
         margin-bottom: 5px;
         font-family: 'Segoe UI', sans-serif;
-        color :black;
-
+        color: black;
     }
+
     .location {
         font-size: 0.85rem;
         color: black;
@@ -139,10 +142,9 @@
     @@media (max-width: 768px) {
         .product-container {
             grid-template-columns: repeat(2, 1fr);
-             gap: 15px;
+            gap: 15px;
         }
     }
-    
 </style>
 
 @if (isLoading)
@@ -193,9 +195,11 @@ else if (NearbyStores.Any())
     private List<HighLightModel> NearbyStores = new();
     private string ErrorMessage = string.Empty;
     private bool isLoading = true;
+    private UserLocationState UserLocation;
 
     protected override async Task OnInitializedAsync()
     {
+        UserLocation = await UserLocationService.GetUserLocationAsync();
         await FetchStoresAsync();
     }
 
