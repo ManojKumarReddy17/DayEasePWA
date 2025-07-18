@@ -1,10 +1,13 @@
 ﻿@page "/highlightcompact"
 @inject IJSRuntime JS
 @inject IStoreService StoreService
-@inject UserLocationState UserLocation
+@inject AuthenticationStateProvider AuthProvider
+@inject IUserLocationService UserLocationService
+@using DayEaseServices.Services
 @using Domain.DomainModels
 @using Domain.RequestModels
 @using DayEaseServices.Services.IServices
+@using Microsoft.AspNetCore.Components.Authorization
 @layout NavMenu
 
 <style>
@@ -93,51 +96,23 @@
     }
 
     .store-card-wrapper {
-        padding: 0.4rem;
+        flex: 1 1 33.33%;
+        max-width: 33.33%;
         box-sizing: border-box;
         font-size: 0.72rem;
-        flex: 1 1 15%;
-        max-width: calc(20% - 10px);
-    }
-    @@media (max-width: 992px) {
-        .store-card-wrapper
-
-    {
-            flex: 1 1 calc(33.33% - 10px);
-            max-width: calc(33.33% - 0.8rem);
-    }
-    
-    .card-img-customs {
-        height: 120px;
-    }
-
     }
 
     @@media (max-width: 768px) {
         .store-card-wrapper {
-            flex: 1 1 calc(33.33% - 10px);
-            max-width: calc(33.33% - 0.8rem);
-        }
-
-        .card-img-customs {
-            width: 100%;
-            height: 100px;
-            object-fit: cover;
-            border-bottom: 1px solid #eee;
+            flex: 1 1 50%;
+            max-width: 50%;
         }
     }
 
     @@media (max-width: 500px) {
         .store-card-wrapper {
-            flex: 1 1 calc(33.33% - 10px);
-            max-width: calc(33.33% - 10px);
-        }
-
-        .card-img-customs {
-            width: 100%;
-            height: 100px;
-            object-fit: cover;
-            border-bottom: 1px solid #eee;
+            flex: 1 1 33.33%;
+            max-width: 33.33%;
         }
     }
 
@@ -161,9 +136,7 @@
 
     .card-img-customs {
         width: 100%;
-        height: 180px;
         object-fit: cover;
-        border-bottom: 1px solid #eee;
     }
 
     .offer-badge {
@@ -270,7 +243,6 @@
         width: 100%;
     }
 
- 
 </style>
 @if (isLoading)
 {
@@ -304,13 +276,7 @@ else
 
                             <div class="custom-card">
                                 <div class="position-relative">
-                                    @* <img src="images/@store.Products.First().ProductImg" class="card-img-customs" /> *@
-                                    <img src="@GetProductImage(store)"
-                                         class="card-img-customs"
-                                         alt="@store.StoreName"
-                                         onerror="this.onerror=null; this.src='/images/default-image.jpeg';" />
-
-
+                                    <img src="images/@store.Products.First().ProductImg" class="card-img-customs" />
                                     @if (!string.IsNullOrEmpty(store.SpecialOffer))
                                     {
                                         <div class="offer-badge">Save @store.SpecialOffer</div>
@@ -351,12 +317,7 @@ else
 
                             <div class="custom-card">
                                 <div class="position-relative">
-                                    @* <img src="images/@store.Products.First().ProductImg" class="card-img-customs" /> *@
-                                    <img src="@GetProductImage(store)"
-                                         class="card-img-customs"
-                                         alt="@store.StoreName"
-                                         onerror="this.onerror=null; this.src='/images/default-image.jpeg';" />
-
+                                    <img src="images/@store.Products.First().ProductImg" class="card-img-customs" />
                                     @if (!string.IsNullOrEmpty(store.SpecialOffer))
                                     {
                                         <div class="offer-badge">Save @store.SpecialOffer</div>
@@ -391,9 +352,11 @@ else
     private string ErrorMessage = string.Empty;
     private bool isLoading = true;
     private int VisibleStoreCount = 6;
+    private UserLocationState UserLocation;
 
     protected override async Task OnInitializedAsync()
     {
+        UserLocation = await UserLocationService.GetUserLocationAsync();
         await FetchStoresAsync();
     }
 
@@ -431,19 +394,7 @@ else
         {
             ErrorMessage = $"Error fetching stores: {ex.Message}";
         }
-
         isLoading = false;
-    }
-    private string GetProductImage(HighLightModel store)
-    {
-        var product = store.Products.FirstOrDefault();
-
-        if (product == null || string.IsNullOrWhiteSpace(product.ProductImg))
-        {
-            return "images/default-image.jpeg"; // fallback image if null or empty
-        }
-
-        return $"images/{product.ProductImg}";
     }
 
     private void LoadMoreStores()

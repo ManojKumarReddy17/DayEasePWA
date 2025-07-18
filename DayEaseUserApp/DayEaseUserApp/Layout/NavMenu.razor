@@ -1,6 +1,7 @@
 ﻿@inherits LayoutComponentBase
 @inject NavigationManager NavigationManager
 @using DayEaseServices.Services.IServices
+@inject IUserLocationService UserLocationService
 @using Domain.RequestModels
 @inject ICartService CartService
 @inject UserLocationState UserLocation
@@ -65,11 +66,11 @@
             <i class="bi bi-wallet2 me-2"></i> Wallet
         </NavLink>
 
-    
+
         <NavLink class="nav-link py-3 text-white" @onclick="ShowLogoutPopup" style="padding-left: 4rem;">
             <i class="bi bi-box-arrow-left me-2"></i> Logout
         </NavLink>
-       
+
     </nav>
 </div>
 
@@ -101,13 +102,12 @@
 
     protected override async Task OnInitializedAsync()
     {
+        UserLocation = await UserLocationService.GetUserLocationAsync();
         var request = new CartModel
         {
-            UserId = UserLocation.UserId// Replace with actual user ID logic
+            UserId = UserLocation.UserId
         };
-
-        // cartItems = await CartService.GetCartItemsByUserId(request);
-       await CartService.LoadCartItemCountAsync(request);
+        await CartService.LoadCartItemCountAsync(request);
     }
     protected override void OnInitialized()
     {

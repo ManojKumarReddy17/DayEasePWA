@@ -1,6 +1,7 @@
 ﻿@page "/productcategory"
 @inject IProductCategory ProductCategoryService
 @using DayEaseServices.Services.IServices
+@inject IUserLocationService UserLocationService
 @inject ICartService CartService
 @using Domain.RequestModels
 @using DayEaseUserApp.Layout
@@ -1243,6 +1244,7 @@ else
 
         private async Task AddToCart(ProductRequestModel product)
         {
+            UserLocation = await UserLocationService.GetUserLocationAsync();
             CartService.AddToCart(product.ProductId, null, 1);
 
             var model = new CartModel
