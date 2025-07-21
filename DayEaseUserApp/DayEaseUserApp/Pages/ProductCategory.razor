@@ -933,33 +933,9 @@ else if (filteredProducts != null && filteredProducts.Count > 0)
                 <div class="product-image-container" @onclick="() => OpenPopup(product)" style="cursor: pointer;">
                     <img src="images/@product.ProductImg" alt="@product.ProductName" />
                 </div>
-
-                @* <div class="product-details">
-                    <h4>@product.ProductName</h4>
-                    <p class="product-description">@product.ProductDesc</p>
-
-                    <div class="price-action-row">
-                        <p class="product-price">@FormatCurrency(product.Price)</p>
-
-                        @if (CartService.CartItems.ContainsKey(product.ProductId))
-                        {
-                            <div class="stepper">
-                                <button @onclick="() => CartService.DecreaseQuantity(product.ProductId)">−</button>
-                                <span class="quantity">@CartService.CartItems[product.ProductId].quantity</span>
-                                <button @onclick="() => CartService.IncreaseQuantity(product.ProductId)">+</button>
-                            </div>
-                        }
-                        else
-                        {
-                            <button class="cart-btn" @onclick="() => AddToCart(product.ProductId, product.ProductName)">
-                                Add to Cart
-                            </button>
-                        }
-                    </div>
-                </div> *@
+          
                 <div class="product-details">
                     <h4>@product.ProductName</h4>
-                    <p class="product-description">@product.ProductDesc</p>
 
                     <div class="price-action-row">
                         <p class="product-price">@FormatCurrency(product.Price)</p>
