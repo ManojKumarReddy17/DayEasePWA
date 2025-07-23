@@ -18,13 +18,13 @@ namespace DayEaseServices.Services
         {
             _apiService = apiService;
         }
-
-        public async  Task<string> CreateAsync<TRequest, TResponse>(OrderRequestModel model)
+        public async Task<PlaceOrderResponseModel> CreateAsync<TRequest, TResponse>(OrderRequestModel model)
         {
             string endpoint = "Order/CreateOrderAsync";
-            var result = await _apiService.PostAsync<OrderRequestModel, string>(endpoint, model);
+            var result = await _apiService.PostAsync<OrderRequestModel, PlaceOrderResponseModel>(endpoint, model);
             return result;
         }
+     
         public async Task<OrderResponseModel> GetOrder<TRequest, TResponse>(GetOrderDetailsByIdRequestModel model)
         {
             string endpoint = "Order/GetOrderById";
@@ -32,11 +32,11 @@ namespace DayEaseServices.Services
             return result;
         }
 
-        public async Task<OrderRequestModel> OrderDetailsbyUser<TRequest, TResponse>(OrderRequestModel model)
+        public async Task<List<OrderRequestModel>> OrderDetailsbyUser<TRequest, TResponse>(OrderRequestModel model)
         {
             string endpoint = "Order/GetOrderDetailsByUserId";
  
-            var result = await _apiService.PostAsync<OrderRequestModel, OrderRequestModel>(endpoint, model);
+            var result = await _apiService.PostAsync<OrderRequestModel, List<OrderRequestModel>>(endpoint, model);
             return result;
         }
 

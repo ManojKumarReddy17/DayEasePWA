@@ -6,6 +6,8 @@
 @using Domain.RequestModels
 @inject NavigationManager Navigation
 @layout NavMenu
+@inject UserLocationState UserLocation
+
 
 <style>
     body {
@@ -168,23 +170,23 @@
         }
 
 
-        .order-button.reorder {
-            background-color: #2563eb;
-            color: white;
+    .order-button.reorder {
+        background-color: #2563eb;
+        color: white;
+    }
+
+        .order-button.reorder:hover {
+            background-color: #1d4ed8;
         }
 
-            .order-button.reorder:hover {
-                background-color: #1d4ed8;
-            }
+    .order-button.view {
+        background-color: #1f2937;
+        color: white;
+    }
 
-        .order-button.view {
-            background-color: #1f2937;
-            color: white;
+        .order-button.view:hover {
+            background-color: #111827;
         }
-
-            .order-button.view:hover {
-                background-color: #111827;
-            }
 
     .order-detail i {
         margin-right: 0.3rem;
@@ -221,47 +223,61 @@
     @*     <img src="images/Day-Ease-logo-black.png" class="logo" alt="Day Ease Logo" />My Orders *@
     @* </h2> *@
     <h2 class="order-heading flex-heading">
-        <img src="images/Day-Ease-logo-black.png" class="logo" alt="Day Ease Logo" />
+        @* <img src="images/Day-Ease-logo-black.png" class="logo" alt="Day Ease Logo" /> *@
         My Orders
     </h2>
 
-    @foreach (var order in OrderDetails.OrderItems)
+    @foreach (var order in OrderDetails)
     {
         <div class="order-card">
             <div class="order-header">
-                @* <p class="order-id">Order #@order.OrderId</p> *@
                 <div class="order-id-header">
                     <span class="label">Order ID:</span>
-                    <span class="value">@OrderDetails.OrderId</span>
+                    <span class="value">@order.OrderId</span>
                 </div>
-                <p class="order-date">@OrderDetails.CreatedAt</p>
+                <p class="order-date">@order.CreatedAt.ToString("dd MMM yyyy, hh:mm tt")</p>
             </div>
 
-            <p><span class="order-label">Store:</span> @OrderDetails.StoreName</p>
-            <p><span class="order-label">Items:</span> @order.ProductName</p>
-            <p><span class="order-label">Total:</span> ₹@order.Price</p>
+            <p><span class="order-label">Store:</span> @order.StoreName</p>
+            <p><span class="order-label">Items:</span></p>
+
+            @if (order.OrderItems != null && order.OrderItems.Any())
+            {
+                <ul>
+                    @foreach (var item in order.OrderItems)
+                    {
+                        <li>@item.ProductName - Qty: @item.Quantity - ₹@item.Price.ToString("N2")</li>
+                    }
+                </ul>
+            }
+            else
+            {
+                <p>No items found.</p>
+            }
+
+            <p><span class="order-label">Total:</span> ₹@order.TotalAmount.ToString("N2")</p>
 
             <div class="order-status">
                 <span>Status:</span>
-                <span class="@GetStatusBadgeClass(OrderDetails.OrderStatus)">
-                    @OrderDetails.OrderStatus
+                <span class="@GetStatusBadgeClass(order.OrderStatus)">
+                    @order.OrderStatus
                 </span>
             </div>
 
             <div class="order-actions">
                 <button class="order-button reorder">Reorder</button>
-                @* <button  class="order-button view" @onclick="() => GoToDetails(order.Id)">View Details</button> *@
                 <a href="/order?orderId=@order.OrderId" class="order-button view">View Details</a>
             </div>
         </div>
+
     }
 </div>
 
 
-
 @code {
 
-    private OrderRequestModel OrderDetails { get; set; }
+    private List<OrderRequestModel> OrderDetails { get; set; } = new();
+
     private bool isLoading = true;
 
     protected override async Task OnInitializedAsync()
@@ -270,8 +286,10 @@
         {
 
 
-            var request = new OrderRequestModel { UserId = "DEUS20250523093506" };
+            var request = new OrderRequestModel { UserId = UserLocation.UserId };
+
             OrderDetails = await orderservices.OrderDetailsbyUser<OrderRequestModel, OrderResponseModel>(request);
+
         }
         catch
         {

@@ -2,7 +2,6 @@
 @using DayEaseServices.Services.IServices
 @using Domain.RequestModels
 @inject ICartService cartService
-@inject IUserLocationService userLocationService
 @layout NavMenu
 @inject CartState CartState
 @inject NavigationManager Navigation
@@ -307,7 +306,7 @@
                         <button class="qty-btn" @onclick="async () => await IncreaseQuantity(item)">+</button>
                     </div>
                     <div class="price-final">₹@item.TotalPrice</div>
-                    <div class="original">₹@(item.Price* item.Quantity)</div>
+                    <div class="original">₹@(item.Price * item.Quantity)</div>
                 </div>
             </div>
         }
@@ -335,15 +334,13 @@
 
     protected override async Task OnInitializedAsync()
     {
-        UserLocation = await userLocationService.GetUserLocationAsync();
-        var request = new CartModel
-        {
-            UserId = UserLocation.UserId
-        };
+        var userId = UserLocation.UserId;
 
-        cartItems = await cartService.GetCartItemsByUserId(request);
-        await cartService.LoadCartItemCountAsync(request);
+        var cartRequest = new CartModel { UserId = userId };
+        cartItems = await cartService.GetCartItemsByUserId(cartRequest);
+        await cartService.LoadCartItemCountAsync(cartRequest);
     }
+
 
     private async Task IncreaseQuantity(CartModel item)
     {
@@ -405,6 +402,7 @@
     {
         CartState.CartItems = cartItems;
         CartState.UserId = UserLocation.UserId;
+        CartState.StoreId = cartItems.FirstOrDefault().StoreId;
         Navigation.NavigateTo("/checkout");
     }
     private void BrowseProducts()

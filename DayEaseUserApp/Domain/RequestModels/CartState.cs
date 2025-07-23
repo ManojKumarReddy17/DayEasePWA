@@ -6,9 +6,15 @@ using System.Threading.Tasks;
 
 namespace Domain.RequestModels
 {
-    public class CartState 
+    public class CartState
     {
         public List<CartModel> CartItems { get; set; } = new();
         public string UserId { get; set; }
+        public string StoreId { get; set; }
+    
+      public void ClearCart()
+        {
+            CartItems.Clear();
+        }
     }
 }
