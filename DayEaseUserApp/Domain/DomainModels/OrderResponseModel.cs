@@ -20,6 +20,7 @@ namespace Domain.DomainModels
         public DateTime UpdatedAt { get; set; }
         public List<OrderItemResponseModel> OrderItems { get; set; }
         public string Message { get; set; }
+        public bool IsSuccess { get; set; }
 
     }
     public class OrderItemResponseModel
