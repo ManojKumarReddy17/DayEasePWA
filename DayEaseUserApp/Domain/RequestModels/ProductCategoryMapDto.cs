@@ -10,5 +10,6 @@ namespace Domain.RequestModels
     {
         public string ProductCategoryId { get; set; }
         public string ProductCategoryName { get; set; }
+        public string ImageUrl { get; set; }
     }
 }
