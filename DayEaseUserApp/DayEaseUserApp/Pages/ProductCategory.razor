@@ -211,6 +211,7 @@
     }
 
     /* Categories Navigation */
+
     .categories-nav {
         margin: 1rem 0;
     }
@@ -226,6 +227,14 @@
         .categories-scroll::-webkit-scrollbar {
             display: none; /* Hide scrollbar in Chrome/Safari */
         }
+        .category-img {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 6px; /* optional rounded edges */
+    margin-right: 8px;  /* space between image and text */
+    vertical-align: middle; /* aligns image with text */
+}
 
     .category-btn {
         display: flex;
@@ -906,9 +915,9 @@
         {
             <button class="category-btn @(selectedCategory == cat.Name ? "active" : "")"
                     @onclick="() => FilterByCategory(cat.Name, cat.ProductCategoryId)">
-                <i class="@(!string.IsNullOrWhiteSpace(cat.Icon) ? cat.Icon : "bi bi-box")"></i> @cat.Name
+                <img src="@cat.ImageUrl" alt="@cat.Name" class="category-img" /> @cat.Name
             </button>
-        }
+        }   
     </div>
 </div>
 
@@ -1031,7 +1040,7 @@ else
     ProductRequestModel selectedProduct;
 
     protected override async Task OnInitializedAsync()
-    {
+        {
         isFirstLoad = true; // show spinner early
 
         var uri = Navigation.ToAbsoluteUri(Navigation.Uri);
@@ -1050,7 +1059,8 @@ else
             Categories = categoryDtos.Select(dto => new CategoryRequest
             {
                 Name = dto.ProductCategoryName,
-                Icon = "bi bi-grid",
+               // Icon = "bi bi-grid",
+                ImageUrl = dto.ImageUrl,
                 StoreId = StoreId,
                 ProductCategoryId = dto.ProductCategoryId
             }).ToList();
@@ -1058,7 +1068,8 @@ else
             Categories.Insert(0, new CategoryRequest
             {
                 Name = "All",
-                Icon = "bi bi-grid",
+                ImageUrl = null,
+               // Icon = "bi bi-grid",
                 StoreId = StoreId,
                 ProductCategoryId = null
             });
