@@ -523,7 +523,8 @@
                 Variant = c.Variant,
                 Quantity = c.Quantity,
                 Price = c.Price,
-                ProductImage = c.ProductImage
+                ProductImage = c.ProductImage,
+                CartItemId = c.CartItemId
             }).ToList();
     }
 
@@ -560,7 +561,8 @@
 
                     ProductId = c.ProductId,
                     Quantity = c.Quantity,
-                    Price = c.Price
+                    Price = c.Price,
+                    CartItemId = c.CartItemId
                 }).ToList()
             };
 
