@@ -1,6 +1,7 @@
 ﻿@page "/productcategory"
 @inject IProductCategory ProductCategoryService
 @using DayEaseServices.Services.IServices
+@using DayEaseServices.Services
 @inject IUserLocationService UserLocationService
 @inject ICartService CartService
 @using Domain.RequestModels
@@ -9,6 +10,7 @@
 @using Microsoft.AspNetCore.WebUtilities
 @layout NavMenu
 @inject IJSRuntime JS
+@inject GuestUserService locationService
 @using System.Linq
 @implements IDisposable
 
@@ -1039,6 +1041,10 @@ else
     bool showPopup = false;
     ProductRequestModel selectedProduct;
 
+    private string GuestUserId;
+    private string EffectiveUserId => IsGuestUser ? GuestUserId : UserLocation?.UserId;
+    private bool IsGuestUser => string.IsNullOrWhiteSpace(UserLocation?.UserId);
+
     protected override async Task OnInitializedAsync()
         {
         isFirstLoad = true; // show spinner early
@@ -1227,106 +1233,88 @@ else
         showPopup = false;
         selectedProduct = null;
     }
-    @code {
-
-        private async Task AddToCart(ProductRequestModel product)
-        {
-            UserLocation = await UserLocationService.GetUserLocationAsync();
-            CartService.AddToCart(product.ProductId, null, 1);
-
-            var model = new CartModel
+    
+    private async Task AddToCart(ProductRequestModel product)
+    {
+        var cartItem = new CartModel
             {
-                UserId = UserLocation.UserId,
                 ProductId = product.ProductId,
-                StoreId = StoreId,
-                Quantity = 1
+                Quantity = 1,
+                StoreId = product.StoreId
             };
 
-            await CartService.AddCartItems(model); // <-- POST to API
-           
-        await CartService.LoadCartItemCountAsync(model);
+        if (locationService.IsGuestUser)
+        {
+            cartItem.GuestUserId = locationService.GuestUserId;
+            await CartService.AddGuestCartItemAsync(cartItem);
+        }
+        else
+        {
+
+            cartItem.UserId = locationService.UserId;
+            await CartService.AddCartItems(cartItem);
         }
 
-        private async Task UpdateQuantity(string productId, bool increase)
+        await CartService.LoadCartItemCountAsync(cartItem);
+    }
+    private async Task<CartModel> BuildCartModel(string productId, int quantity)
+    {
+        return new CartModel
+            {
+                ProductId = productId,
+                Quantity = quantity,
+                StoreId = StoreId,
+                UserId = locationService.IsGuestUser ? null : locationService.UserId,
+                GuestUserId = locationService.IsGuestUser ? locationService.GuestUserId : null
+            };
+    }
+
+    private async Task UpdateQuantity(string productId, bool increase)
+    {
+        var cartItem = CartService.CartItems.GetValueOrDefault(productId);
+        if (cartItem.quantity < 0) return;
+
+        int updatedQuantity = increase ? cartItem.quantity + 1 : cartItem.quantity - 1;
+        var cartModel = await BuildCartModel(productId, updatedQuantity);
+
+        if (locationService.IsGuestUser)
         {
-            var cartItem = CartService.CartItems.GetValueOrDefault(productId);
-            if (cartItems == null)
-                return;
+            var guestItems = await CartService.GetGuestCartItemsAsync(cartModel);
+            var item = guestItems.FirstOrDefault(x => x.ProductId == productId);
+            if (item == null) return;
+
+            cartModel.CartItemId = item.CartItemId;
 
             if (increase)
-            {
                 CartService.IncreaseQuantity(productId);
-
-                var request = new CartModel
-                {
-                    UserId = UserLocation.UserId
-                };
-
-                var result = await CartService.GetCartItemsByUserId(request);
-                var lst = result.Where(x => x.ProductId == productId).FirstOrDefault();
-
-                var cartupdate = new CartModel
-                {
-                    CartItemId = lst.CartItemId,
-                    UserId = UserLocation.UserId,
-                    ProductId = productId,
-                    StoreId = StoreId,
-                    Quantity = cartItem.quantity + 1
-
-                };
-                await CartService.UpdateCartItems(cartupdate);
-                await CartService.LoadCartItemCountAsync(cartupdate);
-            }
             else
-            {
-                if (cartItem.quantity <= 1)
-                {
+                CartService.DecreaseQuantity(productId);
 
-                    var request = new CartModel
-                    {
-                        UserId = UserLocation.UserId
-                    };
-                    var result = await CartService.GetCartItemsByUserId(request);
-                    var lst = result.Where(x => x.ProductId == productId).FirstOrDefault();
-
-
-                    var cartremove = new CartModel
-                    {
-                        CartItemId = lst.CartItemId,
-                        UserId = UserLocation.UserId,
-                        ProductId = productId,
-                        StoreId = StoreId,
-
-
-                    };
-                    await CartService.RemoveCartItems(cartremove);
-                    await CartService.LoadCartItemCountAsync(cartremove);
-                }
-                else
-                {
-                    CartService.DecreaseQuantity(productId);
-
-                    var request = new CartModel
-                    {
-                        UserId = UserLocation.UserId
-                    };
-                    var result = await CartService.GetCartItemsByUserId(request);
-                    var lst = result.Where(x => x.ProductId == productId).FirstOrDefault();
-
-                    var cartupdate = new CartModel
-                    {
-                        CartItemId = lst.CartItemId,
-                        UserId = UserLocation.UserId,
-                        ProductId = productId,
-                        StoreId = StoreId,
-                        Quantity = cartItem.quantity - 1
-
-                    };
-                    await CartService.UpdateCartItems(cartupdate);
-                    await CartService.LoadCartItemCountAsync(cartupdate);
-                }
-            }
+            if (updatedQuantity < 1)
+                await CartService.RemoveGuestCartItemAsync(cartModel);
+            else
+                await CartService.UpdateGuestCartItemQuantityAsync(cartModel);
         }
+        else
+        {
+            var userItems = await CartService.GetCartItemsByUserId(cartModel);
+            var item = userItems.FirstOrDefault(x => x.ProductId == productId);
+            if (item == null) return;
+
+            cartModel.CartItemId = item.CartItemId;
+
+            if (increase)
+                CartService.IncreaseQuantity(productId);
+            else
+                CartService.DecreaseQuantity(productId);
+
+            if (updatedQuantity < 1)
+                await CartService.RemoveCartItems(cartModel);
+            else
+                await CartService.UpdateCartItems(cartModel);
+        }
+
+        await CartService.LoadCartItemCountAsync(cartModel);
     }
     private void IncreaseQuantity(string productId)
     {
