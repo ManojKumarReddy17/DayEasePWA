@@ -35,6 +35,7 @@ builder.Services.AddScoped<IStoreService, StoreService>();
 builder.Services.AddScoped<UserLocationState>();
 builder.Services.AddScoped<ICartService, CartService>();
 builder.Services.AddScoped<IUserLocationService, UserLocationService>();
+builder.Services.AddScoped<GuestUserService>();
 builder.Services.AddBlazoredLocalStorage();
 builder.Services.AddAuthorizationCore();
 builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthStateProvider>();

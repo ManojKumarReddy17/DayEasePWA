@@ -3,6 +3,8 @@
 @inject IStoreService StoreService
 @inject AuthenticationStateProvider AuthProvider
 @inject IUserLocationService UserLocationService
+@inject GuestUserService locService
+@inject UserLocationState UserLocation
 @using DayEaseServices.Services
 @using Domain.DomainModels
 @using Domain.RequestModels
@@ -397,11 +399,13 @@ else
     private string ErrorMessage = string.Empty;
     private bool isLoading = true;
     private int VisibleStoreCount = 6;
-    private UserLocationState UserLocation;
+    // private UserLocationState UserLocation;
 
+//     
     protected override async Task OnInitializedAsync()
     {
-        UserLocation = await UserLocationService.GetUserLocationAsync();
+        locService.UserId = UserLocation.UserId;
+        await locService.EnsureLocationAsync(UserLocation);
         await FetchStoresAsync();
     }
 
@@ -411,24 +415,23 @@ else
         try
         {
             var request = new NearbyStoresRequest
-            {
-                AreaId = UserLocation.AreaId,
-                Latitude = UserLocation.Latitude,
-                Longitude = UserLocation.Longitude
-            };
+                {
+                    Latitude = locService.Latitude,
+                    Longitude = locService.Longitude
+                };
 
             var apiResponse = await StoreService.GetNearbyStoresAsync(request);
 
             if (apiResponse?.Success == true && apiResponse.Stores?.Any() == true)
             {
                 Stores = apiResponse.Stores.Select(s => new HighLightModel
-                {
-                    StoreId = s.StoreId,
-                    StoreName = s.StoreName,
-                    DistanceInKm = Math.Round(s.Distance, 3),
-                    Products = s.Products,
-                    SpecialOffer = $"{s.Products.Max(p => p.Discount)} off!"
-                }).ToList();
+                    {
+                        StoreId = s.StoreId,
+                        StoreName = s.StoreName,
+                        DistanceInKm = Math.Round(s.Distance, 3),
+                        Products = s.Products,
+                        SpecialOffer = s.Products?.Max(p => p.Discount).ToString() + " off!"
+                    }).ToList();
             }
             else
             {
@@ -441,17 +444,15 @@ else
         }
         isLoading = false;
     }
+
     private string GetProductImage(HighLightModel store)
     {
-        var product = store.Products.FirstOrDefault();
-
-        if (product == null || string.IsNullOrWhiteSpace(product.ProductImg))
-        {
-            return "images/default-image.jpeg"; // fallback image if null or empty
-        }
-
-        return $"images/{product.ProductImg}";
+        var product = store.Products?.FirstOrDefault();
+        return string.IsNullOrWhiteSpace(product?.ProductImg)
+            ? "images/default-image.jpeg"
+            : $"images/{product.ProductImg}";
     }
+
     private void LoadMoreStores()
     {
         VisibleStoreCount += 6;

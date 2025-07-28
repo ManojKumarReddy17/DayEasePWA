@@ -1,11 +1,14 @@
 ﻿@page "/cart"
 @using DayEaseServices.Services.IServices
+@using DayEaseServices.Services
 @using Domain.RequestModels
 @inject ICartService cartService
 @layout NavMenu
 @inject CartState CartState
 @inject NavigationManager Navigation
 @inject UserLocationState UserLocation
+@inject GuestUserService locService
+
 <style>
     .cart-wrapper {
         background-color: #f8f9fa;
@@ -276,6 +279,8 @@
         }
 </style>
 
+
+
 <div class="cart-wrapper">
     <div class="cart-header">
         <i class="fas fa-shopping-cart cart-icon"></i>
@@ -286,35 +291,73 @@
         ⏱️ Delivery in 15 mins
     </div>
 
-    @if (cartItems.Any())
+    @if (locService.IsGuestUser ? guestCartItems.Any() : cartItems.Any())
     {
-        @foreach (var item in cartItems)
+        @if (locService.IsGuestUser)
         {
-            <div class="cart-item-box">
-                <div class="item-left">
-                    <img src="placeholder.jpg" alt="@item.ProductImage" class="cart-image" />
-                    <div class="item-info">
-                        <div class="product-title">@item.ProductName</div>
-                        <div class="product-quantity">Qty: @item.Quantity</div>
+            @foreach (var item in guestCartItems)
+            {
+                <div class="cart-item-box">
+                    <div class="item-left">
+                        <img src="placeholder.jpg" alt="@item.ProductName" class="cart-image" />
+                        <div class="item-info">
+                            <div class="product-title">@item.ProductName</div>
+                            <div class="product-quantity">Qty: @item.Quantity</div>
+                        </div>
                     </div>
-                </div>
 
-                <div class="price-box">
-                    <div class="price-qty-wrapper">
-                        <button class="qty-btn" @onclick="async () => await DecreaseQuantity(item)">−</button>
-                        <span class="qty-count">@item.Quantity</span>
-                        <button class="qty-btn" @onclick="async () => await IncreaseQuantity(item)">+</button>
+                    <div class="price-box">
+                        <div class="price-qty-wrapper">
+                            <button class="qty-btn" @onclick="async () => await DecreaseGuestQuantity(item)">−</button>
+                            <span class="qty-count">Qty: @item.Quantity</span>
+                            <button class="qty-btn" @onclick="async () => await IncreaseGuestQuantity(item)">+</button>
+                        </div>
+                        <div class="price-final">₹@item.TotalPrice</div> <!-- Dummy price, update if you have price -->
+                        <div class="original">₹₹@(item.Price * item.Quantity)</div> <!-- Dummy price -->
                     </div>
-                    <div class="price-final">₹@item.TotalPrice</div>
-                    <div class="original">₹@(item.Price * item.Quantity)</div>
                 </div>
-            </div>
+            }
+        }
+        else
+        {
+            @foreach (var item in cartItems)
+            {
+                <div class="cart-item-box">
+                    <div class="item-left">
+                        <img src="placeholder.jpg" alt="@item.ProductImage" class="cart-image" />
+                        <div class="item-info">
+                            <div class="product-title">@item.ProductName</div>
+                            <div class="product-quantity">Qty: @item.Quantity</div>
+                        </div>
+                    </div>
+
+                    <div class="price-box">
+                        <div class="price-qty-wrapper">
+                            <button class="qty-btn" @onclick="async () => await DecreaseQuantity(item)">−</button>
+                            <span class="qty-count">@item.Quantity</span>
+                            <button class="qty-btn" @onclick="async () => await IncreaseQuantity(item)">+</button>
+                        </div>
+                        <div class="price-final">₹@item.TotalPrice</div>
+                        <div class="original">₹@(item.Price * item.Quantity)</div>
+                    </div>
+                </div>
+            }
         }
 
+        <!-- Subtotal and Checkout -->
         <div class="checkout-footer">
             <div class="subtotal-box">
-                <div><strong>Subtotal:</strong> ₹@cartItems.Sum(i => i.TotalPrice)</div>
-                <div class="savings">You Save: ₹@cartItems.Sum(i => (i.Price * i.Quantity) - i.TotalPrice)</div>
+                <div>
+                    <strong>Subtotal:</strong> ₹@(locService.IsGuestUser
+                ? guestCartItems.Sum(i => i.TotalPrice)
+                : cartItems.Sum(i => i.TotalPrice))
+                </div>
+
+                <div class="savings">
+                    You Save: ₹@(locService.IsGuestUser
+                ? guestCartItems.Sum(i => (i.Price * i.Quantity) - i.TotalPrice)
+                : cartItems.Sum(i => (i.Price * i.Quantity) - i.TotalPrice))
+                </div>
             </div>
             <button class="btn-checkout" @onclick="Checkout">Proceed to Checkout</button>
         </div>
@@ -324,21 +367,40 @@
         <div class="empty-cart-container">
             <img src="images/empty-cart-icon.svg" alt="Empty Cart" class="empty-cart-icon" />
             <p class="empty-text">Your cart is empty</p>
-            <button class="btn-browse" @onclick="@(() => Navigation.NavigateTo("/highlightcompact"))">Browse Products</button>
+            <button class="btn-browse" @onclick="BrowseProducts">Browse Products</button>
         </div>
     }
+
 </div>
 
 @code {
     private List<CartModel> cartItems = new();
+    private List<GuestCartItem> guestCartItems = new();
 
     protected override async Task OnInitializedAsync()
     {
-        var userId = UserLocation.UserId;
+        await locService.EnsureLocationAsync(UserLocation);
 
-        var cartRequest = new CartModel { UserId = userId };
-        cartItems = await cartService.GetCartItemsByUserId(cartRequest);
-        await cartService.LoadCartItemCountAsync(cartRequest);
+        if (locService.IsGuestUser)
+        {
+            var guestRequest = new CartModel
+                {
+                    GuestUserId = locService.GuestUserId
+                };
+
+            guestCartItems = await cartService.GetGuestCartItemsAsync(guestRequest);
+            await cartService.LoadCartItemCountAsync(guestRequest);
+        }
+        else
+        {
+            var request = new CartModel
+                {
+                    UserId = locService.UserId
+                };
+
+            cartItems = await cartService.GetCartItemsByUserId(request);
+            await cartService.LoadCartItemCountAsync(request);
+        }
     }
 
 
@@ -397,9 +459,77 @@
             }
         }
     }
+    private async Task IncreaseGuestQuantity(GuestCartItem item)
+    {
+        item.Quantity++;
+        item.TotalPrice = item.Quantity * (item.Price - item.Discount);
+        var request = new CartModel
+            {
+                GuestUserId = locService.GuestUserId,
+                CartItemId = item.CartItemId,
+                ProductId = item.ProductId,
+                StoreId = item.StoreId,
+                Quantity = item.Quantity
+            };
 
+        var response = await cartService.UpdateGuestCartItemQuantityAsync(request);
+        if (response?.Result != null)
+        {
+            await cartService.LoadCartItemCountAsync(request);
+            StateHasChanged();
+        }
+    }
+
+    private async Task DecreaseGuestQuantity(GuestCartItem item)
+    {
+        if (item.Quantity > 1)
+        {
+            item.Quantity--;
+            item.TotalPrice = item.Quantity * (item.Price - item.Discount);
+            var request = new CartModel
+                {
+                    GuestUserId = locService.GuestUserId,
+                    CartItemId = item.CartItemId,
+                    ProductId = item.ProductId,
+                    StoreId = item.StoreId,
+                    Quantity = item.Quantity
+                };
+
+            var response = await cartService.UpdateGuestCartItemQuantityAsync(request);
+            if (response?.Result != null)
+            {
+                await cartService.LoadCartItemCountAsync(request);
+                StateHasChanged();
+            }
+        }
+        else
+        {
+            var request = new CartModel
+                {
+                    GuestUserId = locService.GuestUserId,
+                    CartItemId = item.CartItemId,
+                    ProductId = item.ProductId,
+                    StoreId = item.StoreId
+                };
+
+            var response = await cartService.RemoveGuestCartItemAsync(request);
+            if (response?.Result != null)
+            {
+                guestCartItems.Remove(item);
+                await cartService.LoadCartItemCountAsync(request);
+                StateHasChanged();
+            }
+        }
+    }
     private void Checkout()
     {
+        if (string.IsNullOrEmpty(UserLocation.UserId))
+        {
+
+            
+            Navigation.NavigateTo("/login");
+           
+        }
         CartState.CartItems = cartItems;
         CartState.UserId = UserLocation.UserId;
         CartState.StoreId = cartItems.FirstOrDefault().StoreId;

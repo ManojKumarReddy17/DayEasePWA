@@ -26,5 +26,10 @@ namespace DayEaseServices.Services.IServices
         void IncreaseQuantity(string productId);
         void DecreaseQuantity(string productId);
         //void ClearCart();
+        Task<List<GuestCartItem>> GetGuestCartItemsAsync(CartModel model);
+        Task<MysqlResponse<int>> AddGuestCartItemAsync(CartModel item);
+        Task<MysqlResponse<int>> UpdateGuestCartItemQuantityAsync(CartModel item);
+        Task<MysqlResponse<int>> RemoveGuestCartItemAsync(CartModel item);
+        Task<MysqlResponse<int>> MigrateCartAsync(string guestId, string userId);
     }
 }
