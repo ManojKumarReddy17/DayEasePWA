@@ -942,7 +942,7 @@ else if (filteredProducts != null && filteredProducts.Count > 0)
         {
             <div class="product-card">
                 <div class="product-image-container" @onclick="() => OpenPopup(product)" style="cursor: pointer;">
-                    <img src="images/@product.ProductImg" alt="@product.ProductName" />
+                    <img src="@product.ProductImg" alt="@product.ProductName" />
                 </div>
           
                 <div class="product-details">
@@ -983,7 +983,7 @@ else if (filteredProducts != null && filteredProducts.Count > 0)
                     &times;
                 </button>
 
-                <img src="images/@selectedProduct.ProductImg" class="popup-image" alt="Selected Product" />
+                <img src="@selectedProduct.ProductImg" class="popup-image" alt="Selected Product" />
                 <h4>@selectedProduct.ProductName</h4>
                 <p>@selectedProduct.ProductDesc</p>
 
@@ -1074,7 +1074,7 @@ else
             Categories.Insert(0, new CategoryRequest
             {
                 Name = "All",
-                ImageUrl = null,
+                ImageUrl = "bi bi-grid",
                // Icon = "bi bi-grid",
                 StoreId = StoreId,
                 ProductCategoryId = null
