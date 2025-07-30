@@ -523,21 +523,25 @@
     }
     private void Checkout()
     {
-        if (string.IsNullOrEmpty(UserLocation.UserId))
+        if (!string.IsNullOrEmpty(UserLocation.UserId))
         {
 
-            
-            Navigation.NavigateTo("/login");
+            CartState.CartItems = cartItems;
+            CartState.UserId = UserLocation.UserId;
+            CartState.StoreId = cartItems.FirstOrDefault().StoreId;
+            Navigation.NavigateTo("/checkout");
+           
            
         }
-        CartState.CartItems = cartItems;
-        CartState.UserId = UserLocation.UserId;
-        CartState.StoreId = cartItems.FirstOrDefault().StoreId;
-        Navigation.NavigateTo("/checkout");
+        else if (string.IsNullOrEmpty(UserLocation.UserId))
+        {
+            Navigation.NavigateTo("/Login");
+        }
+        
     }
     private void BrowseProducts()
     {
-        Navigation.NavigateTo("/productcategory");
+        Navigation.NavigateTo("/highlightcompact");
     }
 
 }
