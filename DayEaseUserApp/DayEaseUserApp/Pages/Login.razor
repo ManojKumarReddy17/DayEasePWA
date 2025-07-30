@@ -219,6 +219,11 @@
                     <a href="/mobile-number?IsForgot=true" class="btn btn-outline-primary mt-3">Forgot Password?</a>
 
                 </div>
+                <div class="forgot-link">
+                    @*  <a href="/forgotpassword">Forgot Password?</a> *@
+                    <a href="/highlightcompact" class="btn btn-outline-primary mt-3">Guest User</a>
+
+                </div>
             </div>
 
             <button type="submit" class="btn btn-primary">LOGIN</button>
@@ -259,10 +264,10 @@
         var authState = await AuthProvider.GetAuthenticationStateAsync();
         var user = authState.User;
 
-        if (user.Identity != null && user.Identity.IsAuthenticated)
-        {
-            NavigationManager.NavigateTo("/highlightcompact", forceLoad: true);
-        }
+        // if (user.Identity != null && user.Identity.IsAuthenticated)
+        // {
+        //     NavigationManager.NavigateTo("/highlightcompact", forceLoad: true);
+        // }
     }
 
     private async Task HandleLogin()
