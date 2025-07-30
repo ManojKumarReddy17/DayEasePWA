@@ -9,6 +9,8 @@
 @inject UserLocationState UserLocation
 @inject ILocalStorageService LocalStorage
 @inject AuthenticationStateProvider AuthProvider
+@inject ICartService cartService
+@inject IJSRuntime JS
 @using Blazored.LocalStorage
 <style>
     html, body {
@@ -282,7 +284,23 @@
             UserLocation.Latitude = response.Latitude;
             UserLocation.Longitude = response.Longitude;
 
+            var guestUserId = await JS.InvokeAsync<string>("sessionStore.get", "guestUserId");
 
+            if (!string.IsNullOrEmpty(guestUserId))
+            {
+
+               var result = await cartService.MigrateCartAsync(guestUserId, response.UserId);
+
+                if (result.Success == 200)
+                {
+                    await JS.InvokeVoidAsync("sessionStore.remove", "guestUserId");
+                }
+                else
+                {
+                    errorMessage = result?.Message;
+                }
+
+            }
             NavigationManager.NavigateTo("/highlightcompact");
         }
         else

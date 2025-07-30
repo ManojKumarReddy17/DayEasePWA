@@ -11,6 +11,7 @@ namespace Domain.RequestModels
         public string ProductCategoryId { get; set; }
         public string StoreId { get; set; }
         public string Name { get; set; }
+        public string ImageUrl { get; set; }
         public string Icon { get; set; } = "bi bi-grid";
        
     }
