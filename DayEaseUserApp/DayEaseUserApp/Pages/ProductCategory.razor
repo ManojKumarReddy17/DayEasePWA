@@ -229,14 +229,15 @@
         .categories-scroll::-webkit-scrollbar {
             display: none; /* Hide scrollbar in Chrome/Safari */
         }
-        .category-img {
-    width: 40px;
-    height: 40px;
-    object-fit: cover;
-    border-radius: 6px; /* optional rounded edges */
-    margin-right: 8px;  /* space between image and text */
-    vertical-align: middle; /* aligns image with text */
-}
+
+    .category-img {
+        width: 40px;
+        height: 40px;
+        object-fit: cover;
+        border-radius: 6px; /* optional rounded edges */
+        margin-right: 8px; /* space between image and text */
+        vertical-align: middle; /* aligns image with text */
+    }
 
     .category-btn {
         display: flex;
@@ -435,8 +436,8 @@
     }
 
     /* ---------------------------------
-                MODAL BACKDROP & ANIMATION
-                ---------------------------------- */
+                    MODAL BACKDROP & ANIMATION
+                    ---------------------------------- */
     .modal-backdrop {
         position: fixed;
         top: 0;
@@ -465,8 +466,8 @@
     }
 
     /* ---------------------------------
-                MODAL CONTENT BOX
-                ---------------------------------- */
+                    MODAL CONTENT BOX
+                    ---------------------------------- */
     .popup-action-row {
         display: flex;
         justify-content: space-between;
@@ -544,8 +545,8 @@
     }
 
     /* ---------------------------------
-                PRODUCT IMAGE INSIDE MODAL
-                ---------------------------------- */
+                    PRODUCT IMAGE INSIDE MODAL
+                    ---------------------------------- */
     .popup-image {
         width: 100px;
         max-height: 250px;
@@ -558,8 +559,8 @@
     }
 
     /* ---------------------------------
-                PRODUCT DETAILS IN MODAL
-                ---------------------------------- */
+                    PRODUCT DETAILS IN MODAL
+                    ---------------------------------- */
     .modal-content h4 {
         font-size: 1.4rem;
         font-weight: 600;
@@ -576,8 +577,8 @@
     }
 
     /* ---------------------------------
-                QUANTITY CONTROLS
-                ---------------------------------- */
+                    QUANTITY CONTROLS
+                    ---------------------------------- */
     .cart-controls {
         display: flex;
         justify-content: center;
@@ -615,8 +616,8 @@
     }
 
     /* ---------------------------------
-                ACTION BUTTON ROW
-                ---------------------------------- */
+                    ACTION BUTTON ROW
+                    ---------------------------------- */
     .popup-button-row {
         display: flex;
         justify-content: space-between;
@@ -657,8 +658,8 @@
     }
 
     /* ---------------------------------
-                RESPONSIVE STYLES
-                ---------------------------------- */
+                    RESPONSIVE STYLES
+                    ---------------------------------- */
     @@media (max-width: 600px) {
         .modal-content {
             padding: 16px;
@@ -919,7 +920,7 @@
                     @onclick="() => FilterByCategory(cat.Name, cat.ProductCategoryId)">
                 <img src="@cat.ImageUrl" alt="@cat.Name" class="category-img" /> @cat.Name
             </button>
-        }   
+        }
     </div>
 </div>
 
@@ -942,9 +943,9 @@ else if (filteredProducts != null && filteredProducts.Count > 0)
         {
             <div class="product-card">
                 <div class="product-image-container" @onclick="() => OpenPopup(product)" style="cursor: pointer;">
-                    <img src="@product.ProductImg" alt="@product.ProductName" />
+                    <img src="images/@product.ProductImg" alt="@product.ProductName" />
                 </div>
-          
+
                 <div class="product-details">
                     <h4>@product.ProductName</h4>
 
@@ -983,7 +984,7 @@ else if (filteredProducts != null && filteredProducts.Count > 0)
                     &times;
                 </button>
 
-                <img src="@selectedProduct.ProductImg" class="popup-image" alt="Selected Product" />
+                <img src="images/@selectedProduct.ProductImg" class="popup-image" alt="Selected Product" />
                 <h4>@selectedProduct.ProductName</h4>
                 <p>@selectedProduct.ProductDesc</p>
 
@@ -1016,6 +1017,22 @@ else
 {
     <div class="no-products">No products found</div>
 }
+@if (showReplaceItemsPopup)
+{
+    <div class="modal-backdrop" @onclick="() => CloseCartWarningPopup(false)">
+        <div class="modal-content" @onclick:stopPropagation="true">
+            <button class="modal-close-icon" @onclick="() => CloseCartWarningPopup(false)" aria-label="Close">&times;</button>
+            <h5>Cart Warning</h5>
+            <p>@cartWarningMessage</p>
+            <div class="popup-button-row">
+                <button class="cart-btn confirm-btn" @onclick="() => CloseCartWarningPopup(true)">Yes</button>
+                <button class="cart-btn cancel-btn" @onclick="() => CloseCartWarningPopup(false)">No</button>
+            </div>
+        </div>
+    </div>
+}
+
+
 
 @code {
     private string searchQuery = "";
@@ -1046,7 +1063,7 @@ else
     private bool IsGuestUser => string.IsNullOrWhiteSpace(UserLocation?.UserId);
 
     protected override async Task OnInitializedAsync()
-        {
+    {
         isFirstLoad = true; // show spinner early
 
         var uri = Navigation.ToAbsoluteUri(Navigation.Uri);
@@ -1063,22 +1080,22 @@ else
             var categoryDtos = await ProductCategoryService.GetProductcategoByStoreId(categoryInput);
 
             Categories = categoryDtos.Select(dto => new CategoryRequest
-            {
-                Name = dto.ProductCategoryName,
-               // Icon = "bi bi-grid",
-                ImageUrl = dto.ImageUrl,
-                StoreId = StoreId,
-                ProductCategoryId = dto.ProductCategoryId
-            }).ToList();
+                {
+                    Name = dto.ProductCategoryName,
+                    // Icon = "bi bi-grid",
+                    ImageUrl = dto.ImageUrl,
+                    StoreId = StoreId,
+                    ProductCategoryId = dto.ProductCategoryId
+                }).ToList();
 
             Categories.Insert(0, new CategoryRequest
-            {
-                Name = "All",
-                ImageUrl = "bi bi-grid",
-               // Icon = "bi bi-grid",
-                StoreId = StoreId,
-                ProductCategoryId = null
-            });
+                {
+                    Name = "All",
+                    ImageUrl = null,
+                    // Icon = "bi bi-grid",
+                    StoreId = StoreId,
+                    ProductCategoryId = null
+                });
 
             // Don't show products until both categories + products are loaded
             await FilterByCategory("All", null);
@@ -1132,34 +1149,34 @@ else
         isLoading = true;
 
         var request = new PaginationQueryInput
-        {
-            Product = new ProductRequestModel
             {
-                StoreId = StoreId,
-                CategoryId = string.IsNullOrWhiteSpace(categoryId) ? null : categoryId
-            },
-            PaginationInput = new PaginationInput
-            {
-                PageNumber = currentPage,
-                PageSize = pageSize
-            }
-        };
+                Product = new ProductRequestModel
+                {
+                    StoreId = StoreId,
+                    CategoryId = string.IsNullOrWhiteSpace(categoryId) ? null : categoryId
+                },
+                PaginationInput = new PaginationInput
+                {
+                    PageNumber = currentPage,
+                    PageSize = pageSize
+                }
+            };
 
         var result = await ProductCategoryService.GetProductsByStoreId(request);
 
         if (result?.Result?.Items != null && result.Result.Items.Any())
         {
             var newProducts = result.Result.Items.Select(p => new ProductRequestModel
-            {
-                ProductId = p.ProductId,
-                StoreId = p.StoreId,
-                CategoryId = p.CategoryId,
-                ProductName = p.ProductName,
-                ProductDesc = p.ProductDesc,
-                Price = p.Price,
-                Discount = p.Discount,
-                ProductImg = p.ProductImg
-            }).ToList();
+                {
+                    ProductId = p.ProductId,
+                    StoreId = p.StoreId,
+                    CategoryId = p.CategoryId,
+                    ProductName = p.ProductName,
+                    ProductDesc = p.ProductDesc,
+                    Price = p.Price,
+                    Discount = p.Discount,
+                    ProductImg = p.ProductImg
+                }).ToList();
 
             products.AddRange(newProducts);
             currentPage++;
@@ -1233,30 +1250,269 @@ else
         showPopup = false;
         selectedProduct = null;
     }
+    private bool showReplaceItemsPopup = false;
+    private string cartWarningMessage = string.Empty;
     
+
     private async Task AddToCart(ProductRequestModel product)
     {
+        cartWarningMessage = string.Empty;
+        selectedProduct = product;
+
         var cartItem = new CartModel
             {
                 ProductId = product.ProductId,
                 Quantity = 1,
-                StoreId = product.StoreId
+                StoreId = product.StoreId,
+                UserId = locationService.IsGuestUser ? null : locationService.UserId,
+                GuestUserId = locationService.IsGuestUser ? locationService.GuestUserId : null
             };
 
         if (locationService.IsGuestUser)
         {
-            cartItem.GuestUserId = locationService.GuestUserId;
+            var guestCartItems = await CartService.GetGuestCartItemsAsync(new CartModel { GuestUserId = cartItem.GuestUserId });
+
+            if (guestCartItems.Any() && guestCartItems.First().StoreId != cartItem.StoreId)
+            {
+                cartWarningMessage = "⚠️ You can only order from one store at a time. Replace cart?";
+                showReplaceItemsPopup = true;
+                StateHasChanged();
+                return;
+            }
+
             await CartService.AddGuestCartItemAsync(cartItem);
         }
         else
         {
+            var userCartItems = await CartService.GetCartItemsByUserId(new CartModel { UserId = cartItem.UserId });
 
-            cartItem.UserId = locationService.UserId;
+            if (userCartItems.Any() && userCartItems.First().StoreId != cartItem.StoreId)
+            {
+                cartWarningMessage = "⚠️ You can only order from one store at a time. Replace cart?";
+                showReplaceItemsPopup = true;
+                StateHasChanged();
+                return;
+            }
+
             await CartService.AddCartItems(cartItem);
         }
 
         await CartService.LoadCartItemCountAsync(cartItem);
+        selectedProduct = null;
     }
+
+    private async Task CloseCartWarningPopup(bool isConfirmed)
+    {
+        if (isConfirmed && selectedProduct != null)
+        {
+            if (locationService.IsGuestUser)
+            {
+                var guestCartItems = await CartService.GetGuestCartItemsAsync(new CartModel
+                    {
+                        GuestUserId = locationService.GuestUserId
+                    });
+
+                foreach (var item in guestCartItems)
+                {
+                    await CartService.RemoveCartItems(new CartModel
+                        {
+                            GuestUserId = locationService.GuestUserId,
+                            ProductId = item.ProductId
+                        });
+                }
+            }
+            else
+            {
+                var userCartItems = await CartService.GetCartItemsByUserId(new CartModel
+                    {
+                        UserId = locationService.UserId
+                    });
+
+                foreach (var item in userCartItems)
+                {
+                    await CartService.RemoveCartItems(new CartModel
+                        {
+                            CartItemId = item.CartItemId,
+                            UserId = locationService.UserId,
+                            ProductId = item.ProductId
+                        });
+                }
+            }
+
+           
+            await AddToCart(selectedProduct);
+        }
+
+       
+        showReplaceItemsPopup = false;
+        cartWarningMessage = string.Empty;
+        selectedProduct = null;
+
+        StateHasChanged();
+    }
+    
+
+    // private void CloseCartWarningPopup()
+    // {
+    //     showReplaceItemsPopup = false;
+    //     cartWarningMessage = string.Empty;
+    // }
+
+
+    // private async Task AddToCart(ProductRequestModel product)
+    // {
+    //     cartWarningMessage = string.Empty;
+
+    //     var cartItem = new CartModel
+    //         {
+    //             ProductId = product.ProductId,
+    //             Quantity = 1,
+    //             StoreId = product.StoreId,
+    //             UserId = locationService.IsGuestUser ? null : locationService.UserId,
+    //             GuestUserId = locationService.IsGuestUser ? locationService.GuestUserId : null
+    //         };
+
+    //     if (locationService.IsGuestUser)
+    //     {
+    //         var guestCartItems = await CartService.GetGuestCartItemsAsync(new CartModel { GuestUserId = cartItem.GuestUserId });
+
+    //         if (guestCartItems.Any())
+    //         {
+    //             var currentStoreId = guestCartItems.First().StoreId;
+    //             if (currentStoreId != cartItem.StoreId)
+    //             {
+    //                 cartWarningMessage = "⚠️  You can only order from one store at a time. Replace cart?";
+    //                 showReplaceItemsPopup = true;
+    //                 StateHasChanged();
+    //                 return;
+    //             }
+    //         }
+
+    //         await CartService.AddGuestCartItemAsync(cartItem);
+    //     }
+    //     else 
+    //     {
+    //         var userCartItems = await CartService.GetCartItemsByUserId(new CartModel { UserId = cartItem.UserId });
+
+    //         if (userCartItems.Any())
+    //         {
+    //             var currentStoreId = userCartItems.First().StoreId;
+    //             if (currentStoreId != cartItem.StoreId)
+    //             {
+    //                 cartWarningMessage = "⚠️ You can only order from one store at a time. Replace cart?";
+    //                 showReplaceItemsPopup = true;
+    //                 StateHasChanged();
+    //                 return;
+    //             }
+    //         }
+
+
+    //         await CartService.AddCartItems(cartItem);
+    //     }
+
+    //     await CartService.LoadCartItemCountAsync(cartItem);
+    //     selectedProduct = null;
+    // }
+    // private async Task CloseCartWarningPopup(bool isConfirmed)
+    // {
+    //     if (isConfirmed && selectedProduct != null)
+    //     {
+    //         if (locationService.IsGuestUser)
+    //         {
+    //             var guestCartItems = await CartService.GetGuestCartItemsAsync(new CartModel
+    //                 {
+    //                     GuestUserId = locationService.GuestUserId
+    //                 });
+
+    //             foreach (var item in guestCartItems)
+    //             {
+    //                 await CartService.RemoveCartItems(new CartModel
+    //                     {
+    //                         GuestUserId = locationService.GuestUserId,
+    //                         ProductId = item.ProductId
+    //                     });
+    //             }
+    //         }
+    //         else
+    //         {
+    //             var userCartItems = await CartService.GetCartItemsByUserId(new CartModel
+    //                 {
+    //                     UserId = locationService.UserId
+    //                 });
+
+    //             foreach (var item in userCartItems)
+    //             {
+    //                 await CartService.RemoveCartItems(new CartModel
+    //                     {
+    //                         UserId = locationService.UserId,
+    //                         ProductId = item.ProductId
+    //                     });
+    //             }
+
+    //         }
+
+            
+    //         await AddToCart(selectedProduct);
+    //     }
+
+        
+    //     selectedProduct = null;
+    //     showReplaceItemsPopup = false;
+    //     StateHasChanged();
+    // }
+    // private void OnCartWarningYes()
+    // {
+        
+    //     Console.WriteLine("Yes clicked");
+    //     showReplaceItemsPopup = false;
+    // }
+
+    // private void OnCartWarningNo()
+    // {
+        
+    //     Console.WriteLine("No clicked");
+    //     showReplaceItemsPopup = false;
+    // }
+
+    // private void CloseCartWarningPopup()
+    // {
+    //     showReplaceItemsPopup = false;
+    //     cartWarningMessage = string.Empty;
+
+    // }
+
+
+
+
+    // private string cartWarningMessage = string.Empty;
+    // private async Task AddToCart(ProductRequestModel product)
+    // {
+    //     cartWarningMessage = string.Empty;
+    //     var cartItem = new CartModel
+    //         {
+    //             ProductId = product.ProductId,
+    //             Quantity = 1,
+    //             StoreId = product.StoreId,
+    //                  UserId = locationService.IsGuestUser ? null : locationService.UserId,
+    //             GuestUserId = locationService.IsGuestUser ? locationService.GuestUserId : null
+
+    //         };
+
+    //     if (locationService.IsGuestUser)
+    //     {
+    //         cartItem.GuestUserId = locationService.GuestUserId;
+    //         await CartService.AddGuestCartItemAsync(cartItem);
+    //     }
+    //     else
+    //     {
+
+    //         cartItem.UserId = locationService.UserId;
+    //         await CartService.AddCartItems(cartItem);
+    //     }
+
+    //     await CartService.LoadCartItemCountAsync(cartItem);
+    // }
+
     private async Task<CartModel> BuildCartModel(string productId, int quantity)
     {
         return new CartModel
