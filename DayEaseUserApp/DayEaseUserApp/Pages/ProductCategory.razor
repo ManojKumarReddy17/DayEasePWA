@@ -1233,11 +1233,6 @@ else
 
     public void Dispose() => objRef?.Dispose();
 
-    // private void AddToCart(string productId, string name)
-    // {
-    //     CartService.AddToCart(productId, name, 1);
-    //     StateHasChanged();
-    // }
 
     private void OpenPopup(ProductRequestModel product)
     {
@@ -1352,167 +1347,6 @@ else
     }
     
 
-    // private void CloseCartWarningPopup()
-    // {
-    //     showReplaceItemsPopup = false;
-    //     cartWarningMessage = string.Empty;
-    // }
-
-
-    // private async Task AddToCart(ProductRequestModel product)
-    // {
-    //     cartWarningMessage = string.Empty;
-
-    //     var cartItem = new CartModel
-    //         {
-    //             ProductId = product.ProductId,
-    //             Quantity = 1,
-    //             StoreId = product.StoreId,
-    //             UserId = locationService.IsGuestUser ? null : locationService.UserId,
-    //             GuestUserId = locationService.IsGuestUser ? locationService.GuestUserId : null
-    //         };
-
-    //     if (locationService.IsGuestUser)
-    //     {
-    //         var guestCartItems = await CartService.GetGuestCartItemsAsync(new CartModel { GuestUserId = cartItem.GuestUserId });
-
-    //         if (guestCartItems.Any())
-    //         {
-    //             var currentStoreId = guestCartItems.First().StoreId;
-    //             if (currentStoreId != cartItem.StoreId)
-    //             {
-    //                 cartWarningMessage = "⚠️  You can only order from one store at a time. Replace cart?";
-    //                 showReplaceItemsPopup = true;
-    //                 StateHasChanged();
-    //                 return;
-    //             }
-    //         }
-
-    //         await CartService.AddGuestCartItemAsync(cartItem);
-    //     }
-    //     else 
-    //     {
-    //         var userCartItems = await CartService.GetCartItemsByUserId(new CartModel { UserId = cartItem.UserId });
-
-    //         if (userCartItems.Any())
-    //         {
-    //             var currentStoreId = userCartItems.First().StoreId;
-    //             if (currentStoreId != cartItem.StoreId)
-    //             {
-    //                 cartWarningMessage = "⚠️ You can only order from one store at a time. Replace cart?";
-    //                 showReplaceItemsPopup = true;
-    //                 StateHasChanged();
-    //                 return;
-    //             }
-    //         }
-
-
-    //         await CartService.AddCartItems(cartItem);
-    //     }
-
-    //     await CartService.LoadCartItemCountAsync(cartItem);
-    //     selectedProduct = null;
-    // }
-    // private async Task CloseCartWarningPopup(bool isConfirmed)
-    // {
-    //     if (isConfirmed && selectedProduct != null)
-    //     {
-    //         if (locationService.IsGuestUser)
-    //         {
-    //             var guestCartItems = await CartService.GetGuestCartItemsAsync(new CartModel
-    //                 {
-    //                     GuestUserId = locationService.GuestUserId
-    //                 });
-
-    //             foreach (var item in guestCartItems)
-    //             {
-    //                 await CartService.RemoveCartItems(new CartModel
-    //                     {
-    //                         GuestUserId = locationService.GuestUserId,
-    //                         ProductId = item.ProductId
-    //                     });
-    //             }
-    //         }
-    //         else
-    //         {
-    //             var userCartItems = await CartService.GetCartItemsByUserId(new CartModel
-    //                 {
-    //                     UserId = locationService.UserId
-    //                 });
-
-    //             foreach (var item in userCartItems)
-    //             {
-    //                 await CartService.RemoveCartItems(new CartModel
-    //                     {
-    //                         UserId = locationService.UserId,
-    //                         ProductId = item.ProductId
-    //                     });
-    //             }
-
-    //         }
-
-            
-    //         await AddToCart(selectedProduct);
-    //     }
-
-        
-    //     selectedProduct = null;
-    //     showReplaceItemsPopup = false;
-    //     StateHasChanged();
-    // }
-    // private void OnCartWarningYes()
-    // {
-        
-    //     Console.WriteLine("Yes clicked");
-    //     showReplaceItemsPopup = false;
-    // }
-
-    // private void OnCartWarningNo()
-    // {
-        
-    //     Console.WriteLine("No clicked");
-    //     showReplaceItemsPopup = false;
-    // }
-
-    // private void CloseCartWarningPopup()
-    // {
-    //     showReplaceItemsPopup = false;
-    //     cartWarningMessage = string.Empty;
-
-    // }
-
-
-
-
-    // private string cartWarningMessage = string.Empty;
-    // private async Task AddToCart(ProductRequestModel product)
-    // {
-    //     cartWarningMessage = string.Empty;
-    //     var cartItem = new CartModel
-    //         {
-    //             ProductId = product.ProductId,
-    //             Quantity = 1,
-    //             StoreId = product.StoreId,
-    //                  UserId = locationService.IsGuestUser ? null : locationService.UserId,
-    //             GuestUserId = locationService.IsGuestUser ? locationService.GuestUserId : null
-
-    //         };
-
-    //     if (locationService.IsGuestUser)
-    //     {
-    //         cartItem.GuestUserId = locationService.GuestUserId;
-    //         await CartService.AddGuestCartItemAsync(cartItem);
-    //     }
-    //     else
-    //     {
-
-    //         cartItem.UserId = locationService.UserId;
-    //         await CartService.AddCartItems(cartItem);
-    //     }
-
-    //     await CartService.LoadCartItemCountAsync(cartItem);
-    // }
-
     private async Task<CartModel> BuildCartModel(string productId, int quantity)
     {
         return new CartModel
@@ -1561,7 +1395,7 @@ else
 
             if (increase)
                 CartService.IncreaseQuantity(productId);
-            else
+            else 
                 CartService.DecreaseQuantity(productId);
 
             if (updatedQuantity < 1)
