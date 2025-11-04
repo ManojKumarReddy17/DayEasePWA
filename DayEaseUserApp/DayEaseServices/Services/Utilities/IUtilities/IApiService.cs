@@ -8,21 +8,13 @@ namespace Registration.IApiService
     {
 
         Task<TResponse> PostAsync<TRequest, TResponse>(string endpoint, TRequest request);
-        Task<string> ValidateOtp<TRequest, TResponse>(string url, TRequest data);
-        Task<string> UserRegister<TRequest, TResponse>(string url, TRequest data);
-        Task<TResponse> Post<TRequest, TResponse>(string endpoint, TRequest request);
+        //Task<string> ValidateOtp<TRequest, TResponse>(string url, TRequest data);
+        //Task<string> UserRegister<TRequest, TResponse>(string url, TRequest data);
+        //Task<TResponse> Post<TRequest, TResponse>(string endpoint, TRequest request);
         Task<TResponse> PostWithoutAuthAsync<TRequest, TResponse>(string endpoint, TRequest request);
         void SetAuthorizationHeader(string token);
         void RemoveAuthorizationHeader();
         
-
-        //product category 
-       
-      
-
-
-
-        Task<string> ForgotPassword<TRequest, TResponse>(string url, TRequest data);
     }
 }
 

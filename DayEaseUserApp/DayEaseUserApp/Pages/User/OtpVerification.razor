@@ -9,6 +9,9 @@
 @using DayEaseServices.Services.IServices
 @using Domain.RequestModels
 @using System.Text.Json
+@using Microsoft.JSInterop
+@using Microsoft.AspNetCore.Components.Web;
+
 
 <style>
     html, body {
@@ -312,7 +315,7 @@
 
                 };
 
-            var response = await RegistrationService.ValidateOtp<OtpVerificationRequest, string>(request);
+            var response = await RegistrationService.ValidateOtp(request);
 
             if (string.IsNullOrWhiteSpace(response))
             {

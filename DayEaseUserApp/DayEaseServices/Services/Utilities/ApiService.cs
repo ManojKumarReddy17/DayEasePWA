@@ -41,52 +41,6 @@ namespace Domain.Utilities
         }
 
 
-        public async Task<string> UserRegister<TRequest, TResponse>(string url, TRequest request)
-        {
-            var jsonContent = new StringContent(
-                JsonSerializer.Serialize(request),
-                Encoding.UTF8,
-                "application/json");
-
-            var response = await _httpclient.PostAsync($"{_settings.DayEase_API}/{url}", jsonContent);
-            response.EnsureSuccessStatusCode();
-
-            return await response.Content.ReadAsStringAsync();
-        }
-
-        public async Task<string> ValidateOtp<TRequest, TResponse>(string url, TRequest request)
-        {
-            var jsonContent = new StringContent(
-                JsonSerializer.Serialize(request),
-                Encoding.UTF8,
-                "application/json");
-
-            var response = await _httpclient.PostAsync($"{_settings.DayEase_API}/{url}", jsonContent);
-            response.EnsureSuccessStatusCode();
-
-            return await response.Content.ReadAsStringAsync();
-        }
-  public async Task<string> ForgotPassword<TRequest, TResponse>(string url, TRequest request)
-        {
-            var jsonContent = new StringContent(
-               JsonSerializer.Serialize(request),
-               Encoding.UTF8,
-               "application/json");
-
-            var response = await _httpclient.PostAsync($"{_settings.DayEase_API}/{url}", jsonContent);
-            response.EnsureSuccessStatusCode();
-
-            return await response.Content.ReadAsStringAsync();
-        }
-
-        public async Task<TResponse> Post<TRequest, TResponse>(string endpoint, TRequest request)
-        {
-            var jsonContent = new StringContent(JsonSerializer.Serialize(request), Encoding.UTF8, "application/json");
-            var response = await _httpclient.PostAsync($"{_settings.DayEase_API}{endpoint}", jsonContent);
-            var jsonString = await response.Content.ReadAsStringAsync();
-            return JsonSerializer.Deserialize<TResponse>(jsonString);
-        }
-
         public async Task<TResponse> PostWithoutAuthAsync<TRequest, TResponse>(string endpoint, TRequest request)
         {
             var jsonContent = new StringContent(JsonSerializer.Serialize(request), Encoding.UTF8, "application/json");

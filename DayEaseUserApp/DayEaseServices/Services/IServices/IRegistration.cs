@@ -11,8 +11,8 @@ namespace DayEaseServices.Services.IServices
 {
     public interface IRegistration
     {
-        Task<string> PostAsync<TRequest,TResponse>(MobileNumberRequest model);
-        Task<string> ValidateOtp<TRequest, TRespnse>(OtpVerificationRequest model);
+        Task<string> PostAsync(MobileNumberRequest model);
+        Task<string> ValidateOtp(OtpVerificationRequest model);
         Task<List<StateModel>> GetStatesAsync();
         Task<List<CityModel>> GetCityAsync(CityModel StateId);
         Task<List<AreaModel>> GetAreaByCityId(AreaModel cityModel);
@@ -20,7 +20,7 @@ namespace DayEaseServices.Services.IServices
 
         Task<string> RegisterUserAsync(UserModel userModel);
         Task<UserResponseModel> UpdateUser(UserModel userModel);
-        Task<string>ForgotPassword<TRequest,TResponse>(ForgotPasswordModel model);
+        Task<string>ForgotPassword(ForgotPasswordModel model);
     }
 
 }

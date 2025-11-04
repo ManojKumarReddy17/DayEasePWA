@@ -288,7 +288,7 @@
 
             var request = new OrderRequestModel { UserId = UserLocation.UserId };
 
-            OrderDetails = await orderservices.OrderDetailsbyUser<OrderRequestModel, OrderResponseModel>(request);
+            OrderDetails = await orderservices.OrderDetailsbyUser(request);
 
         }
         catch

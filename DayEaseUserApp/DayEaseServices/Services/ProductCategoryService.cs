@@ -12,43 +12,20 @@ using System.Threading.Tasks;
 
 namespace DayEaseServices.Services
 {
-    public class ProductCategoryService : IProductCategory
+    public class ProductCategoryService(IApiService _apiservice) : IProductCategory
     {
-        private readonly IApiService _apiservice;
-        public ProductCategoryService(IApiService apiservice)
-        {
-            _apiservice = apiservice;
-        }
-
-
-
 
         public async Task<List<ProductCategoriesModel>> GetProductsByCategoryId(ProductCategoriesModel model)
-        {
-            string endpoint = "ProductCategory/GetProductCategoryById";
-            var response = await _apiservice.PostAsync<ProductCategoriesModel, List<ProductCategoriesModel>>(endpoint, model);
-            return response;
-        }
+    => await _apiservice.PostAsync<ProductCategoriesModel, List<ProductCategoriesModel>>
+       ("ProductCategory/GetProductCategoryById", model);
 
         public async Task<List<ProductCategoryMapDto>> GetProductcategoByStoreId(StoreProdCategoryRequestModel model)
-        {
-            string endpoint = "ProductCategories/GetStoreProductCategorybyId";
-            var response = await _apiservice.PostAsync<StoreProdCategoryRequestModel, List<ProductCategoryMapDto>>(endpoint, model);
-
-            return response;
-        }
-
-
+            => await _apiservice.PostAsync<StoreProdCategoryRequestModel, List<ProductCategoryMapDto>>
+               ("ProductCategories/GetStoreProductCategorybyId", model);
 
         public async Task<MysqlResponse<Pagination<ProductRequestModel>>> GetProductsByStoreId(PaginationQueryInput model)
-        {
-            string endpoint = "Products/GetProductsByStoreId";
-            var details = await _apiservice.PostAsync<PaginationQueryInput, MysqlResponse<Pagination<ProductRequestModel>>>(
-                endpoint,
-                model
-            );
-            return details;
-        }
+            => await _apiservice.PostAsync<PaginationQueryInput, MysqlResponse<Pagination<ProductRequestModel>>>
+               ("Products/GetProductsByStoreId", model);
 
 
     }

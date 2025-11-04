@@ -573,7 +573,7 @@
 
         try
         {
-            var order = await OrderService.CreateAsync<OrderRequestModel, PlaceOrderResponseModel>(orderRequest);
+            var order = await OrderService.CreateAsync(orderRequest);
             if (order.Success)
             {
                 // CartState.ClearCart();

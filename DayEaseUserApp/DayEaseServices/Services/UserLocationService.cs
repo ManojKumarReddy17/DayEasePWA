@@ -6,14 +6,8 @@ using System.Threading.Tasks;
 
 namespace DayEaseServices.Services
 {
-    public class UserLocationService : IUserLocationService
+    public class UserLocationService(AuthenticationStateProvider _authProvider) : IUserLocationService
     {
-        private readonly AuthenticationStateProvider _authProvider;
-
-        public UserLocationService(AuthenticationStateProvider authProvider)
-        {
-            _authProvider = authProvider;
-        }
 
         public async Task<UserLocationState> GetUserLocationAsync()
         {
