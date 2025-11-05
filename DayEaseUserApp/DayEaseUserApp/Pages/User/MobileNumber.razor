@@ -274,7 +274,7 @@
 
                 };
 
-            var response = await RegistrationService.PostAsync<MobileNumberRequest, string>(request);
+            var response = await RegistrationService.PostAsync(request);
 
             if (!string.IsNullOrEmpty(response))
             {

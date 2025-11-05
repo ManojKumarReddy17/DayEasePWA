@@ -11,11 +11,11 @@ namespace DayEaseServices.Services.IServices
     public interface IOrderService
     {
        
-        Task<PlaceOrderResponseModel> CreateAsync<TRequest, TResponse>(OrderRequestModel model);
-        Task<OrderResponseModel> GetOrder<TRequest, TResponse>(GetOrderDetailsByIdRequestModel model);
+        Task<PlaceOrderResponseModel> CreateAsync(OrderRequestModel model);
+        Task<OrderResponseModel> GetOrder(GetOrderDetailsByIdRequestModel model);
         
-        Task<List<OrderRequestModel>> OrderDetailsbyUser<TRequest, TResponse>(OrderRequestModel model);
-        Task<OrderStatusResponse> OrderStatus<TRequest,TResponse>(UpdateOrderStatusRequest model);
+        Task<List<OrderRequestModel>> OrderDetailsbyUser(OrderRequestModel model);
+        Task<OrderStatusResponse> OrderStatus(UpdateOrderStatusRequest model);
     }
 
 }

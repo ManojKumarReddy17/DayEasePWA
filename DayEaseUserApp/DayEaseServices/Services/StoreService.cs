@@ -10,22 +10,11 @@ using Registration.IApiService;
 
 namespace DayEaseServices.Services
 {
-    public class StoreService : IStoreService
+    public class StoreService(IApiService _apiService) : IStoreService
     {
-        private readonly IApiService _apiService;
 
-        public StoreService(IApiService apiService)
-        {
-            _apiService = apiService;
-        }
-
-        public async Task<NearbyStoresResponse> GetNearbyStoresAsync(NearbyStoresRequest request)
-        {
-            
-            var response = await _apiService.PostAsync<NearbyStoresRequest, NearbyStoresResponse>("User/GetStoresbyDistance", request);
-
-            return response;
-        }
+        public async Task<NearbyStoresResponse> GetNearbyStoresAsync(NearbyStoresRequest request)=> await _apiService.PostAsync<NearbyStoresRequest, NearbyStoresResponse>("User/GetStoresbyDistance", request);
+       
     }
 
 }

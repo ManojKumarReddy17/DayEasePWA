@@ -12,17 +12,8 @@ using System.Threading.Tasks;
 
 namespace DayEaseServices.Services
 {
-    public class CustomAuthStateProvider : AuthenticationStateProvider
+    public class CustomAuthStateProvider(ILocalStorageService _localStorage, UserLocationState _userLocationState) : AuthenticationStateProvider
     {
-        private readonly ILocalStorageService _localStorage;
-        private readonly UserLocationState _userLocationState;
-
-
-        public CustomAuthStateProvider(ILocalStorageService localStorage, UserLocationState userLocationState)
-        {
-            _localStorage = localStorage;
-            _userLocationState = userLocationState;
-        }
 
         public override async Task<AuthenticationState> GetAuthenticationStateAsync()
         {
