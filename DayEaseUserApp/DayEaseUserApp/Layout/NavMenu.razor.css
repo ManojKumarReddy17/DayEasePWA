@@ -1,12 +1,22 @@
 /* === HEADER === */
 .top-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 10px 16px;
     background-color: white;
     border-bottom: 1px solid #ccc;
-    height :60px;
+    height: 60px;
+    z-index: 1002; /* Keep above sidebar and content */
+}
+
+
+.content-area {
+    padding-top: 70px; /* or whatever your top-bar height is */
 }
 
 .hamburger {
@@ -101,9 +111,9 @@
 /* === SIDEBAR === */
 .sidebar-menu {
     width: 250px;
-    height: 100vh;
+    height: calc(100vh - 60px); /* subtract header height */
     position: fixed;
-    top: 0;
+    top: 60px; /* align just below fixed header */
     left: 0;
     background-color: #007bff;
     color: white;
