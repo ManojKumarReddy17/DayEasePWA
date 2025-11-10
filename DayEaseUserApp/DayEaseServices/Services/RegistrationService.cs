@@ -43,7 +43,7 @@ public class RegistrationService (IApiService _apiservice): IRegistration
     public async Task<UserResponseModel> UpdateUser(UserModel userModel)
      =>  await _apiservice.PostAsync<UserModel, UserResponseModel>("User/UpdateUser", userModel);
 
-    public async Task<string> ForgotPassword(ForgotPasswordModel model)
-        => await _apiservice.PostAsync<ForgotPasswordModel, string>("User/ForgotPassword", model);
+    public async Task<UserOtpResponseModel> ForgotPassword(ForgotPasswordModel model)
+        => await _apiservice.PostAsync<ForgotPasswordModel, UserOtpResponseModel>("User/ForgotPassword", model);
 
 }
