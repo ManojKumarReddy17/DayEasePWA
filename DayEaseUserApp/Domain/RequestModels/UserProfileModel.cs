@@ -1,15 +1,13 @@
-﻿using Amazon.DynamoDBv2.DataModel;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-
 namespace Domain.RequestModels
 {
-    public class UserModel
+    public class UserProfileModel
     {
         public string PhoneNumber { get; set; }
 
@@ -47,13 +45,7 @@ namespace Domain.RequestModels
         public string Gender { get; set; }
 
         [Required(ErrorMessage = "Address is required")]
-    
+
         public string Address { get; set; }
-
-        [Required(ErrorMessage = "Password is required")]
-        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,15}$",
-         ErrorMessage = "Password must be 7–15 characters and include uppercase, lowercase, number, and special character.")]
-        public string Password { get; set; }
     }
-
 }

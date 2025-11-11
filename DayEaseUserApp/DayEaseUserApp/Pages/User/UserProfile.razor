@@ -173,36 +173,36 @@
 
         <div class="form-group">
             <label>First Name</label>
-            <InputText @bind-Value="userModel.FName" class="input" />
-            <ValidationMessage For="@(() => userModel.FName)" />
+            <InputText @bind-Value="UserProfileModel.FName" class="input" />
+            <ValidationMessage For="@(() => UserProfileModel.FName)" />
         </div>
 
         <div class="form-group">
             <label>Last Name</label>
-            <InputText @bind-Value="userModel.LName" class="input" />
-            <ValidationMessage For="@(() => userModel.LName)" />
+            <InputText @bind-Value="UserProfileModel.LName" class="input" />
+            <ValidationMessage For="@(() => UserProfileModel.LName)" />
         </div>
 
         <div class="form-group">
             <label>Phone Number</label>
-            <InputText @bind-Value="userModel.PhoneNumber" class="input" disabled />
+            <InputText @bind-Value="UserProfileModel.PhoneNumber" class="input" disabled />
         </div>
 
 
         <div class="form-group">
             <label>Gender</label>
-            <InputSelect @bind-Value="userModel.Gender" class="input">
+            <InputSelect @bind-Value="UserProfileModel.Gender" class="input">
                 <option value="">-- Select Gender --</option>
                 <option>Male</option>
                 <option>Female</option>
 
             </InputSelect>
-            <ValidationMessage For="@(() => userModel.Gender)" />
+            <ValidationMessage For="@(() => UserProfileModel.Gender)" />
         </div>
 
         <div class="form-group">
             <label>Country</label>
-            <InputText @bind-Value="userModel.Country" class="input" disabled />
+            <InputText @bind-Value="UserProfileModel.Country" class="input" disabled />
         </div>
         <div class="form-group">
             <label>State</label>
@@ -213,7 +213,7 @@
                     <option value="@state.StateId">@state.StateName</option>
                 }
             </InputSelect>
-            <ValidationMessage For="@(() => userModel.State)" />
+            <ValidationMessage For="@(() => UserProfileModel.State)" />
         </div>
         <div class="form-group">
             <label>City</label>
@@ -224,7 +224,7 @@
                     <option value="@city.CityId">@city.CityName</option>
                 }
             </InputSelect>
-            <ValidationMessage For="@(() => userModel.City)" />
+            <ValidationMessage For="@(() => UserProfileModel.City)" />
         </div>
 
         <div class="form-group">
@@ -236,39 +236,39 @@
                     <option value="@location.AreaId">@location.AreaName</option>
                 }
             </InputSelect>
-            <ValidationMessage For="@(() => userModel.Location)" />
+            <ValidationMessage For="@(() => UserProfileModel.Location)" />
         </div>
 
         <div class="form-group">
             <label>Sublocation (Area)</label>
-            <InputSelect @bind-Value="userModel.Sublocation" class="input">
+            <InputSelect @bind-Value="UserProfileModel.Sublocation" class="input">
                 <option value="">-- Select Sublocation --</option>
                 @foreach (var sub in subareaList)
                 {
                     <option value="@sub.SubAreaId">@sub.SubAreaName</option>
                 }
             </InputSelect>
-            <ValidationMessage For="@(() => userModel.Sublocation)" />
+            <ValidationMessage For="@(() => UserProfileModel.Sublocation)" />
         </div>
 
         <div class="form-group">
             <label>Latitude</label>
-            <InputText @bind-Value="userModel.Latitude" class="input" />
-            <ValidationMessage For="@(() => userModel.Latitude)" />
+            <InputText @bind-Value="UserProfileModel.Latitude" class="input" />
+            <ValidationMessage For="@(() => UserProfileModel.Latitude)" />
         </div>
 
         <div class="form-group">
             <label>Longitude</label>
-            <InputText @bind-Value="userModel.Longitude" class="input" />
-            <ValidationMessage For="@(() => userModel.Longitude)" />
+            <InputText @bind-Value="UserProfileModel.Longitude" class="input" />
+            <ValidationMessage For="@(() => UserProfileModel.Longitude)" />
         </div>
 
 
 
         <div class="form-group">
             <label>Address</label>
-            <InputTextArea @bind-Value="userModel.Address" class="input" />
-            <ValidationMessage For="@(() => userModel.Address)" />
+            <InputTextArea @bind-Value="UserProfileModel.Address" class="input" />
+            <ValidationMessage For="@(() => UserProfileModel.Address)" />
         </div>
 
         <!-- Update Button -->
@@ -304,7 +304,7 @@
 }
 
 @code {
-    private UserModel userModel = new();
+    private UserProfileModel UserProfileModel = new();
     private List<StateModel> stateList = new();
     private List<CityModel> cityList = new();
     private List<AreaModel> areaList = new();
@@ -320,15 +320,15 @@
 
     private string SelectedStateId
     {
-        get => userModel.State;
+        get => UserProfileModel.State;
         set
         {
-            if (userModel.State != value)
+            if (UserProfileModel.State != value)
             {
-                userModel.State = value;
-                userModel.City = null;
-                userModel.Location = null;
-                userModel.Sublocation = null;
+                UserProfileModel.State = value;
+                UserProfileModel.City = null;
+                UserProfileModel.Location = null;
+                UserProfileModel.Sublocation = null;
                 _ = LoadCitiesAsync();
             }
         }
@@ -336,14 +336,14 @@
 
     private string SelectedCityId
     {
-        get => userModel.City;
+        get => UserProfileModel.City;
         set
         {
-            if (userModel.City != value)
+            if (UserProfileModel.City != value)
             {
-                userModel.City = value;
-                userModel.Location = null;
-                userModel.Sublocation = null;
+                UserProfileModel.City = value;
+                UserProfileModel.Location = null;
+                UserProfileModel.Sublocation = null;
                 _ = LoadAreasAsync();
             }
         }
@@ -351,13 +351,13 @@
 
     private string SelectedAreaId
     {
-        get => userModel.Location;
+        get => UserProfileModel.Location;
         set
         {
-            if (userModel.Location != value)
+            if (UserProfileModel.Location != value)
             {
-                userModel.Location = value;
-                userModel.Sublocation = null;
+                UserProfileModel.Location = value;
+                UserProfileModel.Sublocation = null;
                 _ = LoadSubAreasAsync();
             }
         }
@@ -368,7 +368,7 @@
 
     protected override void OnInitialized()
     {
-        editContext = new EditContext(userModel);
+        editContext = new EditContext(UserProfileModel);
         editContext.OnFieldChanged += OnFieldChanged;
     }
 
@@ -380,29 +380,29 @@
         {
             var claims = JwtHelper.DecodePayload(jwtToken);
 
-            userModel.FName = claims.TryGetValue("FName", out var fname) ? fname?.ToString() : "";
-            userModel.LName = claims.TryGetValue("LName", out var lname) ? lname?.ToString() : "";
-            userModel.PhoneNumber = claims.TryGetValue("PhoneNumber", out var phone) ? phone?.ToString() : "";
-            userModel.Gender = claims.TryGetValue("Gender", out var gender) ? gender?.ToString() : "";
-            userModel.Country = claims.TryGetValue("Country", out var country) ? country?.ToString() : "";
-            userModel.State = claims.TryGetValue("State", out var state) ? state?.ToString() : "";
-            userModel.City = claims.TryGetValue("City", out var city) ? city?.ToString() : "";
-            userModel.Location = claims.TryGetValue("Location", out var location) ? location?.ToString() : "";
-            userModel.Sublocation = claims.TryGetValue("Sublocation", out var sublocation) ? sublocation?.ToString() : "";
-            userModel.Latitude = claims.TryGetValue("Latitude", out var lat) ? lat?.ToString() : "";
-            userModel.Longitude = claims.TryGetValue("Longitude", out var lng) ? lng?.ToString() : "";
-            userModel.Address = claims.TryGetValue("Address", out var address) ? address?.ToString() : "";
+            UserProfileModel.FName = claims.TryGetValue("FName", out var fname) ? fname?.ToString() : "";
+            UserProfileModel.LName = claims.TryGetValue("LName", out var lname) ? lname?.ToString() : "";
+            UserProfileModel.PhoneNumber = claims.TryGetValue("PhoneNumber", out var phone) ? phone?.ToString() : "";
+            UserProfileModel.Gender = claims.TryGetValue("Gender", out var gender) ? gender?.ToString() : "";
+            UserProfileModel.Country = claims.TryGetValue("Country", out var country) ? country?.ToString() : "";
+            UserProfileModel.State = claims.TryGetValue("State", out var state) ? state?.ToString() : "";
+            UserProfileModel.City = claims.TryGetValue("City", out var city) ? city?.ToString() : "";
+            UserProfileModel.Location = claims.TryGetValue("Location", out var location) ? location?.ToString() : "";
+            UserProfileModel.Sublocation = claims.TryGetValue("Sublocation", out var sublocation) ? sublocation?.ToString() : "";
+            UserProfileModel.Latitude = claims.TryGetValue("Latitude", out var lat) ? lat?.ToString() : "";
+            UserProfileModel.Longitude = claims.TryGetValue("Longitude", out var lng) ? lng?.ToString() : "";
+            UserProfileModel.Address = claims.TryGetValue("Address", out var address) ? address?.ToString() : "";
 
-            originalUserModel = JsonSerializer.Deserialize<UserModel>(JsonSerializer.Serialize(userModel));
+            originalUserModel = JsonSerializer.Deserialize<UserModel>(JsonSerializer.Serialize(UserProfileModel));
         }
 
         // Load dropdown data
         stateList = await RegistrationService.GetStatesAsync();
-        if (!string.IsNullOrWhiteSpace(userModel.State))
+        if (!string.IsNullOrWhiteSpace(UserProfileModel.State))
             await LoadCitiesAsync();
-        if (!string.IsNullOrWhiteSpace(userModel.City))
+        if (!string.IsNullOrWhiteSpace(UserProfileModel.City))
             await LoadAreasAsync();
-        if (!string.IsNullOrWhiteSpace(userModel.Location))
+        if (!string.IsNullOrWhiteSpace(UserProfileModel.Location))
             await LoadSubAreasAsync();
     }
 
@@ -411,7 +411,7 @@
 
     private void OnFieldChanged(object? sender, FieldChangedEventArgs e)
     {
-        IsFormUpdated = !JsonSerializer.Serialize(userModel)
+        IsFormUpdated = !JsonSerializer.Serialize(UserProfileModel)
             .Equals(JsonSerializer.Serialize(originalUserModel));
         StateHasChanged();
     }
@@ -426,18 +426,18 @@
         {
             try
             {
-                var response = await RegistrationService.UpdateUser(userModel);
+                var response = await RegistrationService.UpdateUser(UserProfileModel);
 
                 if (response != null && response.Success)
                 {
                     ShowUserExistsModal = true;
                     originalUserModel = JsonSerializer.Deserialize<UserModel>(
-                        JsonSerializer.Serialize(userModel)
+                        JsonSerializer.Serialize(UserProfileModel)
                     );
                     IsFormUpdated = false;
 
                     // reset validation state
-                    editContext = new EditContext(userModel);
+                    editContext = new EditContext(UserProfileModel);
                 }
                 else
                 {
@@ -470,8 +470,8 @@
 
     private async Task LoadCitiesAsync()
     {
-        if (!string.IsNullOrWhiteSpace(userModel.State))
-            cityList = await RegistrationService.GetCityAsync(new CityModel { StateId = userModel.State });
+        if (!string.IsNullOrWhiteSpace(UserProfileModel.State))
+            cityList = await RegistrationService.GetCityAsync(new CityModel { StateId = UserProfileModel.State });
         else
             cityList.Clear();
 
@@ -482,8 +482,8 @@
 
     private async Task LoadAreasAsync()
     {
-        if (!string.IsNullOrWhiteSpace(userModel.City))
-            areaList = await RegistrationService.GetAreaByCityId(new AreaModel { CityId = userModel.City });
+        if (!string.IsNullOrWhiteSpace(UserProfileModel.City))
+            areaList = await RegistrationService.GetAreaByCityId(new AreaModel { CityId = UserProfileModel.City });
         else
             areaList.Clear();
 
@@ -493,8 +493,8 @@
 
     private async Task LoadSubAreasAsync()
     {
-        if (!string.IsNullOrWhiteSpace(userModel.Location))
-            subareaList = await RegistrationService.GetSubAreaByAreaId(new SubAreaModel { AreaId = userModel.Location });
+        if (!string.IsNullOrWhiteSpace(UserProfileModel.Location))
+            subareaList = await RegistrationService.GetSubAreaByAreaId(new SubAreaModel { AreaId = UserProfileModel.Location });
         else
             subareaList.Clear();
 
