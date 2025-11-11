@@ -13,13 +13,13 @@ namespace Domain.RequestModels
     {
         public string PhoneNumber { get; set; }
 
-        //[Required(ErrorMessage = "First name is required")]
-        //[RegularExpression(@"^[A-Za-z\s]{1,20}$", ErrorMessage = "First name must be letters and spaces only")]
+        [Required(ErrorMessage = "First Name is required")]
+        [RegularExpression("^[A-Za-z]+$", ErrorMessage = "First Name must contain only letters")]
 
         public string FName { get; set; }
 
-        //[Required(ErrorMessage = "Last name is required")]
-        //[RegularExpression(@"^[A-Za-z\s]{1,20}$", ErrorMessage = "Last name can contain only letters and spaces")]
+        [Required(ErrorMessage = "First Name is required")]
+        [RegularExpression("^[A-Za-z]+$", ErrorMessage = "First Name must contain only letters")]
 
         public string LName { get; set; }
 
