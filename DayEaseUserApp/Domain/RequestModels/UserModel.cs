@@ -13,12 +13,12 @@ namespace Domain.RequestModels
     {
         public string PhoneNumber { get; set; }
 
-        [Required(ErrorMessage = "First name is required")]
+        //[Required(ErrorMessage = "First name is required")]
         //[RegularExpression(@"^[A-Za-z\s]{1,20}$", ErrorMessage = "First name must be letters and spaces only")]
 
         public string FName { get; set; }
 
-        [Required(ErrorMessage = "Last name is required")]
+        //[Required(ErrorMessage = "Last name is required")]
         //[RegularExpression(@"^[A-Za-z\s]{1,20}$", ErrorMessage = "Last name can contain only letters and spaces")]
 
         public string LName { get; set; }
@@ -50,9 +50,9 @@ namespace Domain.RequestModels
     
         public string Address { get; set; }
 
-        [Required(ErrorMessage = "Password is required")]
-        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,15}$",
-    ErrorMessage = "Password must be 7–15 characters and include uppercase, lowercase, number, and special character.")]
+        //[Required(ErrorMessage = "Password is required")]
+        //[RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,15}$",
+        // ErrorMessage = "Password must be 7–15 characters and include uppercase, lowercase, number, and special character.")]
         public string Password { get; set; }
     }
 

@@ -311,10 +311,12 @@
     private List<SubAreaModel> subareaList = new();
     private EditContext editContext;
     private bool ShowUserExistsModal = false;
-    // private bool isModified = false;
-    private UserModel originalUserModel = new(); // For comparison
+    private UserModel originalUserModel = new();
     private bool IsFormUpdated = false;
+    private List<string> validationErrors = new(); // to show detailed errors if needed
 
+
+    // ------------------ PROPERTY BINDINGS ------------------
 
     private string SelectedStateId
     {
@@ -362,55 +364,13 @@
     }
 
 
-
-    private void NavigateToLogin()
-    {
-        NavigationManager.NavigateTo("/highlightcompact");
-    }
+    // ------------------ INITIALIZATION ------------------
 
     protected override void OnInitialized()
     {
         editContext = new EditContext(userModel);
         editContext.OnFieldChanged += OnFieldChanged;
     }
-    // protected override void OnInitialized()
-    // {
-    //     editContext = new EditContext(userModel);
-    //     editContext.OnFieldChanged += (_, __) =>
-    //     {
-    //         isModified = true;
-    //         StateHasChanged();
-    //     };
-    // }
-    private void OnFieldChanged(object? sender, FieldChangedEventArgs e)
-    {
-        // Compare current model with original
-        IsFormUpdated = !JsonSerializer.Serialize(userModel).Equals(JsonSerializer.Serialize(originalUserModel));
-        StateHasChanged();
-    }
-    private async Task OnUpdateProfileClick()
-    {
-        if (!editContext.Validate())
-        {
-            // Proceed if form is valid
-            var response = await RegistrationService.UpdateUser(userModel);
-
-            if (response.Success == true)
-            {
-
-                ShowUserExistsModal = true;
-                originalUserModel = JsonSerializer.Deserialize<UserModel>(JsonSerializer.Serialize(userModel));
-                IsFormUpdated = false;
-
-            }
-        }
-        else
-        {
-            Console.WriteLine("Form validation failed.");
-        }
-
-    }
-
 
     protected override async Task OnInitializedAsync()
     {
@@ -436,24 +396,77 @@
             originalUserModel = JsonSerializer.Deserialize<UserModel>(JsonSerializer.Serialize(userModel));
         }
 
-        // Load all dropdown data
+        // Load dropdown data
         stateList = await RegistrationService.GetStatesAsync();
         if (!string.IsNullOrWhiteSpace(userModel.State))
-        {
             await LoadCitiesAsync();
-        }
-
         if (!string.IsNullOrWhiteSpace(userModel.City))
-        {
             await LoadAreasAsync();
-        }
-
         if (!string.IsNullOrWhiteSpace(userModel.Location))
-        {
             await LoadSubAreasAsync();
+    }
+
+
+    // ------------------ EVENT HANDLERS ------------------
+
+    private void OnFieldChanged(object? sender, FieldChangedEventArgs e)
+    {
+        IsFormUpdated = !JsonSerializer.Serialize(userModel)
+            .Equals(JsonSerializer.Serialize(originalUserModel));
+        StateHasChanged();
+    }
+
+
+    private async Task OnUpdateProfileClick()
+    {
+        validationErrors.Clear();
+
+        // ✅ Correct validation condition
+        if (editContext.Validate())
+        {
+            try
+            {
+                var response = await RegistrationService.UpdateUser(userModel);
+
+                if (response != null && response.Success)
+                {
+                    ShowUserExistsModal = true;
+                    originalUserModel = JsonSerializer.Deserialize<UserModel>(
+                        JsonSerializer.Serialize(userModel)
+                    );
+                    IsFormUpdated = false;
+
+                    // reset validation state
+                    editContext = new EditContext(userModel);
+                }
+                else
+                {
+                    var errorMsg = response?.Message ?? "Update failed. Please try again.";
+                    validationErrors.Add(errorMsg);
+                    Console.WriteLine("UpdateUser failed: " + errorMsg);
+                }
+            }
+            catch (Exception ex)
+            {
+                validationErrors.Add("Exception while updating profile: " + ex.Message);
+                Console.WriteLine("Exception: " + ex);
+            }
+        }
+        else
+        {
+            validationErrors = editContext.GetValidationMessages().ToList();
+            Console.WriteLine("Form validation failed: " + string.Join(", ", validationErrors));
         }
     }
 
+
+    private void NavigateToLogin()
+    {
+        NavigationManager.NavigateTo("/highlightcompact");
+    }
+
+
+    // ------------------ DROPDOWN LOADERS ------------------
 
     private async Task LoadCitiesAsync()
     {
@@ -489,6 +502,8 @@
     }
 
 
+    // ------------------ JWT HELPER ------------------
+
     public static class JwtHelper
     {
         public static Dictionary<string, object> DecodePayload(string token)
@@ -500,20 +515,15 @@
             if (parts.Length != 3)
                 throw new ArgumentException("Invalid JWT token format.");
 
-            string payload = parts[1];
-
-            payload = PadBase64(payload);
-
+            string payload = PadBase64(parts[1]);
             var jsonBytes = Convert.FromBase64String(payload);
             var json = Encoding.UTF8.GetString(jsonBytes);
 
-            var result = JsonSerializer.Deserialize<Dictionary<string, object>>(json);
-            return result!;
+            return JsonSerializer.Deserialize<Dictionary<string, object>>(json)!;
         }
 
         private static string PadBase64(string base64)
         {
-            // JWT base64 strings are often missing padding characters
             switch (base64.Length % 4)
             {
                 case 2: return base64 + "==";
@@ -524,3 +534,4 @@
         }
     }
 }
+
