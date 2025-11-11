@@ -19,7 +19,7 @@ namespace DayEaseServices.Services.IServices
         Task<List<SubAreaModel>> GetSubAreaByAreaId(SubAreaModel areaModel);
 
         Task<string> RegisterUserAsync(UserModel userModel);
-        Task<UserResponseModel> UpdateUser(UserModel userModel);
+        Task<UserResponseModel> UpdateUser(UserProfileModel UserProfileModel);
         Task<UserOtpResponseModel>ForgotPassword(ForgotPasswordModel model);
     }
 

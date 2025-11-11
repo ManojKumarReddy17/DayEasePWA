@@ -1,18 +1,9 @@
-﻿using Amazon.Runtime.Internal;
-using Domain.RequestModels;
-using Domain.ResponseModels;
+﻿using Domain.RequestModels;
 using Microsoft.Extensions.Options;
 using Registration.IApiService;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace Domain.Utilities
 {
@@ -28,10 +19,7 @@ namespace Domain.Utilities
         }
         public async Task<TResponse> PostAsync<TRequest, TResponse>(string endpoint, TRequest request)
         {
-            var jsonContent = new StringContent(
-                System.Text.Json.JsonSerializer.Serialize(request),
-                System.Text.Encoding.UTF8,
-                "application/json");
+            var jsonContent = new StringContent(JsonSerializer.Serialize(request), Encoding.UTF8, "application/json");
 
             var response = await _httpclient.PostAsync($"{_settings.DayEase_API}/{endpoint}", jsonContent);
             response.EnsureSuccessStatusCode();
