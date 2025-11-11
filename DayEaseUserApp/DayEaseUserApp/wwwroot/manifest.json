@@ -1,7 +1,7 @@
 {
   "name": "DayEaseUser App",
   "short_name": "DayEaseUser",
-  "start_url": "/mobile-number",
+  "start_url": "/Login",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#000000",
