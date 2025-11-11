@@ -49,22 +49,25 @@
         <img src="images/Day-Ease-logo-black.png" alt="DayEase Logo" class="sidebar-logo" />
     </div>
     <nav class="sidebar-nav">
-        <NavLink class="nav-link border-bottom py-3 text-white" href="MyOrders" style="padding-left: 4rem;">
+        <NavLink class="nav-link border-bottom py-3 text-white" href="highlightcompact" style="padding-left: 4rem;" @onclick="ToggleNavMenu">
+            <i class="bi bi-house me-2"></i> Home
+        </NavLink>
+        <NavLink class="nav-link border-bottom py-3 text-white" href="MyOrders" style="padding-left: 4rem;" @onclick="ToggleNavMenu">
             <i class="bi bi-receipt me-2"></i> MyOrders
         </NavLink>
-        <NavLink class="nav-link border-bottom py-3 text-white" href="/user-profile" style="padding-left: 4rem;">
+        <NavLink class="nav-link border-bottom py-3 text-white" href="/user-profile" style="padding-left: 4rem;" @onclick="ToggleNavMenu">
             <i class="bi bi-person me-2"></i> Profile
         </NavLink>
-        <NavLink class="nav-link border-bottom py-3 text-white" href="stores" style="padding-left: 4rem;">
+        <NavLink class="nav-link border-bottom py-3 text-white" href="stores" style="padding-left: 4rem;" @onclick="ToggleNavMenu">
             <i class="bi bi-shop me-2"></i> Stores
         </NavLink>
-        <NavLink class="nav-link border-bottom py-3 text-white" href="support" style="padding-left: 4rem;">
+        <NavLink class="nav-link border-bottom py-3 text-white" href="support" style="padding-left: 4rem;" @onclick="ToggleNavMenu">
             <i class="bi bi-headset me-2"></i> Support
         </NavLink>
-        <NavLink class="nav-link border-bottom py-3 text-white" href="about-us" style="padding-left: 4rem;">
+        <NavLink class="nav-link border-bottom py-3 text-white" href="about-us" style="padding-left: 4rem;" @onclick="ToggleNavMenu">
             <i class="bi bi-chat-dots"></i> About Us
         </NavLink>
-        <NavLink class="nav-link border-bottom py-3 text-white" href="/wallet" style="padding-left: 4rem;">
+        <NavLink class="nav-link border-bottom py-3 text-white" href="/wallet" style="padding-left: 4rem;" @onclick="ToggleNavMenu">
             <i class="bi bi-wallet2 me-2"></i> Wallet
         </NavLink>
 
