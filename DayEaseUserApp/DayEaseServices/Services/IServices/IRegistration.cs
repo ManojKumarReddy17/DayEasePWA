@@ -20,7 +20,7 @@ namespace DayEaseServices.Services.IServices
 
         Task<string> RegisterUserAsync(UserModel userModel);
         Task<UserResponseModel> UpdateUser(UserModel userModel);
-        Task<string>ForgotPassword(ForgotPasswordModel model);
+        Task<UserOtpResponseModel>ForgotPassword(ForgotPasswordModel model);
     }
 
 }
