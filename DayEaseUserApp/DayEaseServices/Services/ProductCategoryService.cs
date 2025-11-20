@@ -1,13 +1,14 @@
-﻿using DayEaseServices.Services.IServices;
-using Domain.RequestModels;
-using Domain.ResponseModels;
-using Registration.IApiService;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using DayEaseServices.Services.IServices;
+using Domain.RequestModels;
+using Domain.ResponseModels;
+using Domain.Utilities;
+using Registration.IApiService;
 
 
 namespace DayEaseServices.Services
@@ -27,6 +28,10 @@ namespace DayEaseServices.Services
             => await _apiservice.PostAsync<PaginationQueryInput, MysqlResponse<Pagination<ProductRequestModel>>>
                ("Products/GetProductsByStoreId", model);
 
+        public async Task<MysqlResponse<Pagination<ProductRequestModel>>> SearchProductsAsync(ProductSearchModel request)
+        => await _apiservice.PostAsync<ProductSearchModel, MysqlResponse<Pagination<ProductRequestModel>>>
+            ("SearchStoreProducts", request);
+        
 
     }
 }

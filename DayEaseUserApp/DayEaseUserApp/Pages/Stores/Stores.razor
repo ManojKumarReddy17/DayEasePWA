@@ -197,22 +197,37 @@ else if (NearbyStores.Any())
     private bool isLoading = true;
     private UserLocationState UserLocation;
 
-    protected override async Task OnInitializedAsync()
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        UserLocation = await UserLocationService.GetUserLocationAsync();
-        await FetchStoresAsync();
+        if (firstRender)
+        {
+            isLoading = true;
+            StateHasChanged();
+
+            UserLocation = await UserLocationService.GetUserLocationAsync();
+
+            await FetchStoresAsync();
+
+            isLoading = false;
+            StateHasChanged();
+        }
     }
 
     private async Task FetchStoresAsync()
     {
-        isLoading = true;
         try
         {
+            // Fix: Convert Latitude and Longitude to double before comparison
+            if (!double.TryParse(UserLocation.Latitude, out var lat) || !double.TryParse(UserLocation.Longitude, out var lng) || lat == 0 || lng == 0)
+            {
+                ErrorMessage = "Unable to fetch location.";
+                return;
+            }
+
             var request = new NearbyStoresRequest
             {
-                AreaId = UserLocation.AreaId,
-                Latitude = UserLocation.Latitude,
-                Longitude = UserLocation.Longitude
+                Latitude = lat.ToString(),
+                Longitude = lng.ToString()
             };
 
             var apiResponse = await StoreService.GetNearbyStoresAsync(request);
@@ -224,8 +239,8 @@ else if (NearbyStores.Any())
                     StoreId = s.StoreId,
                     StoreName = s.StoreName,
                     DistanceInKm = Math.Round(s.Distance, 2),
-                    Products = s.Products,
-                    SpecialOffer = $"{s.Products.Max(p => p.Discount)} off!"
+                    Products = s.Products ?? new List<ProductModel>(),
+                    SpecialOffer = $"{s.Products?.Max(p => p.Discount) ?? 0}% off!"
                 }).ToList();
             }
             else
@@ -237,6 +252,6 @@ else if (NearbyStores.Any())
         {
             ErrorMessage = $"Error fetching stores: {ex.Message}";
         }
-        isLoading = false;
     }
+
 }
