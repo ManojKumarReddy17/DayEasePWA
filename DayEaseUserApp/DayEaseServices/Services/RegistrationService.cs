@@ -17,7 +17,8 @@ public class RegistrationService (IApiService _apiservice): IRegistration
 {
 
     public async Task<string> PostAsync(MobileNumberRequest model)=> await _apiservice.PostAsync<MobileNumberRequest, string>("User/OTPInitiate", model);
-   
+
+    public async Task<string> ResendOtp(MobileNumberRequest model) => await _apiservice.PostAsync<MobileNumberRequest, string>("User/OTPResend", model);
 
     public async Task<string> RegisterUserAsync(UserModel userModel)=> await _apiservice.PostAsync<UserModel, string>("User/Register", userModel);
 

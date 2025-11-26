@@ -104,6 +104,21 @@
         box-shadow: 0 0 5px rgba(0,0,0,0.2);
     }
 
+    .resend-wrapper {
+        display: flex;
+        justify-content: flex-end; /* move to right side */
+        margin-top: 10px;
+        margin-bottom: 5px; /* space above Verify button */
+        width: 100%;
+    }
+
+    .resend-link {
+        font-size: 16px;
+        color: #ffffff;
+        text-decoration: underline;
+        cursor: pointer;
+        font-weight: 600;
+    }
     .btn-primary {
         width: 100%;
         padding: 14px;
@@ -114,8 +129,9 @@
         color: white;
         font-weight: bold;
         cursor: pointer;
+        margin-top:20px;
     }
-
+    
         .btn-primary:hover {
             background-color: #009edb;
         }
@@ -165,7 +181,7 @@
         }
 
         .form-control,
-        .btn-primary {
+        .btn-primary{
             font-size: 0.9rem;
         }
     }
@@ -184,13 +200,19 @@
             <input type="text" maxlength="1" class="otp-box" @ref="OtpRef4" value="@OtpDigits[4]" @oninput="(e) => OnOtpInput(e, 4)" @onkeydown="(e) => OnKeyDown(e, 4)" />
             <input type="text" maxlength="1" class="otp-box" @ref="OtpRef5" value="@OtpDigits[5]" @oninput="(e) => OnOtpInput(e, 5)" @onkeydown="(e) => OnKeyDown(e, 5)" />
         </div>
+        @if (!canResend)
+        {
+            <p class="timer-text">Enter OTP in @countdown sec</p>
+        }
+        else
+        {
+            <div class="resend-wrapper">
+                <a class="resend-link" @onclick="ResendOtp">Resend OTP</a>
+            </div>
+        }
 
         <button class="btn-primary" @onclick="ValidateOtp">Verify OTP</button>
-
-        @if (!string.IsNullOrEmpty(ErrorMessage))
-        {
-            <p class="error">@ErrorMessage</p>
-        }
+       
     </div>
 </div>
 <script>
@@ -215,6 +237,9 @@
     private string ErrorMessage;
     private string PhoneNumber;
     private bool IsForgot = false;
+    private int countdown = 30;
+    private bool canResend = false;
+    private System.Timers.Timer otpTimer;
 
     private ElementReference OtpRef0;
     private ElementReference OtpRef1;
@@ -253,8 +278,10 @@
         if (firstRender)
         {
             await JS.InvokeVoidAsync("restrictOtpInputToDigits");
+            StartOtpTimer();
         }
     }
+   
 
     private async Task OnOtpInput(ChangeEventArgs e, int index)
     {
@@ -345,6 +372,66 @@
         {
             ErrorMessage = $"Error verifying OTP: {ex.Message}";
         }
+    }
+    private void StartOtpTimer()
+    {
+        canResend = false;
+        countdown = 30;
+
+        otpTimer = new System.Timers.Timer(1000); // 1 sec
+        otpTimer.Elapsed += async (s, e) =>
+        {
+            if (countdown > 0)
+            {
+                countdown--;
+                InvokeAsync(StateHasChanged);
+            }
+            else
+            {
+                otpTimer.Stop();
+                canResend = true;
+                InvokeAsync(StateHasChanged);
+            }
+        };
+
+        otpTimer.Start();
+    }
+    private async Task ResendOtp()
+    {
+        ErrorMessage = "";
+
+        var model = new MobileNumberRequest
+        {
+            phonenumber = PhoneNumber,
+            IsForgot = IsForgot
+        };
+
+        var response = await RegistrationService.ResendOtp(model);
+
+        if (string.IsNullOrWhiteSpace(response))
+        {
+            ErrorMessage = "Unable to resend OTP. Try again.";
+            return;
+        }
+
+        // 🔥 Convert JSON to object
+        var result = System.Text.Json.JsonSerializer.Deserialize<OtpResponse>(response);
+
+        // 🔥 If StatusCode is NOT 200, show the error
+        if (result.StatusCode != 200)
+        {
+            ErrorMessage = result.Message;
+            return;
+        }
+
+        // 🔥 Success — Reset OTP boxes
+        for (int i = 0; i < OtpDigits.Length; i++)
+            OtpDigits[i] = "";
+
+        StartOtpTimer();
+
+        await Task.Delay(50);
+        await OtpRefs[0].FocusAsync();
     }
 
     private async Task ClearOtpFields()

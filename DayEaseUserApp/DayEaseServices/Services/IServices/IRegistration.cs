@@ -13,6 +13,7 @@ namespace DayEaseServices.Services.IServices
     {
         Task<string> PostAsync(MobileNumberRequest model);
         Task<string> ValidateOtp(OtpVerificationRequest model);
+        Task<string> ResendOtp(MobileNumberRequest model);
         Task<List<StateModel>> GetStatesAsync();
         Task<List<CityModel>> GetCityAsync(CityModel StateId);
         Task<List<AreaModel>> GetAreaByCityId(AreaModel cityModel);
