@@ -7,9 +7,13 @@
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                dotNetHelper.invokeMethodAsync("OnScrollNearBottom");
+                dotNetHelper.invokeMethodAsync('OnScrollNearBottom');
             }
         });
+    }, {
+        root: null,        
+        rootMargin: '0px',
+        threshold: 1.0       
     });
 
     observer.observe(sentinel);
