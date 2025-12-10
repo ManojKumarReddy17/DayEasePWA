@@ -1,32 +1,64 @@
-window.mapInterop = {
-    getCurrentLocationAndInitMap: function (dotNetRef) {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(function (position) {
-                const lat = position.coords.latitude;
-                const lng = position.coords.longitude;
+﻿window.mapInterop = {
+    popupMap: null,
+    marker: null,
 
-                dotNetRef.invokeMethodAsync('UpdateCoordinates', lat, lng);
+    getCurrentLocation: function () {
+        return new Promise((resolve, reject) => {
+            if (!navigator.geolocation) {
+                reject("Geolocation not supported");
+                return;
+            }
 
-                var mapCenter = new google.maps.LatLng(lat, lng);
-                var map = new google.maps.Map(document.getElementById("googleMap"), {
-                    center: mapCenter,
-                    zoom: 15
-                });
+            navigator.geolocation.getCurrentPosition(
+                (pos) => {
+                    resolve({
+                        lat: pos.coords.latitude,
+                        lng: pos.coords.longitude
+                    });
+                },
+                (err) => {
+                    reject("Unable to fetch location");
+                }
+            );
+        });
+    },
+    openMapPopupChoose: function (lat, lng, dotNetRef) {
+        this.loadPopupMap(lat, lng, dotNetRef);
+    },
 
-                var marker = new google.maps.Marker({
-                    position: mapCenter,
-                    map: map,
-                    draggable: true
-                });
+    loadPopupMap: function (lat, lng, dotNetRef) {
+        const mapDiv = document.getElementById("popupMap");
 
-                marker.addListener('dragend', function () {
-                    var newLat = marker.getPosition().lat();
-                    var newLng = marker.getPosition().lng();
-                    dotNetRef.invokeMethodAsync('UpdateCoordinates', newLat, newLng);
-                });
-            });
-        } else {
-            alert("Geolocation is not supported by this browser.");
-        }
+        this.popupMap = new google.maps.Map(mapDiv, {
+            center: { lat, lng },
+            zoom: 16
+        });
+
+        this.marker = new google.maps.Marker({
+            position: { lat, lng },
+            map: this.popupMap,
+            draggable: true
+        });
+
+        // Send updated coords on drag
+        this.marker.addListener("dragend", (e) => {
+            dotNetRef.invokeMethodAsync("SetTempLocation",
+                e.latLng.lat(), e.latLng.lng());
+        });
+
+        // Or click on map
+        this.popupMap.addListener("click", (e) => {
+            this.marker.setPosition(e.latLng);
+            dotNetRef.invokeMethodAsync("SetTempLocation",
+                e.latLng.lat(), e.latLng.lng());
+        });
+
+        // Send initial values
+        dotNetRef.invokeMethodAsync("SetTempLocation", lat, lng);
     }
 };
+
+
+
+
+
