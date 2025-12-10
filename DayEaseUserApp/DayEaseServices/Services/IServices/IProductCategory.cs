@@ -18,8 +18,7 @@ namespace DayEaseServices.Services.IServices
 
         Task<List<ProductCategoriesModel>> GetProductsByCategoryId(ProductCategoriesModel model);
 
-
-
+        Task<MysqlResponse<Pagination<ProductRequestModel>>> SearchProductsAsync(ProductSearchModel request);
 
     }
 }

@@ -17,7 +17,8 @@ public class RegistrationService (IApiService _apiservice): IRegistration
 {
 
     public async Task<string> PostAsync(MobileNumberRequest model)=> await _apiservice.PostAsync<MobileNumberRequest, string>("User/OTPInitiate", model);
-   
+
+    public async Task<string> ResendOtp(MobileNumberRequest model) => await _apiservice.PostAsync<MobileNumberRequest, string>("User/OTPResend", model);
 
     public async Task<string> RegisterUserAsync(UserModel userModel)=> await _apiservice.PostAsync<UserModel, string>("User/Register", userModel);
 
@@ -40,8 +41,8 @@ public class RegistrationService (IApiService _apiservice): IRegistration
     public async Task<string> ValidateOtp(OtpVerificationRequest model)
         => await _apiservice.PostAsync<OtpVerificationRequest, string>("User/OTPValidate", model);
 
-    public async Task<UserResponseModel> UpdateUser(UserModel userModel)
-     =>  await _apiservice.PostAsync<UserModel, UserResponseModel>("User/UpdateUser", userModel);
+    public async Task<UserResponseModel> UpdateUser(UserProfileModel UserProfileModel)
+     =>  await _apiservice.PostAsync<UserProfileModel, UserResponseModel>("User/UpdateUser", UserProfileModel);
 
     public async Task<UserOtpResponseModel> ForgotPassword(ForgotPasswordModel model)
         => await _apiservice.PostAsync<ForgotPasswordModel, UserOtpResponseModel>("User/ForgotPassword", model);

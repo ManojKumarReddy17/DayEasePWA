@@ -1,0 +1,32 @@
+﻿@page "/select-location"
+@inject IJSRuntime JS
+
+<h3>Select Your Location</h3>
+
+<div id="googleMap" style="width:100%; height:400px;"></div>
+
+<p><b>Latitude:</b> @Latitude</p>
+<p><b>Longitude:</b> @Longitude</p>
+
+@code {
+    public double Latitude { get; set; }
+    public double Longitude { get; set; }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JS.InvokeVoidAsync("window.mapInterop.getCurrentLocationAndInitMap",
+                DotNetObjectReference.Create(this));
+        }
+    }
+
+    [JSInvokable]
+    public void UpdateCoordinates(double lat, double lng)
+    {
+        Latitude = lat;
+        Longitude = lng;
+        StateHasChanged();
+    }
+}
+
