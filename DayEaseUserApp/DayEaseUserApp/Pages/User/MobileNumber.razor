@@ -30,13 +30,9 @@
         justify-content: center;
         align-items: center;
         min-height: 100vh;
-        width: 100%;
-        max-width: 500px;
-        margin: 0 auto;
-        padding: 2rem 1rem;
-        box-sizing: border-box;
+        padding: 1rem;
+        text-align: center;
     }
-
     .logo {
         width: 35vw;
         max-width: 160px;
@@ -45,43 +41,44 @@
         margin-bottom: 1.5rem;
     }
 
-    h3 {
-        color: #ffffff;
-        margin-bottom: 1rem;
-        font-size: clamp(1.2rem, 5vw, 2rem);
-        text-align: center;
-    }
-
     .form-group {
-        width: 100%;
         margin-bottom: 1rem;
+        width: 100%;
+        max-width: 350px;
+        text-align: left;
     }
 
     label {
-        display: block;
-        margin-bottom: 0.25rem;
         color: #ffffff;
-        font-size: clamp(0.9rem, 3.5vw, 1.1rem);
+        font-weight: 600;
+        font-size: 1rem;
+        margin-bottom: 0.5rem;
+        display: block;
     }
 
     input.form-control {
-        width: 100%;
+        width: 320px;
         padding: 0.75rem;
+        font-size: 1rem;
         border-radius: 10px;
         border: none;
-        font-size: clamp(1rem, 4vw, 1.1rem);
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        box-sizing: border-box;
     }
 
-    button.btn-primary {
-        width: 100%;
+    .btn-primary {
         background: #00CFFF;
         color: #fff;
         font-weight: bold;
         padding: 0.75rem;
         border: none;
         border-radius: 10px;
-        font-size: clamp(1rem, 4vw, 1.1rem);
+        font-size: 1rem;
+        width: 100%;
+        max-width: 350px;
+        cursor: pointer;
         margin-top: 1rem;
+        transition: background 0.3s;
     }
 
     p {
@@ -171,16 +168,18 @@
 <div class="main-container">
     <img src="images/login-logo_v01.png" alt="Day Ease Logo" class="logo" />
 
-    <h3>Enter Mobile Number</h3>
+    
 
-    <div class="form-group">
+    @* <div class="form-group">
         <label>Country Code</label>
         <input type="text" value="+91" class="form-control" disabled />
-    </div>
+    </div> *@
 
 
     <div class="form-group">
-        <label for="mobile">Mobile Number:</label>
+        <label for="phonenumber">Mobile Number:</label>
+        <div class="input-group">
+            <span class="input-group-text">+91</span>
         <input id="mobile"
                class="form-control @(HasValidationError ? "error" : "")"
                @bind="PhoneNumber"
@@ -192,7 +191,7 @@
                inputmode="numeric"
                pattern="[0-9]*" />
 
-
+          </div>
         @if (HasValidationError && !string.IsNullOrEmpty(errorMessage))
         {
             <div class="validation-error">@errorMessage</div>
