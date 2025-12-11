@@ -404,10 +404,29 @@ else
 //     
     protected override async Task OnInitializedAsync()
     {
+        isLoading = true;
+
+        // 1️⃣ Load saved guest user from local/session storage
+       await UserLocation.LoadAsync();
+
+        // 2️⃣ Attach guest user id to locService (VERY IMPORTANT)
         locService.UserId = UserLocation.UserId;
+
+        // 3️⃣ Ensure latitude & longitude (gets saved if missing)
         await locService.EnsureLocationAsync(UserLocation);
+
+        // 4️⃣ Now coordinates MUST be available
+        if (string.IsNullOrEmpty(locService.Latitude) || string.IsNullOrEmpty(locService.Longitude))
+        {
+            ErrorMessage = "Unable to detect location";
+            isLoading = false;
+            return;
+        }
+
+        // 5️⃣ Now fetch nearby stores safely
         await FetchStoresAsync();
     }
+
 
     private async Task FetchStoresAsync()
     {
