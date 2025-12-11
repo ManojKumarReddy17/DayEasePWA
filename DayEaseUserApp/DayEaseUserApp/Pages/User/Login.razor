@@ -44,12 +44,6 @@
         margin-bottom: 1.5rem;
     }
 
-    h5 {
-        color: #ffffff;
-        font-size: 2rem;
-        margin-bottom: 1.5rem;
-    }
-
     .form-group {
         margin-bottom: 1rem;
         width: 100%;
@@ -113,7 +107,7 @@
     }
 
     .validation-error {
-        color: red;
+        color: white;
         font-size: 0.9rem;
         margin-top: 0.25rem;
     }
@@ -167,7 +161,6 @@
     <img src="images/login-logo_v01.png" alt="Day Ease Logo" class="logo" />
 
     <div class="login-form">
-        <h5>Login</h5>
 
         @if (!string.IsNullOrEmpty(errorMessage))
         {
@@ -285,7 +278,7 @@
 
             // ✅ Save AreaId, Latitude, Longitude to shared state
             UserLocation.UserId = response.UserId;
-            UserLocation.AreaId = response.AreaId;
+            //UserLocation.AreaId = response.AreaId;
             UserLocation.Latitude = response.Latitude;
             UserLocation.Longitude = response.Longitude;
 

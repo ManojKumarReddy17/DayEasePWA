@@ -34,11 +34,8 @@
         justify-content: center;
         align-items: center;
         min-height: 100vh;
-        width: 100%;
-        max-width: 500px;
-        margin: 0 auto;
-        padding: 2rem 1rem;
-        box-sizing: border-box;
+        padding: 1rem;
+        text-align: center;
     }
 
     .logo {
@@ -105,12 +102,13 @@
     }
 
     .resend-wrapper {
-        display: flex;
-        justify-content: flex-end; /* move to right side */
-        margin-top: 10px;
-        margin-bottom: 5px; /* space above Verify button */
         width: 100%;
+        display: flex;
+        justify-content: center; /* center the link */
+        margin-top: 10px;
+        margin-bottom: 5px;
     }
+
 
     .resend-link {
         font-size: 16px;
@@ -119,25 +117,28 @@
         cursor: pointer;
         font-weight: 600;
     }
+
     .btn-primary {
-        width: 100%;
-        padding: 14px;
-        font-size: 1rem;
-        border: none;
-        border-radius: 8px;
-        background-color: #00c2ff;
-        color: white;
+        background: #00CFFF;
+        color: #fff;
         font-weight: bold;
+        padding: 0.75rem;
+        border: none;
+        border-radius: 10px;
+        font-size: 1rem;
+        width: 100%;
+        max-width: 350px;
         cursor: pointer;
-        margin-top:20px;
+        margin-top: 1rem;
+        transition: background 0.3s;
     }
-    
+
         .btn-primary:hover {
-            background-color: #009edb;
+            background: #00b8e6;
         }
 
     .error {
-        color: red;
+        color: white;
         margin-top: 1rem;
     }
 
@@ -188,9 +189,9 @@
 </style>
 
 <div class="main-container">
-    <div class="inner-box">
+    
         <img src="images/login-logo_v01.png" class="logo" alt="Logo" />
-        <h3>@("Enter OTP")</h3>
+        <h3>@("Enter 6-digit-code")</h3>
 
         <div class="form-group otp-inputs">
             <input type="text" maxlength="1" class="otp-box" @ref="OtpRef0" value="@OtpDigits[0]" @oninput="(e) => OnOtpInput(e, 0)" @onkeydown="(e) => OnKeyDown(e, 0)" />
@@ -200,21 +201,25 @@
             <input type="text" maxlength="1" class="otp-box" @ref="OtpRef4" value="@OtpDigits[4]" @oninput="(e) => OnOtpInput(e, 4)" @onkeydown="(e) => OnKeyDown(e, 4)" />
             <input type="text" maxlength="1" class="otp-box" @ref="OtpRef5" value="@OtpDigits[5]" @oninput="(e) => OnOtpInput(e, 5)" @onkeydown="(e) => OnKeyDown(e, 5)" />
         </div>
-        @if (!canResend)
+            @if (canResend)
+            {
+                <div class="resend-wrapper">
+                    <a class="resend-link" @onclick="ResendOtp">Resend Code</a>
+                </div>
+            }
+            else
+            {
+                <p class="timer-text">Enter code in @countdown sec</p>
+            }
+
+        @if (!string.IsNullOrEmpty(ErrorMessage))
         {
-            <p class="timer-text">Enter OTP in @countdown sec</p>
-        }
-        else
-        {
-            <div class="resend-wrapper">
-                <a class="resend-link" @onclick="ResendOtp">Resend OTP</a>
-            </div>
+            <p class="error">@ErrorMessage</p>
         }
 
-        <button class="btn-primary" @onclick="ValidateOtp">Verify OTP</button>
+        <button class="btn-primary" @onclick="ValidateOtp">Verify</button>
        
     </div>
-</div>
 <script>
     window.restrictOtpInputToDigits = function () {
         document.querySelectorAll('.otp-box').forEach(input => {
