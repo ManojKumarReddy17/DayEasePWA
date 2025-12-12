@@ -14,13 +14,12 @@ namespace Domain.RequestModels
         public string PhoneNumber { get; set; }
 
         [Required(ErrorMessage = "First Name is required")]
-        [RegularExpression("^[A-Za-z]+$", ErrorMessage = "First Name must contain only letters")]
+        [RegularExpression("^[A-Za-z ]+$", ErrorMessage = "First Name must contain only letters")]
 
         public string FName { get; set; }
 
-        [Required(ErrorMessage = "First Name is required")]
-        [RegularExpression("^[A-Za-z]+$", ErrorMessage = "First Name must contain only letters")]
-
+        [Required(ErrorMessage = "Last Name is required")]
+        [RegularExpression("^[A-Za-z ]+$", ErrorMessage = "Last Name must contain only letters")]
         public string LName { get; set; }
 
         public string Country { get; set; } = "India";
@@ -51,9 +50,13 @@ namespace Domain.RequestModels
         public string Address { get; set; }
 
         [Required(ErrorMessage = "Password is required")]
-        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,15}$",
-         ErrorMessage = "Password must be 7–15 characters and include uppercase, lowercase, number, and special character.")]
+        [StringLength(15, MinimumLength = 8, ErrorMessage = "Password must be 8–15 characters")]
+        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).+$",
+           ErrorMessage = "Password must include uppercase, lowercase, number, and special character.")]
         public string Password { get; set; }
+        [Required(ErrorMessage = "You must accept terms")]
+        public bool AcceptedTerms { get; set; }
+
     }
 
 }

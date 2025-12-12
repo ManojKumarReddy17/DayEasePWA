@@ -8,7 +8,6 @@
 @inject ILocalStorageService LocalStorage
 @inject NavigationManager Navigation
 @inject IJSRuntime JS
-@layout NavMenu
 
 <style>
     html, body {
@@ -269,51 +268,41 @@
 
 
 <div class="main-container">
-
     <img src="images/login-logo_v01.png" alt="Day Ease Logo" class="logo" />
+    <h3>Enter Details</h3>
 
-
-    <h3>Register</h3>
-
-    <EditForm Model="@user" OnValidSubmit="HandleValidSubmit">
+    <EditForm EditContext="@editContext" OnValidSubmit="HandleSubmit">
         <DataAnnotationsValidator />
 
+        <!-- First Name -->
         <div class="mb-3">
             <label class="form-label">First Name</label>
-            <InputText @bind-Value="user.FName" class="form-control" maxlength="25"
-                       oninput="this.value=this.value.replace(/[^A-Za-z\s]/g,'')" />
+            <InputText @bind-Value="user.FName" class="form-control" maxlength="25" oninput="this.value=this.value.replace(/[^A-Za-z\s]/g,'')" />
             <ValidationMessage For="@(() => user.FName)" class="validation-message" />
         </div>
 
+        <!-- Last Name -->
         <div class="mb-3">
             <label class="form-label">Last Name</label>
-            <InputText @bind-Value="user.LName" class="form-control" maxlength="25"
-                       oninput="this.value=this.value.replace(/[^A-Za-z\s]/g,'')" />
+            <InputText @bind-Value="user.LName" class="form-control" maxlength="25" oninput="this.value=this.value.replace(/[^A-Za-z\s]/g,'')" />
             <ValidationMessage For="@(() => user.LName)" class="validation-message" />
         </div>
 
+        <!-- Password -->
         <div class="mb-3">
             <label class="form-label">Password</label>
             <div class="password-wrapper">
-                <InputText @bind-Value="user.Password"
-                           type="@PasswordInputType"
-                           class="form-control password-input"
-                           maxlength="15"
-                           @oninput="OnPasswordInput"
-                           @onfocus="() => ShowPasswordRules = true"
-                           @onblur="ValidatePassword" />
+                <InputText @bind-Value="user.Password" type="@PasswordInputType" class="form-control password-input" maxlength="15"
+                           @oninput="OnPasswordInput" @onfocus="() => ShowPasswordRules = true" @onblur="ValidatePassword" />
                 <span class="password-toggle @(ShowPassword ? "show" : "hide")" @onclick="TogglePasswordVisibility">
                     <i class="@((ShowPassword ? "fas fa-eye-slash" : "fas fa-eye"))"></i>
                 </span>
             </div>
-
             <ValidationMessage For="@(() => user.Password)" class="validation-message" />
-
-            @if (!IsPasswordValid && !string.IsNullOrEmpty(PasswordErrorMessage))
+            @if (!string.IsNullOrEmpty(PasswordErrorMessage))
             {
                 <div class="validation-message">@PasswordErrorMessage</div>
             }
-
             @if (ShowPasswordRules && !IsPasswordValid)
             {
                 <div class="password-rules mt-2">
@@ -328,12 +317,14 @@
             }
         </div>
 
+        <!-- Country -->
         <div class="mb-3">
             <label class="form-label">Country</label>
             <InputText @bind-Value="user.Country" class="form-control" readonly />
             <ValidationMessage For="@(() => user.Country)" class="validation-message" />
         </div>
 
+        <!-- State -->
         <div class="mb-3">
             <label class="form-label">State</label>
             <select class="form-control" @bind="SelectedStateId">
@@ -346,6 +337,7 @@
             <ValidationMessage For="@(() => user.State)" class="validation-message" />
         </div>
 
+        <!-- City -->
         <div class="mb-3">
             <label class="form-label">City</label>
             <select class="form-control" @bind="SelectedCityId">
@@ -358,6 +350,7 @@
             <ValidationMessage For="@(() => user.City)" class="validation-message" />
         </div>
 
+        <!-- Area -->
         <div class="mb-3">
             <label class="form-label">Area</label>
             <select class="form-control" @bind="SelectedAreaId">
@@ -370,6 +363,7 @@
             <ValidationMessage For="@(() => user.Location)" class="validation-message" />
         </div>
 
+        <!-- SubArea -->
         <div class="mb-3">
             <label class="form-label">SubArea</label>
             <select class="form-control" @bind="user.Sublocation">
@@ -382,6 +376,7 @@
             <ValidationMessage For="@(() => user.Sublocation)" class="validation-message" />
         </div>
 
+        <!-- Gender -->
         <div class="mb-3">
             <label class="form-label">Gender</label>
             <InputSelect @bind-Value="user.Gender" class="form-control">
@@ -393,46 +388,35 @@
             <ValidationMessage For="@(() => user.Gender)" class="validation-message" />
         </div>
 
+        <!-- Address -->
         <div class="mb-3">
             <label class="form-label">Address</label>
-            <InputTextArea @bind-Value="user.Address" class="form-control" rows="2" maxlength="25" />
+            <InputTextArea @bind-Value="user.Address" class="form-control" rows="2" maxlength="200" />
             <ValidationMessage For="@(() => user.Address)" class="validation-message" />
         </div>
-        @* <div class="mb-3">
-            <label class="form-label">Location (Select on Map)</label>
 
-            <button class="btn btn-primary me-2" @onclick="OpenCurrentLocationPopup">Use Current Location</button>
-            <button class="btn btn-outline-secondary" @onclick="OpenChooseLocationPopup">Choose on Map</button>
-
-            <div class="row mt-3">
-                <div class="col">
-                    <label>Latitude</label>
-                    <InputText @bind-Value="user.Latitude" class="form-control" readonly />
-                </div>
-                <div class="col">
-                    <label>Longitude</label>
-                    <InputText @bind-Value="user.Longitude" class="form-control" readonly />
-                </div>
-            </div>
-        </div>  *@
-
-
+        <!-- Location Buttons -->
         <div class="mb-3">
             <label class="form-label">Choose Location</label>
-            <button class="btn btn-info text-dark ms-2" @onclick="UseCurrentLocation">Use Current Location</button>
-            <button class="btn btn-info text-dark ms-2" @onclick="OpenChooseLocationPopup">Choose on Map</button>
+            <button type="button" class="btn btn-info text-dark ms-2" @onclick="UseCurrentLocation">
+                Use Current Location
+            </button>
+            <button type="button" class="btn btn-info text-dark ms-2" @onclick="OpenChooseLocationPopup">
+                Choose on Map
+            </button>
         </div>
 
+        <!-- Latitude/Longitude -->
         <div class="mb-3">
             <label class="form-label">Latitude</label>
             <InputText @bind-Value="user.Latitude" class="form-control" readonly />
         </div>
-
         <div class="mb-3">
             <label class="form-label">Longitude</label>
             <InputText @bind-Value="user.Longitude" class="form-control" readonly />
-        </div> 
+        </div>
 
+        <!-- Terms Checkbox -->
         <div class="form-check mb-3">
             <InputCheckbox @bind-Value="AcceptedTerms" class="form-check-input" />
             <label class="form-check-label">I accept the terms and conditions</label>
@@ -440,26 +424,24 @@
 
         <button type="submit" class="btn btn-primary" disabled="@(!AcceptedTerms)">Register</button>
     </EditForm>
-
 </div>
+
+<!-- Map Modal -->
 @if (ShowMapPopup)
 {
     <div class="modal-backdrop">
         <div class="modal-map-box">
-
             <h4>Select Location</h4>
-
             <div id="popupMap" style="width:100%; height:350px; border:1px solid #ccc;"></div>
-
             <div class="mt-3 text-center">
-                <button class="btn btn-success" @onclick="ConfirmSelectedLocation">Confirm</button>
-                <button class="btn btn-secondary" @onclick="CloseMapPopup">Cancel</button>
+                <button type="button" class="btn btn-success" @onclick="ConfirmSelectedLocation">Confirm</button>
+                <button type="button" class="btn btn-secondary" @onclick="CloseMapPopup">Cancel</button>
             </div>
         </div>
     </div>
 }
 
-
+<!-- Success Modal -->
 @if (ShowUserExistsModal)
 {
     <div class="modal-backdrop">
@@ -472,6 +454,8 @@
 }
 
 @code {
+    private EditContext editContext;
+    private ValidationMessageStore messageStore;
     private UserModel user = new();
     private List<StateModel> stateList = new();
     private List<CityModel> cityList = new();
@@ -484,174 +468,11 @@
     private bool IsPasswordValid = false;
     private string PasswordErrorMessage = string.Empty;
     private bool ShowPassword = false;
-
     private string PasswordInputType => ShowPassword ? "text" : "password";
-    private DotNetObjectReference<UserDetails>? dotNetRef;
-
-
-    bool ShowMapPopup = false;
-    bool IsUsingCurrentLocation = false;
-    double tempLat;
-    double tempLng;
-
-    private async Task UseCurrentLocation()
-    {
-        try
-        {
-            // Get GPS location directly
-            var gps = await JS.InvokeAsync<CurrentLocation>("mapInterop.getCurrentLocation");
-
-            user.Latitude = gps.Lat.ToString();
-            user.Longitude = gps.Lng.ToString();
-
-            await InvokeAsync(StateHasChanged);
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine("Error getting location: " + ex.Message);
-        }
-    }
-
-
-    private async Task OpenChooseLocationPopup()
-    {
-        IsUsingCurrentLocation = false;
-        ShowMapPopup = true;
-
-        await InvokeAsync(StateHasChanged);
-        await Task.Delay(200);
-
-        var gps = await JS.InvokeAsync<CurrentLocation>("mapInterop.getCurrentLocation");
-
-        double lat = gps.Lat;
-        double lng = gps.Lng;
-
-        await JS.InvokeVoidAsync("mapInterop.openMapPopupChoose",
-            lat, lng, DotNetObjectReference.Create(this));
-    }
-    public class CurrentLocation
-    {
-        public double Lat { get; set; }
-        public double Lng { get; set; }
-    }
-    [JSInvokable]
-    public Task SetTempLocation(double lat, double lng)
-    {
-        tempLat = lat;
-        tempLng = lng;
-        return Task.CompletedTask;
-    }
-
-    private void ConfirmSelectedLocation()
-    {
-        user.Latitude = tempLat.ToString();
-        user.Longitude = tempLng.ToString();
-
-        ShowMapPopup = false;
-    }
-
-    private void CloseMapPopup()
-    {
-        ShowMapPopup = false;
-    }
-
-
-
-
-
-    protected override async Task OnInitializedAsync()
-    {
-        try
-        {
-            stateList = await RegistrationService.GetStatesAsync();
-            user.Country = "India";
-
-            var phoneFromLocalStorage = await LocalStorage.GetItemAsync<string>("PhoneNumber");
-            if (!string.IsNullOrEmpty(phoneFromLocalStorage))
-            {
-                user.PhoneNumber = phoneFromLocalStorage;
-            }
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Error during initialization: {ex.Message}");
-        }
-    }
-
-    public void Dispose()
-    {
-        dotNetRef?.Dispose();
-    }
-
-    private void TogglePasswordVisibility()
-    {
-        ShowPassword = !ShowPassword;
-    }
-
-    private void ValidatePassword(FocusEventArgs e)
-    {
-        if (!IsValidPassword(user.Password))
-        {
-            IsPasswordValid = false;
-            PasswordErrorMessage = "Enter a valid password";
-        }
-        else
-        {
-            IsPasswordValid = true;
-            PasswordErrorMessage = string.Empty;
-        }
-    }
-
-    private void OnPasswordInput(ChangeEventArgs e)
-    {
-        var password = e.Value?.ToString() ?? "";
-        user.Password = password;
-        IsPasswordValid = IsValidPassword(password);
-    }
-
-    private bool IsValidPassword(string password)
-    {
-        return !string.IsNullOrWhiteSpace(password) &&
-               password.Length >= 8 &&
-               password.Length <= 15 &&
-               password.Any(char.IsLower) &&
-               password.Any(char.IsUpper) &&
-               password.Any(char.IsDigit) &&
-               password.Any(ch => "!@#$%^&*()_+-=[]{}|;:,.<>?".Contains(ch));
-    }
-
-    private async Task LoadCitiesAsync()
-    {
-        if (!string.IsNullOrWhiteSpace(user.State))
-            cityList = await RegistrationService.GetCityAsync(new CityModel { StateId = user.State });
-        else
-            cityList.Clear();
-
-        areaList.Clear();
-        subareaList.Clear();
-        await InvokeAsync(StateHasChanged);
-    }
-
-    private async Task LoadAreasAsync()
-    {
-        if (!string.IsNullOrWhiteSpace(user.City))
-            areaList = await RegistrationService.GetAreaByCityId(new AreaModel { CityId = user.City });
-        else
-            areaList.Clear();
-
-        subareaList.Clear();
-        await InvokeAsync(StateHasChanged);
-    }
-
-    private async Task LoadSubAreasAsync()
-    {
-        if (!string.IsNullOrWhiteSpace(user.Location))
-            subareaList = await RegistrationService.GetSubAreaByAreaId(new SubAreaModel { AreaId = user.Location });
-        else
-            subareaList.Clear();
-
-        await InvokeAsync(StateHasChanged);
-    }
+    private bool ShowMapPopup = false;
+    private bool IsUsingCurrentLocation = false;
+    private double tempLat;
+    private double tempLng;
 
     private string SelectedStateId
     {
@@ -698,9 +519,146 @@
         }
     }
 
-    private async Task HandleValidSubmit()
+    protected override async Task OnInitializedAsync()
     {
-        var response = await RegistrationService.RegisterUserAsync(user);
+        user = new UserModel();
+        editContext = new EditContext(user);
+        messageStore = new ValidationMessageStore(editContext);
+
+        editContext.OnFieldChanged += (sender, args) =>
+        {
+            messageStore.Clear(args.FieldIdentifier);
+            var value = args.FieldIdentifier.Model
+                .GetType()
+                .GetProperty(args.FieldIdentifier.FieldName)?
+                .GetValue(args.FieldIdentifier.Model);
+
+            var results = new List<ValidationResult>();
+            Validator.TryValidateProperty(value, new ValidationContext(args.FieldIdentifier.Model)
+            {
+                MemberName = args.FieldIdentifier.FieldName
+            }, results);
+
+            foreach (var result in results)
+            {
+                messageStore.Add(args.FieldIdentifier, result.ErrorMessage);
+            }
+
+            editContext.NotifyValidationStateChanged();
+        };
+
+        stateList = await RegistrationService.GetStatesAsync();
+        user.Country = "India";
+        var phoneFromLocalStorage = await LocalStorage.GetItemAsync<string>("PhoneNumber");
+        if (!string.IsNullOrEmpty(phoneFromLocalStorage))
+            user.PhoneNumber = phoneFromLocalStorage;
+    }
+
+    private void TogglePasswordVisibility() => ShowPassword = !ShowPassword;
+
+    private void ValidatePassword(FocusEventArgs e)
+    {
+        PasswordErrorMessage = "";
+        if (!IsValidPassword(user.Password))
+            PasswordErrorMessage = "Enter a valid password";
+    }
+
+    private void OnPasswordInput(ChangeEventArgs e)
+    {
+        user.Password = e.Value?.ToString() ?? "";
+        PasswordErrorMessage = "";
+        editContext.NotifyFieldChanged(editContext.Field("Password"));
+        editContext.Validate();
+    }
+
+    private bool IsValidPassword(string password)
+        => !string.IsNullOrWhiteSpace(password) &&
+           password.Length >= 8 && password.Length <= 15 &&
+           password.Any(char.IsLower) &&
+           password.Any(char.IsUpper) &&
+           password.Any(char.IsDigit) &&
+           password.Any(ch => "!@#$%^&*()_+-=[]{}|;:,.<>?".Contains(ch));
+
+    private async Task LoadCitiesAsync()
+    {
+        if (!string.IsNullOrWhiteSpace(user.State))
+            cityList = await RegistrationService.GetCityAsync(new CityModel { StateId = user.State });
+        else
+            cityList.Clear();
+        areaList.Clear();
+        subareaList.Clear();
+        await InvokeAsync(StateHasChanged);
+    }
+
+    private async Task LoadAreasAsync()
+    {
+        if (!string.IsNullOrWhiteSpace(user.City))
+            areaList = await RegistrationService.GetAreaByCityId(new AreaModel { CityId = user.City });
+        else
+            areaList.Clear();
+        subareaList.Clear();
+        await InvokeAsync(StateHasChanged);
+    }
+
+    private async Task LoadSubAreasAsync()
+    {
+        if (!string.IsNullOrWhiteSpace(user.Location))
+            subareaList = await RegistrationService.GetSubAreaByAreaId(new SubAreaModel { AreaId = user.Location });
+        else
+            subareaList.Clear();
+        await InvokeAsync(StateHasChanged);
+    }
+
+    private async Task UseCurrentLocation()
+    {
+        try
+        {
+            var gps = await JS.InvokeAsync<CurrentLocation>("mapInterop.getCurrentLocation");
+            user.Latitude = gps.Lat.ToString();
+            user.Longitude = gps.Lng.ToString();
+            await InvokeAsync(StateHasChanged);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Error getting location: " + ex.Message);
+        }
+    }
+
+    private async Task OpenChooseLocationPopup()
+    {
+        IsUsingCurrentLocation = false;
+        ShowMapPopup = true;
+        await InvokeAsync(StateHasChanged);
+        await Task.Delay(200);
+        var gps = await JS.InvokeAsync<CurrentLocation>("mapInterop.getCurrentLocation");
+        double lat = gps.Lat;
+        double lng = gps.Lng;
+        await JS.InvokeVoidAsync("mapInterop.openMapPopupChoose", lat, lng, DotNetObjectReference.Create(this));
+    }
+
+    [JSInvokable]
+    public Task SetTempLocation(double lat, double lng)
+    {
+        tempLat = lat;
+        tempLng = lng;
+        return Task.CompletedTask;
+    }
+
+    private void ConfirmSelectedLocation()
+    {
+        user.Latitude = tempLat.ToString();
+        user.Longitude = tempLng.ToString();
+        ShowMapPopup = false;
+    }
+
+    private void CloseMapPopup() => ShowMapPopup = false;
+
+    private async Task HandleSubmit(EditContext editContext)
+    {
+        if (!editContext.Validate())
+            return;
+
+        var response = await RegistrationService.RegisterUserAsync(user); // Make sure this returns a typed object
 
         if (response != null)
         {
@@ -727,10 +685,12 @@
         Navigation.NavigateTo("/login");
     }
 
-    private void CloseModal()
+    private void CloseModal() => ShowUserExistsModal = false;
+
+    public class CurrentLocation
     {
-        ShowUserExistsModal = false;
+        public double Lat { get; set; }
+        public double Lng { get; set; }
     }
 }
-
 
