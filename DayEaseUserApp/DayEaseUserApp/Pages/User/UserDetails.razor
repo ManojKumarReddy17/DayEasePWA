@@ -1,9 +1,11 @@
 ﻿@page "/user-details"
 @using System.ComponentModel.DataAnnotations
+@using Domain.DomainModels
 @using Microsoft.AspNetCore.Components.Forms
 @using DayEaseServices.Services.IServices
 @using Domain.RequestModels
 @using Blazored.LocalStorage
+@using Newtonsoft.Json
 @inject IRegistration RegistrationService
 @inject ILocalStorageService LocalStorage
 @inject NavigationManager Navigation
@@ -263,6 +265,9 @@
         border-radius: 10px;
     }
 
+    .spinner-border-sm {
+        vertical-align: middle;
+    }
 
 </style>
 
@@ -422,7 +427,21 @@
             <label class="form-check-label">I accept the terms and conditions</label>
         </div>
 
-        <button type="submit" class="btn btn-primary" disabled="@(!AcceptedTerms)">Register</button>
+        <button type="submit"
+                class="btn btn-primary"
+                disabled="@(!AcceptedTerms || IsLoading)">
+            @if (IsLoading)
+            {
+                <span class="spinner-border spinner-border-sm me-2"
+                      role="status"
+                      aria-hidden="true"></span>
+                <span>Registering...</span>
+            }
+            else
+            {
+                <span>Register</span>
+            }
+        </button>
     </EditForm>
 </div>
 
@@ -441,6 +460,19 @@
     </div>
 }
 
+@if (ShowFailureModal)
+{
+    <div class="modal-backdrop">
+        <div class="modal-box">
+            <p>User registration failed. Please register once again.</p>
+            <button class="btn-primary-modal" @onclick="CloseFailureModal">
+                OK
+            </button>
+        </div>
+    </div>
+}
+
+
 <!-- Success Modal -->
 @if (ShowUserExistsModal)
 {
@@ -448,7 +480,7 @@
         <div class="modal-box">
             <p>Successfully registered. Please log in to continue.</p>
             <button class="btn-primary-modal" @onclick="NavigateToLogin">Login</button>
-            <button class="btn-secondary-modal" @onclick="CloseModal">Cancel</button>
+           @*  <button class="btn-secondary-modal" @onclick="CloseModal">Cancel</button> *@
         </div>
     </div>
 }
@@ -473,6 +505,8 @@
     private bool IsUsingCurrentLocation = false;
     private double tempLat;
     private double tempLng;
+    private bool IsLoading = false;
+    private bool ShowFailureModal = false;
 
     private string SelectedStateId
     {
@@ -523,30 +557,30 @@
     {
         user = new UserModel();
         editContext = new EditContext(user);
-        messageStore = new ValidationMessageStore(editContext);
+        // messageStore = new ValidationMessageStore(editContext);
 
-        editContext.OnFieldChanged += (sender, args) =>
-        {
-            messageStore.Clear(args.FieldIdentifier);
-            var value = args.FieldIdentifier.Model
-                .GetType()
-                .GetProperty(args.FieldIdentifier.FieldName)?
-                .GetValue(args.FieldIdentifier.Model);
+        // editContext.OnFieldChanged += (sender, args) =>
+        // {
+        //     messageStore.Clear(args.FieldIdentifier);
+        //     var value = args.FieldIdentifier.Model
+        //         .GetType()
+        //         .GetProperty(args.FieldIdentifier.FieldName)?
+        //         .GetValue(args.FieldIdentifier.Model);
 
-            var results = new List<ValidationResult>();
-            Validator.TryValidateProperty(value, new ValidationContext(args.FieldIdentifier.Model)
-            {
-                MemberName = args.FieldIdentifier.FieldName
-            }, results);
+        //     var results = new List<ValidationResult>();
+        //     Validator.TryValidateProperty(value, new ValidationContext(args.FieldIdentifier.Model)
+        //     {
+        //         MemberName = args.FieldIdentifier.FieldName
+        //     }, results);
 
-            foreach (var result in results)
-            {
-                messageStore.Add(args.FieldIdentifier, result.ErrorMessage);
-            }
+        //     foreach (var result in results)
+        //     {
+        //         messageStore.Add(args.FieldIdentifier, result.ErrorMessage);
+        //     }
 
-            editContext.NotifyValidationStateChanged();
-        };
-
+        //     editContext.NotifyValidationStateChanged();
+        // };
+          
         stateList = await RegistrationService.GetStatesAsync();
         user.Country = "India";
         var phoneFromLocalStorage = await LocalStorage.GetItemAsync<string>("PhoneNumber");
@@ -568,7 +602,7 @@
         user.Password = e.Value?.ToString() ?? "";
         PasswordErrorMessage = "";
         editContext.NotifyFieldChanged(editContext.Field("Password"));
-        editContext.Validate();
+        //editContext.Validate();
     }
 
     private bool IsValidPassword(string password)
@@ -655,13 +689,12 @@
 
     private async Task HandleSubmit(EditContext editContext)
     {
-        if (!editContext.Validate())
-            return;
-
-        var response = await RegistrationService.RegisterUserAsync(user); // Make sure this returns a typed object
-
-        if (response != null)
+        IsLoading = true;
+        UserResponseModel response = await RegistrationService.RegisterUserAsync(user);
+ 
+        if (response != null && response.Message is "User registered successfully.")
         {
+            IsLoading = false;
             Submitted = true;
             await LocalStorage.RemoveItemAsync("PhoneNumber");
             user = new UserModel();
@@ -676,13 +709,20 @@
         else
         {
             Submitted = false;
+            IsLoading = false;
+            ShowFailureModal = true;
         }
     }
-
+     
     private void NavigateToLogin()
     {
         ShowUserExistsModal = false;
         Navigation.NavigateTo("/login");
+    }
+
+    private void CloseFailureModal()
+    {
+        ShowFailureModal = false;
     }
 
     private void CloseModal() => ShowUserExistsModal = false;

@@ -13,8 +13,9 @@ namespace DayEaseServices.Services
     public class StoreService(IApiService _apiService) : IStoreService
     {
 
-        public async Task<NearbyStoresResponse> GetNearbyStoresAsync(NearbyStoresRequest request)=> await _apiService.PostAsync<NearbyStoresRequest, NearbyStoresResponse>("User/GetStoresbyDistance", request);
-       
+        public async Task<NearbyStoresResponse> GetNearbyStoresAsync(NearbyStoresRequest request)=> 
+           await _apiService.PostAsync<NearbyStoresRequest, NearbyStoresResponse>("User/GetStoresbyDistance", request);
+
     }
 
 }
