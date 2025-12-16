@@ -16,11 +16,11 @@ using Registration.IApiService;
 public class RegistrationService (IApiService _apiservice): IRegistration
 {
 
-    public async Task<string> PostAsync(MobileNumberRequest model)=> await _apiservice.PostAsync<MobileNumberRequest, string>("User/OTPInitiate", model);
+    public async Task<UserOtpResponseModel> PostAsync(MobileNumberRequest model)=> await _apiservice.PostAsync<MobileNumberRequest, UserOtpResponseModel>("User/OTPInitiate", model);
 
-    public async Task<string> ResendOtp(MobileNumberRequest model) => await _apiservice.PostAsync<MobileNumberRequest, string>("User/OTPResend", model);
+    public async Task<UserOtpResponseModel> ResendOtp(MobileNumberRequest model) => await _apiservice.PostAsync<MobileNumberRequest, UserOtpResponseModel>("User/OTPResend", model);
 
-    public async Task<string> RegisterUserAsync(UserModel userModel)=> await _apiservice.PostAsync<UserModel, string>("User/Register", userModel);
+    public async Task<UserResponseModel> RegisterUserAsync(UserModel userModel)=> await _apiservice.PostAsync<UserModel, UserResponseModel>("User/Register", userModel);
 
     public async Task<List<StateModel>> GetStatesAsync()
     => (await _apiservice.PostAsync<object, StateResponse>("States", null))?.Data
@@ -38,8 +38,8 @@ public class RegistrationService (IApiService _apiservice): IRegistration
         => await _apiservice.PostAsync<SubAreaModel, List<SubAreaModel>>("SubArea/GetSubAreaByAreaId", model)
            ?? new List<SubAreaModel>();
 
-    public async Task<string> ValidateOtp(OtpVerificationRequest model)
-        => await _apiservice.PostAsync<OtpVerificationRequest, string>("User/OTPValidate", model);
+    public async Task<UserOtpResponseModel> ValidateOtp(OtpVerificationRequest model)
+        => await _apiservice.PostAsync<OtpVerificationRequest, UserOtpResponseModel>("User/OTPValidate", model);
 
     public async Task<UserResponseModel> UpdateUser(UserProfileModel UserProfileModel)
      =>  await _apiservice.PostAsync<UserProfileModel, UserResponseModel>("User/UpdateUser", UserProfileModel);

@@ -4,6 +4,7 @@
 @inject ILocalStorageService LocalStorage
 @inject IJSRuntime JS
 
+@using Domain.DomainModels
 @using Microsoft.AspNetCore.WebUtilities
 @using Blazored.LocalStorage
 @using DayEaseServices.Services.IServices
@@ -217,7 +218,22 @@
             <p class="error">@ErrorMessage</p>
         }
 
-        <button class="btn-primary" @onclick="ValidateOtp">Verify</button>
+    <button class="btn-primary"
+            @onclick="ValidateOtp"
+            disabled="@IsOtpVerifying">
+        @if (IsOtpVerifying)
+        {
+            <span class="spinner-border spinner-border-sm me-2"
+                  role="status"
+                  aria-hidden="true"></span>
+            <span>Verifying...</span>
+        }
+        else
+        {
+            <span>Verify</span>
+        }
+    </button>
+
        
     </div>
 <script>
@@ -244,6 +260,7 @@
     private bool IsForgot = false;
     private int countdown = 30;
     private bool canResend = false;
+    private bool IsOtpVerifying = false;
     private System.Timers.Timer otpTimer;
 
     private ElementReference OtpRef0;
@@ -328,6 +345,7 @@
 
     private async Task ValidateOtp()
     {
+        IsOtpVerifying = true;
         ErrorMessage = "";
         var otp = string.Concat(OtpDigits);
 
@@ -347,34 +365,33 @@
 
                 };
 
-            var response = await RegistrationService.ValidateOtp(request);
+            UserOtpResponseModel response = await RegistrationService.ValidateOtp(request);
 
-            if (string.IsNullOrWhiteSpace(response))
+            if (response is null)
             {
                 ErrorMessage = "No response from server.";
                 return;
             }
 
-            string jsonString = response.Trim('\"').Replace("\\\"", "\"");
-            var otpResponse = JsonSerializer.Deserialize<OtpResponse>(jsonString);
-
-            if (otpResponse?.StatusCode == 200 && IsForgot == true)
+            if (response?.StatusCode == 200 && IsForgot == true)
             {
                 Navigation.NavigateTo("/forgotpassword");
 
             }
-            else if (otpResponse?.StatusCode == 200)
+            else if (response?.StatusCode == 200)
             {
                 Navigation.NavigateTo("/user-details");
             }
             else
             {
-                ErrorMessage = otpResponse?.Message ?? "Invalid OTP. Please try again.";
+                ErrorMessage = response?.Message ?? "Invalid OTP. Please try again.";
                 await ClearOtpFields();
             }
+            IsOtpVerifying = false;
         }
         catch (Exception ex)
         {
+            IsOtpVerifying = false;
             ErrorMessage = $"Error verifying OTP: {ex.Message}";
         }
     }
@@ -403,6 +420,7 @@
     }
     private async Task ResendOtp()
     {
+        IsOtpVerifying = true;
         ErrorMessage = "";
 
         var model = new MobileNumberRequest
@@ -411,28 +429,25 @@
             IsForgot = IsForgot
         };
 
-        var response = await RegistrationService.ResendOtp(model);
+        UserOtpResponseModel response = await RegistrationService.ResendOtp(model);
 
-        if (string.IsNullOrWhiteSpace(response))
+        if (response is null)
         {
             ErrorMessage = "Unable to resend OTP. Try again.";
             return;
         }
 
-        // 🔥 Convert JSON to object
-        var result = System.Text.Json.JsonSerializer.Deserialize<OtpResponse>(response);
-
         // 🔥 If StatusCode is NOT 200, show the error
-        if (result.StatusCode != 200)
+        if (response.StatusCode != 200)
         {
-            ErrorMessage = result.Message;
+            ErrorMessage = response.Message;
             return;
         }
 
         // 🔥 Success — Reset OTP boxes
         for (int i = 0; i < OtpDigits.Length; i++)
             OtpDigits[i] = "";
-
+        IsOtpVerifying = false;
         StartOtpTimer();
 
         await Task.Delay(50);

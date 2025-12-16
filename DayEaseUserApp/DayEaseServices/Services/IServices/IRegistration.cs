@@ -11,15 +11,15 @@ namespace DayEaseServices.Services.IServices
 {
     public interface IRegistration
     {
-        Task<string> PostAsync(MobileNumberRequest model);
-        Task<string> ValidateOtp(OtpVerificationRequest model);
-        Task<string> ResendOtp(MobileNumberRequest model);
+        Task<UserOtpResponseModel> PostAsync(MobileNumberRequest model);
+        Task<UserOtpResponseModel> ValidateOtp(OtpVerificationRequest model);
+        Task<UserOtpResponseModel> ResendOtp(MobileNumberRequest model);
         Task<List<StateModel>> GetStatesAsync();
         Task<List<CityModel>> GetCityAsync(CityModel StateId);
         Task<List<AreaModel>> GetAreaByCityId(AreaModel cityModel);
         Task<List<SubAreaModel>> GetSubAreaByAreaId(SubAreaModel areaModel);
 
-        Task<string> RegisterUserAsync(UserModel userModel);
+        Task<UserResponseModel> RegisterUserAsync(UserModel userModel);
         Task<UserResponseModel> UpdateUser(UserProfileModel UserProfileModel);
         Task<UserOtpResponseModel>ForgotPassword(ForgotPasswordModel model);
     }

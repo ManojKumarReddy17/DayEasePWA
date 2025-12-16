@@ -214,12 +214,27 @@
                 </div>
                 <div class="forgot-link">
                     @*  <a href="/forgotpassword">Forgot Password?</a> *@
-                    <a href="/highlightcompact" class="btn btn-outline-primary mt-3">Guest User</a>
+                    <a class="btn btn-outline-primary mt-3" @onclick="LoginAsGuest">Guest User</a>
 
                 </div>
             </div>
 
-            <button type="submit" class="btn btn-primary">LOGIN</button>
+            <button type="submit"
+                    class="btn btn-primary"
+                    disabled="@IsLoginLoading">
+                @if (IsLoginLoading)
+                {
+                    <span class="spinner-border spinner-border-sm me-2"
+                          role="status"
+                          aria-hidden="true"></span>
+                    <span>Logging in...</span>
+                }
+                else
+                {
+                    <span>LOGIN</span>
+                }
+            </button>
+
         </EditForm>
 
         <div class="text-center mt-3">
@@ -234,6 +249,7 @@
     private bool ShowPasswordRules = false;
     private bool IsPasswordValid = false;
     private bool ShowPassword = false;
+    private bool IsLoginLoading = false;
 
     private string PasswordInputType => ShowPassword ? "text" : "password";
 
@@ -265,6 +281,7 @@
 
     private async Task HandleLogin()
     {
+        IsLoginLoading = true;
         errorMessage = null;
 
         var response = await userloginservice.PostAsync(loginModel);
@@ -272,6 +289,7 @@
 
         if (response != null && !string.IsNullOrEmpty(response.JwtToken))
         {
+            await LocalStorage.SetItemAsync("IsGuestUser", false);
             await LocalStorage.SetItemAsync("JwtToken", response.JwtToken);
             // ✅ Notify the AuthenticationStateProvider
             ((CustomAuthStateProvider)AuthProvider).NotifyUserAuthentication(response.JwtToken);
@@ -299,10 +317,12 @@
                 }
 
             }
+            IsLoginLoading = false;
             NavigationManager.NavigateTo("/highlightcompact");
         }
         else
         {
+            IsLoginLoading = false;
             errorMessage = response?.Message ?? "Invalid username or password.";
         }
     }
@@ -332,5 +352,11 @@
                password.Any(char.IsUpper) &&
                password.Any(char.IsDigit) &&
                password.Any(ch => "!@#$%^&*()_+-=[]{}|;:,.<>?".Contains(ch));
+    }
+
+    private async Task LoginAsGuest()
+    {
+        await LocalStorage.SetItemAsync("IsGuestUser", true);
+        NavigationManager.NavigateTo("/highlightcompact");
     }
 }

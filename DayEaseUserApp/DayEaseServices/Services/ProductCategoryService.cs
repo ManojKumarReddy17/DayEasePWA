@@ -22,7 +22,7 @@ namespace DayEaseServices.Services
 
         public async Task<List<ProductCategoryMapDto>> GetProductcategoByStoreId(StoreProdCategoryRequestModel model)
             => await _apiservice.PostAsync<StoreProdCategoryRequestModel, List<ProductCategoryMapDto>>
-               ("ProductCategories/GetStoreProductCategorybyId", model);
+               ("ProductCategory/GetProductCategoriesByStoreId", model);
 
         public async Task<MysqlResponse<Pagination<ProductRequestModel>>> GetProductsByStoreId(PaginationQueryInput model)
             => await _apiservice.PostAsync<PaginationQueryInput, MysqlResponse<Pagination<ProductRequestModel>>>
