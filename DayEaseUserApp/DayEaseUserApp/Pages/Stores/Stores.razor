@@ -173,13 +173,13 @@ else if (NearbyStores.Any())
             {
                 <a href="/productcategory?storeId=@store.StoreId&storeName=@Uri.EscapeDataString(store.StoreName)" style="text-decoration:none; color:inherit;">
                     <div class="product-card">
-                        <div class="product-image-container">
+                        @* <div class="product-image-container">
                             <img src="images/@store.Products.First().ProductImg" alt="@store.StoreName" />
                             @if (!string.IsNullOrEmpty(store.SpecialOffer))
                             {
                                 <div class="offer-badge">Save @store.SpecialOffer</div>
                             }
-                        </div>
+                        </div> *@
                         <div class="product-details">
                             <div class="store-name">@store.StoreName</div>
                             <div class="location"><i class="bi bi-geo-alt-fill"></i> @store.DistanceInKm km</div>
@@ -236,11 +236,9 @@ else if (NearbyStores.Any())
             {
                 NearbyStores = apiResponse.Stores.Select(s => new HighLightModel
                 {
-                    StoreId = s.StoreId,
-                    StoreName = s.StoreName,
-                    DistanceInKm = Math.Round(s.Distance, 2),
-                    Products = s.Products ?? new List<ProductModel>(),
-                    SpecialOffer = $"{s.Products?.Max(p => p.Discount) ?? 0}% off!"
+                    StoreId = s.storeId,
+                    StoreName = s.storeName,
+                    DistanceInKm = Math.Round(s.distance, 2),
                 }).ToList();
             }
             else
