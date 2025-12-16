@@ -3,6 +3,7 @@
 @using Blazored.LocalStorage
 @using DayEaseServices.Services
 @using DayEaseServices.Services.IServices
+@using Domain.DomainModels
 @using Domain.RequestModels
 @inject IRegistration RegistrationService
 @using System.Text.Json
@@ -198,7 +199,22 @@
         }
     </div>
 
-    <button class="btn-primary" @onclick="RegisterUser">Send OTP</button>
+    <button class="btn-primary"
+            @onclick="RegisterUser"
+            disabled="@IsSendingOtp">
+        @if (IsSendingOtp)
+        {
+            <span class="spinner-border spinner-border-sm me-2"
+                  role="status"
+                  aria-hidden="true"></span>
+            <span>Sending OTP...</span>
+        }
+        else
+        {
+            <span>Send OTP</span>
+        }
+    </button>
+
 
     <div class="text-center mt-3">
         <a href="/login" class="text-decoration-none text-white-custom">Already have an account? Login</a>
@@ -224,7 +240,8 @@
     private bool HasValidationError = false;
     private bool ShowUserExistsModal = false;
     private bool IsForgot = false;
-   
+    private bool IsSendingOtp = false;
+
 
     protected override void OnInitialized()
     {
@@ -254,6 +271,7 @@
 
     private async Task RegisterUser()
     {
+        IsSendingOtp = true;
         HasValidationError = false;
         errorMessage = "";
 
@@ -273,42 +291,31 @@
 
                 };
 
-            var response = await RegistrationService.PostAsync(request);
+            UserOtpResponseModel response = await RegistrationService.PostAsync(request);
+            IsSendingOtp = false;
 
-            if (!string.IsNullOrEmpty(response))
+            if (response is not null)
             {
-                string jsonString = response.Trim('\"').Replace("\\\"", "\"");
-
-                var registrationResponse = JsonSerializer.Deserialize<RegistrationResponse>(jsonString);
-
-                if (registrationResponse != null)
+                if(response.StatusCode is 200)
                 {
-                    if (registrationResponse.StatusCode == 200)
+                    await LocalStorage.SetItemAsync("PhoneNumber", PhoneNumber);
+                    Navigation.NavigateTo($"/otp-verification?isForgot={IsForgot.ToString().ToLower()}");
+                }
+                else if(response.StatusCode is 409)
+                {
+                    if (IsForgot)
                     {
                         await LocalStorage.SetItemAsync("PhoneNumber", PhoneNumber);
-                        Navigation.NavigateTo($"/otp-verification?isForgot={IsForgot.ToString().ToLower()}");
+                        Navigation.NavigateTo("/otp-verification?isForgot=true");
                     }
-                    else if (registrationResponse.StatusCode == 409)
-                    {
-                        if (IsForgot)
-                        {
-                            await LocalStorage.SetItemAsync("PhoneNumber", PhoneNumber);
-                            Navigation.NavigateTo("/otp-verification?isForgot=true");
-                        }
-                        else
-                        {
-                            ShowUserExistsModal = true;
-                        }
-                    }
-
                     else
                     {
-                        await JS.InvokeVoidAsync("alert", registrationResponse.Message ?? "Unexpected response.");
+                        ShowUserExistsModal = true;
                     }
                 }
                 else
                 {
-                    await JS.InvokeVoidAsync("alert", "Could not parse response.");
+                    await JS.InvokeVoidAsync("alert", response.Message ?? "Unexpected response.");
                 }
             }
             else
@@ -318,6 +325,7 @@
         }
         catch (Exception ex)
         {
+            IsSendingOtp = false;
             await JS.InvokeVoidAsync("alert", $"Error: {ex.Message}");
         }
     }

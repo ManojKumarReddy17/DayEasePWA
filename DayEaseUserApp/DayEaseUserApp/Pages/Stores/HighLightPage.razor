@@ -3,6 +3,7 @@
 @inject IStoreService StoreService
 @inject AuthenticationStateProvider AuthProvider
 @inject IUserLocationService UserLocationService
+@inject IOrderService orderservices
 @inject GuestUserService locService
 @inject UserLocationState UserLocation
 @using DayEaseServices.Services
@@ -10,6 +11,7 @@
 @using Domain.RequestModels
 @using DayEaseServices.Services.IServices
 @using Microsoft.AspNetCore.Components.Authorization
+@inject Blazored.LocalStorage.ILocalStorageService LocalStorage
 @layout NavMenu
 
 <style>
@@ -298,7 +300,7 @@ else if (!string.IsNullOrEmpty(ErrorMessage))
 }
 else
 {
-    @if (Stores.Take(VisibleStoreCount).Any())
+    @if (Stores.Take(VisibleStoreCount).Any() && !IsGuestUser)
     {
         <div class="container mt-3">
             <h2 class="store-offers-heading">
@@ -399,11 +401,14 @@ else
     private string ErrorMessage = string.Empty;
     private bool isLoading = true;
     private int VisibleStoreCount = 6;
+    private bool IsGuestUser = false;
+    private List<OrderRequestModel> OrderDetails { get; set; } = new();
     // private UserLocationState UserLocation;
 
 //     
     protected override async Task OnInitializedAsync()
     {
+        IsGuestUser = await LocalStorage.GetItemAsync<bool>("IsGuestUser");
         isLoading = true;
 
         // 1️⃣ Load saved guest user from local/session storage
@@ -425,12 +430,44 @@ else
 
         // 5️⃣ Now fetch nearby stores safely
         await FetchStoresAsync();
+        ///Order/GetOrderDetailsByUserId
     }
 
+    // private async Task FetchUserOrdersAsync()
+    // {
+
+    //     try
+    //     {
+    //         var request = new OrderRequestModel { UserId = UserLocation.UserId };
+
+    //         OrderDetails = await orderservices.OrderDetailsbyUser(request);
+
+    //         if (OrderDetails.Count > 0)
+    //         {
+    //             Stores = apiResponse.Stores.Select(s => new HighLightModel
+    //             {
+    //                 StoreId = s.StoreId,
+    //                 StoreName = s.StoreName,
+    //                 DistanceInKm = Math.Round(s.Distance, 3),
+    //                 Products = s.Products,
+    //                 SpecialOffer = s.Products?.Max(p => p.Discount).ToString() + " off!"
+    //             }).ToList();
+    //         }
+    //         else
+    //         {
+    //             ErrorMessage = apiResponse?.Message ?? "No stores found.";
+    //         }
+    //     }
+    //     catch (Exception ex)
+    //     {
+    //         ErrorMessage = $"Error fetching stores: {ex.Message}";
+    //     }
+
+    // }
 
     private async Task FetchStoresAsync()
     {
-        isLoading = true;
+        
         try
         {
             var request = new NearbyStoresRequest
@@ -461,7 +498,7 @@ else
         {
             ErrorMessage = $"Error fetching stores: {ex.Message}";
         }
-        isLoading = false;
+       
     }
 
     private string GetProductImage(HighLightModel store)
