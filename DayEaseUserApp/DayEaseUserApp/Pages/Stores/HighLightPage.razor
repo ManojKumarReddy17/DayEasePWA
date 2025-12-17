@@ -12,6 +12,7 @@
 @using DayEaseServices.Services.IServices
 @using Microsoft.AspNetCore.Components.Authorization
 @inject Blazored.LocalStorage.ILocalStorageService LocalStorage
+@inject NavigationManager Navigation
 @layout NavMenu
 
 <style>
@@ -282,8 +283,34 @@
         width: 100%;
     }
 
+    .see-more-wrapper {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 0.5rem;
+    }
+
+    .see-more-btn {
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: #006aff;
+        padding: 0;
+        text-decoration: none;
+    }
+
+        .see-more-btn:hover {
+            text-decoration: underline;
+        }
+    @@media (max-width: 576px) {
+        .see-more-wrapper
+
+    {
+        justify-content: flex-end;
+    }
+
+    }
 </style>
-@if (isLoading)
+  
+@if (isPageLoading)
 {
     <div class="loading-wrapper">
         <div class="loading-spinner">
@@ -300,217 +327,226 @@ else if (!string.IsNullOrEmpty(ErrorMessage))
 }
 else
 {
-    @if (Stores.Take(VisibleStoreCount).Any() && !IsGuestUser)
+    @if (!IsGuestUser && RecentOrderStores?.Count > 0)
     {
         <div class="container mt-3">
             <h2 class="store-offers-heading">
-                <span><i class="bi bi-shop me-2"></i>Recent Orders</span>
+                <i class="bi bi-clock-history me-2"></i>Recent Orders
             </h2>
 
             <div class="store-grid">
-                @foreach (var store in Stores.Take(VisibleStoreCount))
+                @foreach (var store in RecentOrderStores)
                 {
-                    <div class="store-card-wrapper">
-                        <a href="/productcategory?storeId=@store.StoreId&storeName=@Uri.EscapeDataString(store.StoreName)&DistanceInKm=@store.DistanceInKm" class="store-link">
-
-                            <div class="custom-card">
-                                <div class="position-relative">
-                                    @* <img src="images/@store.Products.First().ProductImg" class="card-img-customs" /> *@
-                                    <img src="@GetProductImage(store)"
-                                         class="card-img-customs"
-                                         alt="@store.StoreName"
-                                         onerror="this.onerror=null; this.src='/images/default-image.jpeg';" />
-
-
-                                    @if (!string.IsNullOrEmpty(store.SpecialOffer))
-                                    {
-                                        <div class="offer-badge">Save @store.SpecialOffer</div>
-                                    }
-                                </div>
-                                <div class="store-info">
-                                    <div class="store-name">@store.StoreName</div>
-                                    <div class="location">📍 @store.DistanceInKm km</div>
-                                    <div>20-30 mins</div>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
+                    @StoreCard(store)
                 }
             </div>
-
-            @if (VisibleStoreCount < Stores.Count)
-            {
-                <div class="text-center mt-3">
-                    <button class="btn btn-outline-primary" @onclick="LoadMoreStores">See More</button>
-                </div>
-            }
         </div>
     }
 
-    @if (Stores.Take(VisibleStoreCount).Any())
+
+    @if (NearbyStores.Any())
     {
-        <div class="container mt-3">
-            <h2 class="store-offers-heading">
-                <span><i class="bi bi-shop me-2"></i>Near by Stores</span>
-            </h2>
+        <div class="container mt-4">
 
+            <!-- Header row -->
+            <div class="stores-header">
+                <h2 class="store-offers-heading mb-0">
+                    <i class="bi bi-shop me-2"></i>Nearby Stores
+                </h2>
+            </div>
+            <!-- Store grid -->
             <div class="store-grid">
-                @foreach (var store in Stores.Take(VisibleStoreCount))
+                @foreach (var store in NearbyStores)
                 {
-                    <div class="store-card-wrapper">
-                        <a href="/productcategory?storeId=@store.StoreId&storeName=@Uri.EscapeDataString(store.StoreName)&DistanceInKm=@store.DistanceInKm" class="store-link">
-
-                            <div class="custom-card">
-                                <div class="position-relative">
-                                    @* <img src="images/@store.Products.First().ProductImg" class="card-img-customs" /> *@
-                                    <img src="@GetProductImage(store)"
-                                         class="card-img-customs"
-                                         alt="@store.StoreName"
-                                         onerror="this.onerror=null; this.src='/images/default-image.jpeg';" />
-
-                                    @if (!string.IsNullOrEmpty(store.SpecialOffer))
-                                    {
-                                        <div class="offer-badge">Save @store.SpecialOffer</div>
-                                    }
-                                </div>
-                                <div class="store-info">
-                                    <div class="store-name">@store.StoreName</div>
-                                    <div class="location">📍 @store.DistanceInKm km</div>
-                                    <div>20-30 mins</div>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
+                    @StoreCard(store)
                 }
             </div>
-
-            @if (VisibleStoreCount < Stores.Count)
-            {
-                <div class="text-center mt-3">
-                    <button class="btn btn-outline-primary" @onclick="LoadMoreStores">See More</button>
-                </div>
-            }
+            <div class="see-more-wrapper">
+                <button class="btn btn-link see-more-btn"
+                        @onclick="NavigateToStores">
+                     More Stores
+                </button>
+            </div>
         </div>
     }
-
 }
 
-
 @code {
-    private List<HighLightModel> Stores = new();
-    private string ErrorMessage = string.Empty;
-    private bool isLoading = true;
-    private int VisibleStoreCount = 6;
-    private bool IsGuestUser = false;
-    private List<OrderRequestModel> OrderDetails { get; set; } = new();
-    // private UserLocationState UserLocation;
 
-//     
+    /* ================== STATE ================== */
+
+    private List<HighLightModel> RecentOrderStores = new();
+    private List<HighLightModel> NearbyStores = new();
+
+    private bool IsGuestUser;
+    private string ErrorMessage = string.Empty;
+
+    private bool isPageLoading = true;
+
+    // Nearby pagination
+    private int CurrentPage = 1;
+    private const int PageSize = 10;
+    private bool HasMoreData = true;
+    private bool isNearbyLoading = false;
+
+    /* ================== LIFECYCLE ================== */
+
     protected override async Task OnInitializedAsync()
     {
+        isPageLoading = true;
+
         IsGuestUser = await LocalStorage.GetItemAsync<bool>("IsGuestUser");
-        isLoading = true;
 
-        // 1️⃣ Load saved guest user from local/session storage
-       //await UserLocation.LoadAsync();
-
-        // 2️⃣ Attach guest user id to locService (VERY IMPORTANT)
-        locService.UserId = UserLocation.UserId;
-
-        // 3️⃣ Ensure latitude & longitude (gets saved if missing)
         await locService.EnsureLocationAsync(UserLocation);
 
-        // 4️⃣ Now coordinates MUST be available
-        if (string.IsNullOrEmpty(locService.Latitude) || string.IsNullOrEmpty(locService.Longitude))
+        if (string.IsNullOrEmpty(locService.Latitude) ||
+            string.IsNullOrEmpty(locService.Longitude))
         {
             ErrorMessage = "Unable to detect location";
-            isLoading = false;
+            isPageLoading = false;
             return;
         }
 
-        // 5️⃣ Now fetch nearby stores safely
-        await FetchStoresAsync();
-        ///Order/GetOrderDetailsByUserId
+        var tasks = new List<Task>
+    {
+        FetchNearbyStoresAsync()
+    };
+
+        if (!IsGuestUser)
+            tasks.Add(FetchRecentOrderStoresAsync());
+
+        await Task.WhenAll(tasks);
+
+        isPageLoading = false;
     }
 
-    // private async Task FetchUserOrdersAsync()
-    // {
 
-    //     try
-    //     {
-    //         var request = new OrderRequestModel { UserId = UserLocation.UserId };
-
-    //         OrderDetails = await orderservices.OrderDetailsbyUser(request);
-
-    //         if (OrderDetails.Count > 0)
-    //         {
-    //             Stores = apiResponse.Stores.Select(s => new HighLightModel
-    //             {
-    //                 StoreId = s.StoreId,
-    //                 StoreName = s.StoreName,
-    //                 DistanceInKm = Math.Round(s.Distance, 3),
-    //                 Products = s.Products,
-    //                 SpecialOffer = s.Products?.Max(p => p.Discount).ToString() + " off!"
-    //             }).ToList();
-    //         }
-    //         else
-    //         {
-    //             ErrorMessage = apiResponse?.Message ?? "No stores found.";
-    //         }
-    //     }
-    //     catch (Exception ex)
-    //     {
-    //         ErrorMessage = $"Error fetching stores: {ex.Message}";
-    //     }
-
-    // }
-
-    private async Task FetchStoresAsync()
+    /* ================== API ================== */
+    private async Task FetchRecentOrderStoresAsync()
     {
-        
         try
         {
-            var request = new NearbyStoresRequest
+            var request = new UserRecentOrderRequest
+            {
+                userId = UserLocation.UserId,
+                userLatitude = locService.Latitude,
+                userLongitude = locService.Longitude
+            };
+
+            var orders = await StoreService.GetRecentOrdersForUserId(request);
+
+            if (orders == null || orders.Count == 0)
+            {
+                RecentOrderStores.Clear();
+                return;
+            }
+
+            RecentOrderStores = orders
+                .Where(o => !string.IsNullOrEmpty(o.storeId))
+                .GroupBy(o => o.storeId)
+                .Select(g => new HighLightModel
                 {
-                    Latitude = locService.Latitude,
-                    Longitude = locService.Longitude
-                };
+                    StoreId = g.Key,
+                    StoreName = g.First().storeName ?? "Unknown Store",
+                    DistanceInKm = g.First().distance > 0
+                        ? Math.Round(g.First().distance, 2)
+                        : 0,
+
+                    // 🔹 Recent orders don’t have images → default
+                    StoreImage = "images/default-image.jpeg"
+                })
+                .ToList();
+        }
+        catch (Exception ex)
+        {
+            ErrorMessage = $"Recent orders error: {ex.Message}";
+        }
+    }
+
+
+    private async Task FetchNearbyStoresAsync()
+    {
+        try
+        {
+            isNearbyLoading = true;
+
+            var request = new NearbyStoresRequest
+            {
+                Latitude = locService.Latitude,
+                Longitude = locService.Longitude,
+                pageNumber = CurrentPage,
+                pageSize = PageSize
+            };
 
             var apiResponse = await StoreService.GetNearbyStoresAsync(request);
 
             if (apiResponse?.Success == true && apiResponse.Stores?.Any() == true)
             {
-                Stores = apiResponse.Stores.Select(s => new HighLightModel
-                    {
-                        StoreId = s.StoreId,
-                        StoreName = s.StoreName,
-                        DistanceInKm = Math.Round(s.Distance, 3),
-                        Products = s.Products,
-                        SpecialOffer = s.Products?.Max(p => p.Discount).ToString() + " off!"
-                    }).ToList();
+                var newStores = apiResponse.Stores.Select(s => new HighLightModel
+                {
+                    StoreId = s.storeId,
+                    StoreName = s.storeName ?? "Unknown Store",
+                    DistanceInKm = Math.Round(s.distance, 2),
+                    StoreImage = s.storeImage
+                }).ToList();
+
+                NearbyStores.AddRange(newStores);
+
+                HasMoreData = apiResponse.HasNextPage;
             }
             else
             {
-                ErrorMessage = apiResponse?.Message ?? "No stores found.";
+                HasMoreData = false;
             }
         }
         catch (Exception ex)
         {
             ErrorMessage = $"Error fetching stores: {ex.Message}";
         }
-       
+        finally
+        {
+            isNearbyLoading = false;
+        }
     }
 
-    private string GetProductImage(HighLightModel store)
+    private void NavigateToStores()
     {
-        var product = store.Products?.FirstOrDefault();
-        return string.IsNullOrWhiteSpace(product?.ProductImg)
+        Navigation.NavigateTo("/stores");
+
+    }
+
+    /* ================== HELPERS ================== */
+
+
+    // private string SafeEscape(string? value)
+    //     => Uri.EscapeDataString(value ?? string.Empty);
+
+    private string GetStoreImage(HighLightModel store)
+        => string.IsNullOrWhiteSpace(store.StoreImage)
             ? "images/default-image.jpeg"
-            : $"images/{product.ProductImg}";
-    }
+            : store.StoreImage;
 
-    private void LoadMoreStores()
-    {
-        VisibleStoreCount += 6;
-    }
+    /* ================== UI COMPONENT ================== */
+
+    RenderFragment StoreCard(HighLightModel store) => @<div class="store-card-wrapper">
+        <a href="/productcategory?storeId=@store.StoreId
+                    &storeName=@store.StoreName
+                    &DistanceInKm=@store.DistanceInKm"
+           class="store-link">
+
+            <div class="custom-card">
+                <div class="position-relative">
+                    <img src="@GetStoreImage(store)"
+                         class="card-img-customs"
+                         alt="@store.StoreName"
+                         onerror="this.onerror=null;this.src='/images/default-image.jpeg';" />
+                </div>
+
+                <div class="store-info">
+                    <div class="store-name">@store.StoreName</div>
+                    <div class="location">📍 @store.DistanceInKm km</div>
+                </div>
+            </div>
+        </a>
+    </div>;
 }
