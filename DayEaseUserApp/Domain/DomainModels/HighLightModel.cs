@@ -13,9 +13,6 @@ namespace Domain.DomainModels
         public double Latitude { get; set; }
         public double Longitude { get; set; }
         public double DistanceInKm { get; set; }
-        public List<string> DailyOffers { get; set; }
-        public string SpecialOffer { get; set; }
-
-        public List<ProductModel> Products { get; set; }
+        public string StoreImage { get; set; } = string.Empty;
     }
 }

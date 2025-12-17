@@ -27,14 +27,14 @@
         background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
         min-height: 100vh;
     }
-
     /* Style for page title */
+
     .page-title {
         margin-top: 20px;
         font-size: 24px;
     }
-
     /* Product grid */
+
     .product-container {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -54,21 +54,20 @@
         font-weight: 500;
         animation: fadeIn 0.4s ease-in-out;
     }
+
     @@keyframes fadeIn {
-        from
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
 
-    {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
     }
     /* Product card with colorful accents */
+
     .product-card {
         border-radius: 12px;
         overflow: hidden;
@@ -83,8 +82,8 @@
             transform: translateY(-5px);
             box-shadow: 0 8px 16px rgba(0,0,0,0.15);
         }
-
     /* Product image */
+
     .product-image-container {
         position: relative;
         height: 200px;
@@ -100,7 +99,6 @@
             object-fit: cover;
         }
 
-
     .product-image {
         width: 100%;
         height: 100%;
@@ -111,8 +109,8 @@
     .product-card:hover .product-image {
         transform: scale(1.05);
     }
-
     /* Cart button */
+
     .cart-btn {
         background-color: #007bff;
         color: white;
@@ -138,8 +136,8 @@
             .cart-btn.added:hover {
                 background-color: #1E90FF !important; /* Dark Green */
             }
-
     /* New styles for quantity layout */
+
     .cart-controls {
         display: flex;
         align-items: center;
@@ -148,7 +146,6 @@
         gap: 8px;
     }
 
-
     .quantity {
         font-weight: bold;
         font-size: 16px;
@@ -156,8 +153,6 @@
         text-align: center;
         color: #333;
     }
-
-
 
     .top-navbar {
         display: flex;
@@ -168,8 +163,8 @@
         border-bottom: 1px solid #e5e5e5;
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     }
-
     /* Logo container */
+
     .navbar-left {
         flex: 1; /* Takes available space */
     }
@@ -190,13 +185,13 @@
         align-items: center;
         gap: 5px;
     }
-
         /* Optional: Hover styles */
+
         .nav-btn:hover {
             background: #e0e0e0;
         }
-
     /* Product details with subtle gradient */
+
     .product-card {
         border-radius: 12px;
         overflow: hidden;
@@ -232,8 +227,8 @@
         font-size: 0.9em;
         margin-left: 5px;
     }
-
     /* Delivery Info */
+
     .delivery-info {
         padding: 8px 16px;
         background-color: #f8f8f8;
@@ -241,7 +236,6 @@
         display: flex;
         justify-content: space-between;
     }
-
     /* Categories Navigation */
 
     .categories-nav {
@@ -288,8 +282,8 @@
             margin-bottom: 0.3rem;
             transition: color 0.2s ease;
         }
-
         /* Active (selected) category style */
+
         .category-btn.active {
             color: #007bff;
             font-weight: bold;
@@ -351,33 +345,29 @@
             transform: rotate(360deg);
         }
     }
-    @@media (max-width: 1024px) {
-        .product-container
 
-        {
+    @@media (max-width: 1024px) {
+        .product-container {
             grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
             gap: 18px;
             padding: 10px;
         }
-
     }
 
     @@media (max-width: 480px) {
-        .product-container
-
-    {
-        grid-template-columns: repeat(1, 1fr);
-        gap: 10px;
-        padding: 5px;
-    }
-
+        .product-container {
+            grid-template-columns: repeat(1, 1fr);
+            gap: 10px;
+            padding: 5px;
+        }
     }
     /* Responsive adjustments*/
+
     @@media (max-width: 768px) {
         .product-container {
             grid-template-columns: repeat(2, 1fr);
-             gap: 15px;
-			padding: 8px;
+            gap: 15px;
+            padding: 8px;
         }
 
         .cart-summary {
@@ -438,9 +428,8 @@
         font-size: 28px;
         color: white;
     }
+    /*new one*/ /* Match height and alignment with store title box */
 
-    /*new one*/
-    /* Match height and alignment with store title box */
     .search-container {
         display: flex;
         align-items: center;
@@ -486,10 +475,8 @@
             margin: 0 auto 30px auto;
         }
     }
+    /* --------------------------------- MODAL BACKDROP & ANIMATION ---------------------------------- */
 
-    /* ---------------------------------
-                    MODAL BACKDROP & ANIMATION
-                    ---------------------------------- */
     .modal-backdrop {
         position: fixed;
         top: 0;
@@ -516,10 +503,8 @@
             transform: scale(1);
         }
     }
+    /* --------------------------------- MODAL CONTENT BOX ---------------------------------- */
 
-    /* ---------------------------------
-                    MODAL CONTENT BOX
-                    ---------------------------------- */
     .popup-action-row {
         display: flex;
         justify-content: space-between;
@@ -533,11 +518,11 @@
         font-weight: bold;
         color: #333;
     }
-
     /* For inline add-to-cart button */
+
     .add-btn-inline {
         background-color: #007bff;
-        color : white;
+        color: white;
         border: none;
         border-radius: 10px;
         padding: 10px 20px;
@@ -549,8 +534,8 @@
         .add-btn-inline:hover {
             background-color: #0056b3;
         }
-
     /* Inline version of cart controls */
+
     .cart-controls-inline {
         display: flex;
         align-items: center;
@@ -562,7 +547,6 @@
             font-size: 1.2rem;
             border-radius: 8px;
         }
-
 
     .modal-close-icon {
         position: absolute;
@@ -595,10 +579,8 @@
         max-height: 90vh;
         box-sizing: border-box;
     }
+    /* --------------------------------- PRODUCT IMAGE INSIDE MODAL ---------------------------------- */
 
-    /* ---------------------------------
-                    PRODUCT IMAGE INSIDE MODAL
-                    ---------------------------------- */
     .popup-image {
         width: 100px;
         max-height: 250px;
@@ -609,10 +591,8 @@
         margin-right: auto;
         display: block;
     }
+    /* --------------------------------- PRODUCT DETAILS IN MODAL ---------------------------------- */
 
-    /* ---------------------------------
-                    PRODUCT DETAILS IN MODAL
-                    ---------------------------------- */
     .modal-content h4 {
         font-size: 1.4rem;
         font-weight: 600;
@@ -627,10 +607,8 @@
         color: #555;
         text-align: left;
     }
+    /* --------------------------------- QUANTITY CONTROLS ---------------------------------- */
 
-    /* ---------------------------------
-                    QUANTITY CONTROLS
-                    ---------------------------------- */
     .cart-controls {
         display: flex;
         justify-content: center;
@@ -639,8 +617,7 @@
         margin: 15px 0;
     }
 
-    .cart-btn.plus,
-    .cart-btn.minus {
+    .cart-btn.plus, .cart-btn.minus {
         background-color: #007bff;
         border: none;
         border-radius: 8px;
@@ -666,10 +643,8 @@
         min-width: 40px;
         text-align: center;
     }
+    /* --------------------------------- ACTION BUTTON ROW ---------------------------------- */
 
-    /* ---------------------------------
-                    ACTION BUTTON ROW
-                    ---------------------------------- */
     .popup-button-row {
         display: flex;
         justify-content: space-between;
@@ -708,10 +683,8 @@
     .cart-btn.close-btn:hover {
         background-color: #5a6268;
     }
+    /* --------------------------------- RESPONSIVE STYLES ---------------------------------- */
 
-    /* ---------------------------------
-                    RESPONSIVE STYLES
-                    ---------------------------------- */
     @@media (max-width: 600px) {
         .modal-content {
             padding: 16px;
@@ -729,8 +702,7 @@
             max-height: 180px;
         }
 
-        .cart-btn.plus,
-        .cart-btn.minus {
+        .cart-btn.plus, .cart-btn.minus {
             padding: 6px 12px;
         }
 
@@ -743,8 +715,7 @@
             gap: 12px;
         }
 
-        .cart-btn.add-btn,
-        .cart-btn.close-btn {
+        .cart-btn.add-btn, .cart-btn.close-btn {
             width: 100%;
         }
 
@@ -772,10 +743,8 @@
             padding: 16px;
         }
     }
-
-
-
     /* Unified stepper style */
+
     .price-action-row {
         display: flex;
         justify-content: space-between;
@@ -816,10 +785,8 @@
         gap: 12px;
         margin-top: 16px;
     }
-
-
-
     /* Unified cart button styling */
+
     .cart-toggle-button {
         display: flex;
         align-items: center;
@@ -861,8 +828,8 @@
         min-width: 24px;
         text-align: center;
     }
-
     /* "Add to Cart" fallback button style (if not yet in cart) */
+
     .cart-btn.add-btn-inline {
         background-color: #007bff;
         color: white;
@@ -878,7 +845,6 @@
         .cart-btn.add-btn-inline:hover {
             background-color: #0056b3;
         }
-
 
     .store-title-flex {
         display: flex;
@@ -932,10 +898,7 @@
         color: white;
         font-weight: 500;
     }
-
 </style>
-
-
 <!-- Store Header -->
 <div class="store-header-wrapper">
     <div class="store-title-box store-title-flex">
@@ -1105,7 +1068,7 @@ else
     private bool isSearchMode = false;
 
     private int currentPage = 1;
-    private int pageSize = 6;
+    private int pageSize = 8;
 
     private ElementReference sentinel;
     private DotNetObjectReference<ProductCategory> objRef;
@@ -1134,7 +1097,7 @@ else
             DistanceInKm = dist;
 
        
-        var categoryInput = new StoreProdCategoryRequestModel { StoreId = StoreId };
+        var categoryInput = new StoreProdCategoryRequestModel { StoreId = StoreId?.Trim() };
         var categoryDtos = await _productCategory.GetProductcategoByStoreId(categoryInput);
 
         Categories = categoryDtos
@@ -1153,6 +1116,24 @@ else
 
         isFirstLoad = false;
     }
+    private ProductSearchModel BuildSearchRequest(
+    int pageNumber,
+    int pageSize,
+    string? productName = null)
+    {
+        return new ProductSearchModel
+        {
+            StoreId = StoreId?.Trim(),
+            CategoryId = string.IsNullOrWhiteSpace(selectedCategoryId)
+                            ? null
+                            : selectedCategoryId.Trim(),
+            ProductName = string.IsNullOrWhiteSpace(productName)
+                            ? null
+                            : productName.Trim(),
+            PageNumber = pageNumber,
+            PageSize = pageSize
+        };
+    }
 
     private async Task LoadProducts(string categoryName, string categoryId)
     {
@@ -1163,19 +1144,14 @@ else
         allProductsLoaded = false;
         isSearchMode = false;
 
-        var request = new ProductSearchModel
-        {
-            StoreId = StoreId,
-            CategoryId = categoryId,
-            PageNumber = currentPage,
-            PageSize = pageSize
-        };
+        var request = BuildSearchRequest(currentPage, pageSize);
 
         var response = await _productCategory.SearchProductsAsync(request);
 
         products = response?.Result?.Items ?? new();
         filteredProducts = products;
     }
+
 
     private async Task FilterByCategory(string name, string id)
     {
@@ -1192,20 +1168,18 @@ else
             return;
         }
 
-        var request = new ProductSearchModel
-        {
-            StoreId = StoreId,
-            CategoryId = selectedCategoryId,
-            ProductName = searchQuery,
-            PageNumber = 1,
-            PageSize = 50
-        };
+        var request = BuildSearchRequest(
+            pageNumber: 1,
+            pageSize: 50,
+            productName: searchQuery
+        );
 
         var response = await _productCategory.SearchProductsAsync(request);
 
         filteredProducts = response?.Result?.Items ?? new();
         isSearchMode = true;
     }
+
 
     private async Task HandleSearchKey(KeyboardEventArgs e)
     {
