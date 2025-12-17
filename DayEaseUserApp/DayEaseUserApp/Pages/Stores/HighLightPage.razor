@@ -12,6 +12,7 @@
 @using DayEaseServices.Services.IServices
 @using Microsoft.AspNetCore.Components.Authorization
 @inject Blazored.LocalStorage.ILocalStorageService LocalStorage
+@inject NavigationManager Navigation
 @layout NavMenu
 
 <style>
@@ -282,8 +283,33 @@
         width: 100%;
     }
 
-</style>
+    .see-more-wrapper {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 0.5rem;
+    }
 
+    .see-more-btn {
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: #006aff;
+        padding: 0;
+        text-decoration: none;
+    }
+
+        .see-more-btn:hover {
+            text-decoration: underline;
+        }
+    @@media (max-width: 576px) {
+        .see-more-wrapper
+
+    {
+        justify-content: flex-end;
+    }
+
+    }
+</style>
+  
 @if (isPageLoading)
 {
     <div class="loading-wrapper">
@@ -318,31 +344,29 @@ else
     }
 
 
-    @* ===== NEARBY STORES ===== *@
     @if (NearbyStores.Any())
     {
         <div class="container mt-4">
-            <h2 class="store-offers-heading">
-                <i class="bi bi-shop me-2"></i>Nearby Stores
-            </h2>
 
+            <!-- Header row -->
+            <div class="stores-header">
+                <h2 class="store-offers-heading mb-0">
+                    <i class="bi bi-shop me-2"></i>Nearby Stores
+                </h2>
+            </div>
+            <!-- Store grid -->
             <div class="store-grid">
                 @foreach (var store in NearbyStores)
                 {
                     @StoreCard(store)
                 }
             </div>
-
-            @if (HasMoreData)
-            {
-                <div class="text-center mt-3">
-                    <button class="btn btn-outline-primary"
-                            disabled="@isNearbyLoading"
-                            @onclick="LoadMoreNearbyStores">
-                        @(isNearbyLoading ? "Loading..." : "See More")
-                    </button>
-                </div>
-            }
+            <div class="see-more-wrapper">
+                <button class="btn btn-link see-more-btn"
+                        @onclick="NavigateToStores">
+                     More Stores
+                </button>
+            </div>
         </div>
     }
 }
@@ -361,7 +385,7 @@ else
 
     // Nearby pagination
     private int CurrentPage = 1;
-    private const int PageSize = 6;
+    private const int PageSize = 10;
     private bool HasMoreData = true;
     private bool isNearbyLoading = false;
 
@@ -484,16 +508,15 @@ else
             isNearbyLoading = false;
         }
     }
+
+    private void NavigateToStores()
+    {
+        Navigation.NavigateTo("/stores");
+
+    }
+
     /* ================== HELPERS ================== */
 
-    private async Task LoadMoreNearbyStores()
-    {
-        if (!HasMoreData || isNearbyLoading)
-            return;
-
-        CurrentPage++;
-        await FetchNearbyStoresAsync();
-    }
 
     // private string SafeEscape(string? value)
     //     => Uri.EscapeDataString(value ?? string.Empty);

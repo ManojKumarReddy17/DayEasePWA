@@ -11,14 +11,14 @@
 
 <style>
 
-    .product-container {
+    .store-container {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
         gap: 25px;
         padding: 10px;
     }
 
-    .product-card {
+    .store-card {
         border-radius: 12px;
         overflow: hidden;
         box-shadow: 0 4px 12px rgba(0,0,0,0.1);
@@ -28,16 +28,16 @@
         border-top: 4px solid #4a90e2; /* Blue accent border */
     }
 
-        .product-card:hover {
+        .store-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 8px 16px rgba(0,0,0,0.15);
         }
 
-            .product-card:hover .product-image {
+            .store-card:hover .store-image {
                 transform: scale(1.05);
             }
 
-    .product-image-container {
+    .store-image-container {
         position: relative;
         height: 200px;
         overflow: hidden;
@@ -46,13 +46,13 @@
         place-items: center; /* Centers the image both horizontally and vertically */
     }
 
-        .product-image-container img {
+        .store-image-container img {
             max-height: 100%;
             max-width: 100%;
             object-fit: cover;
         }
 
-    .product-details {
+    .store-details {
         padding: 15px;
     }
 
@@ -92,7 +92,11 @@
         font-family: 'Segoe UI', sans-serif;
     }
 
-
+    .store-link {
+        text-decoration: none;
+        color: inherit;
+        display: block;
+    }
 
     .loading-wrapper {
         display: flex;
@@ -140,7 +144,7 @@
 
 
     @@media (max-width: 768px) {
-        .product-container {
+        .store-container {
             grid-template-columns: repeat(2, 1fr);
             gap: 15px;
         }
@@ -168,27 +172,44 @@ else if (NearbyStores.Any())
         <h2 class="store-offers-heading">
             <span class="store-header"><i class="bi bi-shop me-2"></i>Stores near you</span>
         </h2>
-        <div class="product-container">
+        <div class="store-container">
             @foreach (var store in NearbyStores)
             {
-                <a href="/productcategory?storeId=@store.StoreId&storeName=@Uri.EscapeDataString(store.StoreName)" style="text-decoration:none; color:inherit;">
-                    <div class="product-card">
-                        @* <div class="product-image-container">
-                            <img src="images/@store.Products.First().ProductImg" alt="@store.StoreName" />
-                            @if (!string.IsNullOrEmpty(store.SpecialOffer))
-                            {
-                                <div class="offer-badge">Save @store.SpecialOffer</div>
-                            }
-                        </div> *@
-                        <div class="product-details">
-                            <div class="store-name">@store.StoreName</div>
-                            <div class="location"><i class="bi bi-geo-alt-fill"></i> @store.DistanceInKm km</div>
+                <a href="/productcategory?storeId=@store.StoreId&storeName=@Uri.EscapeDataString(store.StoreName)"
+                   class="store-link">
+
+                    <div class="store-card">
+
+                        <!-- Store Image -->
+                        <div class="store-image-container">
+                            <img src="@GetStoreImage(store.StoreImage)"
+                                 loading="lazy" />
                         </div>
+
+                        <!-- Store Details -->
+                        <div class="store-details">
+                            <div class="store-name">@store.StoreName</div>
+                            <div class="location">
+                                <i class="bi bi-geo-alt-fill"></i>
+                                @store.DistanceInKm km
+                            </div>
+                        </div>
+
                     </div>
                 </a>
+
             }
         </div>
+        @if (HasMoreData)
+        {
+            <div id="scroll-anchor" style="height:1px;"></div>
+
+            <div class="text-center my-3">
+                <span class="text-muted">Loading more...</span>
+            </div>
+        }
     </div>
+    
 }
 
 @code {
@@ -196,6 +217,13 @@ else if (NearbyStores.Any())
     private string ErrorMessage = string.Empty;
     private bool isLoading = true;
     private UserLocationState UserLocation;
+    private int CurrentPage = 1;
+    private const int PageSize = 10;
+    private bool HasMoreData = true;
+    private bool isFetchingMore = false;
+
+
+    private DotNetObjectReference<Stores>? objRef;
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -205,20 +233,40 @@ else if (NearbyStores.Any())
             StateHasChanged();
 
             UserLocation = await UserLocationService.GetUserLocationAsync();
-
             await FetchStoresAsync();
+
+            objRef = DotNetObjectReference.Create(this);
+
+            await JS.InvokeVoidAsync(
+                "initInfiniteScroll",
+                objRef,
+                "scroll-anchor"
+            );
 
             isLoading = false;
             StateHasChanged();
         }
     }
 
+    [JSInvokable]
+    public async Task LoadMore()
+    {
+        await FetchStoresAsync();
+    }
+
+
     private async Task FetchStoresAsync()
     {
+        if (isFetchingMore || !HasMoreData)
+            return;
+
         try
         {
-            // Fix: Convert Latitude and Longitude to double before comparison
-            if (!double.TryParse(UserLocation.Latitude, out var lat) || !double.TryParse(UserLocation.Longitude, out var lng) || lat == 0 || lng == 0)
+            isFetchingMore = true;
+
+            if (!double.TryParse(UserLocation.Latitude, out var lat) ||
+                !double.TryParse(UserLocation.Longitude, out var lng) ||
+                lat == 0 || lng == 0)
             {
                 ErrorMessage = "Unable to fetch location.";
                 return;
@@ -227,29 +275,61 @@ else if (NearbyStores.Any())
             var request = new NearbyStoresRequest
             {
                 Latitude = lat.ToString(),
-                Longitude = lng.ToString()
+                Longitude = lng.ToString(),
+                pageNumber = CurrentPage,
+                pageSize = PageSize
             };
 
             var apiResponse = await StoreService.GetNearbyStoresAsync(request);
 
-            if (apiResponse?.Success == true && apiResponse.Stores?.Any() == true)
+            if (apiResponse?.Success == true)
             {
-                NearbyStores = apiResponse.Stores.Select(s => new HighLightModel
-                {
-                    StoreId = s.storeId,
-                    StoreName = s.storeName,
-                    DistanceInKm = Math.Round(s.distance, 2),
-                }).ToList();
+                var newStores = apiResponse.Stores?
+                    .Select(s => new HighLightModel
+                    {
+                        StoreId = s.storeId,
+                        StoreName = s.storeName ?? "Unknown Store",
+                        StoreImage = s.storeImage,
+                        DistanceInKm = Math.Round(s.distance, 2)
+                    })
+                    .ToList() ?? new();
+
+                NearbyStores.AddRange(newStores);
+
+                HasMoreData = apiResponse.HasNextPage;
+                CurrentPage++;
             }
             else
             {
-                ErrorMessage = apiResponse?.Message ?? "No stores found.";
+                HasMoreData = false;
             }
         }
         catch (Exception ex)
         {
             ErrorMessage = $"Error fetching stores: {ex.Message}";
         }
+        finally
+        {
+            isFetchingMore = false;
+            StateHasChanged();
+        }
+    }
+    private string GetStoreImage(string image)
+    {
+        return string.IsNullOrWhiteSpace(image)
+            ? "images/store-placeholder.png"
+            : image.StartsWith("http")
+                ? image
+                : $"images/{image}";
+    }
+
+
+    [Inject] IJSRuntime JS { get; set; }
+
+    [JSInvokable]
+    public async Task LoadMoreStores()
+    {
+        await FetchStoresAsync();
     }
 
 }
