@@ -4,7 +4,7 @@
 @using DayEaseServices.Services.IServices
 @using Microsoft.AspNetCore.Components.Authorization
 @using DayEaseServices.Services
-@inject IUserLocationService UserLocationService
+@inject UserLocationManager locationManager
 @inject AuthenticationStateProvider AuthProvider
 @inject IStoreService StoreService
 @layout NavMenu
@@ -227,26 +227,42 @@ else if (NearbyStores.Any())
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        if (firstRender)
+        if (!firstRender)
+            return;
+
+        isLoading = true;
+        StateHasChanged();
+
+        // ✅ Identity & location are ALREADY initialized elsewhere
+        UserLocation = new UserLocationState
         {
-            isLoading = true;
-            StateHasChanged();
+            UserId = locationManager.UserId,
+            Latitude = locationManager.Latitude.ToString("F6"),
+            Longitude = locationManager.Longitude.ToString("F6")
+        };
 
-            UserLocation = await UserLocationService.GetUserLocationAsync();
-            await FetchStoresAsync();
-
-            objRef = DotNetObjectReference.Create(this);
-
-            await JS.InvokeVoidAsync(
-                "initInfiniteScroll",
-                objRef,
-                "scroll-anchor"
-            );
-
+        if (locationManager.Latitude == 0 || locationManager.Longitude == 0)
+        {
+            ErrorMessage = "Unable to detect location";
             isLoading = false;
             StateHasChanged();
+            return;
         }
+
+        await FetchStoresAsync();
+
+        objRef = DotNetObjectReference.Create(this);
+
+        await JS.InvokeVoidAsync(
+            "initInfiniteScroll",
+            objRef,
+            "scroll-anchor"
+        );
+
+        isLoading = false;
+        StateHasChanged();
     }
+
 
     [JSInvokable]
     public async Task LoadMore()

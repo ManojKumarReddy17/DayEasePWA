@@ -6,6 +6,12 @@ using System.Threading.Tasks;
 
 namespace Domain.RequestModels
 {
+    public class CartRequest
+    {
+        public string UserId { get; set; }
+        public List<CartModel> cartItems { get; set; }
+    }
+
     public class CartModel
     {
         
