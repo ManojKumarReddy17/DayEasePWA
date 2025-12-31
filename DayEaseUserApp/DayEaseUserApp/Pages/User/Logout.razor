@@ -2,22 +2,20 @@
 @using Blazored.LocalStorage
 @using DayEaseServices.Services
 @using Microsoft.AspNetCore.Components.Authorization;
+
 @inject ILocalStorageService LocalStorage
 @inject AuthenticationStateProvider AuthProvider
 @inject NavigationManager Navigation
+@inject CartService CartService
 
 <h3>Logging out...</h3>
 
 @code {
     protected override async Task OnInitializedAsync()
     {
-        // 1️⃣ Remove token
-        await LocalStorage.RemoveItemAsync("JwtToken");
-
-        // 2️⃣ Notify AuthenticationStateProvider
-        ((CustomAuthStateProvider)AuthProvider).NotifyUserLogout();
-
-        // 3️⃣ Redirect to login page
-        Navigation.NavigateTo("/login", forceLoad: true);
+        LocalStorage.ClearAsync();
+        await CartService.ClearCart();
+        Navigation.NavigateTo("/Login");
+       
     }
 }

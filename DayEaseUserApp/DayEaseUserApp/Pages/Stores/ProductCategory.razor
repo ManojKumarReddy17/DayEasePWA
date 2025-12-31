@@ -2,15 +2,14 @@
 @inject IProductCategory _productCategory
 @using DayEaseServices.Services.IServices
 @using DayEaseServices.Services
-@inject IUserLocationService UserLocationService
-@inject ICartService CartService
+@inject CartService CartService
 @using Domain.RequestModels
 @using DayEaseUserApp.Layout
 @inject NavigationManager Navigation
 @using Microsoft.AspNetCore.WebUtilities
 @layout NavMenu
 @inject IJSRuntime JS
-@inject GuestUserService locationService
+@inject UserLocationManager locationService
 @using System.Linq
 
 @inject UserLocationState UserLocation
@@ -958,7 +957,7 @@ else if (filteredProducts != null && filteredProducts.Count > 0)
         {
             <div class="product-card">
                 <div class="product-image-container" @onclick="() => OpenPopup(product)" style="cursor: pointer;">
-                    <img src="images/@product.ProductImg" alt="@product.ProductName" />
+                    <img src="@product.ProductImg" alt="@product.ProductName" />
                 </div>
 
                 <div class="product-details">
@@ -971,7 +970,7 @@ else if (filteredProducts != null && filteredProducts.Count > 0)
                         {
                             <div class="stepper">
                                 <button @onclick="() => UpdateQuantity(product.ProductId, false)">➖</button>
-                                <span class="quantity">@CartService.CartItems[product.ProductId].quantity</span>
+                                <span class="quantity">@CartService.CartItems[product.ProductId].Quantity</span>
                                 <button @onclick="() => UpdateQuantity(product.ProductId, true)">➕</button>
                             </div>
                         }
@@ -1013,7 +1012,7 @@ else if (filteredProducts != null && filteredProducts.Count > 0)
 
 
                             <button @onclick="() => UpdateQuantity(selectedProduct.ProductId, false)">➖</button>
-                            <span class="quantity">@CartService.CartItems[selectedProduct.ProductId].quantity</span>
+                            <span class="quantity">@CartService.CartItems[selectedProduct.ProductId].Quantity</span>
                             <button @onclick="() => UpdateQuantity(selectedProduct.ProductId, true)">➕</button>
 
                         </div>
@@ -1096,7 +1095,7 @@ else
             double.TryParse(distStr, out var dist))
             DistanceInKm = dist;
 
-       
+
         var categoryInput = new StoreProdCategoryRequestModel { StoreId = StoreId?.Trim() };
         var categoryDtos = await _productCategory.GetProductcategoByStoreId(categoryInput);
 
@@ -1240,7 +1239,7 @@ else
     }
 
 
-    
+
     private CartModel BuildCartModel(ProductRequestModel product, int qty = 1) =>
         new CartModel
         {
@@ -1251,23 +1250,34 @@ else
             GuestUserId = locationService.IsGuestUser ? locationService.GuestUserId : null
         };
 
-    private async Task<bool> ShouldReplaceStore(string newStoreId)
+    private bool ShouldReplaceStore(string newStoreId)
     {
-        if (locationService.IsGuestUser)
-        {
-            var guestItems = await CartService.GetGuestCartItemsAsync(new CartModel { GuestUserId = EffectiveUserId });
-            return guestItems.Any() && guestItems.First().StoreId != newStoreId;
-        }
-        else
-        {
-            var userItems = await CartService.GetCartItemsByUserId(new CartModel { UserId = EffectiveUserId });
-            return userItems.Any() && userItems.First().StoreId != newStoreId;
-        }
+        if (!CartService.CartItems.Any())
+            return false;
+
+        return CartService.CartItems.Values.Any(
+            item => item.StoreId != newStoreId
+        );
     }
+
+
+
+    // private async Task AddToCart(ProductRequestModel product)
+    // {
+    //     if (ShouldReplaceStore(product.StoreId))
+    //     {
+    //         cartWarningMessage = "⚠️ You can only order from one store at a time. Replace cart?";
+    //         selectedProduct = product;
+    //         showReplaceItemsPopup = true;
+    //         return;
+    //     }
+
+    //     CartService.AddToCart(product.ProductId, product.ProductName, 1);
+    // }
 
     private async Task AddToCart(ProductRequestModel product)
     {
-        if (await ShouldReplaceStore(product.StoreId))
+        if (ShouldReplaceStore(product.StoreId))
         {
             cartWarningMessage = "⚠️ You can only order from one store at a time. Replace cart?";
             selectedProduct = product;
@@ -1275,14 +1285,23 @@ else
             return;
         }
 
-        var model = BuildCartModel(product);
+        var cartModel = new CartModel
+        {
+            ProductId = product.ProductId,
+            ProductName = product.ProductName,
+            ProductImage = product.ProductImg,
+            StoreId = product.StoreId,
+            Quantity = 1,
+            Price = product.Price,
+            Discount = product.Discount,
+            TotalPrice = product.Price - product.Discount,
+            NetPrice = product.Price - product.Discount,
 
-        if (locationService.IsGuestUser)
-            await CartService.AddGuestCartItemAsync(model);
-        else
-            await CartService.AddCartItems(model);
+            UserId = locationService.IsGuestUser ? null : locationService.UserId,
+            GuestUserId = locationService.IsGuestUser ? locationService.GuestUserId : null,
+        };
 
-        await CartService.LoadCartItemCountAsync(model);
+        await CartService.AddToCart(cartModel);
     }
 
 
@@ -1290,38 +1309,28 @@ else
     {
         if (confirm && selectedProduct != null)
         {
-            // remove old items
-            if (locationService.IsGuestUser)
-            {
-                var guestItems = await CartService.GetGuestCartItemsAsync(new CartModel { GuestUserId = EffectiveUserId });
-                foreach (var item in guestItems)
-                {
-                    await CartService.RemoveCartItems(
-                        new CartModel
-                        {
-                            CartItemId = item.CartItemId,
-                            ProductId = item.ProductId,
-                            GuestUserId = item.GuestUserId
-                        });
-                }
-            }
-            else
-            {
-                var userItems = await CartService.GetCartItemsByUserId(new CartModel { UserId = EffectiveUserId });
-                foreach (var item in userItems)
-                {
-                    await CartService.RemoveCartItems(
-                        new CartModel
-                        {
-                            CartItemId = item.CartItemId,
-                            ProductId = item.ProductId,
-                            UserId = item.UserId,
-                            GuestUserId = item.GuestUserId
-                        });
-                }
-            }
+            await CartService.ClearCart();
 
-            await AddToCart(selectedProduct);
+            var cartModel = new CartModel
+            {
+                ProductId = selectedProduct.ProductId,
+                ProductName = selectedProduct.ProductName,
+                ProductImage = selectedProduct.ProductImg,
+                StoreId = selectedProduct.StoreId,
+
+                Quantity = 1,
+
+                Price = selectedProduct.Price,
+                Discount = selectedProduct.Discount,
+                TotalPrice = selectedProduct.Price - selectedProduct.Discount,
+                NetPrice = selectedProduct.Price - selectedProduct.Discount,
+
+                UserId = locationService.IsGuestUser ? null : locationService.UserId,
+                GuestUserId = locationService.IsGuestUser ? locationService.GuestUserId : null,
+              //  Variant = selectedProduct.Variant
+            };
+
+            await CartService.AddToCart(cartModel);
         }
 
         showReplaceItemsPopup = false;
@@ -1332,58 +1341,16 @@ else
 
     private async Task UpdateQuantity(string productId, bool increase)
     {
-        var cartItem = CartService.CartItems.GetValueOrDefault(productId);
-        if (cartItem.quantity < 0) return;
-
-        int updatedQuantity = increase ? cartItem.quantity + 1 : cartItem.quantity - 1;
-        var product = products.FirstOrDefault(p => p.ProductId == productId);
-        if (product == null) return;
-        var cartModel = BuildCartModel(product, updatedQuantity);
-
-        if (locationService.IsGuestUser)
-        {
-            var guestItems = await CartService.GetGuestCartItemsAsync(cartModel);
-            var item = guestItems.FirstOrDefault(x => x.ProductId == productId);
-            if (item == null) return;
-
-            cartModel.CartItemId = item.CartItemId;
-
-            if (increase)
-                CartService.IncreaseQuantity(productId);
-            else
-                CartService.DecreaseQuantity(productId);
-
-            if (updatedQuantity < 1)
-                await CartService.RemoveGuestCartItemAsync(cartModel);
-            else
-                await CartService.UpdateGuestCartItemQuantityAsync(cartModel);
-        }
-        else
-        {
-            var userItems = await CartService.GetCartItemsByUserId(cartModel);
-            var item = userItems.FirstOrDefault(x => x.ProductId == productId);
-            if (item == null) return;
-
-            cartModel.CartItemId = item.CartItemId;
-
-            if (increase)
-                CartService.IncreaseQuantity(productId);
-            else
-                CartService.DecreaseQuantity(productId);
-
-            if (updatedQuantity < 1)
-                await CartService.RemoveCartItems(cartModel);
-            else
-                await CartService.UpdateCartItems(cartModel);
-        }
-
-        await CartService.LoadCartItemCountAsync(cartModel);
+        if (increase)
+            await CartService.IncreaseQuantity(productId);
+    else
+          await  CartService.DecreaseQuantity(productId);
     }
-    private int GetCartCount() => CartService.CartItems.Values.Sum(item => item.quantity);
+
+    private int GetCartCount() => CartService.CartItems.Values.Sum(item => item.Quantity);
 
 
     private string FormatCurrency(decimal amount) => "₹" + amount.ToString("0.00");
-    
 }
 
 

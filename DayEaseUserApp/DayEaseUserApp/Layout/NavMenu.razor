@@ -2,15 +2,14 @@
 @inject NavigationManager NavigationManager
 @using DayEaseServices.Services.IServices
 @using DayEaseServices.Services
-@inject IUserLocationService UserLocationService
 @using Domain.RequestModels
-@inject ICartService CartService
-@inject GuestUserService locService
+@inject CartService CartService
+@inject UserLocationManager locationManager
 @inject UserLocationState UserLocation
 @inject Blazored.LocalStorage.ILocalStorageService LocalStorage
 
 
-@if (!IsGuestUser)
+@if (!locationManager.IsGuestUser)
 {
     <div class="top-bar">
         <div class="header-left">
@@ -158,38 +157,46 @@ else
     private List<CartModel> cartItems = new();
     private List<GuestCartItem> guestCartItems = new();
     private bool showLogoutPopup = false;
-    private bool IsGuestUser = false;
+    
 
+    // protected override async Task OnInitializedAsync()
+    // {
+    //     IsGuestUser = await LocalStorage.GetItemAsync<bool>("IsGuestUser");
+    //     await locService.EnsureLocationAsync(UserLocation);
+
+    //     if (locService.IsGuestUser)
+    //     {
+    //         var guestRequest = new CartModel
+    //             {
+    //                 GuestUserId = locService.GuestUserId
+    //             };
+
+    //         guestCartItems = await CartService.GetGuestCartItemsAsync(guestRequest);
+    //         await CartService.LoadCartItemCountAsync(guestRequest);
+    //     }
+    //     else
+    //     {
+
+    //         UserLocation = await UserLocationService.GetUserLocationAsync();
+    //         var request = new CartModel
+    //             {
+    //                 UserId = UserLocation.UserId
+    //             };
+    //         await CartService.LoadCartItemCountAsync(request);
+    //     }
+    // }
     protected override async Task OnInitializedAsync()
     {
-        IsGuestUser = await LocalStorage.GetItemAsync<bool>("IsGuestUser");
-        await locService.EnsureLocationAsync(UserLocation);
+        await locationManager.InitializeAsync();
 
-        if (locService.IsGuestUser)
-        {
-            var guestRequest = new CartModel
-                {
-                    GuestUserId = locService.GuestUserId
-                };
+        CartService.OnCartChanged += RefreshBadge;
 
-            guestCartItems = await CartService.GetGuestCartItemsAsync(guestRequest);
-            await CartService.LoadCartItemCountAsync(guestRequest);
-        }
-        else
-        {
-
-            UserLocation = await UserLocationService.GetUserLocationAsync();
-            var request = new CartModel
-                {
-                    UserId = UserLocation.UserId
-                };
-            await CartService.LoadCartItemCountAsync(request);
-        }
+        await CartService.RestoreAsync();  
     }
-    
-    protected override void OnInitialized()
+
+    private void RefreshBadge()
     {
-        CartService.OnChange += StateHasChanged;
+        InvokeAsync(StateHasChanged);
     }
 
     private void ToggleNavMenu()
@@ -205,11 +212,6 @@ else
     private void OpenProfile()
     {
         NavigationManager.NavigateTo("/user-profile");
-    }
-
-    public void Dispose()
-    {
-        CartService.OnChange -= StateHasChanged;
     }
     private void ShowLogoutPopup()
     {

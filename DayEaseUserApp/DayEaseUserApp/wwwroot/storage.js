@@ -1,12 +1,16 @@
 ﻿window.sessionStore = {
     set: function (key, value) {
-        localStorage.setItem(key, value);
+        sessionStorage.setItem(key, JSON.stringify(value));
     },
     get: function (key) {
-        return localStorage.getItem(key);
+        const data = sessionStorage.getItem(key);
+        return data ? JSON.parse(data) : null;
     },
     remove: function (key) {
-        localStorage.removeItem(key);
+        sessionStorage.removeItem(key);
+    },
+    clear: function () {
+        sessionStorage.clear();
     }
 };
 

@@ -33,17 +33,14 @@ builder.Services.AddScoped<CartState>();
 builder.Services.AddScoped<IProductCategory, ProductCategoryService>();
 builder.Services.AddScoped<IStoreService, StoreService>();
 builder.Services.AddScoped<UserLocationState>();
-builder.Services.AddScoped<ICartService, CartService>();
-builder.Services.AddScoped<IUserLocationService, UserLocationService>();
-builder.Services.AddScoped<GuestUserService>();
+builder.Services.AddScoped<UserLocationManager>();
 builder.Services.AddBlazoredLocalStorage();
 builder.Services.AddAuthorizationCore();
 builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthStateProvider>();
 
-//builder.Services.AddScoped<RegistrationState>();
 builder.Services.AddBlazoredLocalStorage();
-// ✅ Use Blazored Session Storage for session-like behavior in Blazor WASM
-//builder.Services.AddBlazoredSessionStorage();
+builder.Services.AddScoped<CartService>();
+builder.Services.AddScoped<CartState>();
 
 await builder.Build().RunAsync();
 

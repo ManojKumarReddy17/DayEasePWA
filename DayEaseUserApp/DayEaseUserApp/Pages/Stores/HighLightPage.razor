@@ -2,10 +2,8 @@
 @inject IJSRuntime JS
 @inject IStoreService StoreService
 @inject AuthenticationStateProvider AuthProvider
-@inject IUserLocationService UserLocationService
 @inject IOrderService orderservices
-@inject GuestUserService locService
-@inject UserLocationState UserLocation
+@inject UserLocationManager userLocation
 @using DayEaseServices.Services
 @using Domain.DomainModels
 @using Domain.RequestModels
@@ -13,6 +11,7 @@
 @using Microsoft.AspNetCore.Components.Authorization
 @inject Blazored.LocalStorage.ILocalStorageService LocalStorage
 @inject NavigationManager Navigation
+@inject CartService CartService
 @layout NavMenu
 
 <style>
@@ -395,42 +394,67 @@ else
     {
         isPageLoading = true;
 
-        IsGuestUser = await LocalStorage.GetItemAsync<bool>("IsGuestUser");
+        NearbyStores.Clear();
+        RecentOrderStores.Clear();
+        ErrorMessage = string.Empty;
 
-        await locService.EnsureLocationAsync(UserLocation);
-
-        if (string.IsNullOrEmpty(locService.Latitude) ||
-            string.IsNullOrEmpty(locService.Longitude))
+        try
         {
-            ErrorMessage = "Unable to detect location";
-            isPageLoading = false;
-            return;
+            
+            // Initialize user or guest location
+            await userLocation.InitializeAsync();
+            IsGuestUser = userLocation.IsGuestUser;
+
+            if (userLocation.Latitude == 0 || userLocation.Longitude == 0)
+            {
+                ErrorMessage = "Unable to detect location";
+                return;
+            }
+
+            // Fetch stores
+            var tasks = new List<Task>
+        {
+            FetchNearbyStoresAsync()
+        };
+
+            if (!IsGuestUser)
+            {
+                // Use UserLocationManager instead of UserLocation
+                var userId = userLocation.UserId;
+
+                if (!string.IsNullOrEmpty(userId))
+                {
+                    tasks.Add(FetchRecentOrderStoresAsync());
+                }
+            }
+
+
+            await Task.WhenAll(tasks);
         }
-
-        var tasks = new List<Task>
-    {
-        FetchNearbyStoresAsync()
-    };
-
-        if (!IsGuestUser)
-            tasks.Add(FetchRecentOrderStoresAsync());
-
-        await Task.WhenAll(tasks);
-
-        isPageLoading = false;
+        catch (Exception ex)
+        {
+            ErrorMessage = $"Error initializing page: {ex.Message}";
+        }
+        finally
+        {
+            isPageLoading = false;
+        }
     }
 
 
     /* ================== API ================== */
     private async Task FetchRecentOrderStoresAsync()
     {
+        if (string.IsNullOrEmpty(userLocation.UserId))
+            return;
+
         try
         {
             var request = new UserRecentOrderRequest
             {
-                userId = UserLocation.UserId,
-                userLatitude = locService.Latitude,
-                userLongitude = locService.Longitude
+                userId = userLocation.UserId,
+                userLatitude = userLocation.Latitude.ToString("F6"),
+				userLongitude = userLocation.Longitude.ToString("F6")
             };
 
             var orders = await StoreService.GetRecentOrdersForUserId(request);
@@ -451,8 +475,6 @@ else
                     DistanceInKm = g.First().distance > 0
                         ? Math.Round(g.First().distance, 2)
                         : 0,
-
-                    // 🔹 Recent orders don’t have images → default
                     StoreImage = "images/default-image.jpeg"
                 })
                 .ToList();
@@ -463,7 +485,6 @@ else
         }
     }
 
-
     private async Task FetchNearbyStoresAsync()
     {
         try
@@ -472,8 +493,8 @@ else
 
             var request = new NearbyStoresRequest
             {
-                Latitude = locService.Latitude,
-                Longitude = locService.Longitude,
+                Latitude = userLocation.Latitude.ToString("F6"),
+                Longitude = userLocation.Longitude.ToString("F6"),
                 pageNumber = CurrentPage,
                 pageSize = PageSize
             };
@@ -514,7 +535,7 @@ else
         Navigation.NavigateTo("/stores");
 
     }
-
+    
     /* ================== HELPERS ================== */
 
 
