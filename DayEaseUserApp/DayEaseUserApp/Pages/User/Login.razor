@@ -6,10 +6,10 @@
 @using DayEaseServices.Services.IServices
 @inject NavigationManager NavigationManager
 @inject HttpClient Http
-@inject UserLocationState UserLocation
 @inject ILocalStorageService LocalStorage
 @inject AuthenticationStateProvider AuthProvider
-@inject ICartService cartService
+@inject UserLocationManager LocationManager
+@inject CartService cartService
 @inject IJSRuntime JS
 @using Blazored.LocalStorage
 <style>
@@ -190,13 +190,14 @@
             <div class="form-group">
                 <label>Password:</label>
                 <div class="password-wrapper">
-                    <InputText @bind-Value="loginModel.password"
+                     <InputText @bind-Value="loginModel.password"
                                type="@PasswordInputType"
                                class="form-control password-input"
                                maxlength="15"
                                @oninput="OnPasswordInput"
                                @onfocus="OnPasswordFocus"
-                               @onblur="OnPasswordBlur" />
+                               @onblur="OnPasswordBlur" /> 
+
 
                     <span class="password-toggle @(ShowPassword ? "show" : "hide")" @onclick="TogglePasswordVisibility">
                         <i class="@((ShowPassword ? "fas fa-eye-slash" : "fas fa-eye"))"></i>
@@ -243,40 +244,39 @@
     </div>
 </div>
 
+
 @code {
+    [Parameter]
+    [SupplyParameterFromQuery]
+    public string? returnUrl { get; set; }
+
     private UserLoginRequest loginModel = new();
-    private string errorMessage;
-    private bool ShowPasswordRules = false;
-    private bool IsPasswordValid = false;
-    private bool ShowPassword = false;
-    private bool IsLoginLoading = false;
+    private string? errorMessage;
+
+    private bool ShowPassword;
+    private bool IsLoginLoading;
+    private bool IsPasswordValid;
 
     private string PasswordInputType => ShowPassword ? "text" : "password";
 
     private void TogglePasswordVisibility()
+        => ShowPassword = !ShowPassword;
+
+    private void OnPasswordFocus(FocusEventArgs e) { }
+    private void OnPasswordBlur(FocusEventArgs e) { }
+
+    private void OnPasswordInput(ChangeEventArgs e)
     {
-        ShowPassword = !ShowPassword;
+        var password = e.Value?.ToString() ?? "";
+        loginModel.password = password;
+        IsPasswordValid = IsValidPassword(password);
     }
 
-    private void OnPasswordFocus(FocusEventArgs e)
+    private void LimitToTenDigits(ChangeEventArgs e)
     {
-        ShowPasswordRules = true;
-    }
-
-    private void OnPasswordBlur(FocusEventArgs e)
-    {
-        ShowPasswordRules = false;
-    }
-
-    protected override async Task OnInitializedAsync()
-    {
-        var authState = await AuthProvider.GetAuthenticationStateAsync();
-        var user = authState.User;
-
-        // if (user.Identity != null && user.Identity.IsAuthenticated)
-        // {
-        //     NavigationManager.NavigateTo("/highlightcompact", forceLoad: true);
-        // }
+        var input = e.Value?.ToString() ?? "";
+        loginModel.phonenumber =
+            new string(input.Where(char.IsDigit).Take(10).ToArray());
     }
 
     private async Task HandleLogin()
@@ -286,77 +286,57 @@
 
         var response = await userloginservice.PostAsync(loginModel);
 
-
-        if (response != null && !string.IsNullOrEmpty(response.JwtToken))
+        if (!string.IsNullOrEmpty(response?.JwtToken))
         {
             await LocalStorage.SetItemAsync("IsGuestUser", false);
             await LocalStorage.SetItemAsync("JwtToken", response.JwtToken);
-            // ✅ Notify the AuthenticationStateProvider
-            ((CustomAuthStateProvider)AuthProvider).NotifyUserAuthentication(response.JwtToken);
 
-            // ✅ Save AreaId, Latitude, Longitude to shared state
-            UserLocation.UserId = response.UserId;
-            //UserLocation.AreaId = response.AreaId;
-            UserLocation.Latitude = response.Latitude;
-            UserLocation.Longitude = response.Longitude;
-
-            var guestUserId = await JS.InvokeAsync<string>("sessionStore.get", "guestUserId");
-
-            if (!string.IsNullOrEmpty(guestUserId))
-            {
-
-               var result = await cartService.MigrateCartAsync(guestUserId, response.UserId);
-
-                if (result.Success == 200)
-                {
-                    await JS.InvokeVoidAsync("sessionStore.remove", "guestUserId");
-                }
-                else
-                {
-                    errorMessage = result?.Message;
-                }
-
-            }
-            IsLoginLoading = false;
-            NavigationManager.NavigateTo("/highlightcompact");
+            ((CustomAuthStateProvider)AuthProvider)
+                .NotifyUserAuthentication(response.JwtToken);
+            // ✅ FORCE USER ID FROM LOGIN RESPONSE
+            LocationManager.SetLoggedInUserLocation(
+                response.UserId,
+                double.TryParse(response.Latitude, out var lat) ? lat : 0,
+                double.TryParse(response.Longitude, out var lng) ? lng : 0
+            );
+            await cartService.RestoreFromBackendAsync(response.UserId);
+            NavigationManager.NavigateTo(
+                string.IsNullOrWhiteSpace(returnUrl) ? "/highlightcompact" : returnUrl,
+                true
+            );
         }
         else
         {
-            IsLoginLoading = false;
-            errorMessage = response?.Message ?? "Invalid username or password.";
+            errorMessage = response?.Message ?? "Invalid username or password";
         }
+
+        IsLoginLoading = false;
     }
 
-    private void LimitToTenDigits(ChangeEventArgs e)
-    {
-        var input = e.Value?.ToString();
-        if (input != null)
-        {
-            loginModel.phonenumber = new string(input.Where(char.IsDigit).Take(10).ToArray());
-        }
-    }
-
-    private void OnPasswordInput(ChangeEventArgs e)
-    {
-        var password = e.Value?.ToString() ?? "";
-        loginModel.password = password;
-        IsPasswordValid = IsValidPassword(password);
-    }
-
-    private bool IsValidPassword(string password)
-    {
-        return !string.IsNullOrWhiteSpace(password) &&
-               password.Length >= 7 &&
-               password.Length <= 15 &&
-               password.Any(char.IsLower) &&
-               password.Any(char.IsUpper) &&
-               password.Any(char.IsDigit) &&
-               password.Any(ch => "!@#$%^&*()_+-=[]{}|;:,.<>?".Contains(ch));
-    }
 
     private async Task LoginAsGuest()
     {
         await LocalStorage.SetItemAsync("IsGuestUser", true);
-        NavigationManager.NavigateTo("/highlightcompact");
+        await LocalStorage.RemoveItemAsync("JwtToken");
+
+        // Ensure guest ID + location
+        await LocationManager.EnsureGuestLocationAsync();
+
+        NavigationManager.NavigateTo("/highlightcompact", true);
+    }
+
+    private bool IsValidPassword(string password)
+    {
+        return !string.IsNullOrWhiteSpace(password)
+            && password.Length >= 7
+            && password.Length <= 15
+            && password.Any(char.IsLower)
+            && password.Any(char.IsUpper)
+            && password.Any(char.IsDigit)
+            && password.Any(ch => "!@#$%^&*()_+-=[]{}|;:,.<>?".Contains(ch));
     }
 }
+
+
+
+

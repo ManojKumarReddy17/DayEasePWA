@@ -1,152 +1,294 @@
-﻿using DayEaseServices.Services.IServices;
-using Domain.RequestModels;
-using Domain.ResponseModels;
-using Registration.IApiService;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
+using DayEaseServices.Services.IServices;
+using Domain.RequestModels;
+using Domain.ResponseModels;
+using Microsoft.JSInterop;
+using Registration.IApiService;
 
 namespace DayEaseServices.Services
 {
-    public class CartService(IApiService _apiservice) : ICartService
+    public class CartService
     {
-       
-        public event Action OnChange;
+        private readonly IApiService _apiService;
+        private readonly IJSRuntime _js;
 
-        private readonly Dictionary<string, (int quantity, string name)> _cart = new();
+        private readonly UserLocationManager _location;
 
-        public Dictionary<string, (int quantity, string name)> CartItems => _cart;
-
-        public int CartItemCount => _cart.Values.Sum(x => x.quantity);
-
-       
-        public async Task<List<CartModel>> GetCartItemsByUserId(CartModel model)
-    => await _apiservice.PostAsync<CartModel, List<CartModel>>
-       ("Cart/GetCartItemsByUserId", model);
-
-        public async Task<MysqlResponse<int>> AddCartItems(CartModel model)
-            => await _apiservice.PostAsync<CartModel, MysqlResponse<int>>
-               ("Cart/AddCartItem", model);
-
-        public async Task<MysqlResponse<int>> UpdateCartItems(CartModel model)
-            => await _apiservice.PostAsync<CartModel, MysqlResponse<int>>
-               ("Cart/UpdateCartItemQuantity", model);
-
-       
-        public async Task<MysqlResponse<int>> RemoveCartItems(CartModel model)=>
-            await _apiservice.PostAsync<CartModel, MysqlResponse<int>>("Cart/DeleteCartItem", model);
-
-            
-
-        public async Task<List<GuestCartItem>> GetGuestCartItemsAsync(CartModel request)=>
-        await _apiservice.PostAsync<CartModel, List<GuestCartItem>>("Cart/GetGuestCartItems", request);
-        
-
-        public async Task<MysqlResponse<int>> AddGuestCartItemAsync(CartModel model)=>
-         await _apiservice.PostAsync<CartModel, MysqlResponse<int>>("Cart/AddGuestCartItem", model);
-        
-
-        public async Task<MysqlResponse<int>> UpdateGuestCartItemQuantityAsync(CartModel model)
-         =>await _apiservice.PostAsync<CartModel, MysqlResponse<int>>("Cart/UpdateGuestCartItemQuantity", model);
-        
-
-        public async Task<MysqlResponse<int>> RemoveGuestCartItemAsync(CartModel model)
-         =>await _apiservice.PostAsync<CartModel, MysqlResponse<int>>("Cart/DeleteGuestCartItem", model);
-        
-
-        // ----------------- LOAD CART -----------------
-
-        public async Task LoadCartItemCountAsync(CartModel model)
+        public CartService(IApiService apiService, IJSRuntime js, UserLocationManager location)
         {
-            _cart.Clear();
+            _apiService = apiService;
+            _js = js;
+            _location = location;
+        }
 
-            if (!string.IsNullOrEmpty(model.GuestUserId))
-            {
-                var guestCarts = await GetGuestCartItemsAsync(model);
-                foreach (var item in guestCarts)
-                {
-                    if (!string.IsNullOrEmpty(item.ProductId))
-                    {
-                        _cart[item.ProductId] = (item.Quantity, item.ProductName);
-                    }
-                }
-            }
-            else if (!string.IsNullOrEmpty(model.UserId))
-            {
-                var userCarts = await GetCartItemsByUserId(model);
-                foreach (var item in userCarts)
-                {
-                    if (!string.IsNullOrEmpty(item.ProductId))
-                    {
-                        _cart[item.ProductId] = (item.Quantity, item.ProductName);
-                    }
-                }
-            }
+        public event Action? OnCartChanged;
 
+        public event Action? OnChange;
+
+        public Dictionary<string, CartModel> CartItems { get; } = new();
+
+        public int CartItemCount => CartItems.Values.Sum(x => x.Quantity);
+        private System.Timers.Timer? _debounceTimer;
+        private string? _currentUserId;
+
+        private void RaiseCartEvents()
+        {
             OnChange?.Invoke();
+            OnCartChanged?.Invoke();
         }
+        // =========================
+        // RESTORE FROM SESSION
+        // =========================
 
-
-        public void AddToCart(string productId, string productName, int quantity = 1)
+        public async Task RestoreAsync()
         {
-            if (_cart.ContainsKey(productId))
-                _cart[productId] = (_cart[productId].quantity + quantity, productName);
-            else
-                _cart[productId] = (quantity, productName);
+            var json = await _js.InvokeAsync<string>("cartSession.load");
 
-            OnChange?.Invoke();
-        }
+            if (string.IsNullOrWhiteSpace(json))
+                return;
 
-        public void IncreaseQuantity(string productId)
-        {
-            if (_cart.ContainsKey(productId))
+            var list = JsonSerializer.Deserialize<List<CartModel>>(json,
+                new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+            if (list == null || list.Count == 0)
+                return;
+
+            CartItems.Clear();
+
+            foreach (var item in list)
             {
-                _cart[productId] = (_cart[productId].quantity + 1, _cart[productId].name);
-                OnChange?.Invoke();
+                if (!string.IsNullOrWhiteSpace(item.ProductId))
+                    CartItems[item.ProductId] = item;
             }
+
+            RaiseCartEvents();
         }
 
-        public void DecreaseQuantity(string productId)
-        {
-            if (_cart.ContainsKey(productId))
-            {
-                var newQty = _cart[productId].quantity - 1;
-                if (newQty > 0)
-                    _cart[productId] = (newQty, _cart[productId].name);
-                else
-                    _cart.Remove(productId);
 
-                OnChange?.Invoke();
-            }
-        }
-        public void RemoveFromCart(string productId)
+        private void DebounceSave(string userId)
         {
-            if (_cart.ContainsKey(productId))
-            {
-                _cart.Remove(productId);
-                OnChange?.Invoke();
-            }
-        }
+            _currentUserId = userId;
 
-        public void ClearCart()
-        {
-            _cart.Clear();
-            OnChange?.Invoke();
-        }
-        public async Task<MysqlResponse<int>> MigrateCartAsync(string guestId, string userId)
-        {
-            var payload = new CartModel
+            _debounceTimer?.Stop();
+
+            _debounceTimer = new System.Timers.Timer(1500); // 1.5 sec
+            _debounceTimer.AutoReset = false;
+            _debounceTimer.Elapsed += async (_, __) =>
             {
-                GuestUserId = guestId,
-                UserId = userId
+                await SaveCartToDbAsync(_currentUserId);
             };
 
-            return await _apiservice.PostAsync<CartModel, MysqlResponse<int>>("Cart/MigrateGuestCart", payload);
-
+            _debounceTimer.Start();
         }
+
+        // =========================
+        // SAVE TO SESSION
+        // =========================
+        private async Task PersistAsync()
+        {
+            var list = CartItems.Values.ToList();
+            await _js.InvokeVoidAsync("cartSession.save", list);
+        }
+
+        // =========================
+        // LOCAL CART OPERATIONS
+        // =========================
+        public async Task AddToCart(CartModel item)
+        {
+            if (CartItems.TryGetValue(item.ProductId, out var existing))
+            {
+                existing.Quantity += item.Quantity;
+                existing.TotalPrice = existing.NetPrice * existing.Quantity;
+            }
+            else
+            {
+                CartItems[item.ProductId] = item;
+            }
+
+            await PersistAsync();
+            RaiseCartEvents();
+            var userId = _location.UserId;
+            if (!string.IsNullOrWhiteSpace(userId))
+                DebounceSave(userId);
+        }
+
+        public async Task IncreaseQuantity(string productId)
+        {
+            if (!CartItems.TryGetValue(productId, out var item))
+                return;
+
+            item.Quantity++;
+            item.TotalPrice = item.Price * item.Quantity;
+
+            await PersistAsync();
+            RaiseCartEvents();
+            var userId = _location.UserId;
+            if (!string.IsNullOrWhiteSpace(userId))
+                DebounceSave(userId);
+        }
+
+        public async Task DecreaseQuantity(string productId)
+        {
+            if (!CartItems.TryGetValue(productId, out var item))
+                return;
+
+            item.Quantity--;
+
+            if (item.Quantity <= 0)
+            {
+                // remove product from cart
+                CartItems.Remove(productId);
+            }
+            else
+            {
+                // update total when still > 0
+                item.TotalPrice = item.Price * item.Quantity;
+            }
+
+            await PersistAsync();
+            RaiseCartEvents();
+            var userId = _location.UserId;
+            if (!string.IsNullOrWhiteSpace(userId))
+                DebounceSave(userId);
+        }
+
+
+        // =========================
+        // BACKEND: GET USER CART
+        // =========================
+        public async Task<List<CartModel>> GetCartItemsByUserIdAsync(string userId)
+        {
+            if (string.IsNullOrWhiteSpace(userId))
+                return new();
+
+            return await _apiService.PostAsync<CartModel, List<CartModel>>(
+                "Cart/GetCartItemsByUserId",
+                new CartModel { UserId = userId }
+            );
+        }
+
+        // =========================
+        // RESTORE FROM BACKEND ➜ SESSION
+        // =========================
+        public async Task RestoreFromBackendAsync(string userId)
+        {
+            var items = await GetCartItemsByUserIdAsync(userId);
+
+            CartItems.Clear();
+
+            foreach (var item in items)
+                CartItems[item.ProductId] = item;
+
+            await PersistAsync();
+            RaiseCartEvents();
+        }
+
+        // =========================
+        // CLEAR
+        // =========================
+        public async Task ClearCart()
+        {
+            CartItems.Clear();
+            await _js.InvokeVoidAsync("cartSession.clear");
+            OnChange?.Invoke();
+        }
+
+        // =========================
+        // SAVE LOCAL CART -> DB
+        // =========================
+        public async Task SaveCartToDbAsync(string userId)
+        {
+            if (string.IsNullOrWhiteSpace(userId))
+                return;
+
+            // Convert UI cart items to AddCartItemRequest
+            var apiItems = CartItems.Values.Select(item => new CartModel
+            {
+                UserId = userId,
+                StoreId = item.StoreId,
+                ProductId = item.ProductId,
+                Quantity = item.Quantity,
+                Price = item.Price,
+                Discount = item.Discount,
+                NetPrice = item.NetPrice,
+                TotalPrice = item.TotalPrice,
+                ProductName = item.ProductName,
+                ProductImage = item.ProductImage
+            }).ToList();
+
+            var request = new CartRequest
+            {
+                UserId = userId,
+                cartItems = apiItems
+            };
+
+            await _apiService.PostAsync<CartRequest, MysqlResponse<int>>(
+                "Cart/UserCart",
+                request
+            );
+        }
+
+
+
+        // =========================
+        // MIGRATE GUEST -> USER
+        // =========================
+        public async Task MigrateGuestCartAsync(string userId)
+        {
+            await SaveCartToDbAsync(userId);
+            await ClearCart();
+        }
+
+        // =========================
+        // JS SESSION END -> SAVE
+        // =========================
+        [JSInvokable]
+        public async Task OnSessionEnd(string cartJson)
+        {
+            var items = JsonSerializer.Deserialize<List<CartModel>>(cartJson);
+
+            if (items == null || items.Count == 0)
+                return;
+
+            var userId = items.FirstOrDefault()?.UserId;
+
+            if (string.IsNullOrWhiteSpace(userId))
+                return;
+
+            var apiItems = items.Select(item => new CartModel
+            {
+                UserId = userId,
+                StoreId = item.StoreId,
+                ProductId = item.ProductId,
+                Quantity = item.Quantity,
+                Price = item.Price,
+                Discount = item.Discount,
+                NetPrice = item.NetPrice,
+                TotalPrice = item.TotalPrice,
+                ProductName = item.ProductName,
+                ProductImage = item.ProductImage
+            }).ToList();
+
+            var request = new CartRequest
+            {
+                UserId = userId,
+                cartItems = apiItems
+            };
+
+            await _apiService.PostAsync<CartRequest, MysqlResponse<int>>(
+                "Cart/UserCart",
+                request
+            );
+        }
+
     }
 
 }
+
+
+
 

@@ -12,30 +12,27 @@ using System.Threading.Tasks;
 
 namespace DayEaseServices.Services
 {
-    public class CustomAuthStateProvider(ILocalStorageService _localStorage, UserLocationState _userLocationState) : AuthenticationStateProvider
+    public class CustomAuthStateProvider(ILocalStorageService _localStorage) : AuthenticationStateProvider
     {
 
         public override async Task<AuthenticationState> GetAuthenticationStateAsync()
         {
-            var savedToken = await _localStorage.GetItemAsync<string>("JwtToken");
+            var token = await _localStorage.GetItemAsync<string>("JwtToken");
 
-            if (string.IsNullOrWhiteSpace(savedToken))
-            {
+            if (string.IsNullOrWhiteSpace(token))
                 return new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity()));
-            }
 
-            var identity = new ClaimsIdentity(ParseClaimsFromJwt(savedToken), "JwtToken");
+            var claims = ParseClaimsFromJwt(token);
+            var identity = new ClaimsIdentity(claims, "jwt");
             var user = new ClaimsPrincipal(identity);
 
-            // ✅ Update shared state from claims
-            SetUserLocationState(user);
-
             return new AuthenticationState(user);
-            //return new AuthenticationState(new ClaimsPrincipal(identity));
         }
+
         public void NotifyUserAuthentication(string token)
         {
-            var identity = new ClaimsIdentity(ParseClaimsFromJwt(token), "JwtToken");
+            var claims = ParseClaimsFromJwt(token);
+            var identity = new ClaimsIdentity(claims, "jwt");
             var user = new ClaimsPrincipal(identity);
 
             NotifyAuthenticationStateChanged(Task.FromResult(new AuthenticationState(user)));
@@ -43,26 +40,10 @@ namespace DayEaseServices.Services
 
         public void NotifyUserLogout()
         {
-            var anonymousUser = new ClaimsPrincipal(new ClaimsIdentity());
-            NotifyAuthenticationStateChanged(Task.FromResult(new AuthenticationState(anonymousUser)));
+            NotifyAuthenticationStateChanged(
+                Task.FromResult(new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity())))
+            );
         }
-
-        private void SetUserLocationState(ClaimsPrincipal user)
-        {
-            var userIdClaim = user.FindFirst("nameid")?.Value;
-            var areaIdClaim = user.FindFirst("Location")?.Value;
-            var latitudeClaim = user.FindFirst("Latitude")?.Value?.Trim();
-            var longitudeClaim = user.FindFirst("Longitude")?.Value?.Trim();
-
-            if (!string.IsNullOrEmpty(userIdClaim))
-            {
-                _userLocationState.UserId = userIdClaim; // Since nameid looks like a string, keep it as string if needed
-                _userLocationState.AreaId = areaIdClaim;
-                _userLocationState.Latitude = latitudeClaim;
-                _userLocationState.Longitude = longitudeClaim;
-            }
-        }
-
 
         private IEnumerable<Claim> ParseClaimsFromJwt(string jwt)
         {
