@@ -307,6 +307,39 @@
     }
 
     }
+
+    .segment-toggle {
+        display: flex;
+        background: #f2f2f2;
+        border-radius: 30px;
+        padding: 6px;
+        max-width: 360px;
+        margin: auto;
+    }
+
+    .segment-btn {
+        flex: 1;
+        border: none;
+        background: transparent;
+        padding: 10px 0;
+        border-radius: 25px;
+        font-weight: 600;
+        color: #555;
+        transition: all 0.3s ease;
+    }
+
+    .active-store {
+        background: white;
+        color: #7b2cbf;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+    }
+
+    .active-restaurant {
+        background: linear-gradient(90deg, white, white);
+        color: #7b2cbf;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+
 </style>
   
 @if (isPageLoading)
@@ -326,7 +359,21 @@ else if (!string.IsNullOrEmpty(ErrorMessage))
 }
 else
 {
-    @if (!IsGuestUser && RecentOrderStores?.Count > 0)
+    <div class="container mt-3">
+        <div class="segment-toggle">
+            <button class="segment-btn @(SelectedType == ListingType.Stores ? "active-store" : "")"
+                    @onclick="() => ChangeType(ListingType.Stores)">
+                Stores
+            </button>
+
+            <button class="segment-btn @(SelectedType == ListingType.Restaurants ? "active-restaurant" : "")"
+                    @onclick="() => ChangeType(ListingType.Restaurants)">
+                Restaurants
+            </button>
+        </div>
+    </div>
+
+    @if (isStores && !IsGuestUser && RecentOrderStores?.Count > 0)
     {
         <div class="container mt-3">
             <h2 class="store-offers-heading">
@@ -343,16 +390,17 @@ else
     }
 
 
+
     @if (NearbyStores.Any())
     {
         <div class="container mt-4">
 
             <!-- Header row -->
-            <div class="stores-header">
-                <h2 class="store-offers-heading mb-0">
-                    <i class="bi bi-shop me-2"></i>Nearby Stores
-                </h2>
-            </div>
+            <h2 class="store-offers-heading mb-0">
+                <i class="bi bi-shop me-2"></i>
+                @(isStores ? "Stores" : "Restaurants")
+            </h2>
+
             <!-- Store grid -->
             <div class="store-grid">
                 @foreach (var store in NearbyStores)
@@ -362,9 +410,10 @@ else
             </div>
             <div class="see-more-wrapper">
                 <button class="btn btn-link see-more-btn"
-                        @onclick="NavigateToStores">
-                     More Stores
+                        @onclick="NavigateToListing">
+                    @(isStores ? "More Stores" : "More Restaurants")
                 </button>
+
             </div>
         </div>
     }
@@ -379,6 +428,7 @@ else
 
     private bool IsGuestUser;
     private string ErrorMessage = string.Empty;
+    private bool isStores = true; // ✅ default selected = Stores
 
     private bool isPageLoading = true;
 
@@ -387,6 +437,41 @@ else
     private const int PageSize = 10;
     private bool HasMoreData = true;
     private bool isNearbyLoading = false;
+
+    enum ListingType
+    {
+        Stores,
+        Restaurants
+    }
+
+    private ListingType SelectedType = ListingType.Stores; // default
+
+    private async Task ChangeType(ListingType type)
+    {
+        if (SelectedType == type)
+            return;
+
+        SelectedType = type;
+
+        // 🔁 map enum → bool
+        isStores = SelectedType == ListingType.Stores;
+
+        // reset state
+        NearbyStores.Clear();
+        CurrentPage = 1;
+        HasMoreData = true;
+        ErrorMessage = string.Empty;
+
+        // call API based on toggle
+        await FetchNearbyAsync();
+    }
+    private async Task FetchNearbyAsync()
+    {
+        if (isStores)
+            await FetchNearbyStoresAsync();
+        else
+            await FetchNearbyRestaurantsAsync();
+    }
 
     /* ================== LIFECYCLE ================== */
 
@@ -413,9 +498,10 @@ else
 
             // Fetch stores
             var tasks = new List<Task>
-        {
-            FetchNearbyStoresAsync()
-        };
+            {
+                FetchNearbyAsync() // uses isStores = true by default
+            };
+
 
             if (!IsGuestUser)
             {
@@ -496,8 +582,10 @@ else
                 Latitude = userLocation.Latitude.ToString("F6"),
                 Longitude = userLocation.Longitude.ToString("F6"),
                 pageNumber = CurrentPage,
-                pageSize = PageSize
+                pageSize = PageSize,
+                IsStores = isStores // 🔥 THIS IS THE KEY
             };
+
 
             var apiResponse = await StoreService.GetNearbyStoresAsync(request);
 
@@ -529,13 +617,50 @@ else
             isNearbyLoading = false;
         }
     }
+    private async Task FetchNearbyRestaurantsAsync()
+    {
+        try
+        {
+            isNearbyLoading = true;
 
-    private void NavigateToStores()
+            var request = new NearbyStoresRequest
+            {
+                Latitude = userLocation.Latitude.ToString("F6"),
+                Longitude = userLocation.Longitude.ToString("F6"),
+                pageNumber = CurrentPage,
+                pageSize = PageSize,
+                IsStores = false
+            };
+
+            var response = await StoreService.GetNearbyStoresAsync(request);
+
+            if (response?.Success == true && response.Stores?.Any() == true)
+            {
+                NearbyStores.AddRange(response.Stores.Select(r => new HighLightModel
+                {
+                    StoreId = r.storeId,
+                    StoreName = r.storeName,
+                    DistanceInKm = Math.Round(r.distance, 2),
+                    StoreImage = r.storeImage
+                }));
+            }
+        }
+        finally
+        {
+            isNearbyLoading = false;
+        }
+    }
+
+    // private void NavigateToStores()
+    // {
+    //     Navigation.NavigateTo("/stores");
+
+    // }
+    private void NavigateToListing()
     {
         Navigation.NavigateTo("/stores");
-
     }
-    
+
     /* ================== HELPERS ================== */
 
 

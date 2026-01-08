@@ -32,8 +32,8 @@ namespace DayEaseServices.Services
         public Dictionary<string, CartModel> CartItems { get; } = new();
 
         public int CartItemCount => CartItems.Values.Sum(x => x.Quantity);
-        private System.Timers.Timer? _debounceTimer;
         private string? _currentUserId;
+        private bool _isDirty = false;
 
         private void RaiseCartEvents()
         {
@@ -69,22 +69,7 @@ namespace DayEaseServices.Services
         }
 
 
-        private void DebounceSave(string userId)
-        {
-            _currentUserId = userId;
-
-            _debounceTimer?.Stop();
-
-            _debounceTimer = new System.Timers.Timer(1500); // 1.5 sec
-            _debounceTimer.AutoReset = false;
-            _debounceTimer.Elapsed += async (_, __) =>
-            {
-                await SaveCartToDbAsync(_currentUserId);
-            };
-
-            _debounceTimer.Start();
-        }
-
+        
         // =========================
         // SAVE TO SESSION
         // =========================
@@ -109,11 +94,10 @@ namespace DayEaseServices.Services
                 CartItems[item.ProductId] = item;
             }
 
+            _isDirty = true;
+
             await PersistAsync();
             RaiseCartEvents();
-            var userId = _location.UserId;
-            if (!string.IsNullOrWhiteSpace(userId))
-                DebounceSave(userId);
         }
 
         public async Task IncreaseQuantity(string productId)
@@ -124,11 +108,10 @@ namespace DayEaseServices.Services
             item.Quantity++;
             item.TotalPrice = item.Price * item.Quantity;
 
+            _isDirty = true;
+
             await PersistAsync();
             RaiseCartEvents();
-            var userId = _location.UserId;
-            if (!string.IsNullOrWhiteSpace(userId))
-                DebounceSave(userId);
         }
 
         public async Task DecreaseQuantity(string productId)
@@ -149,11 +132,10 @@ namespace DayEaseServices.Services
                 item.TotalPrice = item.Price * item.Quantity;
             }
 
+            _isDirty = true;
+
             await PersistAsync();
             RaiseCartEvents();
-            var userId = _location.UserId;
-            if (!string.IsNullOrWhiteSpace(userId))
-                DebounceSave(userId);
         }
 
 
@@ -183,6 +165,7 @@ namespace DayEaseServices.Services
             foreach (var item in items)
                 CartItems[item.ProductId] = item;
 
+            _isDirty = true;
             await PersistAsync();
             RaiseCartEvents();
         }
@@ -202,6 +185,8 @@ namespace DayEaseServices.Services
         // =========================
         public async Task SaveCartToDbAsync(string userId)
         {
+            if (!_isDirty)
+                return;
             if (string.IsNullOrWhiteSpace(userId))
                 return;
 
@@ -230,13 +215,23 @@ namespace DayEaseServices.Services
                 "Cart/UserCart",
                 request
             );
+            _isDirty = false;
+        }
+        public async Task SyncCartToBackendAsync()
+        {
+            if (!_isDirty)
+                return;
+
+            var userId = _location.UserId;
+
+            if (string.IsNullOrWhiteSpace(userId))
+                return;
+
+            await SaveCartToDbAsync(userId);
+
+            _isDirty = false;
         }
 
-
-
-        // =========================
-        // MIGRATE GUEST -> USER
-        // =========================
         public async Task MigrateGuestCartAsync(string userId)
         {
             await SaveCartToDbAsync(userId);

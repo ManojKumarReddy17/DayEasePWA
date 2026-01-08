@@ -12,5 +12,6 @@ namespace Domain.RequestModels
         public string Longitude { get; set; }
         public int pageNumber { set; get; }
         public int pageSize { set; get; }
+        public bool IsStores { set; get; } = true;
     }
 }

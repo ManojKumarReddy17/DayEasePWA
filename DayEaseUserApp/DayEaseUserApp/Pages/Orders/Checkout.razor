@@ -7,6 +7,7 @@
 @inject IOrderService OrderService
 
 <style>
+
     .cart-wrapper {
         background-color: #f8f9fa;
         padding: 20px 0 80px;
@@ -57,8 +58,8 @@
         gap: 18px;
         flex: 1;
         /* display: flex;
-            gap: 180px;
-            flex: 1; */
+                        gap: 180px;
+                        flex: 1; */
     }
 
     .item-right {
@@ -277,6 +278,7 @@
         }
 
     .payment-option {
+        padding: 6px 0;
         margin: 10px 0;
         display: flex;
         align-items: center;
@@ -375,6 +377,263 @@
             padding: 10px;
         }
     }
+
+    .cart-items-header {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        margin: 10px 20px;
+        padding: 10px 14px;
+        background: #f8f9fa;
+    }
+
+
+        .cart-items-header .left {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 20px;
+            font-weight: 600;
+            color: #222;
+        }
+
+            .cart-items-header .left i {
+                color: #0d6efd;
+                font-size: 16px;
+            }
+
+        .cart-items-header .count {
+            background: #e7f1ff;
+            color: #0d6efd;
+            padding: 4px 10px;
+            border-radius: 16px;
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        .cart-items-header:hover {
+            background: #f1f6ff;
+            transition: 0.2s ease;
+        }
+
+    .price-toggle {
+        cursor: pointer;
+    }
+
+    .total-left {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .total-text {
+        font-size: 15px;
+        font-weight: 600;
+    }
+
+    .toggle-icon {
+        font-size: 12px;
+        color: #0d6efd;
+    }
+
+    .total-amount {
+        font-weight: 700;
+        font-size: 15px;
+    }
+
+    /* Improved Cart Item Card */
+    .cart-item-box.improved {
+        display: grid;
+        grid-template-columns: 64px 1fr auto;
+        align-items: center;
+        gap: 14px;
+        padding: 14px;
+        background: #ffffff;
+        border-radius: 14px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+
+        /* Product Image */
+        .cart-item-box.improved .cart-image {
+            width: 56px;
+            height: 56px;
+            border-radius: 10px;
+            object-fit: cover;
+            background: #f2f2f2;
+        }
+
+    /* Product Info */
+    .item-details {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    /* Single container holding all cart items */
+    .cart-items-container {
+        background: #ffffff;
+        border-radius: 16px;
+        margin: 0 20px;
+        overflow: hidden; /* keeps rounded corners clean */
+        box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+
+    /* Each item row */
+    .cart-item-row {
+        display: grid;
+        grid-template-columns: 52px 1fr auto;
+        align-items: center;
+        gap: 12px;
+        padding: 14px;
+    }
+
+        /* Divider between rows */
+        .cart-item-row:not(:last-child) {
+            border-bottom: 1px solid #eef0f3;
+        }
+
+        /* Image */
+        .cart-item-row .cart-image {
+            width: 46px;
+            height: 46px;
+            border-radius: 10px;
+            object-fit: cover;
+            background: linear-gradient(135deg, #f1f6ff, #e7f0ff);
+        }
+
+        /* Text */
+        .cart-item-row .product-title {
+            font-size: 14.5px;
+            font-weight: 600;
+            color: #222;
+        }
+
+        .cart-item-row .product-quantity {
+            font-size: 12px;
+            color: #888;
+        }
+
+        /* Price */
+        .cart-item-row .item-price {
+            font-size: 14.5px;
+            font-weight: 700;
+            color: #000;
+            white-space: nowrap;
+        }
+
+        /* Mobile tap feedback */
+        .cart-item-row:active {
+            background: #f8f9fb;
+        }
+
+    .address-section {
+        padding: 20px;
+    }
+
+    .section-title {
+        font-size: 16px;
+        font-weight: 600;
+        margin-bottom: 12px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+
+
+    .selected-icon {
+        font-size: 18px;
+        color: #0d6efd;
+    }
+
+
+    .address-selected {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: #fff;
+        padding: 14px;
+        border-radius: 14px;
+        border: 1.5px solid #e5e7eb;
+        cursor: pointer;
+    }
+
+    .address-selected {
+        border-color: #0d6efd;
+        background: #f7fbff;
+    }
+
+
+    .address-dropdown {
+        margin-top: 10px;
+        background: #fff;
+        border-radius: 14px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        overflow: hidden;
+    }
+
+    .address-card {
+        display: flex;
+        gap: 12px;
+        padding: 14px;
+        cursor: pointer;
+    }
+
+        .address-card:hover {
+            background: #f1f6ff;
+        }
+
+    .address-left {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+    }
+
+    .address-icon {
+        font-size: 18px;
+        color: #0d6efd;
+    }
+
+    .address-title {
+        font-weight: 600;
+        font-size: 14.5px;
+    }
+
+    .address-text {
+        font-size: 12.5px;
+        color: #666;
+    }
+
+    @@media (max-width: 480px) {
+    }
+
+
+    .save-banner {
+        background: #e6f8ee;
+        color: #0b8e2d;
+        font-weight: 600;
+        padding: 10px 14px;
+        border-radius: 12px;
+        margin: 12px 0;
+        font-size: 14px;
+        text-align: center;
+    }
+
+    .save-banner {
+        animation: fadeIn 0.25s ease-in;
+    }
+
+    @@keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(-4px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
 </style>
 
 <div class="cart-wrapper">
@@ -386,56 +645,95 @@
     </div>
 
     <!-- Delivery Address -->
-    <section class="address-section" style="padding: 20px;">
-        <h4>Delivery Address</h4>
-        <select class="form-select">
-            <option selected>Select address</option>
-            <option>Home - 123 Street, City</option>
-            <option>Work - Office Complex</option>
-        </select>
+    <section class="address-section">
+        <h4 class="section-title">
+            <i class="fas fa-map-marker-alt"></i> Delivery Address
+        </h4>
+
+        <!-- Selected Address -->
+        <div class="address-selected" @onclick="() => showAddressDropdown = !showAddressDropdown">
+            <div class="address-left">
+                <i class="fas fa-home address-icon"></i>
+                <div>
+                    <div class="address-title">@SelectedAddressTitle</div>
+                    <div class="address-text">@SelectedAddressText</div>
+                </div>
+            </div>
+
+            <i class="fas @(showAddressDropdown ? "fa-chevron-up" : "fa-chevron-down")"></i>
+        </div>
+
+        <!-- Dropdown -->
+        @if (showAddressDropdown)
+        {
+            <div class="address-dropdown">
+
+                <div class="address-card"
+                     @onclick='() => SelectAddress("Home", "123 Street, City, State - 560001")'>
+                    <i class="fas fa-home address-icon"></i>
+                    <div>
+                        <div class="address-title">Home</div>
+                        <div class="address-text">123 Street, City, State - 560001</div>
+                    </div>
+                </div>
+
+                <div class="address-card"
+                     @onclick='() => SelectAddress("Work", "Office Complex, Main Road, City")'>
+                    <i class="fas fa-briefcase address-icon"></i>
+                    <div>
+                        <div class="address-title">Work</div>
+                        <div class="address-text">Office Complex, Main Road, City</div>
+                    </div>
+                </div>
+
+                <div class="address-card add-new">
+                    <i class="fas fa-plus-circle"></i>
+                    <span>Add New Address</span>
+                </div>
+
+            </div>
+        }
+
     </section>
 
     <!-- Cart Items -->
     <section class="items-section">
-        <h4 style="padding-left: 20px;">Cart Items</h4>
+        <div class="cart-items-header">
+            <div class="left">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="title">Cart Items</span>
+            </div>
+
+            <span class="count">(@cartItems.Count)</span>
+        </div>
+
+
 
         @if (cartItems.Any())
         {
-            @foreach (var item in cartItems)
-            {
-                <div class="cart-item-box">
-                    <!-- Left: Image and  -->
-                    <div class="item-left">
-                        @if (item.ProductImage != null)
-                        {
-                            <img src="@item.ProductImage" alt="@item.ProductName" class="cart-image" />
-                        }
-                        else
-                        {
-                            <img src="~/images/No-images.jpg" alt="No image" class="cart-image" />
-                        }
+            <div class="cart-items-container">
 
-                        <!-- Column 2: Product Title -->
-                        <div class="item-title item-center">
+                @foreach (var item in cartItems)
+                {
+                    <div class="cart-item-row">
+
+                        <img src="@(item.ProductImage ?? "/images/No-images.jpg")"
+                             alt="@item.ProductName"
+                             class="cart-image" />
+
+                        <div class="item-details">
                             <div class="product-title">@item.ProductName</div>
+                            <div class="product-quantity">@item.Quantity pcs</div>
                         </div>
 
-
-                        <!-- Column 3: Price -->
                         <div class="item-price">
-                            <span>@item.Quantity x ₹@item.Price</span><br />
-                            <span>= ₹@(item.Quantity * item.Price)</span>
+                            ₹@(item.Quantity* item.Price)
                         </div>
+
                     </div>
+                }
 
-
-                </div>
-
-            }
-        }
-        else
-        {
-            <p>Your cart is empty. <a href="/cart">Go back to cart</a></p>
+            </div>
         }
     </section>
 
@@ -443,77 +741,148 @@
     {
         <!-- Price Summary -->
         <section class="price-summary" style="padding: 0 20px;">
-            <h4>💰	Price Details</h4>
 
-            <div class="price-row">
-                <span><i class="fas fa-calculator icon"></i> Subtotal</span>
-                <span>₹@Subtotal</span>
-            </div>
-            <div class="price-row">
-                <span><i class="fas fa-motorcycle icon"></i> Delivery Charges</span>
-                <span>₹@DeliveryCharges</span>
-            </div>
-            <div class="price-row">
-                <span><i class="fas fa-box icon"></i> Handling Charges</span>
-                <span>₹@HandlingCharges</span>
-            </div>
-            <div class="price-row">
-                <span><i class="fas fa-wallet icon"></i> Small Cart Fee</span>
-                <span>₹@SmallCartFee</span>
-            </div>
+            <!-- TOTAL (always visible) -->
+            <div class="price-row total price-toggle"
+                 @onclick="() => showPriceDetails = !showPriceDetails">
 
-            <div class="price-row total">
-                <div>
-                    <strong><i class="fas fa-receipt icon"></i> Total</strong><br />
-                    <small>(incl. all taxes and charges)</small>
+                <!-- LEFT: Total + dropdown -->
+                <div class="total-left">
+                    <i class="fas fa-receipt icon"></i>
+                    <span class="total-text">Total</span>
+                    <i class="fas @(showPriceDetails ? "fa-chevron-up" : "fa-chevron-down") toggle-icon"></i>
                 </div>
-                <strong>₹@Total</strong>
+
+                <!-- RIGHT: Price -->
+                <strong class="total-amount">₹@Total</strong>
+
+
             </div>
+
+            <!-- COLLAPSIBLE DETAILS -->
+            @if (showPriceDetails)
+            {
+                <div class="price-details-box">
+                    <div class="price-row">
+                        <span><i class="fas fa-calculator icon"></i> Subtotal (after discount)</span>
+                        <span>₹@Subtotal</span>
+                    </div>
+
+
+                    <div class="price-row">
+                        <span><i class="fas fa-motorcycle icon"></i> Delivery Charges</span>
+                        <span>₹@DeliveryCharges</span>
+                    </div>
+
+                    <div class="price-row">
+                        <span>
+                            <i class="fas fa-box icon"></i>
+                            Handling Charges <small>(incl. 18% GST)</small>
+                        </span>
+                        <span>₹@HandlingCharges</span>
+                    </div>
+
+                    <div class="price-row">
+                        <span><i class="fas fa-layer-group icon"></i> Platform Fee</span>
+                        <span>₹@PlatformFee</span>
+                    </div>
+
+                    @if (SmallCartFee > 0)
+                    {
+                        <div class="price-row">
+                            <span><i class="fas fa-wallet icon"></i> Small Cart Fee</span>
+                            <span>₹@SmallCartFee</span>
+                        </div>
+                    }
+                </div>
+            }
         </section>
+
+        @if (YouSaved > 0)
+        {
+            <div class="save-banner">
+                🎉 You saved <strong>₹@YouSaved</strong> on this order
+            </div>
+        }
+
         <!-- Payment Method -->
-        <section class="payment-method" style="padding: 20px;">
+        @* <section class="payment-method" style="padding: 20px;">
             <h4>Payment Method</h4>
             <div class="custom-payment-options">
                 <div class="payment-option">
                     <input type="radio" id="cod" name="payment" checked />
                     <label for="cod">
-                        <img src="images/rupee-note-img.png" alt="COD" class="payment-icon" />
+                        <img src="images/rupee-note-img.png" class="payment-icon" />
                         Cash on Delivery (COD)
                     </label>
                 </div>
                 <div class="payment-option">
                     <input type="radio" id="upi" name="payment" />
                     <label for="upi">
-                        <img src="images/UPI-img.png" alt="UPI" class="payment-icon" />
+                        <img src="images/UPI-img.png" class="payment-icon" />
                         UPI
                     </label>
                 </div>
                 <div class="payment-option">
                     <input type="radio" id="card" name="payment" />
                     <label for="card">
-                        <img src="images/debit-card-img.png" alt="Card" class="payment-icon" />
+                        <img src="images/debit-card-img.png" class="payment-icon" />
                         Credit/Debit Card
                     </label>
                 </div>
             </div>
-        </section>
+        </section> *@
 
-        <button class="place-order-btn" @onclick="PlaceOrderAsync" disabled="@isSubmitting">
+        <button class="place-order-btn"
+                @onclick="PlaceOrderAsync"
+                disabled="@isSubmitting">
             @(isSubmitting ? "Placing Order..." : "Place Order")
         </button>
 
+        @if (showUpiSuccessDialog)
+        {
+            <div class="upi-dialog-backdrop">
+                <div class="upi-dialog">
+                    <h3>Complete UPI Payment</h3>
+
+                    <p>Open your UPI app and complete payment.</p>
+
+                    <button class="success-btn" @onclick="ConfirmUpiPaymentSuccess">
+                        I Have Paid Successfully ✔️
+                    </button>
+
+                    <button class="cancel-btn" @onclick="(() => showUpiSuccessDialog = false)">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        }
+
     }
 </div>
-
 @code {
     private List<CartModel> cartItems = new();
     private string SelectedAddress = "";
-    private string SelectedPaymentMethod = "COD";
+    private string SelectedPaymentMethod;
 
     private bool isSubmitting = false;
     private bool isSuccess = false;
     private string? errorMessage;
+    bool showPriceDetails = false;
 
+    bool showUpiSuccessDialog = false;
+
+    bool showAddressDropdown = false;
+
+    string SelectedAddressTitle = "Home";
+    string SelectedAddressText = "123 Street, City, State - 560001";
+
+    void SelectAddress(string title, string text)
+    {
+        SelectedAddressTitle = title;
+        SelectedAddressText = text;
+        showAddressDropdown = false;
+    }
     protected override void OnInitialized()
     {
         if (!CartState.CartItems.Any())
@@ -522,82 +891,156 @@
         }
 
         cartItems = CartState.CartItems.Select(c => new CartModel
+        {
+            ProductId = c.ProductId,
+            ProductName = c.ProductName,
+            Variant = c.Variant,
+            Quantity = c.Quantity,
+            Price = c.Price,
+            Discount = c.Discount,
+            ProductImage = c.ProductImage,
+            CartItemId = c.CartItemId
+        }).ToList();
+    }
+    decimal Subtotal =>
+    cartItems.Sum(i => (i.Price - i.Discount) * i.Quantity);
+
+    // decimal Subtotal => cartItems.Sum(i => i.Price * i.Quantity);
+    decimal DeliveryCharges => 20;
+
+
+    decimal PlatformFee => Subtotal
+
+    switch
+    {
+        <= 100 => 2,
+        > 100 and <= 400 => 3,
+        > 400 and <= 1000 => 5,
+        _ => 6
+    };
+    decimal HandlingBaseCharge => Math.Round(Subtotal * 0.05m, 2);
+    decimal HandlingGst => Math.Round(HandlingBaseCharge * 0.18m, 2);
+
+
+    //  decimal BaseCharges => Total * 0.05m;
+    //decimal GstCharges => BaseCharges * 0.18m;
+    // decimal HandlingCharges => HandlingBaseCharge + HandlingGst;
+    decimal HandlingCharges => HandlingGst;
+
+
+
+    decimal SmallCartFee => Subtotal < 100 ? 5 : 0;
+    decimal Total => Subtotal + DeliveryCharges + HandlingCharges + PlatformFee + SmallCartFee;
+    // MRP total
+    decimal OriginalTotal =>
+        cartItems.Sum(i => i.Price * i.Quantity);
+
+    // decimal OriginalTotal => cartItems.Sum(i => i.Price * i.Quantity);
+    //   decimal DiscountedTotal => Subtotal;
+    // Savings
+    decimal YouSaved =>
+        OriginalTotal - Subtotal;
+   //  private async Task PlaceOrderAsync()
+   //  {
+   //      isSubmitting = true;
+   //      errorMessage = null;
+
+   //      try
+   //      {
+   //          if (SelectedPaymentMethod == "COD")
+   //          {
+   //              COD → place order immediately
+   //              var codOrder = new OrderRequestModel
+   //              {
+   //                  UserId = CartState.UserId,
+   //                  TotalAmount = Total,
+   //                  PaymentMethod = "COD",
+   //                  OrderStatus = "Confirmed",   directly confirmed
+   //                  OrderItems = cartItems.Select(c => new OrderItemModel
+   //                  {
+   //                      ProductId = c.ProductId,
+   //                      ProductName = c.ProductName,
+   //                      Quantity = c.Quantity,
+   //                      Price = c.Price
+   //                  }).ToList()
+   //              };
+
+   //              var codResponse = await OrderService.CreateAsync(codOrder);
+
+   //              if (!codResponse.Success)
+   //              {
+   //                  errorMessage = "COD order failed.";
+   //                  return;
+   //              }
+
+   //              Navigation.NavigateTo($"/order-success?orderId={codResponse.OrderId}");
+   //              return;
+   //          }
+			// var orderId = Guid.NewGuid().ToString(); temporary order id
+   //          ONLINE PAYMENT FLOW (do NOT create order yet)
+   //          var paymentRequest = new ZohoPaymentRequest
+   //          {
+   //              Amount = Total,
+   //              UserId = CartState.UserId,
+			// 	OrderId = orderId,
+   //              Description = "Checkout Payment",
+   //              RedirectUrl = Navigation.BaseUri + $"payment-success?orderId={orderId}"
+   //          };
+
+   //          var paymentResponse = await OrderService.CreateZohoPayment(paymentRequest);
+
+   //          redirect to zoho
+   //          Navigation.NavigateTo(paymentResponse.hostedpage_url, true);
+   //      }
+   //      catch (Exception ex)
+   //      {
+   //          errorMessage = ex.Message;
+   //      }
+   //      finally
+   //      {
+   //          isSubmitting = false;
+   //      }
+   //  }
+    private async Task PlaceOrderAsync()
+    {
+        // open fake UPI window
+        showUpiSuccessDialog = true;
+    }
+    private async Task ConfirmUpiPaymentSuccess()
+    {
+        showUpiSuccessDialog = false;
+        isSubmitting = true;
+
+        var order = new OrderRequestModel
+        {
+            UserId = CartState.UserId,
+			StoreId = CartState.StoreId,
+            TotalAmount = Total,
+            PaymentMethod = "UPI",
+            OrderStatus = "Confirmed",
+            OrderItems = cartItems.Select(c => new OrderItemModel
             {
                 ProductId = c.ProductId,
                 ProductName = c.ProductName,
-                Variant = c.Variant,
                 Quantity = c.Quantity,
-                Price = c.Price,
-                ProductImage = c.ProductImage,
-                CartItemId = c.CartItemId
-            }).ToList();
+                Price = c.Price
+            }).ToList()
+        };
+
+        var response = await OrderService.CreateAsync(order);
+
+        if (response.Success)
+        {
+            Navigation.NavigateTo($"/myorders?orderId={CartState.UserId}");
+        }
+        else
+        {
+            errorMessage = "Order failed.";
+        }
+
+        isSubmitting = false;
     }
 
-    decimal Subtotal => cartItems.Sum(i => i.Price * i.Quantity);
-    decimal DeliveryCharges => 20;
-    decimal HandlingCharges => 10;
-    decimal GstCharges => Subtotal * 0.05m;
-    decimal SmallCartFee => Subtotal < 100 ? 5 : 0;
-    decimal Total => Subtotal + DeliveryCharges + HandlingCharges + GstCharges + SmallCartFee;
-    private async Task PlaceOrderAsync()
-    {
-        // if (string.IsNullOrWhiteSpace(SelectedAddress))
-        // {
-        //     errorMessage = "Please select a delivery address.";
-        //     return;
-        // }
-
-        isSubmitting = true;
-        errorMessage = null;
-        isSuccess = false;
-
-
-        var orderRequest = new OrderRequestModel
-            {
-
-                UserId = CartState.UserId,
-                StoreId = CartState.StoreId,
-                OrderStatus = "Pending",
-                TotalAmount = Total,
-                RainCharges = 5,
-                DeliveryCharges = DeliveryCharges,
-                OrderItems = cartItems.Select(c => new OrderItemModel
-                {
-
-                    ProductId = c.ProductId,
-                    Quantity = c.Quantity,
-                    Price = c.Price,
-                    CartItemId = c.CartItemId
-                }).ToList()
-            };
-
-        try
-        {
-            var order = await OrderService.CreateAsync(orderRequest);
-            if (order.Success)
-            {
-                // CartState.ClearCart();
-                isSuccess = true;
-                Navigation.NavigateTo("/MyOrders");
-
-            }
-            else
-            {
-                errorMessage = order.Message ?? "Failed to place order.";
-            }
-
-
-        }
-        catch (Exception ex)
-        {
-            errorMessage = "Order failed: " + ex.Message;
-            Console.WriteLine(errorMessage);
-        }
-        finally
-        {
-            isSubmitting = false;
-        }
-    }
 }
 
 

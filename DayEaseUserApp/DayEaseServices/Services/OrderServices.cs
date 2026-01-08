@@ -1,6 +1,7 @@
 ﻿using DayEaseServices.Services.IServices;
 using Domain.DomainModels;
 using Domain.RequestModels;
+using Domain.ResponseModels;
 using Domain.Utilities;
 using Registration.IApiService;
 using System.Collections.Generic;
@@ -28,7 +29,21 @@ namespace DayEaseServices.Services
         public async Task<OrderStatusResponse> OrderStatus(UpdateOrderStatusRequest model)
             => await _apiService.PostAsync<UpdateOrderStatusRequest, OrderStatusResponse>
                ("Order/OrderStatus", model);
+        public async Task<ZohoPaymentResponse> CreateZohoPayment(ZohoPaymentRequest request)
+        {
+            return await _apiService.PostAsync<ZohoPaymentRequest, ZohoPaymentResponse>(
+                "Payment/CreateZohoPayment",
+                request
+            );
+        }
 
-       
+        public async Task<VerifyPaymentResponse> FinalizePayment(FinalizePaymentRequest request)
+        {
+            return await _apiService.PostAsync<FinalizePaymentRequest, VerifyPaymentResponse>(
+                "Payment/FinalizePayment",
+                request
+            );
+        }
+
     }
 }

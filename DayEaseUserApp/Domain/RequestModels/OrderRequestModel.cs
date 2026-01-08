@@ -15,17 +15,16 @@ namespace Domain.RequestModels
         public string StoreId { get; set; }
         public string? StoreName { get; set; }
         public string OrderStatus { get; set; }
+        public string PaymentId { get; set; }
         public decimal TotalAmount { get; set; }
         public decimal RainCharges { get; set; }
         public decimal DeliveryCharges { get; set; }
-        //public string PaymentMethod { get; set; } // Added this property to fix CS0117  
-        //public string DeliveryAddress { get; set; }
+        public decimal PlatformFee { get; set; }
+        public string PaymentMethod { get; set; }  
+        public string DeliveryAddress { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
         public List<OrderItemModel> OrderItems { get; set; }
-
-
-
 
     }
 
@@ -40,8 +39,5 @@ namespace Domain.RequestModels
         public decimal Price { get; set; }
         public string CartItemId { get; set; }
     }
-
-
-
 
 }

@@ -365,7 +365,7 @@
             await CartService.DecreaseQuantity(productId);
     }
 
-    private void Checkout()
+    private async Task Checkout()
     {
         // User is guest ONLY if UserId is null or empty
         if (LocationManager.IsGuestUser)
@@ -382,7 +382,7 @@
         CartState.StoreId = CartItems.First().StoreId;
         Console.WriteLine($"UserId: {LocationManager.UserId}");
         Console.WriteLine($"IsGuestUser: {LocationManager.IsGuestUser}");
-
+		await CartService.SaveCartToDbAsync(LocationManager.UserId);
         Navigation.NavigateTo("/checkout");
     }
 
