@@ -359,21 +359,8 @@ else if (!string.IsNullOrEmpty(ErrorMessage))
 }
 else
 {
-    <div class="container mt-3">
-        <div class="segment-toggle">
-            <button class="segment-btn @(SelectedType == ListingType.Stores ? "active-store" : "")"
-                    @onclick="() => ChangeType(ListingType.Stores)">
-                Stores
-            </button>
 
-            <button class="segment-btn @(SelectedType == ListingType.Restaurants ? "active-restaurant" : "")"
-                    @onclick="() => ChangeType(ListingType.Restaurants)">
-                Restaurants
-            </button>
-        </div>
-    </div>
-
-    @if (isStores && !IsGuestUser && RecentOrderStores?.Count > 0)
+    @if (!IsGuestUser && RecentOrderStores?.Count > 0)
     {
         <div class="container mt-3">
             <h2 class="store-offers-heading">
@@ -398,7 +385,7 @@ else
             <!-- Header row -->
             <h2 class="store-offers-heading mb-0">
                 <i class="bi bi-shop me-2"></i>
-                @(isStores ? "Stores" : "Restaurants")
+                Stores
             </h2>
 
             <!-- Store grid -->
@@ -411,7 +398,7 @@ else
             <div class="see-more-wrapper">
                 <button class="btn btn-link see-more-btn"
                         @onclick="NavigateToListing">
-                    @(isStores ? "More Stores" : "More Restaurants")
+                    More Stores
                 </button>
 
             </div>
@@ -428,7 +415,6 @@ else
 
     private bool IsGuestUser;
     private string ErrorMessage = string.Empty;
-    private bool isStores = true; // ✅ default selected = Stores
 
     private bool isPageLoading = true;
 
@@ -438,40 +424,7 @@ else
     private bool HasMoreData = true;
     private bool isNearbyLoading = false;
 
-    enum ListingType
-    {
-        Stores,
-        Restaurants
-    }
 
-    private ListingType SelectedType = ListingType.Stores; // default
-
-    private async Task ChangeType(ListingType type)
-    {
-        if (SelectedType == type)
-            return;
-
-        SelectedType = type;
-
-        // 🔁 map enum → bool
-        isStores = SelectedType == ListingType.Stores;
-
-        // reset state
-        NearbyStores.Clear();
-        CurrentPage = 1;
-        HasMoreData = true;
-        ErrorMessage = string.Empty;
-
-        // call API based on toggle
-        await FetchNearbyAsync();
-    }
-    private async Task FetchNearbyAsync()
-    {
-        if (isStores)
-            await FetchNearbyStoresAsync();
-        else
-            await FetchNearbyRestaurantsAsync();
-    }
 
     /* ================== LIFECYCLE ================== */
 
@@ -499,7 +452,7 @@ else
             // Fetch stores
             var tasks = new List<Task>
             {
-                FetchNearbyAsync() // uses isStores = true by default
+                FetchNearbyStoresAsync() // uses isStores = true by default
             };
 
 
@@ -583,7 +536,7 @@ else
                 Longitude = userLocation.Longitude.ToString("F6"),
                 pageNumber = CurrentPage,
                 pageSize = PageSize,
-                IsStores = isStores // 🔥 THIS IS THE KEY
+                IsStores = true
             };
 
 
