@@ -149,8 +149,52 @@
             gap: 15px;
         }
     }
+
+    .segment-toggle {
+        display: flex;
+        background: #f2f2f2;
+        border-radius: 30px;
+        padding: 6px;
+        max-width: 360px;
+        margin: auto;
+    }
+    .segment-btn {
+        flex: 1;
+        border: none;
+        background: transparent;
+        padding: 10px 0;
+        border-radius: 25px;
+        font-weight: 600;
+        color: #555;
+        transition: all 0.3s ease;
+    }
+
+    .active-store {
+        background: white;
+        color: #7b2cbf;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+    }
+
+    .active-restaurant {
+        background: linear-gradient(90deg, white, white);
+        color: #7b2cbf;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
 </style>
 
+<div class="container mt-3">
+    <div class="segment-toggle">
+        <button class="segment-btn @(SelectedType == ListingType.Stores ? "active-store" : "")"
+                @onclick="() => ChangeType(ListingType.Stores)">
+            Stores
+        </button>
+
+        <button class="segment-btn @(SelectedType == ListingType.Restaurants ? "active-restaurant" : "")"
+                @onclick="() => ChangeType(ListingType.Restaurants)">
+            Restaurants
+        </button>
+    </div>
+</div>
 @if (isLoading)
 {
     <div class="loading-wrapper">
@@ -211,6 +255,21 @@ else if (NearbyStores.Any())
     </div>
     
 }
+else
+{
+<div class="container mt-5 text-center">
+    <h4 class="text-muted">
+        @if (SelectedType == ListingType.Stores)
+        {
+            <span>No stores found.</span>
+        }
+        else
+        {
+            <span>No restaurants found.</span>
+        }
+    </h4>
+</div>
+}
 
 @code {
     private List<HighLightModel> NearbyStores = new();
@@ -221,6 +280,34 @@ else if (NearbyStores.Any())
     private const int PageSize = 10;
     private bool HasMoreData = true;
     private bool isFetchingMore = false;
+    private bool isStores = true; // ✅ default selected = Stores
+
+    enum ListingType
+    {
+        Stores,
+        Restaurants
+    }
+    private ListingType SelectedType = ListingType.Stores; // default
+
+    private async Task ChangeType(ListingType type)
+    {
+        if (SelectedType == type)
+            return;
+
+        SelectedType = type;
+
+        // 🔁 map enum → bool
+        isStores = SelectedType == ListingType.Stores;
+
+        // reset state
+        NearbyStores.Clear();
+        CurrentPage = 1;
+        HasMoreData = true;
+        ErrorMessage = string.Empty;
+
+        // call API based on toggle
+        await FetchStoresAsync();
+    }
 
 
     private DotNetObjectReference<Stores>? objRef;
@@ -293,7 +380,8 @@ else if (NearbyStores.Any())
                 Latitude = lat.ToString(),
                 Longitude = lng.ToString(),
                 pageNumber = CurrentPage,
-                pageSize = PageSize
+                pageSize = PageSize,
+                IsStores = isStores
             };
 
             var apiResponse = await StoreService.GetNearbyStoresAsync(request);
