@@ -1,5 +1,6 @@
 ﻿using Domain.DomainModels;
 using Domain.RequestModels;
+using Domain.ResponseModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,8 @@ namespace DayEaseServices.Services.IServices
         
         Task<List<OrderRequestModel>> OrderDetailsbyUser(OrderRequestModel model);
         Task<OrderStatusResponse> OrderStatus(UpdateOrderStatusRequest model);
+        Task<ZohoPaymentResponse> CreateZohoPayment(ZohoPaymentRequest request);
+        Task<VerifyPaymentResponse> FinalizePayment(FinalizePaymentRequest request);
     }
 
 }

@@ -55,9 +55,12 @@
             <NavLink class="nav-link border-bottom py-3 text-white" href="highlightcompact" style="padding-left: 4rem;" @onclick="ToggleNavMenu">
                 <i class="bi bi-house me-2"></i> Home
             </NavLink>
-            <NavLink class="nav-link border-bottom py-3 text-white" href="MyOrders" style="padding-left: 4rem;" @onclick="ToggleNavMenu">
-                <i class="bi bi-receipt me-2"></i> MyOrders
+            <NavLink class="nav-link border-bottom py-3 text-white"
+                     href="myorders"
+                     @onclick="ToggleNavMenu">
+                <i class="bi bi-receipt me-2"></i> My Orders
             </NavLink>
+
             <NavLink class="nav-link border-bottom py-3 text-white" href="/user-profile" style="padding-left: 4rem;" @onclick="ToggleNavMenu">
                 <i class="bi bi-person me-2"></i> Profile
             </NavLink>
@@ -154,44 +157,31 @@ else
 
 @code {
     private bool collapseNavMenu = false;
-    private List<CartModel> cartItems = new();
-    private List<GuestCartItem> guestCartItems = new();
     private bool showLogoutPopup = false;
-    
 
-    // protected override async Task OnInitializedAsync()
-    // {
-    //     IsGuestUser = await LocalStorage.GetItemAsync<bool>("IsGuestUser");
-    //     await locService.EnsureLocationAsync(UserLocation);
+    [Inject] NavigationManager Nav { get; set; }
+    [Inject] CartService Cart { get; set; }
 
-    //     if (locService.IsGuestUser)
-    //     {
-    //         var guestRequest = new CartModel
-    //             {
-    //                 GuestUserId = locService.GuestUserId
-    //             };
-
-    //         guestCartItems = await CartService.GetGuestCartItemsAsync(guestRequest);
-    //         await CartService.LoadCartItemCountAsync(guestRequest);
-    //     }
-    //     else
-    //     {
-
-    //         UserLocation = await UserLocationService.GetUserLocationAsync();
-    //         var request = new CartModel
-    //             {
-    //                 UserId = UserLocation.UserId
-    //             };
-    //         await CartService.LoadCartItemCountAsync(request);
-    //     }
-    // }
     protected override async Task OnInitializedAsync()
     {
         await locationManager.InitializeAsync();
 
         CartService.OnCartChanged += RefreshBadge;
 
-        await CartService.RestoreAsync();  
+        await CartService.RestoreAsync();
+
+        Nav.LocationChanged += Nav_LocationChanged;
+    }
+
+    private async void Nav_LocationChanged(object? sender, LocationChangedEventArgs e)
+    {
+        await Cart.SyncCartToBackendAsync();
+    }
+
+    public void Dispose()
+    {
+        Nav.LocationChanged -= Nav_LocationChanged;
+        CartService.OnCartChanged -= RefreshBadge;
     }
 
     private void RefreshBadge()
@@ -199,29 +189,15 @@ else
         InvokeAsync(StateHasChanged);
     }
 
-    private void ToggleNavMenu()
-    {
-        collapseNavMenu = !collapseNavMenu;
-    }
+    private void ToggleNavMenu() => collapseNavMenu = !collapseNavMenu;
 
-    private void OpenCart()
-    {
-        NavigationManager.NavigateTo("/cart");
-    }
+    private void OpenCart() => NavigationManager.NavigateTo("/cart");
 
-    private void OpenProfile()
-    {
-        NavigationManager.NavigateTo("/user-profile");
-    }
-    private void ShowLogoutPopup()
-    {
-        showLogoutPopup = true;
-    }
+    private void OpenProfile() => NavigationManager.NavigateTo("/user-profile");
 
-    private void CancelLogout()
-    {
-        showLogoutPopup = false;
-    }
+    private void ShowLogoutPopup() => showLogoutPopup = true;
+
+    private void CancelLogout() => showLogoutPopup = false;
 
     private void ConfirmLogout()
     {
