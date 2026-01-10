@@ -1,9 +1,11 @@
 ﻿@page "/checkout"
 @inject CartState CartState
 @inject NavigationManager Navigation
+@using DayEaseServices.Services
 @using DayEaseServices.Services.IServices
 @using Domain.DomainModels
 @using Domain.RequestModels
+@inject CartService cartService
 @inject IOrderService OrderService
 
 <style>
@@ -805,33 +807,6 @@
             </div>
         }
 
-        <!-- Payment Method -->
-        @* <section class="payment-method" style="padding: 20px;">
-            <h4>Payment Method</h4>
-            <div class="custom-payment-options">
-                <div class="payment-option">
-                    <input type="radio" id="cod" name="payment" checked />
-                    <label for="cod">
-                        <img src="images/rupee-note-img.png" class="payment-icon" />
-                        Cash on Delivery (COD)
-                    </label>
-                </div>
-                <div class="payment-option">
-                    <input type="radio" id="upi" name="payment" />
-                    <label for="upi">
-                        <img src="images/UPI-img.png" class="payment-icon" />
-                        UPI
-                    </label>
-                </div>
-                <div class="payment-option">
-                    <input type="radio" id="card" name="payment" />
-                    <label for="card">
-                        <img src="images/debit-card-img.png" class="payment-icon" />
-                        Credit/Debit Card
-                    </label>
-                </div>
-            </div>
-        </section> *@
 
         <button class="place-order-btn"
                 @onclick="PlaceOrderAsync"
@@ -905,9 +880,7 @@
     decimal Subtotal =>
     cartItems.Sum(i => (i.Price - i.Discount) * i.Quantity);
 
-    // decimal Subtotal => cartItems.Sum(i => i.Price * i.Quantity);
     decimal DeliveryCharges => 20;
-
 
     decimal PlatformFee => Subtotal
 
@@ -921,10 +894,6 @@
     decimal HandlingBaseCharge => Math.Round(Subtotal * 0.05m, 2);
     decimal HandlingGst => Math.Round(HandlingBaseCharge * 0.18m, 2);
 
-
-    //  decimal BaseCharges => Total * 0.05m;
-    //decimal GstCharges => BaseCharges * 0.18m;
-    // decimal HandlingCharges => HandlingBaseCharge + HandlingGst;
     decimal HandlingCharges => HandlingGst;
 
 
@@ -935,72 +904,10 @@
     decimal OriginalTotal =>
         cartItems.Sum(i => i.Price * i.Quantity);
 
-    // decimal OriginalTotal => cartItems.Sum(i => i.Price * i.Quantity);
-    //   decimal DiscountedTotal => Subtotal;
     // Savings
     decimal YouSaved =>
         OriginalTotal - Subtotal;
-   //  private async Task PlaceOrderAsync()
-   //  {
-   //      isSubmitting = true;
-   //      errorMessage = null;
-
-   //      try
-   //      {
-   //          if (SelectedPaymentMethod == "COD")
-   //          {
-   //              COD → place order immediately
-   //              var codOrder = new OrderRequestModel
-   //              {
-   //                  UserId = CartState.UserId,
-   //                  TotalAmount = Total,
-   //                  PaymentMethod = "COD",
-   //                  OrderStatus = "Confirmed",   directly confirmed
-   //                  OrderItems = cartItems.Select(c => new OrderItemModel
-   //                  {
-   //                      ProductId = c.ProductId,
-   //                      ProductName = c.ProductName,
-   //                      Quantity = c.Quantity,
-   //                      Price = c.Price
-   //                  }).ToList()
-   //              };
-
-   //              var codResponse = await OrderService.CreateAsync(codOrder);
-
-   //              if (!codResponse.Success)
-   //              {
-   //                  errorMessage = "COD order failed.";
-   //                  return;
-   //              }
-
-   //              Navigation.NavigateTo($"/order-success?orderId={codResponse.OrderId}");
-   //              return;
-   //          }
-			// var orderId = Guid.NewGuid().ToString(); temporary order id
-   //          ONLINE PAYMENT FLOW (do NOT create order yet)
-   //          var paymentRequest = new ZohoPaymentRequest
-   //          {
-   //              Amount = Total,
-   //              UserId = CartState.UserId,
-			// 	OrderId = orderId,
-   //              Description = "Checkout Payment",
-   //              RedirectUrl = Navigation.BaseUri + $"payment-success?orderId={orderId}"
-   //          };
-
-   //          var paymentResponse = await OrderService.CreateZohoPayment(paymentRequest);
-
-   //          redirect to zoho
-   //          Navigation.NavigateTo(paymentResponse.hostedpage_url, true);
-   //      }
-   //      catch (Exception ex)
-   //      {
-   //          errorMessage = ex.Message;
-   //      }
-   //      finally
-   //      {
-   //          isSubmitting = false;
-   //      }
-   //  }
+   
     private async Task PlaceOrderAsync()
     {
         // open fake UPI window
@@ -1018,6 +925,9 @@
             TotalAmount = Total,
             PaymentMethod = "UPI",
             OrderStatus = "Confirmed",
+             RainCharges = 5,
+            DeliveryCharges = DeliveryCharges,
+            PlatformFee = PlatformFee,
             OrderItems = cartItems.Select(c => new OrderItemModel
             {
                 ProductId = c.ProductId,
@@ -1031,6 +941,7 @@
 
         if (response.Success)
         {
+            await cartService.ClearCart();
             Navigation.NavigateTo($"/myorders?orderId={CartState.UserId}");
         }
         else
@@ -1040,7 +951,7 @@
 
         isSubmitting = false;
     }
-
+   
 }
 
 
