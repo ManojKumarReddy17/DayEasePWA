@@ -5,8 +5,8 @@
 @using DayEaseServices.Services.IServices
 @using Domain.RequestModels
 @inject NavigationManager Navigation
-@layout NavMenu
-@inject UserLocationState UserLocation
+@* @layout NavMenu *@
+@inject UserLocationManager UserLocation
 
 
 <style>
@@ -16,16 +16,7 @@
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
 
-    .flex-heading {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 10px; /* gap between image and text */
-    }
-
-    .logo {
-        height: 40px; /* adjust based on your layout */
-    }
+    /* ================= PAGE ================= */
 
     .page-wrapper {
         background-color: aliceblue;
@@ -44,11 +35,13 @@
         color: #111827;
     }
 
+    /* ================= ORDER CARD ================= */
+
     .order-card {
         background-color: #ffffff;
         border-radius: 1rem;
         box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
-        padding: 1.5rem;
+        padding: 1rem;
         width: 100%;
         max-width: 700px;
         margin-bottom: 1.5rem;
@@ -59,11 +52,21 @@
             transform: translateY(-4px);
         }
 
+    @@media (min-width: 640px) {
+        .order-card
+
+    {
+        padding: 1.5rem;
+    }
+
+    }
+
+    /* ================= ORDER INFO ================= */
+
     .order-id {
         font-size: 1.2rem;
         font-weight: bold;
         color: #2563eb;
-        margin-bottom: 0.25rem;
     }
 
     .order-date {
@@ -73,102 +76,127 @@
         margin-bottom: 0.75rem;
     }
 
-    .order-detail {
+    /* ================= PRODUCT GRID ================= */
+
+    .product-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+        margin-top: 12px;
+    }
+
+    @@media (min-width: 640px) {
+        .product-grid
+
+    {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    }
+
+    @@media (min-width: 1024px) {
+        .product-grid
+
+    {
+        grid-template-columns: repeat(5, 1fr);
+    }
+
+    }
+
+    .product-card {
+        background: #f9fafb;
+        border-radius: 14px;
+        padding: 10px;
+        text-align: center;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    }
+
+    .product-image {
+        width: 100%;
+        aspect-ratio: 1 / 1;
+        object-fit: contain;
+        margin-bottom: 8px;
+    }
+
+    .product-name {
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: #111827;
+    }
+
+    .product-meta {
+        font-size: 0.8rem;
+        color: #6b7280;
+    }
+
+    .more-items {
         display: flex;
         align-items: center;
+        justify-content: center;
+        font-weight: 700;
         font-size: 1rem;
-        margin: 0.35rem 0;
-        gap: 0.4rem;
+        color: #2563eb;
+        background: #eef2ff;
     }
 
-        .order-detail .label {
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            width: 70px;
-        }
+    /* ================= FOOTER ================= */
 
-        .order-detail .value {
-            font-weight: 500;
-        }
-
-    .order-store .value {
-        color: #059669;
-    }
-
-    .order-items .value {
-        color: #e11d48;
-    }
-
-    .order-total .value {
-        color: #f59e0b;
-        font-weight: bold;
-    }
-
-    .order-status {
-        margin-top: 0.75rem;
+    .order-footer {
         display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 14px;
+    }
+
+    @@media (min-width: 640px) {
+        .order-footer
+
+    {
+        flex-direction: row;
+        justify-content: space-between;
         align-items: center;
-        gap: 0.5rem;
     }
 
-    .status-text {
-        font-weight: 600;
-        color: #1e40af;
     }
 
-    .status {
-        padding: 0.4rem 1rem;
-        border-radius: 9999px;
-        font-size: 0.875rem;
-        font-weight: 600;
-        text-transform: capitalize;
-        color: white;
+    .total-amount {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: #111827;
     }
 
-    .pending {
-        background-color: #ffca28;
-        color: #4b5563;
-    }
+    /* ================= ACTION BUTTONS ================= */
 
     .order-actions {
-        margin-top: 1.25rem;
         display: flex;
-        justify-content: center;
-        gap: 1rem;
-        flex-wrap: wrap;
+        gap: 10px;
+        width: 100%;
     }
 
     .order-button {
+        flex: 1;
         border: none;
         padding: 0.6rem 0.9rem;
         border-radius: 0.9rem;
         font-weight: 600;
         font-size: 0.75rem;
         cursor: pointer;
-        transition: background-color 0.3s ease;
         text-decoration: none;
         text-align: center;
     }
 
-    .order-id-display {
-        font-size: 1.2rem;
-        font-weight: 600;
-        color: #1a237e;
-        display: flex;
-        gap: 10px;
-        align-items: center;
-        margin-bottom: 1rem;
+    @@media (min-width: 640px) {
+        .order-actions
+
+    {
+        width: auto;
     }
 
-        .order-id-display .label {
-            color: #1a237e;
-        }
+    .order-button {
+        flex: unset;
+    }
 
-        .order-id-display .value {
-            color: #263238;
-        }
-
+    }
 
     .order-button.reorder {
         background-color: #2563eb;
@@ -188,35 +216,17 @@
             background-color: #111827;
         }
 
-    .order-detail i {
-        margin-right: 0.3rem;
-        color: #6b7280;
+    /* ================= STATUS ================= */
+
+    .order-status {
+        margin-top: 12px;
+        display: flex;
+        gap: 6px;
+        align-items: center;
+        flex-wrap: wrap;
     }
 
-    @@media (min-width: 640px) {
-        .page-wrapper {
-            padding: 2rem;
-        }
-
-        .order-heading {
-            font-size: 1.5rem;
-        }
-    }
-
-    @@media (min-width: 1024px) {
-        .page-wrapper {
-            max-width: 900px;
-            margin: auto;
-        }
-
-        .logo {
-            height: 40px; /* or any desired height */
-            margin-right: 10px; /* adds space between image and text */
-            vertical-align: middle;
-        }
-    }
 </style>
-
 
 <div class="page-wrapper">
     @* <h2 class="order-heading"> *@
@@ -224,38 +234,64 @@
     @* </h2> *@
     <h2 class="order-heading flex-heading">
         @* <img src="images/Day-Ease-logo-black.png" class="logo" alt="Day Ease Logo" /> *@
-        My Orders
+        Your Orders
     </h2>
 
     @foreach (var order in OrderDetails)
     {
         <div class="order-card">
-            <div class="order-header">
-                <div class="order-id-header">
-                    <span class="label">Order ID:</span>
-                    <span class="value">@order.OrderId</span>
-                </div>
-                <p class="order-date">@order.CreatedAt.ToString("dd MMM yyyy, hh:mm tt")</p>
-            </div>
+            <div class="order-id">@order.OrderId</div>
+            <div class="order-date">@order.CreatedAt.ToString("dd MMM yyyy, hh:mm tt")</div>
 
-            <p><span class="order-label">Store:</span> @order.StoreName</p>
-            <p><span class="order-label">Items:</span></p>
+            <p><strong>Store:</strong> @order.StoreName</p>
 
             @if (order.OrderItems != null && order.OrderItems.Any())
             {
-                <ul>
-                    @foreach (var item in order.OrderItems)
+                <div class="product-grid">
+                    @foreach (var item in order.OrderItems.Take(3))
                     {
-                        <li>@item.ProductName - Qty: @item.Quantity - ₹@item.Price.ToString("N2")</li>
+                        <div class="product-card">
+                            <img src="@GetProductImage(item.ProductImg)"
+                                 class="product-image"
+                                 loading="lazy"
+                                 decoding="async"
+                                 alt="@item.ProductName"
+                                 onerror="this.onerror=null;this.src='images/no-image.png';" />
+
+                            <div class="product-name">@item.ProductName</div>
+                            <div class="product-meta">
+                                Qty: @item.Quantity <br />
+                                ₹@item.Price.ToString("N2")
+                            </div>
+                        </div>
                     }
-                </ul>
+
+                    @if (order.OrderItems.Count > 3)
+                    {
+                        <div class="product-card more-items">
+                            +@(order.OrderItems.Count - 3) more
+                        </div>
+                    }
+                </div>
             }
             else
             {
                 <p>No items found.</p>
             }
 
-            <p><span class="order-label">Total:</span> ₹@order.TotalAmount.ToString("N2")</p>
+            <div class="order-footer">
+                <div class="total-amount">
+                    Total: ₹@order.TotalAmount.ToString("N2")
+                </div>
+
+                <div class="order-actions">
+                    <button class="order-button reorder">Reorder</button>
+                    <a href="/order?orderId=@order.OrderId" class="order-button view">
+                        View Details
+                    </a>
+                </div>
+            </div>
+
 
             <div class="order-status">
                 <span>Status:</span>
@@ -264,10 +300,6 @@
                 </span>
             </div>
 
-            <div class="order-actions">
-                <button class="order-button reorder">Reorder</button>
-                <a href="/order?orderId=@order.OrderId" class="order-button view">View Details</a>
-            </div>
         </div>
 
     }
@@ -306,5 +338,22 @@
         "pending" => "status pending",
         _ => "status"
     };
+    private string GetProductImage(string img)
+    {
+        if (string.IsNullOrWhiteSpace(img))
+            return "images/no-image.png"; // fallback
+
+        // If it's an absolute URL, return as-is
+        if (img.StartsWith("http://") || img.StartsWith("https://"))
+            return img;
+
+        // If it already contains a folder, assume relative to wwwroot
+        if (img.Contains("/"))
+            return img;
+
+        // If it's just a filename, prepend the correct folder
+        return $"Products/{img}";
+    }
+
 
 }
